@@ -16,7 +16,7 @@ import Home from './Home';
 import Robe from './Robe';
 import Trunk from './Trunk';
 import Add from './Add';
-import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch, Link ,Redirect} from 'react-router-dom';
 
 
 export default class AppTab extends React.Component {
@@ -121,7 +121,7 @@ export default class AppTab extends React.Component {
             // dot
             selected={this.state.selectedTab === "greenTab"}
             onPress={() => {
-              // window.location.href=window.location.href+'aa'
+              // window.location.href=window.location.href+'aaa'
               this.setState({
                 selectedTab: "greenTab"
               });
@@ -129,8 +129,10 @@ export default class AppTab extends React.Component {
           >
             <Router>
               <Switch>
-                <Route exact path='/' component={AppBox} />
-                <Route path='/insert' component={Insert} />
+                
+                <Route path='/aaa' component={AppBox} />
+                <Redirect exact from ='/' to='/aaa'/>
+                <Route path='/insert' component={Insert}/>
                 <Route path='/home' component={Home}/>
                 <Route path="/robe" component={Robe}/>
                 <Route path="/trunk" component={Trunk}/>

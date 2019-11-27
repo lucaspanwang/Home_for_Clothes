@@ -9,7 +9,7 @@ export default class Home extends Component {
             <div>
                 <NavBar
                     leftContent={
-                        <Link to="/"><img src={Back} style={{width:'30px',height:"30px"}}/></Link>
+                        <Link to="/aaa"><img src={Back} style={{width:'30px',height:"30px"}}/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>家</NavBar>
             </div>
