@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { NavBar,List } from 'antd-mobile';
 import { Row, Col } from 'antd';
-import fanhui from './images/返回 (1).png';
-import touxiang from './images/头像.png';
-import xiangqing from './images/详情.png';
-import shoucang from './images/收藏（1）.png';
-import xiangce from './images/相册.png';
-import kaquan from './images/卡券.png';
-import huishouzhan from './images/回收站.png';
-import shezhi from './images/设置.png';
-import renwu from './images/小人.png';
+
+// import fanhui from '../images/返回 (1).png';
+import touxiang from '../images/头像.png';
+import xiangqing from '../images/详情.png';
+import shoucang from '../images/收藏（1）.png';
+import xiangce from '../images/相册.png';
+import kaquan from '../images/卡券.png';
+import huishouzhan from '../images/回收站.png';
+import shezhi from '../images/设置.png';
+import renwu from '../images/小人.png';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -29,12 +30,12 @@ export default class Geren extends Component {
             <div style={{width:'100%',height:"100%",background:"url("+renwu+") bottom center no-repeat"}}>
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
-                leftContent={[
-                    <img src={fanhui} style={{width:'30px'}} key="fan"/>
-                ]}
+                // leftContent={[
+                //     <img src={fanhui} style={{width:'30px'}} key="fan"/>
+                // ]}
                 >个人</NavBar>
 
-                <div className="userMessage" style={{width:"100%",overflow:"auto",zoom:"1",padding:"0 5%",marginTop:"10%"}}>
+                <div className="userMessage" style={{width:"100%",overflow:"auto",zoom:"1",padding:"0 5%",marginTop:"20px"}}>
                     <img src={user.photo} alt="" style={{float:"left",width:"20%",borderRadius:"50%",marginRight:"3%"}}/>
                     <div className="userMessCenter" style={{float:"left",width:"70%"}}>
                         <h2>{user.name}</h2>

@@ -1,6 +1,5 @@
 import React from "react";
 import { TabBar } from "antd-mobile";
-// import {BrowserRouter as Router,Route} from 'react-router-dom';
 
 import shequ from './images/社区.png'
 import shequ1 from './images/社区 (1).png'
@@ -13,20 +12,24 @@ import riji1 from './images/日记 (1).png'
 import geren from './images/个人.png'
 import geren1 from './images/个人 (1).png'
 
-import Shequ from './Shequ';
+import Shequ from './shequ/Shequ';
 import Chuanda from './Chuanda';
 import Zhenglixiang from './Zhenglixiang';
 import Riji from './Riji';
-import Geren from './Geren';
-import ShequIndex from "./shequ/ShequIndex";
+import Geren from './geren/Geren';
 import ShequArticle from "./shequ/ShequArticle";
 
 export default class AppTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "aTab"
+      selectedTab: "blueTab"
     };
+  }
+  hrefChange(str){
+    var h=window.location.href;
+    var arr = h.split('/');
+    window.location.href = arr[0] + str;
   }
   render() {
     return (
@@ -72,6 +75,7 @@ export default class AppTab extends React.Component {
                 this.setState({
                   selectedTab: "blueTab"
                 });
+                // this.hrefChange('/shequ');
               }}
             >
               <Shequ/>
@@ -90,7 +94,7 @@ export default class AppTab extends React.Component {
                 this.setState({
                   selectedTab: "bTab"
                 });
-                // console.log('hai');
+                // this.hrefChange('/chuanda');
               }}
             >
             <Chuanda/>
@@ -159,6 +163,7 @@ export default class AppTab extends React.Component {
                 this.setState({
                   selectedTab: "aTab"
                 });
+                // this.hrefChange('/geren');
               }}
             >
             <Geren/>
