@@ -11,7 +11,7 @@ import riji1 from './images/日记 (1).png'
 import geren from './images/个人.png'
 import geren1 from './images/个人 (1).png'
 import Diary from './Diary'
-import Detail from './Detail'
+
 import AboutMe from './AboutMe'
 
 export default class AppTab extends React.Component {
@@ -120,7 +120,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          <Detail />
+         
             {/* 整理箱 */}
           {/* <AppShop /> */}
           </TabBar.Item>

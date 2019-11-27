@@ -1,0 +1,14 @@
+.ant-tooltip-inner {
+    background-color: #fa9e9a !important;
+    color:withe !important;
+}
+
+.am-grid.am-grid-square .am-grid-item .am-grid-item-content {
+    position: absolute;
+    top: 39% !important;
+    transform: translateY(-50%);
+}
+
+.am-grid .am-flexbox {
+    background: #c7e7c2 !important;
+}
