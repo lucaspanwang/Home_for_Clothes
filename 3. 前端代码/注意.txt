@@ -1,0 +1,8 @@
+将 库/yishe/src 替换到 自己的项目的src 里面
+
+安装
+  npm install antd-mobile --save
+  npm install antd --save  或者 yarn add antd
+  npm i rc-form
+  
+  
