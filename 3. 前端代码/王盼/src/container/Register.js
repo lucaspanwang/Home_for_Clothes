@@ -18,15 +18,15 @@ export default class Register extends Component{
     }
 
     render(){
-        return <div style={{width:'100%',position:'relative', backgroundColor:'white'}}>
+        return <div style={{width:'100%',height:'100%', position:'relative', backgroundColor:'white'}}>
         <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
+                    <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
                 ]}
                 >注册
         </NavBar>
-        <Flex direction="column" justify="center" align="center" style={{paddingTop:'30px'}}>
+        <Flex direction="column" justify="center" align="center" style={{paddingTop:'5%'}}>
             <div id="camera_div">
                 <img src={camera} width="50%" style={{position:'absolute', left:'24%', top:'15%'}}/>
                 <p style={{position:'absolute', top:'53%', left:'21%', color:'#a8a8a8'}}>添加头像</p>
@@ -39,8 +39,8 @@ export default class Register extends Component{
                     <li><img src={lock} width="14%"/><InputItem className='register_input' placeholder='密码(6-16位数字字母组合)' type='password' maxLength='16'/></li>
                 </ul>
                     <Flex direction="column" justify="center" align="center">
-                        <Button style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'20px'}}>立 即 注 册</Button>
-                        <p style={{marginTop:'25px', }}>注册代表您同意<a style={{color:'#fc9d9a'}}>《用户协议》</a></p>
+                        <Button style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>立 即 注 册</Button>
+                        <p style={{marginTop:'8%', }}>注册代表您同意<a style={{color:'#fc9d9a'}}>《用户协议》</a></p>
                     </Flex>
                 </form>
             </div>
