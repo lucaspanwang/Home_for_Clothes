@@ -1,5 +1,6 @@
 import React from "react";
 import { TabBar } from "antd-mobile";
+
 import shequ from './images/社区.png'
 import shequ1 from './images/社区 (1).png'
 import chuanda from './images/试衣间.png'
@@ -10,7 +11,24 @@ import riji from './images/日记.png'
 import riji1 from './images/日记 (1).png'
 import geren from './images/个人.png'
 import geren1 from './images/个人 (1).png'
-import Chuanda from './Chuanda'
+
+import Wear from './wear/Wear'
+import AboutUs from "./me/AboutUs";
+import Setup from "./me/Setup";
+import Diary from "./diary/Diary";
+import AboutMe from "./me/AboutMe";
+import Community from "./community/Community";
+import Me from "./me/Me";
+import Article from "./community/Article";
+import AppBox from "./store/AppBox";
+import Login from "./login/Login";
+import Advertise from "./login/Advertise";
+import Forget from "./login/Forget";
+import Register from "./login/Register";
+import ResetPwd from "./login/ResetPwd";
+import Add from "./store/Add";
+import Home from "./store/Home";
+import TestWrapper from "./store/Insert";
 
 export default class AppTab extends React.Component {
   constructor(props) {
@@ -64,7 +82,13 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-            {/* <AppHome /> */}
+            {/* <Advertise /> */}
+            {/* <Login /> */}
+            {/* <Forget /> */}
+            {/* <ResetPwd /> */}
+            {/* <Register /> */}
+          <Community />
+          {/* <Article /> */}
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -83,7 +107,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          <Chuanda />
+          <Wear />
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -116,12 +140,14 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          {/* <AppShop /> */}
+          <AppBox />
+          {/* <Add /> */}
+          {/* <Home /> */}
+          {/* <TestWrapper /> */}
           </TabBar.Item>
           <TabBar.Item
             icon={{
               uri:riji
-              // "url("+wode+")"
             }}
             selectedIcon={{
               uri:
@@ -136,7 +162,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          {/* <AppMe /> */}
+          <Diary />
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -155,7 +181,10 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          {/* <Setup /> */}
+            {/* <AboutUs/> */}
+            {/* <Setup /> */}
+            {/* <AboutMe /> */}
+            <Me />
           </TabBar.Item>
         </TabBar>
       </div>

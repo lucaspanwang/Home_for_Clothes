@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
-import { NavBar} from 'antd-mobile';
-import fanhui from './images/返回 (1).png'
-import didian from './images/地点1.png'
-import xiayu from './images/下雨.png'
-import qing from './images/晴.png'
-import mote from './images/模特.png'
-import fenxiang from './images/分享.png'
-import { Grid } from 'antd-mobile';
-import { Tabs, WhiteSpace } from 'antd-mobile';
-import pengyouquan from './images/朋友圈.png'
-import weixin from './images/微信.png'
-import weibo from './images/微博.png'
-import QQ from './images/QQ (2).png'
-import kongjian from './images/qq空间.png'
-import shequ from './images/社区.png'
-import chuandariji from './images/图片.png'
-import fuzhilianjie from './images/复制链接.png'
-import buganxingqu from './images/不感兴趣_44.png'
-import jubao from './images/举报.png'
-import xiaoren from './images/小人.png'
+import { NavBar,Grid,Tabs,WhiteSpace} from 'antd-mobile';
+import './wear.css';
+
+import fanhui from '../images/返回 (1).png'
+import didian from '../images/地点1.png'
+import xiayu from '../images/下雨.png'
+import qing from '../images/晴.png'
+import mote from '../images/模特.png'
+import fenxiang from '../images/分享.png'
+import pengyouquan from '../images/朋友圈.png'
+import weixin from '../images/微信.png'
+import weibo from '../images/微博.png'
+import QQ from '../images/QQ (2).png'
+import kongjian from '../images/qq空间.png'
+import shequ from '../images/社区.png'
+import chuandariji from '../images/图片.png'
+import fuzhilianjie from '../images/复制链接.png'
+import buganxingqu from '../images/不感兴趣_44.png'
+import jubao from '../images/举报.png'
+import xiaoren from '../images/小人.png'
+
 const data = Array.from(new Array(5)).map((_val, i) => ({
     icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
     text: `name${i}`,
@@ -31,7 +32,8 @@ const data1 = Array.from(new Array(5)).map(() => ({
 }));
 const c=['#00cc00','#ccff99','white','#3399ff','#FFCC66'];
 const w_t=[xiayu,qing]
-export default class Chuanda extends Component {
+
+export default class Wear extends Component {
 
     constructor(){
       super();
@@ -48,29 +50,29 @@ export default class Chuanda extends Component {
       }
     }    
     componentDidMount(){
-        fetch(this.state.url)
-        .then(res=>res.json())
-        .then(res=>{
-            {
-                console.log(res.result.today)
-                this.setState({
-                  city:res.result.today.city,
-                  temperature:res.result.today.temperature,
-                  dressing_advice:res.result.today.dressing_advice,
-                  weather:res.result.today.weather
-                })
-                if(this.state.weather === '晴'){
-                  this.setState({
-                    idx:1,
-                  })
-                }
-                if(this.state.weather === '雨'){
-                  this.setState({
-                    idx:0,
-                  })
-                }
-            }
-        })
+        // fetch(this.state.url)
+        // .then(res=>res.json())
+        // .then(res=>{
+        //     {
+        //         console.log(res.result.today)
+        //         this.setState({
+        //           city:res.result.today.city,
+        //           temperature:res.result.today.temperature,
+        //           dressing_advice:res.result.today.dressing_advice,
+        //           weather:res.result.today.weather
+        //         })
+        //         if(this.state.weather === '晴'){
+        //           this.setState({
+        //             idx:1,
+        //           })
+        //         }
+        //         if(this.state.weather === '雨'){
+        //           this.setState({
+        //             idx:0,
+        //           })
+        //         }
+        //     }
+        // })
 
     }
     click_share=()=>{
