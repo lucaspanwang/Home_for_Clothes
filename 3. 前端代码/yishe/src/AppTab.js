@@ -82,13 +82,13 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-            {/* <Advertise /> */}
-            {/* <Login /> */}
-            {/* <Forget /> */}
-            {/* <ResetPwd /> */}
-            {/* <Register /> */}
-          <Community />
-          {/* <Article /> */}
+            <Advertise />
+            <Login />
+            <Forget />
+            <ResetPwd />
+            <Register />
+            <Community />
+            <Article />
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -141,9 +141,9 @@ export default class AppTab extends React.Component {
             }}
           >
           <AppBox />
-          {/* <Add /> */}
-          {/* <Home /> */}
-          {/* <TestWrapper /> */}
+          <Add />
+          <Home />
+          <TestWrapper />
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -181,10 +181,10 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-            {/* <AboutUs/> */}
-            {/* <Setup /> */}
-            {/* <AboutMe /> */}
             <Me />
+            <AboutUs/>
+            <Setup />
+            <AboutMe />
           </TabBar.Item>
         </TabBar>
       </div>

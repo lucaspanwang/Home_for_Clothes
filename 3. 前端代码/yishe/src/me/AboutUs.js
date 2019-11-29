@@ -14,13 +14,12 @@ export default class AboutUs extends Component {
                 leftContent={[
                     <img src={fanhui} style={{width:'30px'}} key="fan"/>
                 ]}
-                >穿搭</NavBar>
-                <div className="about">
+                >关于我们</NavBar>
+                <div className="about" style={{textAlign:'center'}}>
                     <img src={logo} />
                     <p>衣舍</p>
                     <p>版本1.1</p>
-                    <hr style={{width:'80%'}}/>
-                    <p style={{paddingLeft:'20px',paddingRight:'20px',fontSize:'17px'}}>特别感谢衣舍的依依粉们，积极反馈使用体现，帮助我们优化产品</p>
+                    <p style={{margin:'0 10%',paddingTop:'2%',fontSize:'17px',borderTop:'1px solid #ddd'}}>特别感谢衣舍的依依粉们，积极反馈使用体现，帮助我们优化产品</p>
                     <p style={{fontSize:'17px'}}>感谢大家陪我们一起成长~</p>
                     <img src={weixin} style={{width:'50%'}}/>
                     <p>官方微信账号</p>

@@ -5,7 +5,7 @@ import logo from '../images/logo_light.png';
 import user from '../images/user.png';
 import lock from '../images/lock.png';
 import wechat from '../images/wechat.png';
-import qq from '../images/QQ.png';
+import qq from '../images/qq.png';
 import weibo from '../images/weibo.png';
 import './login.css';
 

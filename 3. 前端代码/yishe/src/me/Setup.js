@@ -36,12 +36,12 @@ export default class Setup extends Component {
                 {/* 退出 */}
                 <WhiteSpace/>
                 <List  className="my-list">
-                    <p style={{height:'50px',fontSize:'20px',paddingTop:'15px'}}>
+                    <p style={{height:'50px',fontSize:'20px',paddingTop:'15px',textAlign:'center'}}>
                         切换账号
                     </p>
                 </List>
                 <List  className="my-list">
-                    <p style={{height:'50px',fontSize:'20px',paddingTop:'15px'}}>
+                    <p style={{height:'50px',fontSize:'20px',paddingTop:'15px',textAlign:'center'}}>
                         退出登录
                     </p>
                 </List>

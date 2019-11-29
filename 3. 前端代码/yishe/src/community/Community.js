@@ -7,7 +7,7 @@ import './community.css';
 // import fanhui from '../images/返回 (1).png';
 import touxiang from '../images/头像.png';
 import xiala from '../images/下拉.png';
-import fenxiang from '../images/分享.png';
+import fenxiang from '../images/分享(1).png';
 import shoucang from '../images/收藏.png';
 import pingbi from '../images/屏蔽.png';
 import guanzhu from '../images/关注.png';
