@@ -109,7 +109,7 @@ export default class Chuanda extends Component {
                 <img src={mote} id="mote"/>
                 {/* 衣物栏 */}
                 <TabExample />
-                <a onClick={this.click_share} id="aaa">
+                <a onClick={this.click_share} id="zhenglitab">
                     <img src={fenxiang} style={{width:'30px',float:'right',position:'relative',bottom:'-170px',right:'10px'}} key="fanxiang"/>
                 </a>
                 {/* 小人 */}

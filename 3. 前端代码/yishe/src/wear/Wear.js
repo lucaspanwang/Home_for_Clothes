@@ -84,15 +84,17 @@ export default class Wear extends Component {
       console.log(div);
       div.style.display='none'
     }
+    hrefChange(str){
+      var h=window.location.href;
+      var arr = h.split('/');
+      window.location.href = arr[0] + str;
+    }
 
     render() {
         return (
             <div className="body" style={{width:'100%',height:'100%'}}>
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
-                leftContent={[
-                    <img src={fanhui} style={{width:'30px'}} key="fan"/>
-                ]}
                 >穿搭</NavBar>
               {/* 天气 */}
                 <div className="daohang">
@@ -111,7 +113,7 @@ export default class Wear extends Component {
                 <img src={mote} id="mote"/>
                 {/* 衣物栏 */}
                 <TabExample />
-                <a onClick={this.click_share} id="aaa">
+                <a onClick={this.click_share} id="zhenglitab">
                     <img src={fenxiang} style={{width:'30px',float:'right',position:'relative',bottom:'-170px',right:'10px'}} key="fanxiang"/>
                 </a>
                 {/* 小人 */}

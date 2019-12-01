@@ -266,6 +266,7 @@ class Insert extends Component {
       whereValue:where
     })
   }
+  
 
   render() {
     return (
@@ -273,7 +274,7 @@ class Insert extends Component {
         {/* ----导航栏 */}
         <NavBar
           leftContent={
-            <a href="/aaa"><img src={Back} style={{ width: '30px', height: "30px" }} /></a>
+            <a href="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} /></a>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
                 </NavBar>

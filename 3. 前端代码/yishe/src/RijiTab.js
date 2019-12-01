@@ -30,11 +30,11 @@ import Add from "./store/Add";
 import Home from "./store/Home";
 import TestWrapper from "./store/Insert";
 
-export default class AppTab extends React.Component {
+export default class RijiTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "chuandaTab"
+      selectedTab: "rijiTab"
     };
   }
   render() {
@@ -135,9 +135,6 @@ export default class AppTab extends React.Component {
             }}
           >
           <AppBox />
-          {/* <Add />
-          <Home />
-          <TestWrapper /> */}
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -176,9 +173,6 @@ export default class AppTab extends React.Component {
             }}
           >
             <Me />
-            {/* <AboutUs/>
-            <Setup />
-            <AboutMe /> */}
           </TabBar.Item>
         </TabBar>
       </div>

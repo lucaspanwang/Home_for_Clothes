@@ -6,13 +6,19 @@ import logo from '../images/logo.png'
 import weixin from '../images/weixin.png'
 
 export default class AboutUs extends Component {
+    hrefChange(str){
+        var h=window.location.href;
+        var arr = h.split('/');
+        window.location.href = arr[0] + str;
+    }
+
     render() {
         return (
             <div style={{width:'100%',height:'100%'}}>
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <img src={fanhui} style={{width:'30px'}} key="fan"/>
+                    <a onClick={()=>{this.hrefChange('setup')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
                 ]}
                 >关于我们</NavBar>
                 <div className="about" style={{textAlign:'center'}}>

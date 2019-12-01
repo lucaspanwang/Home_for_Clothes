@@ -11,6 +11,11 @@ const Item = List.Item;
 const text = <span>你看我是不是很漂亮？<br/>٩(๑❛ᴗ❛๑)۶我也觉得人家<br/>很漂亮呢(＾▽＾)</span>;
 
 export default class AboutMe extends Component {
+    hrefChange(str){
+        var h=window.location.href;
+        var arr = h.split('/');
+        window.location.href = arr[0] + str;
+    }
 
     render() {
         return (
@@ -18,7 +23,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <img src={fanhui} style={{width:'30px'}} key="fan"/>
+                    <a onClick={()=>{this.hrefChange('gerentab')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">

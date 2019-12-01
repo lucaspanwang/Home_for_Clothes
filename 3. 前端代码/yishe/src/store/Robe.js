@@ -9,7 +9,7 @@ export default class Robe extends Component {
             <div>
                 <NavBar
                     leftContent={
-                        <a href="/aaa"><img src={Back} style={{width:'30px',height:"30px"}}/></a>
+                        <a href="/zhenglitab"><img src={Back} style={{width:'30px',height:"30px"}}/></a>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>衣柜</NavBar>
             </div>

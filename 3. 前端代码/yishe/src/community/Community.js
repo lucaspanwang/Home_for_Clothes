@@ -71,6 +71,11 @@ export default class Community extends Component {
             visible,
         });
     };
+    hrefChange(str){
+        var h=window.location.href;
+        var arr = h.split('/');
+        window.location.href = arr[0] + str;
+    }
 
     render() {
         return (
@@ -110,7 +115,7 @@ export default class Community extends Component {
                         </div>
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.article}</Paragraph>
-                            <a href={'/shequarticle'}>阅读全文>></a>
+                            <a onClick={()=>{this.hrefChange('/shequarticle')}}>阅读全文>></a>
                         </div>
                         <ul className="artState">
                             <li><span>{item.time}</span></li>

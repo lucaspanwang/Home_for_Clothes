@@ -25,6 +25,16 @@ const user = {
 }
 
 export default class Me extends Component {
+    constructor(){
+        super();
+    }
+
+    hrefChange(str){
+        var h=window.location.href;
+        var arr = h.split('/');
+        window.location.href = arr[0] + str;
+    }
+
     render() {
         return (
             <div style={{width:'100%',height:"100%",background:"url("+renwu+") bottom center no-repeat"}}>
@@ -41,7 +51,7 @@ export default class Me extends Component {
                         <h2>{user.name}</h2>
                         <h4>简介：{user.infor}</h4>
                     </div>
-                    <img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/>
+                    <a onClick={()=>{this.hrefChange('aboutme')}}><img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/></a>
                 </div>
 
                 <div className="gutter-example" style={{width:"100%",textAlign:'center',marginTop:"5px",}}>
@@ -88,7 +98,7 @@ export default class Me extends Component {
                     >回收站</Item>
                     <Item
                     thumb={shezhi}
-                    onClick={() => {}}
+                    onClick={()=>{this.hrefChange('setup')}}
                     arrow="horizontal"
                     >设置</Item>
                 </List>

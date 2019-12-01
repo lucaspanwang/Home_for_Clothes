@@ -94,6 +94,11 @@ export default class Article extends Component {
             selected: opt.props.value,
         });
     };
+    hrefChange(str){
+      var h=window.location.href;
+      var arr = h.split('/');
+      window.location.href = arr[0] + str;
+    };
     handleVisibleChange = (visible) => {
         this.setState({
             visible,
@@ -149,7 +154,7 @@ export default class Article extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <img src={fanhui} style={{width:'30px'}} key="fan"/>
+                  <a onClick={()=>{this.hrefChange('shequTab')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
                 ]}
                 >阅读全文</NavBar>
               <div className="article">
