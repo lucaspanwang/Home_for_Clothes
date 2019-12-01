@@ -13,22 +13,10 @@ import geren from './images/个人.png'
 import geren1 from './images/个人 (1).png'
 
 import Wear from './wear/Wear'
-import AboutUs from "./me/AboutUs";
-import Setup from "./me/Setup";
 import Diary from "./diary/Diary";
-import AboutMe from "./me/AboutMe";
 import Community from "./community/Community";
 import Me from "./me/Me";
-import Article from "./community/Article";
 import AppBox from "./store/AppBox";
-import Login from "./login/Login";
-import Advertise from "./login/Advertise";
-import Forget from "./login/Forget";
-import Register from "./login/Register";
-import ResetPwd from "./login/ResetPwd";
-import Add from "./store/Add";
-import Home from "./store/Home";
-import TestWrapper from "./store/Insert";
 
 export default class AppTab extends React.Component {
   constructor(props) {
