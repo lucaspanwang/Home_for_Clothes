@@ -7,7 +7,8 @@ import lock from '../images/lock.png';
 import wechat from '../images/wechat.png';
 import qq from '../images/qq.png';
 import weibo from '../images/weibo.png';
-import './login.css';
+import login_bg from '../images/login_bg.jpg';
+import styles from"./login.css";
 
 export default class Login extends Component{
     constructor(){
@@ -22,7 +23,8 @@ export default class Login extends Component{
 
     render(){
         return(
-        <div class="login">
+        <div className="login" className={styles.enter}>
+            <img src={login_bg} width='100%' height='100%'/>
             <img src={logo} className="login_logo"/>
             <form id="login_form">
                 <ul>
