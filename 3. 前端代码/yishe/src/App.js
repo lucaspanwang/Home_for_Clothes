@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import AppTab from './AppTab';
 import Advertise from './login/Advertise';
 import Login from './login/Login';

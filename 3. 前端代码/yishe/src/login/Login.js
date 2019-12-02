@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {InputItem, Button, Icon, } from 'antd-mobile';
-import {BrowserRouter as Router, Link, Switch, Route, Redirect} from'react-router-dom';
+// import {BrowserRouter as Router, Link, Switch, Route, Redirect} from'react-router-dom';
 import logo from '../images/logo_light.png';
 import user from '../images/user.png';
 import lock from '../images/lock.png';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavBar, Button } from 'antd-mobile';
-import { Link, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import './store.css'
 
 import BoxBack from '../images/box-back.jpeg';
