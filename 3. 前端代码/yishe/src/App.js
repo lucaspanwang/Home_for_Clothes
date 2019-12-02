@@ -24,7 +24,7 @@ export default class App extends Component {
     render() {
         return (
             <Router>
-                <Switch>
+                <div>
                     <Route exact path='/' component={Advertise} />
                     <Route path="/shequtab" component={ShequTab} />
                     <Route path="/zhenglitab" component={ZhengliTab} />
@@ -44,9 +44,7 @@ export default class App extends Component {
                     <Route path='/home' component={Home} />
                     <Route path='/robe' component={Robe} />
                     <Route path='/trunk' component={Trunk} />
-                    
-                
-                </Switch> 
+                </div> 
             </Router>
         )
     }

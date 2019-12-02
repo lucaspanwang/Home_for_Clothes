@@ -86,8 +86,8 @@ export default class Wear extends Component {
     }
     hrefChange(str){
       var h=window.location.href;
-      var arr = h.split('/');
-      window.location.href = arr[0] + str;
+      var index = h.lastIndexOf("\/");  
+      window.location.href = h.substring(0, index+1)+str;
     }
 
     render() {

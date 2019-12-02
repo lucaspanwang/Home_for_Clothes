@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Popover, NavBar, WingBlank,WhiteSpace } from 'antd-mobile';
-// import {BrowserRouter as Router,Route,Link} from 'react-router-dom';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography } from 'antd';
 import './community.css';
 
@@ -71,11 +71,12 @@ export default class Community extends Component {
             visible,
         });
     };
-    hrefChange(str){
-        var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
-    }
+    // hrefChange(str){
+    //     console.log(window.location.href);
+    //     var h=window.location.href;
+    //     var index = h.lastIndexOf("\/");  
+    //     window.location.href = h.substring(0, index+1)+str;
+    // }
 
     render() {
         return (
@@ -115,7 +116,8 @@ export default class Community extends Component {
                         </div>
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.article}</Paragraph>
-                            <a onClick={()=>{this.hrefChange('/shequarticle')}}>阅读全文>></a>
+                            <Link to="/shequarticle">阅读全文>></Link>
+                            {/* <a onClick={()=>{this.hrefChange('/shequarticle')}}>阅读全文>></a> */}
                         </div>
                         <ul className="artState">
                             <li><span>{item.time}</span></li>

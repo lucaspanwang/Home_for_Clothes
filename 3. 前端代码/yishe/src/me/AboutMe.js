@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavBar,List} from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import {Tooltip} from 'antd';
 
 import fanhui from '../images/返回 (1).png';
@@ -13,8 +14,8 @@ const text = <span>你看我是不是很漂亮？<br/>٩(๑❛ᴗ❛๑)۶我�
 export default class AboutMe extends Component {
     hrefChange(str){
         var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
+        var index = h.lastIndexOf("\/");  
+        window.location.href = h.substring(0, index+1)+str;
     }
 
     render() {
@@ -23,7 +24,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <a onClick={()=>{this.hrefChange('gerentab')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
+                    <Link to="gerentab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">

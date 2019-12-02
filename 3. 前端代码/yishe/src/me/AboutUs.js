@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { NavBar} from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 
 import fanhui from '../images/返回 (1).png'
 import logo from '../images/logo.png'
 import weixin from '../images/weixin.png'
 
 export default class AboutUs extends Component {
-    hrefChange(str){
-        var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
-    }
+    // hrefChange(str){
+    //     var h=window.location.href;
+    //     var index = h.lastIndexOf("\/");  
+    //     window.location.href = h.substring(0, index+1)+str;
+    // }
 
     render() {
         return (
@@ -18,7 +19,7 @@ export default class AboutUs extends Component {
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <a onClick={()=>{this.hrefChange('setup')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
+                    <Link to="setup"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >关于我们</NavBar>
                 <div className="about" style={{textAlign:'center'}}>

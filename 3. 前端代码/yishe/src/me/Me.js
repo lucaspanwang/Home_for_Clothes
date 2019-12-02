@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar,List } from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
 // import fanhui from '../images/返回 (1).png';
@@ -11,6 +12,7 @@ import kaquan from '../images/卡券.png';
 import huishouzhan from '../images/回收站.png';
 import shezhi from '../images/设置.png';
 import renwu from '../images/小人.png';
+import Setup from './Setup';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -31,8 +33,8 @@ export default class Me extends Component {
 
     hrefChange(str){
         var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
+        var index = h.lastIndexOf("\/");  
+        window.location.href = h.substring(0, index+1)+str;
     }
 
     render() {
@@ -51,7 +53,7 @@ export default class Me extends Component {
                         <h2>{user.name}</h2>
                         <h4>简介：{user.infor}</h4>
                     </div>
-                    <a onClick={()=>{this.hrefChange('aboutme')}}><img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/></a>
+                    <Link to="/aboutme"><img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/></Link>
                 </div>
 
                 <div className="gutter-example" style={{width:"100%",textAlign:'center',marginTop:"5px",}}>
@@ -96,11 +98,10 @@ export default class Me extends Component {
                     onClick={() => {}}
                     arrow="horizontal"
                     >回收站</Item>
-                    <Item
+                    <Link to="/setup"><Item
                     thumb={shezhi}
-                    onClick={()=>{this.hrefChange('setup')}}
                     arrow="horizontal"
-                    >设置</Item>
+                    >设置</Item></Link>
                 </List>
             </div>
         );

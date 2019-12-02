@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar,Popover,Grid } from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Comment, Tooltip, List } from 'antd';
 import moment from 'moment';
 import './community.css';
@@ -94,11 +95,11 @@ export default class Article extends Component {
             selected: opt.props.value,
         });
     };
-    hrefChange(str){
-      var h=window.location.href;
-      var arr = h.split('/');
-      window.location.href = arr[0] + str;
-    };
+  //   hrefChange(str){
+  //     var h=window.location.href;
+  //     var index = h.lastIndexOf("\/");  
+  //     window.location.href = h.substring(0, index+1)+str;
+  // }
     handleVisibleChange = (visible) => {
         this.setState({
             visible,
@@ -154,7 +155,8 @@ export default class Article extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <a onClick={()=>{this.hrefChange('shequTab')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
+                  // <a onClick={()=>{this.hrefChange('shequTab')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
+                  <Link to="/shequtab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >阅读全文</NavBar>
               <div className="article">

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {InputItem, Button, Icon, } from 'antd-mobile';
-// import {BrowserRouter as Router, Link, Switch, Route, Redirect} from'react-router-dom';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import logo from '../images/logo_light.png';
 import user from '../images/user.png';
 import lock from '../images/lock.png';
@@ -14,11 +14,11 @@ export default class Login extends Component{
         super();
     }
     
-    hrefChange(str){
-        var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
-    }
+    // hrefChange(str){
+    //     var h=window.location.href;
+    //     var index = h.lastIndexOf("\/");  
+    //     window.location.href = h.substring(0, index+1)+str;
+    // }
 
     render(){
         return(
@@ -40,9 +40,10 @@ export default class Login extends Component{
             </form>
             
             <form id="login_form2">
-                <Button onClick={()=>{this.hrefChange('/apptab')}} style={{color:'white', fontSize:'110%', lineHeight:'300%', fontWeight:'bold', height:'100%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</Button>
-                <a onClick={()=>{this.hrefChange('/register')}} style={{fontSize:'110%', position:'absolute', color:'white', marginTop:'6%', left:'3%', textShadow:'1px 1px 3px black'}}>注册</a>
-                <a onClick={()=>{this.hrefChange('/forget')}} style={{fontSize:'110%', position:'absolute', color:'white', marginTop:'6%', right:'3%', textShadow:'1px 1px 3px black'}}>忘记密码？</a>
+                {/* <Button onClick={()=>{this.hrefChange('apptab')}} style={{color:'white', fontSize:'110%', lineHeight:'300%', fontWeight:'bold', height:'100%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</Button> */}
+                <Link to="/apptab"><Button style={{color:'white', fontSize:'110%', lineHeight:'300%', fontWeight:'bold', height:'100%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</Button></Link>
+                <Link to="/register" style={{fontSize:'110%', position:'absolute', color:'white', marginTop:'6%', left:'3%', textShadow:'1px 1px 3px black'}}>注册</Link>
+                <Link to="/forget" style={{fontSize:'110%', position:'absolute', color:'white', marginTop:'6%', right:'3%', textShadow:'1px 1px 3px black'}}>忘记密码？</Link>
                 <div className="third_login">
                     <p style={{position:'absolute', right:'0', color:'rgb(187,187,187)', fontWeight:'bold'}}>——————</p>
                     <p style={{position:'absolute', left:'0',  color:'rgb(187,187,187)', fontWeight:'bold'}}>——————</p>

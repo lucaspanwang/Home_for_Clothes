@@ -266,7 +266,11 @@ class Insert extends Component {
       whereValue:where
     })
   }
-  
+  // hrefChange(str){
+  //   var h=window.location.href;
+  //   var index = h.lastIndexOf("\/");  
+  //   window.location.href = h.substring(0, index+1)+str;
+  // }
 
   render() {
     return (
@@ -274,7 +278,7 @@ class Insert extends Component {
         {/* ----导航栏 */}
         <NavBar
           leftContent={
-            <a href="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} /></a>
+            <Link to="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
                 </NavBar>

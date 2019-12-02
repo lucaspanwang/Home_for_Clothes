@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import fanhui from '../images/返回 (1).png';
 import { NavBar, WingBlank, Flex, InputItem, Button} from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import camera from '../images/camera.png';
 import phone from '../images/phone.png';
 import doc from '../images/doc.png';
@@ -12,18 +13,19 @@ export default class Register extends Component{
         super();
     }
     
-    hrefChange(str){
-        var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
-    }
+    // hrefChange(str){
+    //     var h=window.location.href;
+    //     var index = h.lastIndexOf("\/");  
+    //     window.location.href = h.substring(0, index+1)+str;
+    // }
 
     render(){
         return <div style={{width:'100%',height:'100%', position:'relative', backgroundColor:'white'}}>
         <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
+                    // <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
+                    <Link to="/login"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
                 ]}
                 >注册
         </NavBar>

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import fanhui from '../images/返回 (1).png'
 import {NavBar, Flex, InputItem, Button} from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import './login.css';
 
 export default class Forget extends Component{
@@ -8,18 +9,18 @@ export default class Forget extends Component{
         super();
     }
     
-    hrefChange(str){
-        var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
-    }
-
+    // hrefChange(str){
+    //     var h=window.location.href;
+    //     var index = h.lastIndexOf("\/");  
+    //     window.location.href = h.substring(0, index+1)+str;
+    // }
     render(){
         return <div style={{width:'100%', height:'100%', position:'relative', backgroundColor:'white'}}>
         <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
+                    // <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
+                    <Link to="/login"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
                 ]}
                 >忘记密码
         </NavBar>
@@ -34,7 +35,7 @@ export default class Forget extends Component{
                 </ul>
                 <Flex direction="column" justify="center" align="center">
                     <p style={{marginTop:'3%', fontSize:'16px'}}>收不到验证码短信？试试<a style={{color:'#fc9d9a'}}>语音验证码</a></p>
-                    <Button style={{marginTop:'7%' ,backgroundColor:'#fc9d9a', width:'90%', color:'white', fontSize:'15px'}} onClick={()=>{this.hrefChange('resetpwd')}}>下一步</Button>
+                    <Link to="/resetpwd"><Button style={{marginTop:'7%' ,backgroundColor:'#fc9d9a', width:'90%', color:'white', fontSize:'15px'}}>下一步</Button></Link>
                 </Flex>
             </form>  
         </Flex>

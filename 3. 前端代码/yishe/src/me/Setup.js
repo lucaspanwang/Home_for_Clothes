@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavBar,List,Switch,WhiteSpace } from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { createForm } from 'rc-form';
 
 import fanhui from '../images/返回 (1).png'
@@ -18,9 +19,9 @@ export default class Setup extends Component {
       }
       hrefChange(str){
         var h=window.location.href;
-        var arr = h.split('/');
-        window.location.href = arr[0] + str;
-    }
+        var index = h.lastIndexOf("\/");  
+        window.location.href = h.substring(0, index+1)+str;
+      }
 
     render() {
         return (
@@ -28,7 +29,7 @@ export default class Setup extends Component {
                 {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <a onClick={()=>{this.hrefChange('gerentab')}}><img src={fanhui} style={{width:'30px'}} key="fan"/></a>
+                    <Link to="gerentab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >设置</NavBar>
                 {/* 选择 */}
@@ -47,9 +48,7 @@ export default class Setup extends Component {
                     </p>
                 </List>
                 <List  className="my-list">
-                    <p style={{height:'50px',fontSize:'20px',paddingTop:'15px',textAlign:'center'}}>
-                        退出登录
-                    </p>
+                    <Link to="/login"><p style={{height:'50px',fontSize:'20px',paddingTop:'15px',textAlign:'center'}}>退出登录</p></Link>
                 </List>
             </div>
         )
