@@ -19,6 +19,7 @@ import buganxingqu from '../images/不感兴趣_44.png'
 import jubao from '../images/举报.png'
 import xiaoren from '../images/小人.png'
 import beijing from '../images/雨.jpg'
+import {Consumer} from '../context'
 
 const data = Array.from(new Array(5)).map((_val, i) => ({
     icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
@@ -92,7 +93,8 @@ export default class Wear extends Component {
 
     render() {
         return (
-            <div className="body" style={{width:'100%',height:'100%',background:"url("+beijing+")"}}>
+          <Consumer>
+            {(data)=>{return <div className="body" style={{width:'100%',height:'100%',background:"url("+beijing+")"}}>
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 >穿搭</NavBar>
@@ -145,9 +147,10 @@ export default class Wear extends Component {
                       )}
                     />
                     <hr />
-                    <p onClick={this.click_unShare}>取消</p>
+                    <p onClick={()=>{this.click_unShare(); console.log('data.userId:'+data.userId)}}>取消</p>
                   </div>
-            </div>
+            </div>}}
+            </Consumer>
         );
     }
 }
