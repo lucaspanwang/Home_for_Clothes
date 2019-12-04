@@ -17,9 +17,9 @@ import Setup from './Setup';
 const Item = List.Item;
 const Brief = Item.Brief;
 const user = {
-    photo:`${touxiang}`,
-    name:'我最美丽啦啦啦啦',
-    infor:'我也不知道说些什么',
+    // photo:`${touxiang}`,
+    // name:'我最美丽啦啦啦啦',
+    // infor:'我也不知道说些什么',
     cloth:'35',
     article:'14',
     like:'241',
@@ -29,29 +29,45 @@ const user = {
 export default class Me extends Component {
     constructor(){
         super();
+        this.state = {
+            user:{},
+            detail:[]
+        }
+    }  
+    componentDidMount(){
+        fetch("http://47.98.163.228:8086/users?userId=123")
+        .then(res=>res.json())
+        .then(res=>{
+            for(var i=0;i<res.length;i++){
+                var j = res[i].userPic.indexOf('/');
+                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+            }
+            this.setState({
+                user:res[0]
+            })
+            console.log(this.state.user);
+        });
+        fetch("http://47.98.163.228:8086/detail?userId=123")
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                detail:res
+            })
+            console.log(this.state.detail);
+        });
     }
-
-    hrefChange(str){
-        var h=window.location.href;
-        var index = h.lastIndexOf("\/");  
-        window.location.href = h.substring(0, index+1)+str;
-    }
-
     render() {
         return (
             <div style={{width:'100%',height:"100%",background:"url("+renwu+") bottom center no-repeat"}}>
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
-                // leftContent={[
-                //     <img src={fanhui} style={{width:'30px'}} key="fan"/>
-                // ]}
                 >个人</NavBar>
 
                 <div className="userMessage" style={{width:"100%",overflow:"auto",zoom:"1",padding:"0 5%",marginTop:"20px"}}>
-                    <img src={user.photo} alt="" style={{float:"left",width:"20%",borderRadius:"50%",marginRight:"3%"}}/>
+                    <img src={this.state.user.userPic} alt="" style={{float:"left",width:"20%",borderRadius:"50%",marginRight:"3%"}}/>
                     <div className="userMessCenter" style={{float:"left",width:"70%"}}>
-                        <h2>{user.name}</h2>
-                        <h4>简介：{user.infor}</h4>
+                        <h2>{this.state.user.userName}</h2>
+                        <h4>简介：{this.state.user.userIntro}</h4>
                     </div>
                     <Link to="/aboutme"><img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/></Link>
                 </div>
@@ -59,16 +75,16 @@ export default class Me extends Component {
                 <div className="gutter-example" style={{width:"100%",textAlign:'center',marginTop:"5px",}}>
                     <Row gutter={20} style={{margin:"0 3%",borderTop:"2px solid #ddd"}}>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{user.cloth}</h4><h4>衣服</h4></div>
+                            <div className="gutter-box"><h4>{this.state.detail[0]}</h4><h4>发帖</h4></div>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{user.article}</h4><h4>发帖</h4></div>
+                            <div className="gutter-box"><h4>{this.state.detail[1]}</h4><h4>衣服</h4></div>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{user.like}</h4><h4>点赞</h4></div>
+                            <div className="gutter-box"><h4>{this.state.detail[2]}</h4><h4>关注</h4></div>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{user.concern}</h4><h4>关注</h4></div>
+                            <div className="gutter-box"><h4>{this.state.detail[3]}</h4><h4>粉丝</h4></div>
                         </Col>
                     </Row>
                 </div>

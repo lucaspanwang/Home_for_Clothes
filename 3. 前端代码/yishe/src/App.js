@@ -35,7 +35,7 @@ export default class App extends Component {
                     <Route path='/forget' component={Forget} />
                     <Route path='/register' component={Register} />
                     <Route path='/resetpwd' component={ResetPwd} />
-                    <Route path="/shequarticle" component={ShequArticle} />
+                    <Route path="/shequarticle/:id" component={ShequArticle} />
                     <Route path="/setup" component={Setup} />
                     <Route path="/aboutme" component={AboutMe} />
                     <Route path="/aboutus" component={AboutUs} />

@@ -66,3 +66,18 @@ body{
 .am-grid.am-grid-square .am-grid-item .am-grid-item-content{
     top:0 !important;
 }
+.ant-comment-content-author-name{
+    color:#222 !important;
+}
+.ant-comment-content-author-time{
+    color:#666 !important;
+}
+.ant-comment-inner{
+    padding-bottom: 0 !important;
+}
+.ant-list-split{
+    padding-bottom:15px !important;
+}
+.ant-list-header, .ant-list-footer{
+    padding:0 !important;
+}

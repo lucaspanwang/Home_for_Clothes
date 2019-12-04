@@ -12,12 +12,31 @@ const Item = List.Item;
 const text = <span>你看我是不是很漂亮？<br/>٩(๑❛ᴗ❛๑)۶我也觉得人家<br/>很漂亮呢(＾▽＾)</span>;
 
 export default class AboutMe extends Component {
-    hrefChange(str){
-        var h=window.location.href;
-        var index = h.lastIndexOf("\/");  
-        window.location.href = h.substring(0, index+1)+str;
+    constructor(){
+        super();
+        this.state = {
+            user:{}
+        }
+    }  
+    // hrefChange(str){
+    //     var h=window.location.href;
+    //     var index = h.lastIndexOf("\/");  
+    //     window.location.href = h.substring(0, index+1)+str;
+    // }
+    componentDidMount(){
+        fetch("http://47.98.163.228:8086/users?userId=123")
+      .then(res=>res.json())
+      .then(res=>{
+          for(var i=0;i<res.length;i++){
+            var j = res[i].userPic.indexOf('/');
+            res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+          }
+          this.setState({
+              user:res[0]
+          })
+          console.log(this.state.user);
+      });
     }
-
     render() {
         return (
             <div style={{width:'100%'}}>
@@ -30,27 +49,27 @@ export default class AboutMe extends Component {
                 <List className="my-list">
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>头像</span>
-                       <img src={touxiang} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
+                       <img src={this.state.user.userPic} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>性别</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>女</span>
+                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userSex}</span>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>昵称</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>我是最美的啦啦啦</span>
+                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userName}</span>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>账号</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>12345678910</span>
+                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userPho}</span>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
-                       <span style={{lineHeight:'100%',fontSize:'14px'}}>二维码</span>
-                       <img src={erweima} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
+                       <span style={{lineHeight:'100%',fontSize:'14px'}}>城市</span>
+                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userCity}</span>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>简介</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>我是全世界最漂亮的...</span>
+                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userIntro}</span>
                     </Item>
                 </List>
                 <Tooltip placement="right" title={text}>
