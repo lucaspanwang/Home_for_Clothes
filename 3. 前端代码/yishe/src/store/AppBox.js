@@ -19,7 +19,7 @@ export default class AppBox extends Component {
                 <Router>
                     <Link to="/insert"><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
                     <div id="store">
-                        <img src={Box} style={{ width: '80%', height: '80%',top:'0', margin: '60% 10% 0 10%' }} />
+                        <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
                                 <Link to="/add"><button>+<br />添加</button></Link>

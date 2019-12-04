@@ -19,6 +19,7 @@ import Add from './store/Add';
 import Home from './store/Home';
 import Robe from './store/Robe';
 import Trunk from './store/Trunk';
+import DiaryAdd from './diary/DiaryAdd';
 
 export default class App extends Component {
     render() {
@@ -44,6 +45,7 @@ export default class App extends Component {
                     <Route path='/home' component={Home} />
                     <Route path='/robe' component={Robe} />
                     <Route path='/trunk' component={Trunk} />
+                    <Route path='/diaryadd' component={DiaryAdd} />
                 </div> 
             </Router>
         )

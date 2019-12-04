@@ -1,62 +1,69 @@
 import React, { Component} from 'react';
 import { NavBar,Carousel,Grid } from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Timeline,Icon } from 'antd';
 import './diary.css';
 
-import riji02 from '../images/riji02.jpg';
-import riji05 from '../images/riji05.jpg';
 import del from '../images/垃圾桶.png';
+import add from '../images/添加.png';
 import lunbo01 from '../images/lunbo01.jpg';
 import lunbo02 from '../images/lunbo02.jpg';
-import touxiang from '../images/头像.png';
-
-var diaryList=[
-    {
-        id:'0',
-        imgs:[riji02,riji05,riji02],
-        msg:'今天和朋友一起穿着新衣服去逛街，很开心，希望每天都可以开开心心的！',
-        time:'2019/10/26 10:20 '
-    },
-    {
-        id:'1',
-        imgs:[],
-        msg:'今天的我依旧美美哒！今天的我依旧美美哒！今天的我依旧美美哒！今天的我依旧美美哒！今天的我依旧美美哒！',
-        time:'2019/10/27 09:15 '
-    },
-    {
-        id:'2',
-        imgs:[riji02,riji05],
-        msg:'今天穿着我最喜欢的衣服出去逛街，心情超级好！我还是人见人爱的小仙女。',
-        time:'2019/11/01 15:35 '
-    },
-    {
-        id:'3',
-        imgs:[],
-        msg:'今天和朋友一起穿着新衣服去逛街，很开心，希望每天都可以开开心心的！',
-        time:'2019/11/26 16:58 '
-    }
-]
 
 export default class Diary extends Component {
-    state = {
-        data: ['1', '2'],
-        content:diaryList
+    constructor(){
+        super();
+        this.state = {
+            data: ['1', '2'],
+            content:[],
+            userId:'123'
+        }
+    }
+    hrefChange(str){
+        var h=window.location.href;
+        var arr = h.split('/');
+        window.location.href = arr[0] + str;
     }
     componentDidMount() {
+        fetch('http://47.98.163.228:8081/diary?userId='+this.state.userId)
+        .then(res=>res.json())
+        .then(res=>{
+            {                 
+                for(var i=0;i<res.length;i++){
+                    var j = res[i].userPic.indexOf('/');
+                    res[i].userPic = "http://47.98.163.228:8081"+res[i].userPic.substr(j);
+                }
+                for(var i=0;i<res.length;i++){
+                    if(res[i].dimg.length===1){
+                        res[i].dimg=[];
+                    }else{
+                        for(var j=0;j<res[i].dimg.length;j++){
+                            var n = res[i].dimg[j].indexOf('/');
+                            res[i].dimg[j] = "http://47.98.163.228:8081"+res[i].dimg[j].substr(n);
+                        }
+                    }
+                }
+                console.log(res);
+                
+                this.setState({
+                    content: res,
+                })
+                console.log(this.state.content[0].userPic)
+            }
+        })
         setTimeout(() => {
             this.setState({
             data: [lunbo01,lunbo02],
             });
         }, 100);
     }
-    deleteItem=(id)=>{
-        var content = [...this.state.content];
-        content.splice(id,1);
-        this.setState({
-           content:content
-        })
-        diaryList.splice(id,1);
-    }
+    // deleteItem=(id)=>{
+    //     var content = [...this.state.content];
+    //     content.splice(id,1);
+    //     this.setState({
+    //        content:content
+    //     })
+    //     diaryList.splice(id,1);
+    // }
     render() {
         return (
             <div style={{width:'100%'}}>
@@ -76,7 +83,10 @@ export default class Diary extends Component {
                         </a>
                     ))}
                     </Carousel>
-                    <img src={touxiang} alt='' style={{width:'15%',borderRadius:'50%',position: 'absolute',top:'85%',left:'0',zIndex:"99"}}/>
+                    {
+                        this.state.content.map((item)=>( <img src={this.state.content[0].userPic} alt='' style={{width:'15%',borderRadius:'50%',position: 'absolute',top:'85%',left:'0',zIndex:"99"}}/>))
+                    }
+                   
                 </div>                
 
                 <Timeline style={{marginLeft:'20px',marginTop:'30px'}}>
@@ -84,19 +94,20 @@ export default class Diary extends Component {
                     this.state.content.map((item,idx)=>
                         <Timeline.Item dot={<Icon type="heart" theme="filled" style={{ fontSize: '16px' }} key={idx}/>} color="red">
                             <div style={{width:'95%',padding:'10px',backgroundColor:'#c7e7c2',borderRadius:'10px'}}>
-                            <Grid data={item.imgs}
+                            <Grid data={item.dimg}
                                 columnNum={3}
                                 renderItem={dataItem => (
                                     <img src={dataItem} alt="" style={{width:'100%'}}/>
                                 )}
                                 />
-                                <p style={{color:'#1f8774',marginTop:'8px'}}>{item.msg}</p>
-                                <span style={{color:'#888'}}>{item.time} <img src={del} alt='' style={{width:'7%',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
+                                <p style={{color:'#1f8774',marginTop:'8px'}}>{item.diaryContent}</p>
+                                <span style={{color:'#888'}}>{item.diaryTime} <img src={del} alt='' style={{width:'7%',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
                             </div>    
                         </Timeline.Item>
                     )
                 }
-                </Timeline>                
+                </Timeline>
+                <Link to="/diaryadd"><button  style={{backgroundColor:'white',border:'none',float:'right',marginRight:'5%',position: 'fixed',bottom: '8%',right: '-1%',Zindex: '9999'}}><img src={add} alt='' style={{width:'30%',float:'right'}}/></button></Link>            
             </div>
             
         );

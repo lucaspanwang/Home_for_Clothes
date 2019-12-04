@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { NavBar, Picker, List, WhiteSpace } from 'antd-mobile';
+import { NavBar, Picker, List, WhiteSpace,ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
 import Back from '../images/返回 (1).png';
 import { createForm } from 'rc-form';
 import './store.css';
-
+//图片选择器
+const data = [];
+//图片选择器
 
 const CustomChildren = props => (
   <div
@@ -151,7 +153,7 @@ const colors = [
         />
         <span>红色</span>
       </div>),
-    value: '#FF0000',
+    value: '红色',
   },
   {
     label:
@@ -161,7 +163,7 @@ const colors = [
         />
         <span>绿色</span>
       </div>),
-    value: '#00FF00',
+    value: '绿色',
   },
   {
     label:
@@ -171,7 +173,7 @@ const colors = [
         />
         <span>蓝色</span>
       </div>),
-    value: '#0000FF',
+    value: '蓝色',
   },
   {
     label:
@@ -181,7 +183,7 @@ const colors = [
         />
         <span>灰色</span>
       </div>),
-    value: '#C0C0C0',
+    value: '灰色',
   },
   {
     label:
@@ -191,7 +193,7 @@ const colors = [
         />
         <span>橙色</span>
       </div>),
-    value: '#FF7F00',
+    value: '橙色',
   },
   {
     label:
@@ -201,7 +203,7 @@ const colors = [
         />
         <span>黄色</span>
       </div>),
-    value: '#FFFF00',
+    value: '黄色',
   },
   {
     label:
@@ -211,7 +213,7 @@ const colors = [
         />
         <span>青色</span>
       </div>),
-    value: '#C0FF3E',
+    value: '青色',
   },
   {
     label:
@@ -221,7 +223,7 @@ const colors = [
         />
         <span>黑色</span>
       </div>),
-    value: '#0F0F0F',
+    value: '黑色',
   },
   {
     label:
@@ -231,7 +233,7 @@ const colors = [
         />
         <span>白色</span>
       </div>),
-    value: '#FFFFFF',
+    value: '白色',
   },
   {
     label:
@@ -241,7 +243,7 @@ const colors = [
         />
         <span>紫色</span>
       </div>),
-    value: '#EEAEEE',
+    value: '紫色',
   },
 ];
 
@@ -249,12 +251,31 @@ const colors = [
 
 class Insert extends Component {
   state = {
+    files: data,
+    multiple: false,
     data: [],
+    clothing:[],
+    zhonglei:[],
+    mingzi:[],
     cols: 1,
     visible: false,
-    colorValue: ['#00FF00'],
-    whereValue:['行李箱']
+    colorValue: [],
+    whereValue:[]
   };
+  //图片选择器
+  onChange = (files, type, index) => {
+    console.log(files, type, index);
+    this.setState({
+      files,
+    });
+  }
+  onSegChange = (e) => {
+    const index = e.nativeEvent.selectedSegmentIndex;
+    this.setState({
+      multiple: index === 1,
+    });
+  }
+  //图片选择器
   onChangeColor = (color) => {
     console.log(color);
     this.setState({
@@ -266,13 +287,48 @@ class Insert extends Component {
       whereValue:where
     })
   }
-  // hrefChange(str){
-  //   var h=window.location.href;
-  //   var index = h.lastIndexOf("\/");  
-  //   window.location.href = h.substring(0, index+1)+str;
-  // }
 
+  mingzi=(e)=>{
+    this.setState({
+      mingzi:e.target.value
+    })
+  }
+  todata=()=>{
+    const p=[this.state.zhonglei,this.state.whereValue,this.state.colorValue];
+    console.log(p)
+    this.setState({
+      clothing:p
+    },function(){
+      console.log(this.state.clothing[0][1]);
+    })
+    // fetch("http://47.98.163.228:8084/insert", {
+    //     method: 'post', 
+    //     "Access-Control-Allow-Origin" : "*",
+    //     "Access-Control-Allow-Credentials" : true,
+    //     credentials: 'include',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: JSON.stringify({zhonglei:'123'}) 
+    //   })
+  }
+  componentDidMount(){
+    fetch("http://47.98.163.228:8084/insert", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:JSON.stringify({userId:"123"}) 
+      })
+  }
+  
   render() {
+    //图片选择器
+    const { files } = this.state;
+    //图片选择器
     return (
       <div>
         {/* ----导航栏 */}
@@ -292,7 +348,7 @@ class Insert extends Component {
             data={kind}
             value={this.state.pickerValue}
             onChange={v => this.setState({ pickerValue: v })}
-            onOk={v => this.setState({ pickerValue: v })}
+            onOk={v => this.setState({ zhonglei: v })}
           >
             <CustomChildren>种类</CustomChildren>
           </Picker>
@@ -300,7 +356,8 @@ class Insert extends Component {
 
           {/* ----地方选择 */}
           <Picker data={where}  value={this.state.whereValue} cols={1}
-            onChange={this.onChangeWhere}  >
+            onChange={this.onChangeWhere} 
+             >
             <List.Item arrow="horizontal">地方</List.Item>
           </Picker>
           {/* /----地方选择结束 */}
@@ -318,17 +375,31 @@ class Insert extends Component {
         {/* ---填写名字 */}
         <div style={{height:"50px",backgroundColor:'#FFFFFF'}}>
           <span style={{padding:'20px 14px',fontSize:'18px'}}>名字</span>
-          <input type='text' style={{margin:'8px 30px',height:'30px'}}></input>
+          <input type='text' style={{margin:'8px 30px',height:'30px'}} onChange={this.mingzi}/>
         </div>
         {/* ----填写名字结束 */}
-        {/* ----添加图片和提交 */}
-        <div style={{height:'150px',width:'300px',backgroundColor:'lightgrey',margin:'130px auto'}}>
-          <h1 style={{fontSize:'80px',marginLeft:'40%',color:'white'}}>+</h1>
-          <p style={{fontSize:'20px',marginLeft:'37%',marginTop:'-10%',color:'white'}}>添加图片</p>
-          <input type="submit" style={{marginLeft:'80%',width:'50px',height:'30px'}}/>
-        </div>
-        {/* ----添加图片和提交结束 */}
+        {/* 添加图片 */}
+        <WingBlank >
+        <ImagePicker
+          files={files}
+          onChange={this.onChange}
+          onImageClick={(index, fs) => console.log(index, fs)}
+          selectable={files.length < 7}
+          multiple={this.state.multiple}
+        />
+      </WingBlank>
+      {/* 添加图片结束 */}
 
+
+          <input type="submit" style={{marginLeft:'80%',width:'50px',height:'30px'}} onClick={this.todata}/>
+        {/* ----添加图片和提交结束 */}
+        {/* {
+           console.log(this.state.whereValue),
+           console.log(this.state.mingzi),
+           console.log(this.state.yanse),
+           this.state.zhonglei.map((itme,index)=>(<p>{itme}</p>))
+
+        } */}
       </div>
     )
   }
