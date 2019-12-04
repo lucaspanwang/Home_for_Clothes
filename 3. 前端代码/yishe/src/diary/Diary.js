@@ -88,7 +88,6 @@ export default class Diary extends Component {
                     }
                    
                 </div>                
-
                 <Timeline style={{marginLeft:'20px',marginTop:'30px'}}>
                 {
                     this.state.content.map((item,idx)=>
@@ -107,7 +106,11 @@ export default class Diary extends Component {
                     )
                 }
                 </Timeline>
-                <Link to="/diaryadd"><button  style={{backgroundColor:'white',border:'none',float:'right',marginRight:'5%',position: 'fixed',bottom: '8%',right: '-1%',Zindex: '9999'}}><img src={add} alt='' style={{width:'30%',float:'right'}}/></button></Link>            
+                <Link to="/diaryadd" >
+                    <button  style={{backgroundColor:'white',border:'none',float:'right',marginRight:'5%',Zindex: '9999',marginTop:'18%'}}>
+                        <img src={add} alt='' style={{width:'30%',float:'right'}}/>
+                    </button>
+                </Link>            
             </div>
             
         );
