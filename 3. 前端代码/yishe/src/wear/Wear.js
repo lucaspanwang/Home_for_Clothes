@@ -37,45 +37,45 @@ const c=['#00cc00','#ccff99','white','#3399ff','#FFCC66'];
 const w_t=[xiayu,qing]
 
 export default class Wear extends Component {
-
-    constructor(){
-      super();
-      this.state = {
-          data:[],
-          ss: ['微信好友','朋友圈','微博','QQ好友','QQ空间'],
-          ss1: ['穿搭日记','社区','复制链接','不感兴趣','举报'],
-          url0:'http://47.98.163.228:8083/react',
-          url:'http://47.98.163.228:8083/weather',
-          city:'',
-          temperature:'',
-          dressing_advice:'',
-          weather:'',
-          idx:0,
-          arr:[],arr_s:[],
-          ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],
-          count:0,
-          href:'#/apptab',
-          userId:'',
-          ress:[],
-          linshi:0,
-      }
-    }    
-    componentDidMount(){
-      
-      //获取图片信息
-      var small=[],big=[];
-      fetch(this.state.url0)
-      .then(res=>res.json())
-      .then(res=>{
-        console.log(res);
-        var weather = JSON.parse(res[res.length-1])
-        // var weather = JSON.parse(res)[res.length-1];
-        this.setState({
-          city:weather.result.today.city,
-          temperature:weather.result.today.temperature,
-          dressing_advice:weather.result.today.dressing_advice,
-          weather:weather.result.today.weather
-        })
+  constructor(){
+    super();
+    this.state = {
+        data:[],
+        ss: ['微信好友','朋友圈','微博','QQ好友','QQ空间'],
+        ss1: ['穿搭日记','社区','复制链接','不感兴趣','举报'],
+        url0:'http://47.98.163.228:8083/react',
+        url:'http://47.98.163.228:8083/weather',
+        city:'南京',
+        temperature:'2/13',
+        dressing_advice:'',
+        weather:'晴',
+        idx:0,
+        arr:[],arr_s:[],
+        ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],
+        count:0,
+        href:'#/apptab',
+        userId:'',
+        ress:[],
+        linshi:0,
+    }
+  }    
+  componentDidMount(){
+    
+    //获取图片信息
+    var small=[],big=[];
+    fetch(this.state.url0)
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+      // var weather = JSON.parse(res[res.length-1])
+      // // var weather = JSON.parse(res)[res.length-1];
+      // console.log(weather)
+      // this.setState({
+      //   city:weather.result.city,
+      //   temperature:weather.result.future[0].temperature,
+      //   dressing_advice:weather.result.realtime.dressing_advice,
+      //   weather:weather.result.realtime.info
+      // })
         if(this.state.weather === '晴'){
           this.setState({
               idx:1,

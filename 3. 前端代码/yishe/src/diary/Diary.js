@@ -24,6 +24,7 @@ export default class Diary extends Component {
         window.location.href = arr[0] + str;
     }
     componentDidMount() {
+        console.log(this.props.id);
         fetch('http://47.98.163.228:8081/diary?userId='+this.state.userId)
         .then(res=>res.json())
         .then(res=>{
@@ -106,7 +107,7 @@ export default class Diary extends Component {
                     )
                 }
                 </Timeline>
-                <Link to="/diaryadd" >
+                <Link to={"/diaryadd/"+this.props.id} >
                     <button  style={{backgroundColor:'white',border:'none',float:'right',marginRight:'5%',Zindex: '9999',marginTop:'18%'}}>
                         <img src={add} alt='' style={{width:'30%',float:'right'}}/>
                     </button>

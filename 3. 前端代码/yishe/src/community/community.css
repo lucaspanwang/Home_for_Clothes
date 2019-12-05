@@ -81,3 +81,6 @@ body{
 .ant-list-header, .ant-list-footer{
     padding:0 !important;
 }
+textarea.ant-input{
+    min-height: 50px !important;
+}

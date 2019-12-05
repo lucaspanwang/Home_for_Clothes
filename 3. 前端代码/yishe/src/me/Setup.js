@@ -17,11 +17,11 @@ export default class Setup extends Component {
           checked1_2: true,
         };
       }
-      hrefChange(str){
-        var h=window.location.href;
-        var index = h.lastIndexOf("\/");  
-        window.location.href = h.substring(0, index+1)+str;
-      }
+      // hrefChange(str){
+      //   var h=window.location.href;
+      //   var index = h.lastIndexOf("\/");  
+      //   window.location.href = h.substring(0, index+1)+str;
+      // }
 
     render() {
         return (
@@ -29,16 +29,16 @@ export default class Setup extends Component {
                 {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to="gerentab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >设置</NavBar>
                 {/* 选择 */}
                 <ListExample />
                 <Se />
                 <List  className="my-list">
-                <Item arrow="horizontal" multipleLine onClick={()=>{this.hrefChange('aboutus')}}>
-                关于我们
-                </Item>
+                <Link to={"/aboutus/"+this.props.match.params.id}><Item arrow="horizontal" multipleLine>
+                  关于我们
+                </Item></Link>
                 </List>
                 {/* 退出 */}
                 <WhiteSpace/>

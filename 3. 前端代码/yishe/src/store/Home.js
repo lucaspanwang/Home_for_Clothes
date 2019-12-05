@@ -13,6 +13,7 @@ export default class Home extends Component {
         }
     }
     componentDidMount(){
+        // console.log(this.props.match.params.id);//获取用户id
         fetch(this.state.url)
         .then(res=>res.json())
         .then(res=>{
@@ -27,7 +28,7 @@ export default class Home extends Component {
             <div>
                 <NavBar
                     leftContent={
-                        <Link to="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+                        <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>家</NavBar>
                 <div>

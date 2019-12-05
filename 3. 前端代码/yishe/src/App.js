@@ -27,25 +27,43 @@ export default class App extends Component {
             <Router>
                 <div>
                     <Route exact path='/' component={Advertise} />
-                    <Route path="/shequtab" component={ShequTab} />
+                    <Route path='/login' component={Login} />
+                    {/* <Route path="/shequtab" component={ShequTab} />
                     <Route path="/zhenglitab" component={ZhengliTab} />
                     <Route path="/rijitab" component={RijiTab} />
                     <Route path="/gerentab" component={GerenTab} />
-                    <Route path='/login' component={Login} />
-                    <Route path='/apptab' component={AppTab} />
+                    <Route path='/apptab' component={AppTab} /> 
                     <Route path='/forget' component={Forget} />
                     <Route path='/register' component={Register} />
                     <Route path='/resetpwd' component={ResetPwd} />
                     <Route path="/shequarticle/:id" component={ShequArticle} />
                     <Route path="/setup" component={Setup} />
-                    <Route path="/aboutme" component={AboutMe} />
+                    <Route path="/aboutme/:id" component={AboutMe} />
                     <Route path="/aboutus" component={AboutUs} />
                     <Route path='/insert' component={Insert} />
                     <Route path='/add' component={Add} />
                     <Route path='/home' component={Home} />
                     <Route path='/robe' component={Robe} />
                     <Route path='/trunk' component={Trunk} />
-                    <Route path='/diaryadd' component={DiaryAdd} />
+                    <Route path='/diaryadd' component={DiaryAdd} />*/}
+                    <Route path="/shequtab/:id" component={ShequTab} />
+                    <Route path="/zhenglitab/:id" component={ZhengliTab} />
+                    <Route path="/rijitab/:id" component={RijiTab} />
+                    <Route path="/gerentab/:id" component={GerenTab} />
+                    <Route path='/apptab/:id' component={AppTab} />
+                    <Route path='/forget' component={Forget} />
+                    <Route path='/register' component={Register} />
+                    <Route path='/resetpwd' component={ResetPwd} />
+                    <Route path="/shequarticle/:id" component={ShequArticle} />
+                    <Route path="/setup/:id" component={Setup} />
+                    <Route path="/aboutme/:id" component={AboutMe} />
+                    <Route path="/aboutus/:id" component={AboutUs} />
+                    <Route path='/insert/:id' component={Insert} />
+                    <Route path='/add/:id' component={Add} />
+                    <Route path='/home/:id' component={Home} />
+                    <Route path='/robe/:id' component={Robe} />
+                    <Route path='/trunk/:id' component={Trunk} />
+                    <Route path='/diaryadd/:id' component={DiaryAdd} />
                 </div> 
             </Router>
         )

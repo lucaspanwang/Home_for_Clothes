@@ -25,6 +25,9 @@ export default class AppTab extends React.Component {
       selectedTab: "chuandaTab"
     };
   }
+  // componentDidMount(){
+  //   console.log(this.props.match.params.id);
+  // }
   render() {
     return (
       <div
@@ -70,7 +73,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-            <Community />
+            <Community id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -89,7 +92,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          <Wear />
+          <Wear id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -122,7 +125,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          <AppBox />
+          <AppBox id={this.props.match.params.id}/>
           {/* <Add />
           <Home />
           <TestWrapper /> */}
@@ -144,7 +147,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-          <Diary />
+          <Diary id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -163,7 +166,7 @@ export default class AppTab extends React.Component {
               });
             }}
           >
-            <Me />
+            <Me id={this.props.match.params.id}/>
             {/* <AboutUs/>
             <Setup />
             <AboutMe /> */}

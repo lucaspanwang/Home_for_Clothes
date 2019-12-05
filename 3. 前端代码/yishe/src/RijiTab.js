@@ -70,7 +70,7 @@ export default class RijiTab extends React.Component {
               });
             }}
           >
-            <Community />
+            <Community id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -89,7 +89,7 @@ export default class RijiTab extends React.Component {
               });
             }}
           >
-          <Wear />
+          <Wear id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -122,7 +122,7 @@ export default class RijiTab extends React.Component {
               });
             }}
           >
-          <AppBox />
+          <AppBox id={this.props.match.params.id} />
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -141,7 +141,7 @@ export default class RijiTab extends React.Component {
               });
             }}
           >
-          <Diary />
+          <Diary id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -160,7 +160,7 @@ export default class RijiTab extends React.Component {
               });
             }}
           >
-            <Me />
+            <Me id={this.props.match.params.id}/>
           </TabBar.Item>
         </TabBar>
       </div>

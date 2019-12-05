@@ -7,19 +7,15 @@ import './login.css';
 export default class Forget extends Component{
     constructor(){
         super();
-    }
-    
-    // hrefChange(str){
-    //     var h=window.location.href;
-    //     var index = h.lastIndexOf("\/");  
-    //     window.location.href = h.substring(0, index+1)+str;
+    }    
+    // componentDidMount(){
+    //     // console.log(this.props.match.params.id);//获取用户id
     // }
     render(){
         return <div style={{width:'100%', height:'100%', position:'relative', backgroundColor:'white'}}>
         <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    // <a onClick={()=>{this.hrefChange('login')}}><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
                     <Link to="/login"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
                 ]}
                 >忘记密码

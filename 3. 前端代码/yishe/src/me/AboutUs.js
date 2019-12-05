@@ -7,6 +7,9 @@ import logo from '../images/logo.png'
 import weixin from '../images/weixin.png'
 
 export default class AboutUs extends Component {
+    constructor(){
+        super();
+    }
     // hrefChange(str){
     //     var h=window.location.href;
     //     var index = h.lastIndexOf("\/");  
@@ -19,7 +22,7 @@ export default class AboutUs extends Component {
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to="setup"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/setup/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >关于我们</NavBar>
                 <div className="about" style={{textAlign:'center'}}>
