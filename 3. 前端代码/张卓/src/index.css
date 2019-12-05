@@ -1,5 +1,10 @@
+html{
+  height:100%;
+}
+
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -10,56 +15,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-/* li{
-  list-style: none;
-} */
-#store{
-  position: relative;
-  /* border:1px solid red; */
-}
-#fiveBut li{
-  list-style: none;
-}
- #fiveBut{
-   width:65%;
-   height:28%;
-  position: absolute;
-  top:35.9%;
-  left: 20%;
-  /* border:1px solid red */
-}
-#oneBut{
-  height: 25%;
-}
-#twoBut{
-  height:26%;
-}
-#oneBut button{
-  /* border:1px solid blue; */
-  border:none;
-  width:50%;
-  height:100%;
-  background: rgba(255, 255, 255, 0.3);
-  color:white;
-}
-#twoBut button{
-  border:none;
-  /* border:1px solid blue; */
-  height:100%;
-  width:100%;
-  background: rgba(255, 255, 255, 0.3);
-  color:white;
-}
-#list li{
-  display: inline-block;
-  float: left;
-  width:80px;
-  height:30px;
-}
-#kind{
-  position: relative;
-  left: -50%;
-  top:20%;
 }

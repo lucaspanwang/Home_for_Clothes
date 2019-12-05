@@ -1,11 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import 'antd-mobile/dist/antd-mobile.css';
+import './index.css';
+import 'antd/dist/antd.css';
+import 'antd-mobile/dist/antd-mobile.css'
+import {Provider} from './context'
 
+let data={
+    userId:'',
+    userPwd:'',
+    userName:'',
+    userPic:'',
+    userSex:'',
+    userPho:'',
+    userIntro:'',
+    userCity:'',
+};
 
-
-ReactDOM.render(<App/>, document.getElementById('root'));
-
-
+ReactDOM.render(
+    <Provider value={data}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);
