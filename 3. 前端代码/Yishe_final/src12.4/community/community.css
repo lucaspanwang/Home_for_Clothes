@@ -1,0 +1,68 @@
+*{
+    padding:0;
+    margin:0;
+}
+ul li{
+    list-style:none;
+}
+body{
+    background-color:#fff !important;
+}
+.official{
+    margin-top:10px;
+    padding:20px 15px;
+    border:1px solid #bbb;
+    border-radius:8px;
+    background-color:rgba(249,194,118,0.6);
+    font-size:16px;
+    line-height:20px;
+}
+.article{
+    margin-top:10px;
+    padding:0 15px;
+    border-bottom:3px solid rgb(212, 210, 210);
+}
+.article>.artUser{
+    width:100%;
+    height:45px;
+}
+.article>.artUser>.userImg{
+    width:45px;
+    border-radius:10px;
+    float: left;
+}
+.article>.artUser>.userName{
+    padding:0 10px;
+    height:auto;
+    line-height:45px;
+    font-size:18px;
+    float: left;
+}
+.article>.artDetail{
+    line-height:18px;
+}
+.article>.artState{
+    width:100%;
+    margin:10px 0 0 0;
+    padding:10px;
+    border-top:1px solid #ddd;
+    display:flex;
+    justify-content:space-between;
+}
+.article>.artState li{
+    width:25%;
+    text-align:center;
+}
+.article>.artState li img{
+    width:20px;
+    margin:0 2px;
+    float: left;
+}
+.article>.artState li span{
+    line-height:20px;
+    float: left;
+}
+
+.am-grid.am-grid-square .am-grid-item .am-grid-item-content{
+    top:0 !important;
+}
