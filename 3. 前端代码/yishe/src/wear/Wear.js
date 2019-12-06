@@ -46,7 +46,8 @@ export default class Wear extends Component {
         url0:'http://47.98.163.228:8083/react',
         url:'http://47.98.163.228:8083/weather',
         city:'南京',
-        temperature:'2/13',
+        temperature:'2',
+        temperature2:'13',
         dressing_advice:'',
         weather:'晴',
         idx:0,
@@ -60,32 +61,43 @@ export default class Wear extends Component {
     }
   }    
   componentDidMount(){
-    
+    // console.log(this.props.id);
+    fetch("http://47.98.163.228:8083/aa", {
+      method: 'post', 
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Credentials" : true,
+      // credentials: 'include',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: JSON.stringify({userId:111}) 
+  })
     //获取图片信息
     var small=[],big=[];
     fetch(this.state.url0)
     .then(res=>res.json())
     .then(res=>{
       console.log(res);
-      // var weather = JSON.parse(res[res.length-1])
-      // // var weather = JSON.parse(res)[res.length-1];
-      // console.log(weather)
-      // this.setState({
-      //   city:weather.result.city,
-      //   temperature:weather.result.future[0].temperature,
-      //   dressing_advice:weather.result.realtime.dressing_advice,
-      //   weather:weather.result.realtime.info
-      // })
-        if(this.state.weather === '晴'){
+      var weather = JSON.parse(res[res.length-1])
+      console.log(weather)
+      this.setState({
+        city:weather.city,
+        temperature:weather.data[0].tem1,
+        temperature2:weather.data[0].tem,
+        dressing_advice:weather.data[0].index[3].desc,
+        weather:weather.data[0].wea
+      })
+        if(this.state.weather === '雨'){
           this.setState({
-              idx:1,
+              idx:0,
           })
-          document.getElementById('beijingg').style.background="url("+beijing2+")";
+          document.getElementById('beijingg').style.background="url("+beijing+")";
         }
         else{
           this.setState({
-            idx:0,
+            idx:1,
           })
+          document.getElementById('beijingg').style.background="url("+beijing2+")";
         }
 
         for(var i=0;i<res.length-1;i++){
@@ -193,14 +205,14 @@ export default class Wear extends Component {
     shangyi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
-      document.getElementById('mote2').src=this.state.yi[idx];
-      document.getElementById('mote2').style.display = 'block';
+      document.getElementById('mote3').src=this.state.yi[idx];
+      document.getElementById('mote3').style.display = 'block';
     }
     waitao=(idx)=>{
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
-      document.getElementById('mote2').src=this.state.tao[idx];
-      document.getElementById('mote2').style.display = 'block';
+      document.getElementById('mote4').src=this.state.tao[idx];
+      document.getElementById('mote4').style.display = 'block';
     }
 
     tuijian=(idx)=>{
@@ -234,7 +246,7 @@ export default class Wear extends Component {
               method: 'post', 
               "Access-Control-Allow-Origin" : "*",
               "Access-Control-Allow-Credentials" : true,
-              credentials: 'include',
+              // credentials: 'include',
               headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
               },
@@ -269,8 +281,8 @@ export default class Wear extends Component {
                     <span>今日天气:</span>
                     <img src={w_t[this.state.idx]} style={{width:'25px',float:'left',marginLeft:'5px',marginRight:'5px'}} key="fan2"/>
                     <span style={{marginLeft:'5px',marginRight:'15px'}}>{this.state.weather}</span>
-                    <span>{this.state.temperature}</span>
-                    <p style={{fontWeight:'800',textShadow:'#000 3px 0 0,#000 0 3px 0,#000 -1px 0 0,#000 0 -1px 0',}}>
+                    <span>{this.state.temperature}~{this.state.temperature2}</span>
+                    <p style={{fontWeight:'800',textShadow:'#000 3px 0 0,#000 0 3px 0,#000 -1px 0 0,#000 0 -1px 0',marginTop:'15px',marginLeft:'15px'}}>
                       <br />
                       {this.state.dressing_advice}
                     </p>
@@ -279,6 +291,8 @@ export default class Wear extends Component {
                 <img src={mote} id="mote"/>
                 <img src={mote2} id="mote_2"/>
                 <img  id='mote2' />
+                <img  id='mote3' />
+                <img  id='mote4' />
                 {/* 衣物栏 */}
                 {/* <TabExample /> */}
                 <div id="yiwu">
@@ -297,7 +311,6 @@ export default class Wear extends Component {
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.tuijian.bind(this,idx)}
-                                // onClick ={href='#/home'}
                                 />
                             </li>
                           ))
