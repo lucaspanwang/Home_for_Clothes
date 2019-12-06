@@ -128,7 +128,7 @@ export default class Community extends Component {
                             <li><span>{this.standardTime(item.time)}</span></li>
                             <li><img src={`${pinglun}`} alt=''/><span>{item.review || "评论"}</span></li>
                             <li><img src={`${shoucang}`} alt=''/><span>{item.save || "收藏"}</span></li>
-                            <li><img src={`${dianzan}`} alt=''/><span>{item.browse || "点赞"}</span></li>
+                            <li><img src={`${dianzan}`} alt=''/><span>{item.agree || "点赞"}</span></li>
                         </ul>
                     </div>))
                 }

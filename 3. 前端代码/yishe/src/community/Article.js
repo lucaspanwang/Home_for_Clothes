@@ -23,18 +23,6 @@ const menu = [
     {key:'4',value:'屏蔽',image:`${pingbi}`}
 ];
 const { TextArea } = Input;
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <div>
-    <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        回复
-      </Button>
-    </Form.Item>
-  </div>
-);
 export default class Article extends Component {
     constructor(){
       super();
@@ -175,7 +163,6 @@ export default class Article extends Component {
       });
     };
     render() {
-      const { comments, submitting, value } = this.state;
         return (
           <Consumer>
             {
@@ -216,7 +203,7 @@ export default class Article extends Component {
                   <ul className="artState">
                     <li><img src={`${pinglun}`}/><span>评论</span></li>
                     <li><img src={`${shoucang}`}/><span>{this.state.article.save || "收藏"}</span></li>
-                    <li><img src={`${dianzan}`}/><span>{this.state.article.browse || "点赞"}</span></li>
+                    <li><img src={`${dianzan}`}/><span>{this.state.article.agree || "点赞"}</span></li>
                   </ul>
               </div>
               <Comment
@@ -227,12 +214,10 @@ export default class Article extends Component {
                   />
                 }
                 content={
-                  <Editor
-                    onChange={this.handleChange}
-                    onSubmit={this.handleSubmit}
-                    submitting={submitting}
-                    value={value}
-                  />
+                  <Form.Item>
+                    <TextArea rows={1} onChange={this.handleChange} value={this.state.value} />
+                    <Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit} type="primary">回复</Button>
+                  </Form.Item>
                 }
               />
               <List
