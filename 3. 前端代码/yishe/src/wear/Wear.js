@@ -187,6 +187,8 @@ export default class Wear extends Component {
     hrefChange(str){
       var h=window.location.href;
       var index = h.lastIndexOf("\/");  
+      console.log(index)
+      console.log(h)
       window.location.href = h.substring(0, index+1)+str;
     }
     qunzi=(idx)=>{
@@ -213,7 +215,7 @@ export default class Wear extends Component {
       document.getElementById('mote4').src=this.state.tao[idx];
       document.getElementById('mote4').style.display = 'block';
     }
-
+//推荐的点击事件
     tuijian=(idx)=>{
       this.state.count++;
 
@@ -224,7 +226,7 @@ export default class Wear extends Component {
             for(var i = 0;i<this.state.ress.length-1;i++){
               if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
                 // console.log(this.state.ress[i].cloPlace);
-                place = this.state.ress[i].cloPlace  //比如 家
+                place = this.state.ress[i].cloPlace
                 break;
               }
             }
@@ -239,8 +241,7 @@ export default class Wear extends Component {
                 }
               }
             }
-
-            console.log('双击')
+            console.log('双击')//向端口发送图片号码
             fetch("http://47.98.163.228:8083/pp", {
               method: 'post', 
               "Access-Control-Allow-Origin" : "*",
@@ -251,8 +252,11 @@ export default class Wear extends Component {
               },
               body: JSON.stringify({msg:this.state.linshi}) 
             })
-
-            this.hrefChange('home');//跳转
+            console.log(window.location.href)
+            var h = window.location.href;
+            var neww = h.split('/')[4];
+            console.log(neww)
+            this.hrefChange('home');//跳转?????
             console.log(this.state.count)
           }else{
             document.getElementById('mote').style.display = 'none';
@@ -265,6 +269,18 @@ export default class Wear extends Component {
           }
       },200)
 
+    }
+    tiaozhuan=(idx)=>{
+      fetch("http://47.98.163.228:8083/pp", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        // credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({msg:idx}) 
+      })
     }
     render() {
         return (
