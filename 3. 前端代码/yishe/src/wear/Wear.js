@@ -184,11 +184,10 @@ export default class Wear extends Component {
       console.log(div);
       div.style.display='none'
     }
+    //原跳转
     hrefChange(str){
       var h=window.location.href;
       var index = h.lastIndexOf("\/");  
-      console.log(index)
-      console.log(h)
       window.location.href = h.substring(0, index+1)+str;
     }
     qunzi=(idx)=>{
@@ -256,7 +255,8 @@ export default class Wear extends Component {
             var h = window.location.href;
             var neww = h.split('/')[4];
             console.log(neww)
-            this.hrefChange('home');//跳转?????
+            // this.hrefChange('home');//跳转?????
+            window.location.href = '/#/home/'+
             console.log(this.state.count)
           }else{
             document.getElementById('mote').style.display = 'none';
