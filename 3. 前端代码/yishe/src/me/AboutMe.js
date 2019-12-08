@@ -24,7 +24,8 @@ export default class AboutMe extends Component {
     //     window.location.href = h.substring(0, index+1)+str;
     // }
     componentDidMount(){
-        fetch("http://47.98.163.228:8086/users?userId=123")
+        console.log(this.props.match.params.id);
+        fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
@@ -43,7 +44,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to="gerentab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">

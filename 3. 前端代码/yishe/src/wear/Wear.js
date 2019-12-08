@@ -37,60 +37,68 @@ const c=['#00cc00','#ccff99','white','#3399ff','#FFCC66'];
 const w_t=[xiayu,qing]
 
 export default class Wear extends Component {
-
-    constructor(){
-      super();
-      this.state = {
-          data:[],
-          ss: ['微信好友','朋友圈','微博','QQ好友','QQ空间'],
-          ss1: ['穿搭日记','社区','复制链接','不感兴趣','举报'],
-          url0:'http://47.98.163.228:8083/react',
-          url:'http://47.98.163.228:8083/weather',
-          city:'',
-          temperature:'',
-          dressing_advice:'',
-          weather:'',
-          idx:0,
-          arr:[],arr_s:[],
-          ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],
-          count:0,
-          href:'#/apptab',
-          userId:'',
-          ress:[],
-          linshi:0,
-      }
-    }    
-    componentDidMount(){
-      
-      //获取图片信息
-      var small=[],big=[];
-      fetch(this.state.url0)
-      .then(res=>res.json())
-      .then(res=>{
-        console.log(res);
-        var weather = JSON.parse(res[res.length-1])
-        // var weather = JSON.parse(res)[res.length-1];
-        this.setState({
-          city:weather.result.today.city,
-          temperature:weather.result.today.temperature,
-          dressing_advice:weather.result.today.dressing_advice,
-          weather:weather.result.today.weather
-        })
-        if(this.state.weather === '晴'){
+  constructor(){
+    super();
+    this.state = {
+        data:[],
+        ss: ['微信好友','朋友圈','微博','QQ好友','QQ空间'],
+        ss1: ['穿搭日记','社区','复制链接','不感兴趣','举报'],
+        url0:'http://47.98.163.228:8083/react',
+        url:'http://47.98.163.228:8083/weather',
+        city:'南京',
+        temperature:'2',
+        temperature2:'13',
+        dressing_advice:'',
+        weather:'晴',
+        idx:0,
+        arr:[],arr_s:[],
+        ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],
+        count:0,
+        href:'#/apptab',
+        userId:'',
+        ress:[],
+        linshi:0,
+    }
+  }    
+  componentDidMount(){
+    fetch("http://47.98.163.228:8083/aa", {
+      method: 'post', 
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Credentials" : true,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: JSON.stringify({userId:localStorage.getItem('userId')}) 
+  })
+    //获取图片信息
+    var small=[],big=[];
+    fetch(this.state.url0)
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+      var weather = JSON.parse(res[res.length-1])
+      this.setState({
+        city:weather.city,
+        temperature:weather.data[0].tem1,
+        temperature2:weather.data[0].tem,
+        dressing_advice:weather.data[0].index[3].desc,
+        weather:weather.data[0].wea
+      })
+        if(this.state.weather.indexOf('雨')!=-1){
           this.setState({
-              idx:1,
+              idx:0,
           })
-          document.getElementById('beijingg').style.background="url("+beijing2+")";
+          document.getElementById('beijingg').style.background="url("+beijing+")";
         }
         else{
           this.setState({
-            idx:0,
+            idx:1,
           })
+          document.getElementById('beijingg').style.background="url("+beijing2+")";
         }
-
+        //把读取的图片放进来
         for(var i=0;i<res.length-1;i++){
           var j = res[i].cloSmallPic.indexOf('/');
-          console.log(res[i].cloSmallPic.substr(j));
           res[i].cloSmallPic = "http://47.98.163.228:8083"+res[i].cloSmallPic.substr(j);
           big[i] = res[i].cloSmallPic;
           var name = res[i].cloSmallPic.substr(j).split('/')[4];
@@ -102,7 +110,7 @@ export default class Wear extends Component {
             arr_s:small
          })
         }
-      
+      //分类存小图标
       var kuku=[],kuku_s=[];
       var qunqun=[],qunqun_s=[];
       var yiyi=[],yiyi_s=[];
@@ -143,7 +151,6 @@ export default class Wear extends Component {
       //实现推荐
       var tuitui=[],tuitui_s=[];
       var diwen = this.state.temperature.charAt(0);
-      console.log(diwen)
       if(diwen<0){
         this.setState({
           tuijian:this.state.yi,
@@ -170,9 +177,9 @@ export default class Wear extends Component {
     }
     click_unShare=()=>{
       var div = document.getElementById('fenxiang');
-      console.log(div);
       div.style.display='none'
     }
+    //原跳转
     hrefChange(str){
       var h=window.location.href;
       var index = h.lastIndexOf("\/");  
@@ -193,56 +200,23 @@ export default class Wear extends Component {
     shangyi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
-      document.getElementById('mote2').src=this.state.yi[idx];
-      document.getElementById('mote2').style.display = 'block';
+      document.getElementById('mote3').src=this.state.yi[idx];
+      document.getElementById('mote3').style.display = 'block';
     }
     waitao=(idx)=>{
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
-      document.getElementById('mote2').src=this.state.tao[idx];
-      document.getElementById('mote2').style.display = 'block';
+      document.getElementById('mote4').src=this.state.tao[idx];
+      document.getElementById('mote4').style.display = 'block';
     }
-
+//推荐的点击事件
     tuijian=(idx)=>{
-      this.state.count++;
-
+      this.state.count++;//判断点击几次
         var a = setTimeout(()=>{
-          if(this.state.count>1){
-            var place='';
-            var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
-            for(var i = 0;i<this.state.ress.length-1;i++){
-              if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-                // console.log(this.state.ress[i].cloPlace);
-                place = this.state.ress[i].cloPlace  //比如 家
-                break;
-              }
-            }
-            for(var i = 0;i<this.state.ress.length-2;i++){
-              if(this.state.ress[i].cloPlace===place){
-                console.log(this.state.ress[i].cloPlace)
-                this.setState({
-                  linshi:this.state.linshi+1
-                })
-                if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-                  break;
-                }
-              }
-            }
-
-            console.log('双击')
-            fetch("http://47.98.163.228:8083/pp", {
-              method: 'post', 
-              "Access-Control-Allow-Origin" : "*",
-              "Access-Control-Allow-Credentials" : true,
-              credentials: 'include',
-              headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              body: JSON.stringify({msg:this.state.linshi}) 
-            })
-
-            this.hrefChange('home');//跳转
-            console.log(this.state.count)
+          if(this.state.count>1){//双击
+            var place = this.zhao(idx,this.state.tuijian)
+            this.fasong(this.state.linshi);
+            this.tiaozhuan(place);
           }else{
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
@@ -253,8 +227,62 @@ export default class Wear extends Component {
             })
           }
       },200)
-
     }
+    //找到位置
+    zhao=(idx,weizhi)=>{
+      var place='';
+      //找到它的存储地点
+      var nnn = weizhi[idx].split('/')[4].split('.')[0];
+      // var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
+      for(var i = 0;i<this.state.ress.length-1;i++){
+        if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+            place = this.state.ress[i].cloPlace
+            break;
+        }
+      }
+      //判断存储位置的第几个
+      for(var i = 0;i<this.state.ress.length-2;i++){
+        if(this.state.ress[i].cloPlace===place){
+          this.setState({
+            linshi:this.state.linshi+1
+          })
+        if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+          break;
+        }
+      }
+    }
+    return place
+    }
+    //发送衣物编号（从1开始）
+    fasong=(idx)=>{
+      console.log('衣服编号'+idx)
+      fetch("http://47.98.163.228:8083/pp", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({msg:idx}) 
+      })
+    }
+    //跳转
+    tiaozhuan=(place)=>{
+      var p = '';
+      switch(place){
+        case '家':
+          p='home';
+          break;
+        case '行李箱':
+          p='trunk'
+          break;
+        case '柜子':
+            p='robe'
+            break;
+      }
+      window.location.href = '/#/'+p+'/'+this.props.id;
+    }
+
     render() {
         return (
             <div id="beijingg" className="body" style={{width:'100%',height:'100%'}}>
@@ -269,8 +297,8 @@ export default class Wear extends Component {
                     <span>今日天气:</span>
                     <img src={w_t[this.state.idx]} style={{width:'25px',float:'left',marginLeft:'5px',marginRight:'5px'}} key="fan2"/>
                     <span style={{marginLeft:'5px',marginRight:'15px'}}>{this.state.weather}</span>
-                    <span>{this.state.temperature}</span>
-                    <p style={{fontWeight:'800',textShadow:'#000 3px 0 0,#000 0 3px 0,#000 -1px 0 0,#000 0 -1px 0',}}>
+                    <span>{this.state.temperature}~{this.state.temperature2}</span>
+                    <p style={{fontWeight:'800',textShadow:'#000 3px 0 0,#000 0 3px 0,#000 -1px 0 0,#000 0 -1px 0',marginTop:'15px',marginLeft:'15px'}}>
                       <br />
                       {this.state.dressing_advice}
                     </p>
@@ -279,6 +307,8 @@ export default class Wear extends Component {
                 <img src={mote} id="mote"/>
                 <img src={mote2} id="mote_2"/>
                 <img  id='mote2' />
+                <img  id='mote3' />
+                <img  id='mote4' />
                 {/* 衣物栏 */}
                 {/* <TabExample /> */}
                 <div id="yiwu">
@@ -297,7 +327,6 @@ export default class Wear extends Component {
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.tuijian.bind(this,idx)}
-                                // onClick ={href='#/home'}
                                 />
                             </li>
                           ))

@@ -42,6 +42,20 @@
     position:absolute;
     display:none;
   }
+  #mote3{
+    top:135px;
+    left:385px;
+    width:40%;
+    position:absolute;
+    display:none;
+  }
+  #mote4{
+    top:135px;
+    left:385px;
+    width:40%;
+    position:absolute;
+    display:none;
+  }
   #chouti{
     margin-left:200px;
     margin-top:30px;

@@ -5,17 +5,18 @@ import Back from '../images/返回 (1).png';
 import './store.css';
 
 export default class Add extends Component {
-    hrefChange(str){
-        var h=window.location.href;
-        var index = h.lastIndexOf("\/");  
-        window.location.href = h.substring(0, index+1)+str;
+    constructor(){
+        super();
+    }    
+    componentDidMount(){
+        // console.log(this.props.match.params.id);//获取用户id
     }
     render() {
         return (
             <div>
                 <NavBar
                     leftContent={
-                        <Link to="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+                        <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                     style={{ backgroundColor: 'rgb(252, 157, 154)' }}>添加
                 </NavBar>

@@ -35,7 +35,8 @@ export default class Me extends Component {
         }
     }  
     componentDidMount(){
-        fetch("http://47.98.163.228:8086/users?userId=123")
+        console.log(this.props.id);
+        fetch("http://47.98.163.228:8086/users?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
@@ -47,7 +48,7 @@ export default class Me extends Component {
             })
             console.log(this.state.user);
         });
-        fetch("http://47.98.163.228:8086/detail?userId=123")
+        fetch("http://47.98.163.228:8086/detail?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             this.setState({
@@ -69,7 +70,7 @@ export default class Me extends Component {
                         <h2>{this.state.user.userName}</h2>
                         <h4>简介：{this.state.user.userIntro}</h4>
                     </div>
-                    <Link to="/aboutme"><img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/></Link>
+                    <Link to={"/aboutme/"+this.props.id}><img src={xiangqing} alt="" style={{float:"left",width:"7%",padding:"7% 0"}}/></Link>
                 </div>
 
                 <div className="gutter-example" style={{width:"100%",textAlign:'center',marginTop:"5px",}}>
@@ -114,7 +115,7 @@ export default class Me extends Component {
                     onClick={() => {}}
                     arrow="horizontal"
                     >回收站</Item>
-                    <Link to="/setup"><Item
+                    <Link to={"/setup/"+this.props.id}><Item
                     thumb={shezhi}
                     arrow="horizontal"
                     >设置</Item></Link>

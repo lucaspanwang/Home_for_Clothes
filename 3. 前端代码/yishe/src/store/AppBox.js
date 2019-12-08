@@ -12,27 +12,33 @@ var style = {
     backgroundImg: `url(${BoxBack})`
 }
 export default class AppBox extends Component {
+    constructor(){
+        super();
+    }    
+    componentDidMount(){
+        // console.log(this.props.id);//获取用户id
+    }
     render() {
         return (
             <div style={{ backgroundImage: `url(${BoxBack})`, backgroundSize: '150%,100%' }}>
                 <NavBar style={{ color: 'white', backgroundColor: 'rgb(252, 157, 154)' }}>整理箱</NavBar>
                 <Router>
-                    <Link to="/insert"><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
+                    <Link to={"/insert/"+this.props.id}><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
                     <div id="store">
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                <Link to="/add"><button>+<br />添加</button></Link>
-                                <Link to="/add"><button>+<br />添加</button></Link>
+                                <Link to={"/add/"+this.props.id}><button>+<br />添加</button></Link>
+                                <Link to={"/add/"+this.props.id}><button>+<br />添加</button></Link>
                             </li>
                             <li id='twoBut'>
-                                <Link to="/home"><button>家</button></Link>
+                                <Link to={"/home/"+this.props.id}><button>家</button></Link>
                             </li>
                             <li id='twoBut'>
-                                <Link  to="/robe"><button>衣柜</button></Link>
+                                <Link  to={"/robe/"+this.props.id}><button>衣柜</button></Link>
                             </li>
                             <li id='twoBut'>
-                                <Link to="/trunk"><button>行李箱</button></Link>
+                                <Link to={"/trunk/"+this.props.id}><button>行李箱</button></Link>
                             </li>
                         </div>
                     </div>

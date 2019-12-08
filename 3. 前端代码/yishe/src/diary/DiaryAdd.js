@@ -22,7 +22,8 @@ export default class DiaryAdd extends Component {
         var arr = h.split('/');
         window.location.href = arr[0] + str;
     }
-    onPost=()=> {       
+    onPost=()=> {      
+        // console.log(this.props.match.params.id);//获取到的用户id 
         fetch('http://47.98.163.228:8081/dd',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
@@ -51,10 +52,10 @@ export default class DiaryAdd extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to="/rijitab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/rijitab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <Link to="/rijitab" style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
+                    <Link to={"/rijitab/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
                 ]}
                 >发布穿搭日记</NavBar>
 

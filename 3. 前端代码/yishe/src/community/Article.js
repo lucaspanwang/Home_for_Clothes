@@ -3,6 +3,7 @@ import { NavBar,Popover,Grid } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
+import { Consumer } from '../context';
 import './community.css';
 
 import fanhui from '../images/返回 (1).png';
@@ -22,94 +23,24 @@ const menu = [
     {key:'4',value:'屏蔽',image:`${pingbi}`}
 ];
 const { TextArea } = Input;
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <div>
-    <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        回复
-      </Button>
-    </Form.Item>
-  </div>
-);
-// const data = [
-//   {
-//     name: 'Han Solo',
-//     photo: `${touxiang}`,
-//     content: (
-//       <p>
-//         说起优雅，很多女孩第一反应都是丝缎面料。而更多的人认为丝缎面料过于成熟，打造的气质也有些许的“老气”。其实不然，“滑溜溜”的缎面只会让你更温柔。 
-//       </p>
-//     ),
-//     datetime: (
-//       <Tooltip
-//         title={moment()
-//           .subtract(1, 'days')
-//           .format('YYYY-MM-DD HH:mm:ss')}
-//       >
-//         <span>
-//           {moment()
-//             .subtract(1, 'days')
-//             .fromNow()}
-//         </span>
-//       </Tooltip>
-//     ),
-//   },
-//   {
-//     name: 'Han Solo',
-//     photo: `${photo1}`,
-//     content: (
-//       <p>
-//        丝缎面料拥有完美的手感，无懈可击的光泽度更可以映衬出完美的肤色。缎面连衣裙悬垂感和光泽感极佳，穿上瞬间可以让你提升高贵气质，丝润柔滑的裙子勾勒出的线条也非常的优美。选择酒红这样沉稳的颜色，即使是黑黄皮也可以hold住缎面裙，甚至还可以将肤色衬得更高级。
-//       </p>
-//     ),
-//     datetime: (
-//       <Tooltip
-//         title={moment()
-//           .subtract(2, 'days')
-//           .format('YYYY-MM-DD HH:mm:ss')}
-//       >
-//         <span>
-//           {moment()
-//             .subtract(2, 'days')
-//             .fromNow()}
-//         </span>
-//       </Tooltip>
-//     ),
-//   },
-// ];
-// const user = {
-//   id:"0",
-//   photo:touxiang,
-//   name:"一二",
-//   article:"说起优雅，很多女孩第一反应都是丝缎面料。而更多的人认为丝缎面料过于成熟，打造的气质也有些许的“老气”。其实不然，“滑溜溜”的缎面只会让你更温柔。 丝缎面料拥有完美的手感，无懈可击的光泽度更可以映衬出完美的肤色。缎面连衣裙悬垂感和光泽感极佳，穿上瞬间可以让你提升高贵气质，丝润柔滑的裙子勾勒出的线条也非常的优美。选择酒红这样沉稳的颜色，即使是黑黄皮也可以hold住缎面裙，甚至还可以将肤色衬得更高级。",
-//   time:'2019/11/27 21:20:12',
-//   review:data.length,
-//   like:45,
-//   collect:0,
-//   // artPhoto:[`${photo1}`,`${photo2}`]
-//   artPhoto:[`${photo1}`,`${photo2}`,`${photo1}`,`${photo2}`,`${photo1}`],
-// }
 export default class Article extends Component {
     constructor(){
       super();
       this.state = {
         visible: false,
         selected: '',
-        // photoNum:3,
         user:{},
         article:{},
         review:[],
-        // comments: [],
         submitting: false,
         value: '',
       }
     }
     componentDidMount(){
+      var articleId=this.props.match.params.id.split("&")[0];
+      var userId=this.props.match.params.id.split("&")[1];
       // console.log(this.props.match.params.id);
-      fetch("http://47.98.163.228:8086/article?articleId="+this.props.match.params.id)
+      fetch("http://47.98.163.228:8086/article?articleId="+articleId)
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
@@ -125,9 +56,9 @@ export default class Article extends Component {
           this.setState({
             article:res[0]
           })
-          console.log(this.state.article);
+          // console.log(this.state.article);
       });
-      fetch("http://47.98.163.228:8086/review?articleId="+this.props.match.params.id)
+      fetch("http://47.98.163.228:8086/review?articleId="+articleId)
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
@@ -137,9 +68,9 @@ export default class Article extends Component {
           this.setState({
             review:res
           })
-          console.log(this.state.review);
+          // console.log(this.state.review);
       });
-      fetch("http://47.98.163.228:8086/users?userId=123")
+      fetch("http://47.98.163.228:8086/users?userId="+userId)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
@@ -149,7 +80,7 @@ export default class Article extends Component {
             this.setState({
                 user:res[0]
             })
-            console.log(this.state.user);
+            // console.log(this.state.user);
         });
     }
     onSelect = (opt) => {
@@ -232,13 +163,14 @@ export default class Article extends Component {
       });
     };
     render() {
-      const { comments, submitting, value } = this.state;
         return (
-            <div>
+          <Consumer>
+            {
+              (data) => <div onLoad={(data)=>this.setState({userId:data})}>
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to="/shequtab"><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                  <Link to={"/shequtab/"+this.props.match.params.id.split("&")[1]}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >阅读全文</NavBar>
               <div className="article">
@@ -271,7 +203,7 @@ export default class Article extends Component {
                   <ul className="artState">
                     <li><img src={`${pinglun}`}/><span>评论</span></li>
                     <li><img src={`${shoucang}`}/><span>{this.state.article.save || "收藏"}</span></li>
-                    <li><img src={`${dianzan}`}/><span>{this.state.article.browse || "点赞"}</span></li>
+                    <li><img src={`${dianzan}`}/><span>{this.state.article.agree || "点赞"}</span></li>
                   </ul>
               </div>
               <Comment
@@ -282,12 +214,10 @@ export default class Article extends Component {
                   />
                 }
                 content={
-                  <Editor
-                    onChange={this.handleChange}
-                    onSubmit={this.handleSubmit}
-                    submitting={submitting}
-                    value={value}
-                  />
+                  <Form.Item>
+                    <TextArea rows={1} onChange={this.handleChange} value={this.state.value} />
+                    <Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit} type="primary">回复</Button>
+                  </Form.Item>
                 }
               />
               <List
@@ -307,6 +237,7 @@ export default class Article extends Component {
                 )}
               />
             </div>
-        )
+            }
+          </Consumer>)
     }
 }

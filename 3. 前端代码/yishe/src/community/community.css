@@ -54,12 +54,12 @@ body{
     text-align:center;
 }
 .article>.artState li img{
-    width:20px;
+    width:25px;
     margin:0 2px;
     float: left;
 }
 .article>.artState li span{
-    line-height:20px;
+    line-height:28px;
     float: left;
 }
 
@@ -80,4 +80,7 @@ body{
 }
 .ant-list-header, .ant-list-footer{
     padding:0 !important;
+}
+textarea.ant-input{
+    min-height: 50px !important;
 }

@@ -313,6 +313,7 @@ class Insert extends Component {
     //   })
   }
   componentDidMount(){
+    // console.log(this.props.match.params.id);//获取用户id
     fetch("http://47.98.163.228:8084/insert", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
@@ -334,7 +335,7 @@ class Insert extends Component {
         {/* ----导航栏 */}
         <NavBar
           leftContent={
-            <Link to="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+            <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
                 </NavBar>

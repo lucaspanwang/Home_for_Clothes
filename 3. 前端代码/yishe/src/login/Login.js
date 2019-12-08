@@ -32,17 +32,8 @@ export default class Login extends Component{
         }
         if(this.state.flag==1){
             document.getElementById('judgeT').style.display='block';
-            console.log(this.state.lUserId)
-            fetch("http://47.98.163.228:8083/aa", {
-                method: 'post', 
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Credentials" : true,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: JSON.stringify({userId:this.state.lUserId}) 
-            })
+            // res.setHeader('Set-cookie', `userId=${this.state.lUserId}; max-age=10000000`);
+            localStorage.setItem('userId', this.state.lUserId)
         }
     }
 
@@ -91,7 +82,7 @@ export default class Login extends Component{
                 (data)=>{ return <div className="login" className={styles.enter}>
                     <Flex id='judgeT' class="judge" direction="column" justify="center" align="center" style={{display:'none'}}>
                         <p>&nbsp;&nbsp;欢迎光临衣舍！</p>
-                        <Link to="/apptab"><Button onClick={this.wangpan} style={{marginTop:'20%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'20%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>G&nbsp;&nbsp;O</Button></Link>
+                        <Link to={"/apptab/"+this.state.lUserId}><Button onClick={this.wangpan} style={{marginTop:'20%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'20%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>G&nbsp;&nbsp;O</Button></Link>
                     </Flex>
                     <Flex id='judgeF' class="judge" direction="column" justify="center" align="center" style={{display:'none'}}>
                         <p>帐号或密码错误！</p>
