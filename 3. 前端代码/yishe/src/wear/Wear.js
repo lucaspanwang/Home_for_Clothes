@@ -77,7 +77,6 @@ export default class Wear extends Component {
     .then(res=>{
       console.log(res);
       var weather = JSON.parse(res[res.length-1])
-      console.log(weather)
       this.setState({
         city:weather.city,
         temperature:weather.data[0].tem1,
@@ -100,7 +99,6 @@ export default class Wear extends Component {
         //把读取的图片放进来
         for(var i=0;i<res.length-1;i++){
           var j = res[i].cloSmallPic.indexOf('/');
-          console.log(res[i].cloSmallPic.substr(j));
           res[i].cloSmallPic = "http://47.98.163.228:8083"+res[i].cloSmallPic.substr(j);
           big[i] = res[i].cloSmallPic;
           var name = res[i].cloSmallPic.substr(j).split('/')[4];
@@ -153,7 +151,6 @@ export default class Wear extends Component {
       //实现推荐
       var tuitui=[],tuitui_s=[];
       var diwen = this.state.temperature.charAt(0);
-      console.log(diwen)
       if(diwen<0){
         this.setState({
           tuijian:this.state.yi,
@@ -180,7 +177,6 @@ export default class Wear extends Component {
     }
     click_unShare=()=>{
       var div = document.getElementById('fenxiang');
-      console.log(div);
       div.style.display='none'
     }
     //原跳转
@@ -216,30 +212,9 @@ export default class Wear extends Component {
 //推荐的点击事件
     tuijian=(idx)=>{
       this.state.count++;//判断点击几次
-
         var a = setTimeout(()=>{
-          if(this.state.count>1){
-            var place='';
-            //找到它的存储地点
-            var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
-            for(var i = 0;i<this.state.ress.length-1;i++){
-              if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-                place = this.state.ress[i].cloPlace
-                break;
-              }
-            }
-            //判断存储位置的第几个
-            for(var i = 0;i<this.state.ress.length-2;i++){
-              if(this.state.ress[i].cloPlace===place){
-                console.log(this.state.ress[i].cloPlace)
-                this.setState({
-                  linshi:this.state.linshi+1
-                })
-                if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-                  break;
-                }
-              }
-            }
+          if(this.state.count>1){//双击
+            var place = this.zhao(idx,this.state.tuijian)
             this.fasong(this.state.linshi);
             this.tiaozhuan(place);
           }else{
@@ -252,9 +227,33 @@ export default class Wear extends Component {
             })
           }
       },200)
-
     }
-    //跳转到整理箱并且发送衣物编号（从1开始）
+    //找到位置
+    zhao=(idx,weizhi)=>{
+      var place='';
+      //找到它的存储地点
+      var nnn = weizhi[idx].split('/')[4].split('.')[0];
+      // var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
+      for(var i = 0;i<this.state.ress.length-1;i++){
+        if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+            place = this.state.ress[i].cloPlace
+            break;
+        }
+      }
+      //判断存储位置的第几个
+      for(var i = 0;i<this.state.ress.length-2;i++){
+        if(this.state.ress[i].cloPlace===place){
+          this.setState({
+            linshi:this.state.linshi+1
+          })
+        if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+          break;
+        }
+      }
+    }
+    return place
+    }
+    //发送衣物编号（从1开始）
     fasong=(idx)=>{
       console.log('衣服编号'+idx)
       fetch("http://47.98.163.228:8083/pp", {
@@ -283,36 +282,7 @@ export default class Wear extends Component {
       }
       window.location.href = '/#/'+p+'/'+this.props.id;
     }
-    //双击并找到位置
-    shuangji=(idx,weizhi)=>{
-      this.state.count++;//点击几次
-      var a = setTimeout(()=>{ //延迟执行
-        if(this.state.count>1){//双击
-          var place='';
-          //找到它的存储地点
-          var nnn = weizhi[idx].split('/')[4].split('.')[0];
-          // var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
-          for(var i = 0;i<this.state.ress.length-1;i++){
-            if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-              place = this.state.ress[i].cloPlace
-              break;
-            }
-          }
-          //判断存储位置的第几个
-          for(var i = 0;i<this.state.ress.length-2;i++){
-              if(this.state.ress[i].cloPlace===place){
-                console.log(this.state.ress[i].cloPlace)
-                this.setState({
-                  linshi:this.state.linshi+1
-                })
-                if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-                  break;
-                }
-              }
-          }
-        }
-      })
-    }
+
     render() {
         return (
             <div id="beijingg" className="body" style={{width:'100%',height:'100%'}}>
