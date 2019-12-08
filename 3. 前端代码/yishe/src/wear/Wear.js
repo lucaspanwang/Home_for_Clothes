@@ -61,16 +61,14 @@ export default class Wear extends Component {
     }
   }    
   componentDidMount(){
-    // console.log(this.props.id);
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
       "Access-Control-Allow-Origin" : "*",
       "Access-Control-Allow-Credentials" : true,
-      // credentials: 'include',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: JSON.stringify({userId:this.props.id}) 
+      body: JSON.stringify({userId:localStorage.getItem('userId')}) 
   })
     //获取图片信息
     var small=[],big=[];
