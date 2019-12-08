@@ -61,6 +61,7 @@ export default class Wear extends Component {
     }
   }    
   componentDidMount(){
+    // console.log(this.props.id);
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
       "Access-Control-Allow-Origin" : "*",
@@ -69,7 +70,7 @@ export default class Wear extends Component {
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: JSON.stringify({userId:111}) 
+      body: JSON.stringify({userId:this.props.id}) 
   })
     //获取图片信息
     var small=[],big=[];
@@ -98,7 +99,7 @@ export default class Wear extends Component {
           })
           document.getElementById('beijingg').style.background="url("+beijing2+")";
         }
-
+        //把读取的图片放进来
         for(var i=0;i<res.length-1;i++){
           var j = res[i].cloSmallPic.indexOf('/');
           console.log(res[i].cloSmallPic.substr(j));
@@ -113,7 +114,7 @@ export default class Wear extends Component {
             arr_s:small
          })
         }
-      
+      //分类存小图标
       var kuku=[],kuku_s=[];
       var qunqun=[],qunqun_s=[];
       var yiyi=[],yiyi_s=[];
@@ -216,19 +217,20 @@ export default class Wear extends Component {
     }
 //推荐的点击事件
     tuijian=(idx)=>{
-      this.state.count++;
+      this.state.count++;//判断点击几次
 
         var a = setTimeout(()=>{
           if(this.state.count>1){
             var place='';
+            //找到它的存储地点
             var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
             for(var i = 0;i<this.state.ress.length-1;i++){
               if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-                // console.log(this.state.ress[i].cloPlace);
                 place = this.state.ress[i].cloPlace
                 break;
               }
             }
+            //判断存储位置的第几个
             for(var i = 0;i<this.state.ress.length-2;i++){
               if(this.state.ress[i].cloPlace===place){
                 console.log(this.state.ress[i].cloPlace)
@@ -240,24 +242,8 @@ export default class Wear extends Component {
                 }
               }
             }
-            console.log('双击')//向端口发送图片号码
-            fetch("http://47.98.163.228:8083/pp", {
-              method: 'post', 
-              "Access-Control-Allow-Origin" : "*",
-              "Access-Control-Allow-Credentials" : true,
-              // credentials: 'include',
-              headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              body: JSON.stringify({msg:this.state.linshi}) 
-            })
-            console.log(window.location.href)
-            var h = window.location.href;
-            var neww = h.split('/')[4];
-            console.log(neww)
-            // this.hrefChange('home');//跳转?????
-            window.location.href = '/#/home/'+
-            console.log(this.state.count)
+            this.fasong(this.props.id);
+            this.tiaozhuan(place);
           }else{
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
@@ -270,17 +256,33 @@ export default class Wear extends Component {
       },200)
 
     }
-    tiaozhuan=(idx)=>{
+    //跳转到整理箱并且发送衣物编号（从1开始）
+    fasong=(idx)=>{
       fetch("http://47.98.163.228:8083/pp", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
-        // credentials: 'include',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: JSON.stringify({msg:idx}) 
       })
+    }
+    //跳转
+    tiaozhuan=(place)=>{
+      var p = '';
+      switch(place){
+        case '家':
+          p='home';
+          break;
+        case '整理箱':
+          p='trunk'
+          break;
+        case '衣柜':
+            p='robe'
+            break;
+      }
+      window.location.href = '/#/'+p+'/'+this.props.id;
     }
     render() {
         return (
