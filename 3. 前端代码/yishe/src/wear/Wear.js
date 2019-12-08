@@ -240,7 +240,7 @@ export default class Wear extends Component {
                 }
               }
             }
-            this.fasong(this.props.id);
+            this.fasong(this.state.linshi);
             this.tiaozhuan(place);
           }else{
             document.getElementById('mote').style.display = 'none';
@@ -256,6 +256,7 @@ export default class Wear extends Component {
     }
     //跳转到整理箱并且发送衣物编号（从1开始）
     fasong=(idx)=>{
+      console.log('衣服编号'+idx)
       fetch("http://47.98.163.228:8083/pp", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
@@ -273,10 +274,10 @@ export default class Wear extends Component {
         case '家':
           p='home';
           break;
-        case '整理箱':
+        case '行李箱':
           p='trunk'
           break;
-        case '衣柜':
+        case '柜子':
             p='robe'
             break;
       }
