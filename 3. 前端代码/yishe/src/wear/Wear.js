@@ -283,6 +283,36 @@ export default class Wear extends Component {
       }
       window.location.href = '/#/'+p+'/'+this.props.id;
     }
+    //双击并找到位置
+    shuangji=(idx,weizhi)=>{
+      this.state.count++;//点击几次
+      var a = setTimeout(()=>{ //延迟执行
+        if(this.state.count>1){//双击
+          var place='';
+          //找到它的存储地点
+          var nnn = weizhi[idx].split('/')[4].split('.')[0];
+          // var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
+          for(var i = 0;i<this.state.ress.length-1;i++){
+            if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+              place = this.state.ress[i].cloPlace
+              break;
+            }
+          }
+          //判断存储位置的第几个
+          for(var i = 0;i<this.state.ress.length-2;i++){
+              if(this.state.ress[i].cloPlace===place){
+                console.log(this.state.ress[i].cloPlace)
+                this.setState({
+                  linshi:this.state.linshi+1
+                })
+                if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+                  break;
+                }
+              }
+          }
+        }
+      })
+    }
     render() {
         return (
             <div id="beijingg" className="body" style={{width:'100%',height:'100%'}}>
