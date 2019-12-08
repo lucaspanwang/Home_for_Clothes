@@ -32,17 +32,8 @@ export default class Login extends Component{
         }
         if(this.state.flag==1){
             document.getElementById('judgeT').style.display='block';
-            console.log(this.state.lUserId)
-            fetch("http://47.98.163.228:8083/aa", {
-                method: 'post', 
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Credentials" : true,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: JSON.stringify({userId:this.state.lUserId}) 
-            })
+            // res.setHeader('Set-cookie', `userId=${this.state.lUserId}; max-age=10000000`);
+            localStorage.setItem('userId', this.state.lUserId)
         }
     }
 
