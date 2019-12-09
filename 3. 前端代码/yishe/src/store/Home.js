@@ -9,11 +9,10 @@ export default class Home extends Component {
         this.state={
             url:'http://47.98.163.228:8084/home',
             picture:[],
-            num:0
+            num:-1,
         }
     }
     componentDidMount(){
-        // console.log(this.props.match.params.id);//获取用户id
         fetch(this.state.url)
         .then(res=>res.json())
         .then(res=>{
@@ -21,6 +20,23 @@ export default class Home extends Component {
                 picture:res
             })
             console.log(this.state.picture)
+        });
+        fetch('http://47.98.163.228:8083/pp2')
+        .then(res=>res.json())
+        .then(res=>{
+            console.log('????'+res.msg)
+            var n = localStorage.getItem('count')
+            localStorage.setItem('count', n+1)
+            var nn = localStorage.getItem('count')
+            if(nn==1){
+                this.setState({
+                    num:res.msg-1
+                })
+            }else{
+                this.setState({
+                    num:-1
+                })
+            }
         });
     }
     render() {
@@ -33,11 +49,10 @@ export default class Home extends Component {
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>家</NavBar>
                 <div>
                     {
-                    this.state.picture.map((item,i)=>(
-                        console.log(i),
-                        i==this.state.num?<img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>:
-                    <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
-                    ))
+                        this.state.picture.map((item,i)=>(
+                            i==this.state.num?<img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>:
+                        <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
+                        ))
                     }
                 </div>
             </div>
