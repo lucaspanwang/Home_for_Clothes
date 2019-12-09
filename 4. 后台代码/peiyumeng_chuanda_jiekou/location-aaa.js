@@ -18,7 +18,7 @@ let server = http.createServer();
 
 //先假定用户id为111
 var user = '122';
-
+var obj='';
 server.on('request',(req,res)=>{
     if(req.url==='/aa'){
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -70,14 +70,16 @@ server.on('request',(req,res)=>{
                         res.end(JSON.stringify(unique(value)));
                     }
                     if(req.url==='/pp'){
-                        var obj="";
                         req.on('data',function(data){
-                            obj+=data;
                             console.log('接收：'+data)
+                            obj=data;
                         })
+                    }
+                    if(req.url==='/pp2'){
+                        console.log('????'+obj)
                         res.setHeader("Access-Control-Allow-Credentials",true)
                         res.setHeader("Access-Control-Allow-Origin", "*");
-                        res.end();
+                        res.end(obj);
                     }
         })
 })
