@@ -110,7 +110,19 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         });
-    }else if(req.url.split('?')[0] === '/collect'){
+    }else if(req.url === '/collect'){
+        //读取收藏表的信息
+        let promise6 = new Promise(resolve =>{
+            con.query(`select * from saveTable`, (err, result) => {
+                resolve(result);
+                console.log("读取收藏表的信息");
+            })
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
+    }else if(req.url.split('?')[0] === '/collectAdd'){
         //收藏文章
         var it = qs.parse(req.url.split('?')[1]);
         // console.log(it);
@@ -164,7 +176,19 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         });
-    }else if(req.url.split('?')[0] === '/agree'){
+    }else if(req.url === '/agree'){
+        //读取点赞表的信息
+        let promise6 = new Promise(resolve =>{
+            con.query(`select * from agreeTable`, (err, result) => {
+                resolve(result);
+                console.log("读取点赞表的信息");
+            })
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
+    }else if(req.url.split('?')[0] === '/agreeAdd'){
         //点赞文章
         var it = qs.parse(req.url.split('?')[1]);
         // console.log(it);
@@ -213,7 +237,19 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         });
-    }else if(req.url.split('?')[0] === '/care'){
+    }else if(req.url === '/care'){
+        //读取关注表的信息
+        let promise6 = new Promise(resolve =>{
+            con.query(`select * from care`, (err, result) => {
+                resolve(result);
+                console.log("读取关注表的信息");
+            })
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
+    }else if(req.url.split('?')[0] === '/careAdd'){
         //关注其他用户
         var it = qs.parse(req.url.split('?')[1]);
         let promise36 = new Promise(resolve =>{
