@@ -64,8 +64,7 @@ export default class Community extends Component {
             this.setState({
                 users:users
             })
-            
-            console.log(this.state.users);
+            // console.log(this.state.users);
         })
         fetch("http://47.98.163.228:8086/agree?userId="+this.props.id)
         .then(res=>res.json())
