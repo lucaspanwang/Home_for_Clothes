@@ -22,6 +22,16 @@ export default class Home extends Component {
             })
             console.log(this.state.picture)
         });
+        fetch("http://47.98.163.228:8084/userid", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:JSON.stringify({userId:this.props.match.params.id}) 
+      })
     }
     render() {
         return (

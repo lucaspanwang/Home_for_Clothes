@@ -20,7 +20,17 @@ export default class Trunk extends Component {
                 picture:res
             })
             console.log(res);
-        })
+        });
+        fetch("http://47.98.163.228:8089/userid", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:JSON.stringify({userId:this.props.match.params.id}) 
+      })
     }
     render() {
         return (

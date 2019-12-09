@@ -14,9 +14,20 @@ var style = {
 export default class AppBox extends Component {
     constructor(){
         super();
+        this.state={
+            value:'添加'
+        }
     }    
     componentDidMount(){
         // console.log(this.props.id);//获取用户id
+        fetch('http://47.98.163.228:8084/change')
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                value:res
+            })
+            console.log('后台传来：',res);
+        })
     }
     render() {
         return (
@@ -28,7 +39,7 @@ export default class AppBox extends Component {
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                <Link to={"/add/"+this.props.id}><button>+<br />添加</button></Link>
+        <Link to={"/add/"+this.props.id}><button>+<br />{this.state.value}</button></Link>
                                 <Link to={"/add/"+this.props.id}><button>+<br />添加</button></Link>
                             </li>
                             <li id='twoBut'>
