@@ -10,10 +10,13 @@ import fanhui from '../images/返回 (1).png';
 import xiala from '../images/下拉.png';
 import fenxiang from '../images/分享(1).png';
 import shoucang from '../images/收藏.png';
+import yishoucang from '../images/收藏(1).png';
 import pingbi from '../images/屏蔽.png';
 import guanzhu from '../images/关注.png';
+import yiguanzhu from '../images/关注(1).png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
+import yidianzan from '../images/点赞(1).png';
 
 const Item = Popover.Item;
 const menu = [
@@ -39,12 +42,11 @@ export default class Article extends Component {
     componentDidMount(){
       var articleId=this.props.match.params.id.split("&")[0];
       var userId=this.props.match.params.id.split("&")[1];
-      // console.log(this.props.match.params.id);
+      // console.log(this.props.match.params.id.split("&")[1]);
       fetch("http://47.98.163.228:8086/article?articleId="+articleId)
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
-            // console.log(res[i].cimg.length);
             var j = res[i].userPic.indexOf('/');
             res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
             for(var j=0;j<res[i].cimg.length;j++){
@@ -56,8 +58,35 @@ export default class Article extends Component {
           this.setState({
             article:res[0]
           })
-          // console.log(this.state.article);
       });
+      fetch("http://47.98.163.228:8086/collect?userId="+userId)
+      .then(res=>res.json())
+      .then(res=>{
+          var article=this.state.article;
+          article.collect = false;
+          for(var i=0;i<res.length;i++){
+              if(res[i].articleId === article.articleId){
+                article.collect = true;
+              }
+          }
+          this.setState({
+              article:article
+          })
+      })
+      fetch("http://47.98.163.228:8086/agree?userId="+userId)
+      .then(res=>res.json())
+      .then(res=>{
+          var article=this.state.article;
+          article.like = false;
+          for(var i=0;i<res.length;i++){
+            if(article.articleId == res[i].articleId){
+              article.like = true;
+            }
+          }
+          this.setState({
+              article:article
+          })
+      })
       fetch("http://47.98.163.228:8086/review?articleId="+articleId)
       .then(res=>res.json())
       .then(res=>{
@@ -156,12 +185,72 @@ export default class Article extends Component {
         });
       }, 1000);
     };
-  
     handleChange = e => {
       this.setState({
         value: e.target.value,
       });
     };
+    //收藏/取消收藏
+    onCollect = (id,event) =>{
+      var article=this.state.article;
+      if(article.collect === false){
+          fetch("http://47.98.163.228:8086/collectAdd?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
+          .then(res=>res.json())
+          .then(res=>{
+              article.collect = true;
+              article.save += 1;
+              this.setState({
+                  article:article
+              })
+          })
+      }else{
+          fetch("http://47.98.163.228:8086/collectDelete?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
+          .then(res=>res.json())
+          .then(res=>{
+              article.collect = false;
+              article.save -= 1;
+              this.setState({
+                  article:article
+              })
+          })
+      }
+    }
+    onCare = () =>{
+        if(this.state.care === false){
+            this.setState({
+                care:true
+            })
+        }else{
+            this.setState({
+                care:false
+            })
+        }
+    }
+    //点赞/取消点赞
+    onAgree = (id,event) =>{
+      var article=this.state.article;
+      if(article.like === false){
+          fetch("http://47.98.163.228:8086/agreeAdd?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
+          .then(res=>res.json())
+          .then(res=>{
+              article.like = true;
+              article.agree += 1;
+              this.setState({
+                  article:article
+              })
+          })
+        }else{
+            fetch("http://47.98.163.228:8086/agreeDelete?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
+            .then(res=>res.json())
+            .then(res=>{
+              article.like = false;
+              article.agree -= 1;
+              this.setState({
+                  article:article
+              })
+            })
+        }
+    }
     render() {
         return (
           <Consumer>
@@ -202,8 +291,8 @@ export default class Article extends Component {
                   </div>
                   <ul className="artState">
                     <li><img src={`${pinglun}`}/><span>评论</span></li>
-                    <li><img src={`${shoucang}`}/><span>{this.state.article.save || "收藏"}</span></li>
-                    <li><img src={`${dianzan}`}/><span>{this.state.article.agree || "点赞"}</span></li>
+                    <li onClick={this.onCollect.bind(this,this.state.article.articleId)}><img src={this.state.article.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{this.state.article.save || "收藏"}</span></li>
+                    <li onClick={this.onAgree.bind(this,this.state.article.articleId)}><img src={this.state.article.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{this.state.article.agree || "点赞"}</span></li>
                   </ul>
               </div>
               <Comment
