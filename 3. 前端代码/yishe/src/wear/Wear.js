@@ -296,7 +296,7 @@ export default class Wear extends Component {
                     <span id="shi">{this.state.city}</span>
                     <span>今日天气:</span>
                     <img src={w_t[this.state.idx]} style={{width:'25px',float:'left',marginLeft:'5px',marginRight:'5px'}} key="fan2"/>
-                    <span style={{marginLeft:'5px',marginRight:'15px'}}>{this.state.weather}</span>
+                    <span style={{marginLeft:'5px'}}>{this.state.weather}</span>
                     <span>{this.state.temperature}~{this.state.temperature2}</span>
                     <p style={{fontWeight:'800',textShadow:'#000 3px 0 0,#000 0 3px 0,#000 -1px 0 0,#000 0 -1px 0',marginTop:'15px',marginLeft:'15px'}}>
                       <br />
