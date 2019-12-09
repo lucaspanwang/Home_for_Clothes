@@ -69,7 +69,6 @@ export default class DiaryAdd extends Component {
                     files={this.state.dimg}
                     onChange={this.onChange}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    //selectable={files.length < 5}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
                 />
             </div>

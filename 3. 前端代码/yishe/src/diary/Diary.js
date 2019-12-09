@@ -15,7 +15,6 @@ export default class Diary extends Component {
         this.state = {
             data: ['1', '2'],
             content:[],
-            userId:'123'
         }
     }
     hrefChange(str){
@@ -24,8 +23,7 @@ export default class Diary extends Component {
         window.location.href = arr[0] + str;
     }
     componentDidMount() {
-        console.log(this.props.id);
-        fetch('http://47.98.163.228:8081/diary?userId='+this.state.userId)
+        fetch('http://47.98.163.228:8081/diary?userId='+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             {                 
@@ -34,7 +32,7 @@ export default class Diary extends Component {
                     res[i].userPic = "http://47.98.163.228:8081"+res[i].userPic.substr(j);
                 }
                 for(var i=0;i<res.length;i++){
-                    if(res[i].dimg.length===1){
+                    if(res[i].dimg[0]===''){
                         res[i].dimg=[];
                     }else{
                         for(var j=0;j<res[i].dimg.length;j++){
@@ -42,13 +40,10 @@ export default class Diary extends Component {
                             res[i].dimg[j] = "http://47.98.163.228:8081"+res[i].dimg[j].substr(n);
                         }
                     }
-                }
-                console.log(res);
-                
+                }               
                 this.setState({
                     content: res,
                 })
-                console.log(this.state.content[0].userPic)
             }
         })
         setTimeout(() => {
@@ -68,7 +63,12 @@ export default class Diary extends Component {
     render() {
         return (
             <div style={{width:'100%'}}>
-                <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}>穿搭日记</NavBar>
+                <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
+                rightContent={[
+                    <Link to={"/diaryadd/"+this.props.id}>
+                        <img src={add} alt='' style={{width:'25px'}} key='add'/>
+                    </Link>
+                ]}>穿搭日记</NavBar>
                 <div style={{position:"relative"}}>
                     <Carousel autoplay={true} infinite>
                     {this.state.data.map(val => (
@@ -106,12 +106,7 @@ export default class Diary extends Component {
                         </Timeline.Item>
                     )
                 }
-                </Timeline>
-                <Link to={"/diaryadd/"+this.props.id} >
-                    <button  style={{backgroundColor:'white',border:'none',float:'right',marginRight:'5%',Zindex: '9999',marginTop:'18%'}}>
-                        <img src={add} alt='' style={{width:'30%',float:'right'}}/>
-                    </button>
-                </Link>            
+                </Timeline>           
             </div>
             
         );
