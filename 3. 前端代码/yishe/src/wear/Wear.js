@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { NavBar,Grid,Tabs,WhiteSpace} from 'antd-mobile';
+import { NoticeBar, Icon } from 'antd-mobile';
 import './wear.css';
 import {Consumer} from '../context'
-import didian from '../images/地点1.png'
+import didian from '../images/地点.png'
 import xiayu from '../images/下雨.png'
 import qing from '../images/晴.png'
 import mote from '../images/模特.png'
@@ -21,7 +22,7 @@ import jubao from '../images/举报.png'
 import xiaoren from '../images/小人.png'
 import beijing from '../images/雨.jpg'
 import beijing2 from '../images/晴.jpg'
- 
+
 
 const data = Array.from(new Array(5)).map((_val, i) => ({
     icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
@@ -215,8 +216,7 @@ export default class Wear extends Component {
         var a = setTimeout(()=>{
           if(this.state.count>1){//双击
             var place = this.zhao(idx,this.state.tuijian)
-            this.fasong(this.state.linshi);
-            this.tiaozhuan(place);
+            this.fasong(this.state.linshi)
           }else{
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
@@ -255,6 +255,7 @@ export default class Wear extends Component {
     }
     //发送衣物编号（从1开始）
     fasong=(idx)=>{
+      localStorage.setItem('count',0);
       console.log('衣服编号'+idx)
       fetch("http://47.98.163.228:8083/pp", {
         method: 'post', 
@@ -265,6 +266,7 @@ export default class Wear extends Component {
         },
         body: JSON.stringify({msg:idx}) 
       })
+      .then(this.tiaozhuan('家'))
     }
     //跳转
     tiaozhuan=(place)=>{
@@ -291,18 +293,18 @@ export default class Wear extends Component {
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 >穿搭</NavBar>
               {/* 天气 */}
-                <div className="daohang">
-                    <img src={didian} style={{width:'30px',float:'left',position:'relative',top:'-5px'}} key="fan1"/>
-                    <span id="shi">{this.state.city}</span>
-                    <span>今日天气:</span>
-                    <img src={w_t[this.state.idx]} style={{width:'25px',float:'left',marginLeft:'5px',marginRight:'5px'}} key="fan2"/>
-                    <span style={{marginLeft:'5px'}}>{this.state.weather}</span>
+              <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }} id="lalala">
+                    <img src={didian} style={{width:'30px',float:'left',position:'relative',top:'-5px',marginTop:'7px'}} key="fan1"/>
+                    <span id="shi" style={{float:'left'}}>{this.state.city}</span>
+                    <span style={{float:'left'}}>今日天气:</span>
+                    <img src={w_t[this.state.idx]} style={{width:'25px',float:'left',marginLeft:'5px',marginRight:'5px',marginTop:'3px'}} key="fan2"/>
+                    <span style={{marginLeft:'5px',marginRight:'5px'}}>{this.state.weather}</span>
                     <span>{this.state.temperature}~{this.state.temperature2}</span>
-                    <p style={{fontWeight:'800',textShadow:'#000 3px 0 0,#000 0 3px 0,#000 -1px 0 0,#000 0 -1px 0',marginTop:'15px',marginLeft:'15px'}}>
-                      <br />
-                      {this.state.dressing_advice}
-                    </p>
-                </div>
+              </NoticeBar>
+              <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px'}}>
+                  {this.state.dressing_advice}
+              </p>
+
                 {/* 模特 */}
                 <img src={mote} id="mote"/>
                 <img src={mote2} id="mote_2"/>
