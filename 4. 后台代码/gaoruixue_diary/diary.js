@@ -1,7 +1,7 @@
 #!/usr/bin/node
 const http = require('http');
 var optfile = require('./fs_read');
-// var formidable = require('formidable');
+const fs = require('fs');
 
 //连接数据库
 const mysql = require('mysql'),
@@ -24,53 +24,26 @@ server.on('request',(req,res)=>{
             obj+=data;
         })
         req.on('end',function(){
-            console.log(JSON.parse(obj));
-            console.log(JSON.parse(obj).name)
+            var riji = JSON.parse(obj);
+            for(var i =0;i<riji.files.length;i++){
+                var path = '../我的/images/'+ riji.diaryId+i+riji.filesType[i];
+                var base64 = riji.files[i].url.replace(/^data:image\/\w+;base64,/, "");//去掉图片base64码前面部分data:image/png;base64
+                var dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
+                fs.writeFile(path,dataBuffer,function(err){//用fs写入文件
+                    if(err){
+                        console.log(err);
+                    }else{
+                       console.log('写入成功！');
+                    }
+                })
+            }
+            
+            // let bitmap1 = Buffer.from(base64str, 'base64');//解码图片
+            // fs.writeFileSync('end.jpg',bitmap1);
+            console.log(riji);
+            console.log(riji.filesType)
         })
-        res.end();
-        // var form = new formidable.IncomingForm();   //创建上传表单
-        // form.encoding = 'utf-8';        //设置编辑
-        // form.uploadDir = '../我的/images';     //设置上传目录
-        // form.keepExtensions = true;     //保留后缀
-        // form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
-        // form.parse(req, function(err, fields, files) {
-        //     console.log(fields);
-        //     if (err) {
-        //       res.locals.error = err;
-        //       res.render('index', { title: TITLE });
-        //       return;
-        //     }
-        //     console.log(files);
-        //     var type = files.pic.type;
-        //     console.log(type);
-        //     var extName = 'png';  //后缀名
-        //     switch (files.pic.type) {
-        //       case 'image/pjpeg':
-        //         extName = 'jpg';
-        //         break;
-        //       case 'image/jpeg':
-        //         extName = 'jpg';
-        //         break;
-        //       case 'image/png':
-        //         extName = 'png';
-        //         break;
-        //       case 'image/x-png':
-        //         extName = 'png';
-        //         break;
-        //     }
-     
-        //     if(extName.length == 0){
-        //       res.locals.error = '只支持png和jpg格式图片';
-        //       res.render('index', { title: TITLE });
-        //       return;
-        //     }
-        //     //显示地址；
-        //     showUrl = files.pic.path;
-        //     res.json({
-        //       "newPath":showUrl
-        //     });
-        //   });
-
+        res.end();    
     }
     if(req.url === '/diary'){
         let promise = new Promise(resolve =>{
