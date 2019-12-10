@@ -216,7 +216,7 @@ export default class Wear extends Component {
         var a = setTimeout(()=>{
           if(this.state.count>1){//双击
             var place = this.zhao(idx,this.state.tuijian)
-            this.fasong(this.state.linshi)
+            this.fasong(this.state.linshi,place)
           }else{
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
@@ -254,7 +254,7 @@ export default class Wear extends Component {
     return place
     }
     //发送衣物编号（从1开始）
-    fasong=(idx)=>{
+    fasong=(idx,place)=>{
       localStorage.setItem('count',0);
       console.log('衣服编号'+idx)
       fetch("http://47.98.163.228:8083/pp", {
@@ -266,7 +266,7 @@ export default class Wear extends Component {
         },
         body: JSON.stringify({msg:idx}) 
       })
-      .then(this.tiaozhuan('家'))
+      .then(this.tiaozhuan(place))
     }
     //跳转
     tiaozhuan=(place)=>{
