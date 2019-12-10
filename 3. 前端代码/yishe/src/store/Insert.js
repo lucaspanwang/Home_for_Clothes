@@ -4,6 +4,7 @@ import { NavBar, Picker, List, WhiteSpace,ImagePicker, WingBlank, SegmentedContr
 import Back from '../images/返回 (1).png';
 import { createForm } from 'rc-form';
 import './store.css';
+import { thisTypeAnnotation } from '@babel/types';
 //图片选择器
 const data = [];
 //图片选择器
@@ -299,14 +300,7 @@ class Insert extends Component {
     })
   }
   todata=()=>{
-    // const p=[this.state.zhonglei,this.state.whereValue,this.state.colorValue];
-    // console.log(p)
-    // this.setState({
-    //   clothing:p
-    // },function(){
-    //   console.log(this.state.clothing[0][1]);
-    // })
-    fetch("http://47.98.163.228:8087/insert", {
+      fetch("http://47.98.163.228:8087/insert", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
@@ -316,7 +310,8 @@ class Insert extends Component {
         },
         body:JSON.stringify({zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
       })
-  }
+    }
+    
   componentDidMount(){
     // console.log(this.props.match.params.id);//获取用户id
     

@@ -8,7 +8,8 @@ export default class Robe extends Component {
         super();
         this.state={
             url:'http://47.98.163.228:8087/robe',
-            picture:[]
+            picture:[],  
+            num:-1
         }
     }
     componentDidMount(){
@@ -30,7 +31,24 @@ export default class Robe extends Component {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body:JSON.stringify({userId:this.props.match.params.id}) 
-      })
+      });
+      fetch('http://47.98.163.228:8083/pp2')
+        .then(res=>res.json())
+        .then(res=>{
+            console.log('????'+res.msg)
+            var n = localStorage.getItem('count')
+            localStorage.setItem('count', n+1)
+            var nn = localStorage.getItem('count')
+            if(nn==1){
+                this.setState({
+                    num:res.msg-1
+                })
+            }else{
+                this.setState({
+                    num:-1
+                })
+            }
+        });
     }
     render() {
         return (
@@ -42,8 +60,12 @@ export default class Robe extends Component {
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>衣柜</NavBar>
                 <div>
                     {
-                    this.state.picture.map((item,i)=>(<img src={`http://47.98.163.228:8087/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>))
-                    }
+                    this.state.picture.map((item,i)=>(
+                        console.log(i),
+                        i==this.state.num?<img src={`http://47.98.163.228:8087/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>:
+                    <img src={`http://47.98.163.228:8087/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
+                    ))
+                }
                 </div>
             </div>
         )

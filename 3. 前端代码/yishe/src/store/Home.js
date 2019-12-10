@@ -9,10 +9,11 @@ export default class Home extends Component {
         this.state={
             url:'http://47.98.163.228:8084/home',
             picture:[],
-            num:-1,
+            num:-1
         }
     }
     componentDidMount(){
+        // console.log(this.props.match.params.id);//获取用户id
         fetch(this.state.url)
         .then(res=>res.json())
         .then(res=>{
@@ -21,8 +22,17 @@ export default class Home extends Component {
             })
             console.log(this.state.picture)
         });
-<<<<<<< HEAD
-        fetch('http://47.98.163.228:8083/pp2')
+        fetch("http://47.98.163.228:8084/userid", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:JSON.stringify({userId:this.props.match.params.id}) 
+      });
+      fetch('http://47.98.163.228:8083/pp2')
         .then(res=>res.json())
         .then(res=>{
             console.log('????'+res.msg)
@@ -39,18 +49,6 @@ export default class Home extends Component {
                 })
             }
         });
-=======
-        fetch("http://47.98.163.228:8084/userid", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body:JSON.stringify({userId:this.props.match.params.id}) 
-      })
->>>>>>> 937d1179b05386271cfacb4f0261dca778727722
     }
     render() {
         return (
@@ -62,10 +60,11 @@ export default class Home extends Component {
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>家</NavBar>
                 <div>
                     {
-                        this.state.picture.map((item,i)=>(
-                            i==this.state.num?<img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>:
-                        <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
-                        ))
+                    this.state.picture.map((item,i)=>(
+                        console.log(i),
+                        i==this.state.num?<img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>:
+                    <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
+                    ))
                     }
                 </div>
             </div>
