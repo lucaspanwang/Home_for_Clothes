@@ -49,10 +49,15 @@ server.on('request',(req,res)=>{
             }
             if(req.url==='/insert'){
                 res.setHeader('Access-Control-Allow-Origin','*');
+                var obj = '';
                 req.on("data",function(data){
-                    console.log('接收：'+data);
-                    console.log(random(4, {letters: false}));
+                    obj += data;
                     // con.query("insert into clothing(cloId,userId,cloKind,cloPlace,cloColor,cloPic,cloSmallPic)values('190','123','裙子','我家','黑色','....',',,,,,')")
+                })
+                req.on('end',function(){
+                    console.log('接收：'+obj);
+                    console.log('接收：'+JSON.parse(obj).picName[0].url.split(',')[1]);
+                    // console.log(random(4, {letters: false}));
                 })
             }
         })
