@@ -118,7 +118,6 @@ export default class Article extends Component {
             this.setState({
                 user:res[0]
             })
-            // console.log(this.state.user);
         });
     }
     onSelect = (opt) => {
