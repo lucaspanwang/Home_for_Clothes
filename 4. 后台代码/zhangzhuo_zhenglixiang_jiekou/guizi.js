@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const http = require('http');
 const optfile=require('./fs_read');
+const random=require('string-random')
 con=mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -50,6 +51,8 @@ server.on('request',(req,res)=>{
                 res.setHeader('Access-Control-Allow-Origin','*');
                 req.on("data",function(data){
                     console.log('接收：'+data);
+                    console.log(random(4, {letters: false}));
+                    // con.query("insert into clothing(cloId,userId,cloKind,cloPlace,cloColor,cloPic,cloSmallPic)values('190','123','裙子','我家','黑色','....',',,,,,')")
                 })
             }
         })
