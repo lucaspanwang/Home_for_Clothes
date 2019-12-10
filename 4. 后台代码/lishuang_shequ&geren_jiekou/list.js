@@ -1,6 +1,7 @@
 #!/usr/bin/node
 
 const http = require('http');
+const fs = require('fs');
 const qs = require('querystring');
 const read = require('./fs_read')
 const mysql = require('mysql'),
@@ -32,6 +33,7 @@ server.on('request',(req,res) => {
                     result[i].cimg = cimg;
                 }
                 resolve(result);
+                console.log(result);
                 console.log("社区读取所有文章信息");
             })
         }).then(value =>{
@@ -51,6 +53,33 @@ server.on('request',(req,res) => {
             review = JSON.stringify(value);
             res.end(review);
         });
+    }else if(req.url === "/articleAdd"){
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        var obj = '';
+        var fristId = "A1111111";
+        req.on('data',function(data){
+            // console.log('接收：'+data);
+            obj += data;
+        });
+        req.on('end',function(){
+            var item = JSON.parse(obj);
+            for(var i=0;i<item.cimg.length;i++){
+                console.log(item.cimg[i].url);
+                var path = '../我的/images/'+fristId+'-'+i+item.cimgName[i];
+                console.log(path);
+                var base64 = item.cimg[i].url.replace(/^data:image\/\w+;base64,/, "");//去掉图片base64码前面部分data:image/png;base64
+                var dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
+                // console.log('dataBuffer是否是Buffer对象：'+Buffer.isBuffer(dataBuffer));
+                fs.writeFile(path,dataBuffer,function(err){//用fs写入文件
+                    if(err){
+                        console.log(err);
+                    }else{
+                       console.log('写入成功！');
+                    }
+                })
+            }
+        })
+        res.end();
     }else if(req.url.split('=')[0] === '/article?articleId'){
         //读取文章详情页文章信息
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
@@ -58,9 +87,16 @@ server.on('request',(req,res) => {
         let promise3 = new Promise(resolve =>{
             con.query(`select community.*,users.userName,users.userPic from community,users where community.userId=users.userId and community.articleId=${id}`, (err, result) => {
                 var cimg;
+                console.log(result);
+                // for(var i=0;i<result.length;i++){
+                //     cimg = result[i].cimg.split('+');
+                //     result[i].cimg = cimg;
+                // }
                 for(var i=0;i<result.length;i++){
-                    cimg = result[i].cimg.split('+');
-                    result[i].cimg = cimg;
+                    if(result[i].cimg.length !== 0){
+                        cimg = result[i].cimg.split('+');
+                        result[i].cimg = cimg;
+                    }
                 }
                 resolve(result);
                 console.log("读取文章"+id+"的信息");
@@ -110,12 +146,14 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         });
-    }else if(req.url === '/collect'){
+    }else if(req.url.split('?')[0] === '/collect'){
         //读取收藏表的信息
+        var it = qs.parse(req.url,"?",null,{maxKeys:2});
+        var id = it.userId;
         let promise6 = new Promise(resolve =>{
-            con.query(`select * from saveTable`, (err, result) => {
+            con.query(`select * from saveTable where userId=${id}`, (err, result) => {
                 resolve(result);
-                console.log("读取收藏表的信息");
+                console.log("读取用户"+id+"收藏的文章");
             })
         }).then(value =>{
             res.writeHead(200, {"Content-type":"application/json"});
@@ -129,7 +167,7 @@ server.on('request',(req,res) => {
         let promise35 = new Promise(resolve =>{
             con.query(`select count(userId) save from saveTable where articleId=${it.articleId}`,function(err, result){
                 resolve(JSON.parse(JSON.stringify(result))[0].save);
-                // console.log(JSON.parse(JSON.stringify(result))[0].save);
+                console.log(JSON.parse(JSON.stringify(result))[0].save);
             });
         }).then(value =>{
             let promise34 = new Promise(resolve =>{
@@ -176,10 +214,12 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         });
-    }else if(req.url === '/agree'){
+    }else if(req.url.split('?')[0] === '/agree'){
         //读取点赞表的信息
+        var it = qs.parse(req.url,"?",null,{maxKeys:2});
+        var id = it.userId;
         let promise6 = new Promise(resolve =>{
-            con.query(`select * from agreeTable`, (err, result) => {
+            con.query(`select * from agreeTable where userId=${id}`, (err, result) => {
                 resolve(result);
                 console.log("读取点赞表的信息");
             })
@@ -237,10 +277,12 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         });
-    }else if(req.url === '/care'){
+    }else if(req.url.split('?')[0] === '/care'){
         //读取关注表的信息
+        var it = qs.parse(req.url,"?",null,{maxKeys:2});
+        var id = it.userId;
         let promise6 = new Promise(resolve =>{
-            con.query(`select * from care`, (err, result) => {
+            con.query(`select * from care where userId=${id}`, (err, result) => {
                 resolve(result);
                 console.log("读取关注表的信息");
             })
