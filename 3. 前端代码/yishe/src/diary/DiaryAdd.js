@@ -12,8 +12,12 @@ export default class DiaryAdd extends Component {
             date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes();
         this.state = {
             value: '',
-            dimg: [],
+            files: [],
             diarytime:date,
+            index:0,
+            name:[],
+            url:[]
+
 
         };
     }
@@ -24,6 +28,7 @@ export default class DiaryAdd extends Component {
     }
     onPost=()=> {      
         // console.log(this.props.match.params.id);//获取到的用户id 
+       
         fetch('http://47.98.163.228:8081/dd',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
@@ -32,18 +37,31 @@ export default class DiaryAdd extends Component {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify({value:this.state.value,dimg:this.state.dimg,diarytime:this.state.diarytime}) 
-        }) 
+            body: JSON.stringify({value:this.state.value,name:this.state.name,url:this.state.url,diarytime:this.state.diarytime}) 
+        })
+        console.log(this.state.files);
 
     }
     
     onChange1 = ({ target: { value } }) => {
         this.setState({ value });
     };
-    onChange = (dimg, type, index) => {
+    onChange = (files) => {
+        var index = this.state.index;
         this.setState({
-            dimg,
+            files,
         });
+        var name = [...this.state.name,this.state.files[index].file.name]
+        var url = [...this.state.url,this.state.files[index].url]
+        this.setState({
+            name:name,
+            url:url
+        })
+        console.log(this.state.name);
+        console.log(this.state.url);
+        this.setState({
+            index:index+1
+        })
     }
     
     render() {
@@ -66,7 +84,7 @@ export default class DiaryAdd extends Component {
                     autoSize={{ minRows: 3, maxRows: 5 }}
                     />
                  <ImagePicker
-                    files={this.state.dimg}
+                    files={this.state.files}
                     onChange={this.onChange}
                     onImageClick={(index, fs) => console.log(index, fs)}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
