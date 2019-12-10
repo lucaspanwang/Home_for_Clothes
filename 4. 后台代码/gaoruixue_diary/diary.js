@@ -20,7 +20,6 @@ server.on('request',(req,res)=>{
         res.setHeader("Access-Control-Allow-Origin", "*");
         var obj="";
         req.on('data',function(data){
-            // console.log(data);
             obj+=data;
         })
         req.on('end',function(){
@@ -37,9 +36,6 @@ server.on('request',(req,res)=>{
                     }
                 })
             }
-            
-            // let bitmap1 = Buffer.from(base64str, 'base64');//解码图片
-            // fs.writeFileSync('end.jpg',bitmap1);
             console.log(riji);
             console.log(riji.filesType)
         })
