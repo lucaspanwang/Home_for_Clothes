@@ -259,6 +259,7 @@ export default class Article extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
+                  // <img src={fanhui} style={{width:'30px'}} key="fan" onClick={window.history.back()}/>
                   <Link to={"/shequtab/"+this.props.match.params.id.split("&")[1]}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >阅读全文</NavBar>
