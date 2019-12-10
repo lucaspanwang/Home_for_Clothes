@@ -8,15 +8,18 @@ const { TextArea } = Input;
 export default class DiaryAdd extends Component {
     constructor(){
         super();
+        var id = Number(Math.random().toString().substr(3,20) + Date.now()).toString(36);
         var today = new Date(),
             date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes();
         this.state = {
             value: '',
             files: [],
             diarytime:date,
-            index:0,
-            name:[],
-            url:[]
+            diaryId:id,
+            filesType:[]
+            // index:0,
+            // name:[],
+            // url:[]
 
 
         };
@@ -35,9 +38,10 @@ export default class DiaryAdd extends Component {
             "Access-Control-Allow-Credentials" : true,
             credentials: 'include',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'multipart/form-data;charset=utf-8'
             },
-            body: JSON.stringify({value:this.state.value,name:this.state.name,url:this.state.url,diarytime:this.state.diarytime}) 
+            //body:JSON.stringify({value:this.state.value,name:this.state.name,url:this.state.url,diarytime:this.state.diarytime}) 
+            body:JSON.stringify({diaryId:this.state.diaryId,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
         })
         console.log(this.state.files);
 
@@ -47,22 +51,43 @@ export default class DiaryAdd extends Component {
         this.setState({ value });
     };
     onChange = (files) => {
-        var index = this.state.index;
+        //var index = this.state.index;
         this.setState({
             files,
         });
-        var name = [...this.state.name,this.state.files[index].file.name]
-        var url = [...this.state.url,this.state.files[index].url]
+        var filesType = [];
+        for(var i=0;i<this.state.files.length;i++){
+            console.log(this.state.files[i].file.name.split(".")[1]);
+            filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+        }
         this.setState({
-            name:name,
-            url:url
+            filesType:filesType
         })
-        console.log(this.state.name);
-        console.log(this.state.url);
-        this.setState({
-            index:index+1
-        })
+        // var name = [...this.state.name,this.state.files[index].file.name]
+        // var url = [...this.state.url,this.state.files[index].url]
+        // this.setState({
+        //     name:name,
+        //     url:url
+        // })
+        // console.log(this.state.name);
+        // console.log(this.state.url);
+        // this.setState({
+        //     index:index+1
+        // })
     }
+    // delItem=(files,id)=>{
+    //     this.setState({
+    //         files,
+    //     });
+    //     var name = [...this.state.name];
+    //     var url = [...this.state.url];
+    //     name.splice(id,1);
+    //     url.splice(id,1);
+    //     this.setState({
+    //         name:name,
+    //         url:url
+    //     })
+    // }
     
     render() {
         return (
@@ -86,7 +111,6 @@ export default class DiaryAdd extends Component {
                  <ImagePicker
                     files={this.state.files}
                     onChange={this.onChange}
-                    onImageClick={(index, fs) => console.log(index, fs)}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
                 />
             </div>
