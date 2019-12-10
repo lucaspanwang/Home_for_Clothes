@@ -19,13 +19,8 @@ import dianzan from '../images/点赞.png';
 import yidianzan from '../images/点赞(1).png';
 
 const Item = Popover.Item;
-const menu = [
-    {key:'1',value:'分享',image:`${fenxiang}`},
-    {key:'2',value:'关注',image:`${guanzhu}`},
-    {key:'3',value:'收藏',image:`${shoucang}`},
-    {key:'4',value:'屏蔽',image:`${pingbi}`}
-];
 const { TextArea } = Input;
+
 export default class Article extends Component {
     constructor(){
       super();
@@ -86,6 +81,20 @@ export default class Article extends Component {
           this.setState({
               article:article
           })
+      })
+      fetch("http://47.98.163.228:8086/care?userId="+userId)
+      .then(res=>res.json())
+      .then(res=>{
+        var article=this.state.article;
+        article.follow = false;
+        for(var i=0;i<res.length;i++){
+          if(article.userId == res[i].careId){
+            article.follow = true;
+          }
+        }
+        this.setState({
+            article:article
+        })
       })
       fetch("http://47.98.163.228:8086/review?articleId="+articleId)
       .then(res=>res.json())
@@ -215,16 +224,28 @@ export default class Article extends Component {
           })
       }
     }
-    onCare = () =>{
-        if(this.state.care === false){
+    //关注/取消关注
+    onCare = (id,event) =>{
+      var article=this.state.article;
+      if(article.follow === false){
+          fetch("http://47.98.163.228:8086/careAdd?userId="+this.props.match.params.id.split("&")[1]+"&careId="+id)
+          .then(res=>res.json())
+          .then(res=>{
+            article.follow = true;
             this.setState({
-                care:true
+              article:article 
             })
-        }else{
+          })
+      }else{
+          fetch("http://47.98.163.228:8086/careDelete?userId="+this.props.match.params.id.split("&")[1]+"&careId="+id)
+          .then(res=>res.json())
+          .then(res=>{
+            article.follow = false;
             this.setState({
-                care:false
+              article:article
             })
-        }
+          })
+      }
     }
     //点赞/取消点赞
     onAgree = (id,event) =>{
@@ -268,16 +289,22 @@ export default class Article extends Component {
                       <img className='userImg' src={this.state.article.userPic} alt=""/>
                       <span className='userName'>{this.state.article.userName}</span>
                       <Popover mask
-                          visible={this.state.visible}
-                          overlay={[menu.map(it => (
-                              (<Item key={it.key} value={it.value} style={{padding:'10px 25px'}}>
-                                  <img src={it.image} alt='' style={{width:'25px'}}/>
-                                  <span style={{padding:'0 20px',fontSize:'18px'}}>{it.value}</span>
-                              </Item>)
-                          ))]}
-                          onSelect={this.onSelect}
-                      ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
-                      </Popover>
+                        visible={this.state.visible}
+                        overlay={[
+                            (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
+                                <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
+                                <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
+                            </Item>),
+                            (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
+                                <div onClick={this.onCare.bind(this,this.state.article.userId)}>
+                                    <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
+                                    <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
+                                </div>
+                            </Item>)
+                        ]}
+                        onSelect={this.onSelect}
+                    ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
+                    </Popover>
                   </div>
                   <div className="artDetail">
                       <p>{this.state.article.content}</p>

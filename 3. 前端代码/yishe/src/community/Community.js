@@ -15,27 +15,8 @@ import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
 import yidianzan from '../images/点赞(1).png';
 
-// const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs" alt="" />;
 const { Paragraph } = Typography;
 const Item = Popover.Item;
-// const menu = [
-//     {key:'1',value:'分享',image:`${fenxiang}`},
-//     {key:'2',value:'关注',image:`${guanzhu}`},
-//     {key:'3',value:'收藏',image:`${shoucang}`},
-//     {key:'4',value:'屏蔽',image:`${pingbi}`}
-// ];
-// const menu = (
-//     <Menu>
-//       <Menu.Item key="0">
-//         <a href="http://www.alipay.com/">1st menu item</a>
-//       </Menu.Item>
-//       <Menu.Item key="1">
-//         <a href="http://www.taobao.com/">2nd menu item</a>
-//       </Menu.Item>
-//       <Menu.Divider />
-//       <Menu.Item key="3">3rd menu item</Menu.Item>
-//     </Menu>
-//   );
 
 export default class Community extends Component {
     constructor(){
@@ -48,14 +29,6 @@ export default class Community extends Component {
     }    
     componentDidMount(){
         // console.log(this.props.id);
-        // this.setState({
-        //     menu:[
-        //         {key:'1',value:'分享',image:`${fenxiang}`},
-        //         {key:'2',value:'关注',image:`${guanzhu}`},
-        //         {key:'3',value:'收藏',image:`${shoucang}`},
-        //         {key:'4',value:'屏蔽',image:`${pingbi}`}
-        //     ]
-        // })
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
@@ -115,7 +88,6 @@ export default class Community extends Component {
             this.setState({
                 users:users
             })
-            // console.log(this.state.users);
         })
     }
     //修改时间
@@ -181,6 +153,7 @@ export default class Community extends Component {
             })
         }
     }
+    //关注/取消关注
     onCare = (id,event) =>{
         var users = this.state.users;
         console.log(users);
