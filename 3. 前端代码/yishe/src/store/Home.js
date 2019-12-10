@@ -21,6 +21,7 @@ export default class Home extends Component {
             })
             console.log(this.state.picture)
         });
+<<<<<<< HEAD
         fetch('http://47.98.163.228:8083/pp2')
         .then(res=>res.json())
         .then(res=>{
@@ -38,6 +39,18 @@ export default class Home extends Component {
                 })
             }
         });
+=======
+        fetch("http://47.98.163.228:8084/userid", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:JSON.stringify({userId:this.props.match.params.id}) 
+      })
+>>>>>>> 937d1179b05386271cfacb4f0261dca778727722
     }
     render() {
         return (

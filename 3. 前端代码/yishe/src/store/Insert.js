@@ -19,7 +19,7 @@ const CustomChildren = props => (
     </div>
   </div>
 );
-
+let change='';
 const colorStyle = {
   display: 'inline-block',
   verticalAlign: 'middle',
@@ -141,7 +141,11 @@ const where=[
   {
     label:(<span>柜子</span>),
     value:'柜子'
-  }
+  },
+  // {
+  // label:(<span>{change}</span>),
+  // value:{change}
+  // }
 ]
 
 const colors = [
@@ -251,10 +255,11 @@ const colors = [
 
 class Insert extends Component {
   state = {
+    change:'',
     files: data,
     multiple: false,
     data: [],
-    clothing:[],
+    // clothing:[],
     zhonglei:[],
     mingzi:[],
     cols: 1,
@@ -294,27 +299,14 @@ class Insert extends Component {
     })
   }
   todata=()=>{
-    const p=[this.state.zhonglei,this.state.whereValue,this.state.colorValue];
-    console.log(p)
-    this.setState({
-      clothing:p
-    },function(){
-      console.log(this.state.clothing[0][1]);
-    })
-    // fetch("http://47.98.163.228:8084/insert", {
-    //     method: 'post', 
-    //     "Access-Control-Allow-Origin" : "*",
-    //     "Access-Control-Allow-Credentials" : true,
-    //     credentials: 'include',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     body: JSON.stringify({zhonglei:'123'}) 
-    //   })
-  }
-  componentDidMount(){
-    // console.log(this.props.match.params.id);//获取用户id
-    fetch("http://47.98.163.228:8084/insert", {
+    // const p=[this.state.zhonglei,this.state.whereValue,this.state.colorValue];
+    // console.log(p)
+    // this.setState({
+    //   clothing:p
+    // },function(){
+    //   console.log(this.state.clothing[0][1]);
+    // })
+    fetch("http://47.98.163.228:8087/insert", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
@@ -322,8 +314,18 @@ class Insert extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({userId:"123"}) 
+        body:JSON.stringify({zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
       })
+  }
+  componentDidMount(){
+    // console.log(this.props.match.params.id);//获取用户id
+    
+    // fetch('http://47.98.163.228:8084/change')
+    // .then(res=>res.json())
+    // .then(res=>{
+    //   console.log(res)
+    //   change=res;
+    // })
   }
   
   render() {

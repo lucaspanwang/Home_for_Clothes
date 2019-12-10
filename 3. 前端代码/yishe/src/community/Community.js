@@ -7,10 +7,13 @@ import './community.css';
 import xiala from '../images/下拉.png';
 import fenxiang from '../images/分享(1).png';
 import shoucang from '../images/收藏.png';
+import yishoucang from '../images/收藏(1).png';
 import pingbi from '../images/屏蔽.png';
 import guanzhu from '../images/关注.png';
+import yiguanzhu from '../images/关注(1).png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
+import yidianzan from '../images/点赞(1).png';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
@@ -27,25 +30,60 @@ export default class Community extends Component {
         this.state = {
             visible: false,
             selected: '',
-            users:[]
+            users:[],
+            // collect:false,
+            // care:false,
+            // agree:false
         }
     }    
     componentDidMount(){
-        console.log(this.props.id);
+        // console.log(this.props.id);
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                // console.log(res[i].userPic.substr(j));
                 res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
             }
             this.setState({
                 users:res
             })
-            console.log(this.state.users);
+        });
+        fetch("http://47.98.163.228:8086/collect?userId="+this.props.id)
+        .then(res=>res.json())
+        .then(res=>{
+            var users=this.state.users;
+            for(var j=0;j<users.length;j++){
+                users[j].collect = false;
+                for(var i=0;i<res.length;i++){
+                    if(users[j].articleId == res[i].articleId){
+                        users[j].collect = true;
+                    }
+                }
+            }
+            this.setState({
+                users:users
+            })
+            // console.log(this.state.users);
+        })
+        fetch("http://47.98.163.228:8086/agree?userId="+this.props.id)
+        .then(res=>res.json())
+        .then(res=>{
+            var users=this.state.users;
+            for(var j=0;j<users.length;j++){
+                users[j].like = false;
+                for(var i=0;i<res.length;i++){
+                    if(users[j].articleId == res[i].articleId){
+                        users[j].like = true;
+                    }
+                }
+            }
+            this.setState({
+                users:users
+            })
         })
     }
+    //修改时间
     standardTime = (time) => {
         var date = new Date();
         var nowDate = [date.getFullYear(),date.getMonth()+1,date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds()];
@@ -76,17 +114,74 @@ export default class Community extends Component {
           }
         }
       }
+    //下拉菜单
     onSelect = (opt) => {
         this.setState({
             visible: false,
             selected: opt.props.value,
         });
     };
-    handleVisibleChange = (visible) => {
-        this.setState({
-            visible,
-        });
-    };
+    //收藏/取消收藏
+    onCollect = (id,event) =>{
+        var users = this.state.users;
+        if(users.find(it => it.articleId === id).collect === false){
+            fetch("http://47.98.163.228:8086/collectAdd?userId="+this.props.id+"&articleId="+id)
+            .then(res=>res.json())
+            .then(res=>{
+                users.find(it => it.articleId === id).collect = true;
+                users.find(it => it.articleId === id).save += 1;
+                this.setState({
+                    users:users
+                })
+            })
+        }else{
+            fetch("http://47.98.163.228:8086/collectDelete?userId="+this.props.id+"&articleId="+id)
+            .then(res=>res.json())
+            .then(res=>{
+                users.find(it => it.articleId === id).collect = false;
+                users.find(it => it.articleId === id).save -= 1;
+                this.setState({
+                    users:users
+                })
+            })
+        }
+    }
+    onCare = () =>{
+        if(this.state.care === false){
+            this.setState({
+                care:true
+            })
+        }else{
+            this.setState({
+                care:false
+            })
+        }
+    }
+    //点赞/取消点赞
+    onAgree = (id,event) =>{
+        var users = this.state.users;
+        if(users.find(it => it.articleId === id).like === false){
+            fetch("http://47.98.163.228:8086/agreeAdd?userId="+this.props.id+"&articleId="+id)
+            .then(res=>res.json())
+            .then(res=>{
+                users.find(it => it.articleId === id).like = true;
+                users.find(it => it.articleId === id).agree += 1;
+                this.setState({
+                    users:users
+                })
+            })
+        }else{
+            fetch("http://47.98.163.228:8086/agreeDelete?userId="+this.props.id+"&articleId="+id)
+            .then(res=>res.json())
+            .then(res=>{
+                users.find(it => it.articleId === id).like = false;
+                users.find(it => it.articleId === id).agree -= 1;
+                this.setState({
+                    users:users
+                })
+            })
+        }
+    }
     render() {
         return (
             <div style={{width:'100%'}}>
@@ -127,8 +222,8 @@ export default class Community extends Component {
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
                             <li><img src={`${pinglun}`} alt=''/><span>{item.review || "评论"}</span></li>
-                            <li><img src={`${shoucang}`} alt=''/><span>{item.save || "收藏"}</span></li>
-                            <li><img src={`${dianzan}`} alt=''/><span>{item.agree || "点赞"}</span></li>
+                            <li onClick={this.onCollect.bind(this,item.articleId)}><img src={item.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{item.save || "收藏"}</span></li>
+                            <li onClick={this.onAgree.bind(this,item.articleId)}><img src={item.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{item.agree || "点赞"}</span></li>
                         </ul>
                     </div>))
                 }

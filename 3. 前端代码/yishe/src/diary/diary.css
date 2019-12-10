@@ -13,5 +13,8 @@
     background: #c7e7c2 !important;
 }
 textarea.ant-input {
-    min-height: 180px !important;
+    min-height:180px !important;
+}
+.ant-input {
+    height: 180px !important;
 }
