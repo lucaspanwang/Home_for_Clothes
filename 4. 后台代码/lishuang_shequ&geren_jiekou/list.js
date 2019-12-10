@@ -87,11 +87,6 @@ server.on('request',(req,res) => {
         let promise3 = new Promise(resolve =>{
             con.query(`select community.*,users.userName,users.userPic from community,users where community.userId=users.userId and community.articleId=${id}`, (err, result) => {
                 var cimg;
-                console.log(result);
-                // for(var i=0;i<result.length;i++){
-                //     cimg = result[i].cimg.split('+');
-                //     result[i].cimg = cimg;
-                // }
                 for(var i=0;i<result.length;i++){
                     if(result[i].cimg.length !== 0){
                         cimg = result[i].cimg.split('+');
