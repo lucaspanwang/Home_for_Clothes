@@ -253,9 +253,10 @@ const colors = [
 ];
 
 
-
+const picName='';
 class Insert extends Component {
   state = {
+    picName:'',
     change:'',
     files: data,
     multiple: false,
@@ -270,7 +271,7 @@ class Insert extends Component {
   };
   //图片选择器
   onChange = (files, type, index) => {
-    console.log(files, type, index);
+    console.log(files)
     this.setState({
       files,
     });
@@ -308,7 +309,7 @@ class Insert extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
+        body:JSON.stringify({picName:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
       })
     }
     
@@ -379,12 +380,12 @@ class Insert extends Component {
         {/* 添加图片 */}
         <WingBlank >
         <ImagePicker
+          length='1'
           files={files}
           onChange={this.onChange}
-          onImageClick={(index, fs) => console.log(index, fs)}
           selectable={files.length < 7}
           multiple={this.state.multiple}
-        />
+        style={{width:'300px',height:'100%'}}/>
       </WingBlank>
       {/* 添加图片结束 */}
 
