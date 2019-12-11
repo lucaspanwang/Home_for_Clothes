@@ -94,13 +94,13 @@ export default class Me extends Component {
                     arrow="horizontal"
                     onClick={() => {}}
                     >收藏</Item></Link>
-                    <Item
+                    <Link to={"/myclothing/"+this.props.id}><Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={xiangce}
                     onClick={() => {}}
                     arrow="horizontal"
-                    >相册</Item>
-                    {/* <Item
+                    >相册</Item></Link>
+                    <Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={kaquan}
                     onClick={() => {}}
@@ -111,7 +111,7 @@ export default class Me extends Component {
                     thumb={huishouzhan}
                     onClick={() => {}}
                     arrow="horizontal"
-                    >回收站</Item> */}
+                    >回收站</Item>
                     <Link to={"/setup/"+this.props.id}><Item
                     thumb={shezhi}
                     arrow="horizontal"

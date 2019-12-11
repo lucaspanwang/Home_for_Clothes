@@ -96,36 +96,22 @@ export default class Community extends Component {
         this.forceUpdate();
     }
     //修改时间
-    standardTime = (time) => {
-        var date = new Date();
-        var nowDate = [date.getFullYear(),date.getMonth()+1,date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds()];
-        var myDate = time.split(/[ /:]/);
-        var timeDate = [];
-        var str = ['年前','月前','天前','小时前','分钟前','秒前']
-        for(var i=0;i<6;i++){
-          timeDate[i] = nowDate[i] - Number(myDate[i]);
+    standardTime = (timestamp)=>{
+        var mius=Math.round(new Date())-Math.round(new Date(timestamp));
+        if(mius<(1000*60)){
+            return Math.floor(mius/1000)+'秒前';
+        }else if(mius<(1000*60*60)){
+            return Math.floor(mius/(1000*60))+'分钟前';
+        }else if(mius<(1000*60*60*24)){
+            return Math.floor(mius/(1000*60*60))+'小时前';
+        }else if(mius<(1000*60*60*24*30)){
+            return Math.floor(mius/(1000*60*60*24))+'天前';
+        }else if(mius<(1000*60*60*24*30*12)){
+            return Math.floor(mius/(1000*60*60*24*30))+'个月前';
+        }else{
+            return Math.floor(mius/(1000*60*60*24*30*12))+'年前';
         }
-        for(var j=0;j<5;j++){
-          if(timeDate[j] > 1){
-            return timeDate[j]+str[j];
-          }else if(timeDate[j] === 1){
-            if(timeDate[j+1] >= 0){
-              return timeDate[j]+str[j];
-            }else{
-              if(j === 0){
-                timeDate[j+1] = timeDate[j+1]+12;
-              }else if(j === 1){
-                timeDate[j+1] = timeDate[j+1]+30;
-              }else if(j === 2){
-                timeDate[j+1] = timeDate[j+1]+24;
-              }else{
-                timeDate[j+1] = timeDate[j+1]+60;
-              }
-              return timeDate[j+1]+str[j+1];
-            }
-          }
-        }
-      }
+    }
     //下拉菜单
     onSelect = (opt) => {
         this.setState({
