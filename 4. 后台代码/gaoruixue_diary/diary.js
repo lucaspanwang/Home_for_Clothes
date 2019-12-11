@@ -15,10 +15,9 @@ con.connect();
 
 var server = http.createServer().listen(8081);
 server.on('request',(req,res)=>{   
-    res.setHeader("Access-Control-Allow-Origin", "*"); 
-    if(req.url==='/dd'){
-        res.setHeader("Access-Control-Allow-Origin", "*");
+    if(req.url==='/diaryAdd'){
         var obj="";
+        var di='';
         req.on('data',function(data){
             obj+=data;
         })
@@ -26,6 +25,11 @@ server.on('request',(req,res)=>{
             var riji = JSON.parse(obj);
             for(var i =0;i<riji.files.length;i++){
                 var path = '../我的/images/'+ riji.diaryId+i+riji.filesType[i];
+                if(i<riji.files.length-1){
+                    di = di+path.slice(3)+'+';
+                }else{
+                    di = di+path.slice(3);
+                }
                 var base64 = riji.files[i].url.replace(/^data:image\/\w+;base64,/, "");//去掉图片base64码前面部分data:image/png;base64
                 var dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
                 fs.writeFile(path,dataBuffer,function(err){//用fs写入文件
@@ -35,13 +39,24 @@ server.on('request',(req,res)=>{
                        console.log('写入成功！');
                     }
                 })
+                
             }
-            console.log(riji);
-            console.log(riji.filesType)
+            
+            let promise01 = new Promise(resolve =>{
+                con.query('insert into diary values(?,?,?,?,?)',[riji.diaryId,riji.userId,riji.value,di,riji.diarytime],(err, result) => {
+                    result=[riji.diaryId,riji.userId,riji.value,di,riji.diarytime];
+                    resolve(result);
+                });//添加日记
+            }).then(value =>{
+                res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+                diary = JSON.stringify(value);
+                res.end(diary); 
+            });
+
         })
         res.end();    
     }
-    if(req.url === '/diary'){
+    else if(req.url === '/diary'){
         let promise = new Promise(resolve =>{
             //查询数据库数据获得用户信息
             con.query(`select * 
@@ -55,12 +70,12 @@ server.on('request',(req,res)=>{
         })
         .then(value =>{
             var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json"});
+            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
             res.end(data.toString('utf8'));     
         })
     }
     //获取用户信息
-    if(req.url.split('=')[0]==='/users?userId'){
+    else if(req.url.split('=')[0]==='/users?userId'){
         var userId = req.url.split('=')[1];
         let promise = new Promise(resolve =>{
             //查询数据库数据获得用户信息
@@ -72,12 +87,12 @@ server.on('request',(req,res)=>{
         })
         .then(value =>{
             var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json"});
+            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
             res.end(data.toString('utf8'));     
         })
     }
     //获取日记数据
-    if(req.url.split('=')[0]==='/diary?userId'){
+    else if(req.url.split('=')[0]==='/diary?userId'){
         var userId = req.url.split('=')[1];
         let promise = new Promise(resolve =>{
             //查询数据库数据获得日记信息
@@ -94,15 +109,14 @@ server.on('request',(req,res)=>{
         })
         .then(value =>{
             var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json"});
+            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
             res.end(data.toString('utf8'));     
         })
     }
     //获取图片
-    if(req.url.split('/')[1] === 'images') {
+    else if(req.url.split('/')[1] === 'images') {
         var photo = req.url.split('/')[2];
         optfile.readImg('../我的/images/'+photo, res);
-        console.log("主程序结束");
     }
     
 });
