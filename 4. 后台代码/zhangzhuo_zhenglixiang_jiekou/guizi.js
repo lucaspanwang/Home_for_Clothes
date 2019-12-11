@@ -53,21 +53,26 @@ server.on('request',(req,res)=>{
                 var obj = '';
                 req.on("data",function(data){
                     obj += data;
-                    // con.query("insert into clothing(cloId,userId,cloKind,cloPlace,cloColor,cloPic,cloSmallPic)values('190','123','裙子','我家','黑色','....',',,,,,')")
+                    
                 })
                 req.on('end',function(){
-                    // console.log('接收：'+obj);
-                    // console.log('接收：'+JSON.parse(obj).picName[0].url.split(',')[1]);
-                    var base64=JSON.parse(obj).picName[0].url.split(',')[1]
-                    var path='../try/one.jpg';
-                    var dataBuffer=new Buffer(base64,'base64');
-                    fs.writeFile(path,dataBuffer,function(err){
-                        if(err){
-                            console.log(err);
-                        }else{
-                            console.log('写入成功');
-                        }
-                    })
+                    if(JSON.parse(obj).base64[0]!=undefined){
+                        var base64=JSON.parse(obj).base64[0].url.split(',')[1];
+                    }
+                    var zhonglei=JSON.stringify(JSON.parse(obj).zhonglei[0]);
+                    var weizhi=JSON.stringify(JSON.parse(obj).weizhi[0]);
+                    var yanse = JSON.stringify(JSON.parse(obj).yanse[0]);
+                    con.query(`insert into clothing(cloId,userId,cloKind,cloPlace,cloColor,cloPic,cloSmallPic)
+                    values('191',${user},${zhonglei},${weizhi},${yanse},'....',',,,,,')`)
+                    // var path='../try/one.jpg';
+                    // var dataBuffer=new Buffer(base64,'base64');
+                    // fs.writeFile(path,dataBuffer,function(err){
+                    //     if(err){
+                    //         console.log(err);
+                    //     }else{
+                    //         console.log('写入成功');
+                    //     }
+                    // })
                     // console.log(random(4, {letters: false}));
                 })
             }
