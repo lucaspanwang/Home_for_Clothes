@@ -70,9 +70,6 @@ server.on('request',(req,res) => {
                         num = JSON.stringify(result[0].reviewId).replace(/[^0-9]/ig,"")-1;
                     }
                     resolve('Art'+num);
-                    // con.query('select count(articleId) num from community',function(err, result){
-                    //     resolve('Art'+(999999-result[0].num));
-                    // });
                 })
             }).then(value =>{
                 for(var i=0;i<item.cimg.length;i++){
@@ -105,11 +102,48 @@ server.on('request',(req,res) => {
             })
         })
         res.end();
+    }else if(req.url === '/articleshanchu'){
+        //删除文章
+        var id = '';
+        req.on('data',function(data){
+            id += data;
+        });
+        req.on('end',function(){
+            let promise38 = new Promise(resolve =>{
+                con.query('delete from community where articleId=?',[id],(err, result) => {
+                    resolve(result);
+                });
+            }).then(value =>{
+                res.writeHead(200, {"Content-type":"application/json"});
+                review = JSON.stringify(value);
+                res.end(review); 
+            });
+        })
     }else if(req.url.split('=')[0] === '/article?articleId'){
         //读取文章详情页文章信息
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
         let promise3 = new Promise(resolve =>{
             con.query('select community.*,users.userName,users.userPic from community,users where community.userId=users.userId and community.articleId=?',[it.articleId], (err, result) => {
+                var cimg;
+                for(var i=0;i<result.length;i++){
+                    if(result[i].cimg.length !== 0){
+                        cimg = result[i].cimg.split('+');
+                        result[i].cimg = cimg;
+                    }
+                }
+                resolve(result);
+                // console.log("读取文章"+id+"的信息");
+            })
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
+    }else if(req.url.split('=')[0] === '/article?userId'){
+        //读取某用户的所有文章信息
+        var it = qs.parse(req.url,"?",null,{maxKeys:2});
+        let promise7 = new Promise(resolve =>{
+            con.query('select community.*,users.userName,users.userPic from community,users where community.userId=users.userId and community.userId=?',[it.userId], (err, result) => {
                 var cimg;
                 for(var i=0;i<result.length;i++){
                     if(result[i].cimg.length !== 0){
@@ -175,7 +209,7 @@ server.on('request',(req,res) => {
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
         var id = it.userId;
         let promise6 = new Promise(resolve =>{
-            con.query(`select * from saveTable where userId=${id}`, (err, result) => {
+            con.query('select * from saveTable where userId=?',[id], (err, result) => {
                 resolve(result);
                 // console.log("读取用户"+id+"收藏的文章");
             })
@@ -189,9 +223,9 @@ server.on('request',(req,res) => {
         var it = qs.parse(req.url.split('?')[1]);
         // console.log(it);
         let promise35 = new Promise(resolve =>{
-            con.query(`select count(userId) save from saveTable where articleId=${it.articleId}`,function(err, result){
+            con.query('select count(userId) save from saveTable where articleId=?',[it.articleId],function(err, result){
                 resolve(JSON.parse(JSON.stringify(result))[0].save);
-                console.log(JSON.parse(JSON.stringify(result))[0].save);
+                // console.log(JSON.parse(JSON.stringify(result))[0].save);
             });
         }).then(value =>{
             let promise34 = new Promise(resolve =>{
@@ -216,7 +250,7 @@ server.on('request',(req,res) => {
         var it = qs.parse(req.url.split('?')[1]);
         // console.log(it);
         let promise35 = new Promise(resolve =>{
-            con.query(`select count(userId) save from saveTable where articleId=${it.articleId}`,function(err, result){
+            con.query('select count(userId) save from saveTable where articleId=?',[it.articleId],function(err, result){
                 resolve(JSON.parse(JSON.stringify(result))[0].save);
                 // console.log(JSON.parse(JSON.stringify(result))[0].save);
             });
@@ -243,7 +277,7 @@ server.on('request',(req,res) => {
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
         var id = it.userId;
         let promise6 = new Promise(resolve =>{
-            con.query(`select * from agreeTable where userId=${id}`, (err, result) => {
+            con.query('select * from agreeTable where userId=?',[id], (err, result) => {
                 resolve(result);
                 // console.log("读取点赞表的信息");
             })
@@ -256,7 +290,7 @@ server.on('request',(req,res) => {
         //点赞文章
         var it = qs.parse(req.url.split('?')[1]);
         let promise35 = new Promise(resolve =>{
-            con.query(`select count(userId) agree from agreeTable where articleId=${it.articleId}`,function(err, result){
+            con.query('select count(userId) agree from agreeTable where articleId=?',[it.articleId],function(err, result){
                 resolve(JSON.parse(JSON.stringify(result))[0].agree);
             });
         }).then(value =>{
@@ -279,7 +313,7 @@ server.on('request',(req,res) => {
         //取消点赞文章
         var it = qs.parse(req.url.split('?')[1]);
         let promise35 = new Promise(resolve =>{
-            con.query(`select count(userId) agree from agreeTable where articleId=${it.articleId}`,function(err, result){
+            con.query('select count(userId) agree from agreeTable where articleId=?',[it.articleId],function(err, result){
                 resolve(JSON.parse(JSON.stringify(result))[0].agree);
             });
         }).then(value =>{
@@ -303,17 +337,40 @@ server.on('request',(req,res) => {
     }else if(req.url.split('?')[0] === '/care'){
         //读取关注表的信息
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
-        var id = it.userId;
         let promise6 = new Promise(resolve =>{
-            con.query(`select * from care where userId=${id}`, (err, result) => {
-                resolve(result);
-                // console.log("读取关注表的信息");
-            })
+            if(Object.keys(it)[1] === 'userId'){
+                con.query('select * from care where userId=?',[it.userId], (err, result) => {
+                    resolve(result);
+                    // console.log("读取关注表的信息");
+                })
+            }else if(Object.keys(it)[1] === 'careId'){
+                con.query('select * from care where careId=?',[it.careId], (err, result) => {
+                    resolve(result);
+                    // console.log("读取被关注的信息")
+                })
+            }else{
+                res.statusCode = 404;
+                res.end('404 Error, resource not found!');
+            }
         }).then(value =>{
             res.writeHead(200, {"Content-type":"application/json"});
             article = JSON.stringify(value);
             res.end(article); 
         });
+    //     var it = qs.parse(req.url,"?",null,{maxKeys:2});
+    //     console.log(it);
+    //     var id = it.careId;
+    //     console.log(id);
+    //     let promise79 = new Promise(resolve =>{
+    //         con.query('select * from care where careId=?',[id], (err, result) => {
+    //             console.log(id);
+    //             resolve(result);
+    //         })
+    //     }).then(value =>{
+    //         res.writeHead(200, {"Content-type":"application/json"});
+    //         article = JSON.stringify(value);
+    //         res.end(article); 
+    //     });
     }else if(req.url.split('?')[0] === '/careAdd'){
         //关注其他用户
         var it = qs.parse(req.url.split('?')[1]);
@@ -347,7 +404,7 @@ server.on('request',(req,res) => {
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
         var id = it.userId;
         let promise4 = new Promise(resolve =>{
-            con.query(`select * from users where users.userId=${id}`, (err, result) => {
+            con.query('select * from users where users.userId=?',[id], (err, result) => {
                 resolve(result);
                 // console.log("读取用户"+id+"的信息");
             })
@@ -362,22 +419,22 @@ server.on('request',(req,res) => {
         var id = it.userId;
         var count = [];
         let promise5 = new Promise(resolve =>{
-            con.query(`select count(articleId) countArt from community where community.userId=${id}`, (err, result) => {
+            con.query('select count(articleId) countArt from community where community.userId=?',[id], (err, result) => {
                 resolve(JSON.parse(JSON.stringify(result))[0].countArt)
             });//发帖
         }).then(value =>{count.push(value)});
         let promise6 = new Promise(resolve =>{
-            con.query(`select count(cloId) countClo from clothing where clothing.userId=${id}`, (err, result) => {
+            con.query('select count(cloId) countClo from clothing where clothing.userId=?',[id], (err, result) => {
                 resolve(JSON.parse(JSON.stringify(result))[0].countClo)
             });//衣服
         }).then(value =>{count.push(value)});
         let promise7 = new Promise(resolve =>{
-            con.query(`select count(careId) countUser from care where care.userId=${id}`, (err, result) => {
+            con.query('select count(careId) countUser from care where care.userId=?',[id], (err, result) => {
                 resolve(JSON.parse(JSON.stringify(result))[0].countUser)
             });//关注
         }).then(value =>{count.push(value)});
         let promise8 = new Promise(resolve =>{
-            con.query(`select count(userId) countCare from care where care.careId=${id}`, (err, result) => {
+            con.query('select count(userId) countCare from care where care.careId=?',[id], (err, result) => {
                 resolve(JSON.parse(JSON.stringify(result))[0].countCare)
             });//粉丝
         }).then(value =>{
@@ -387,7 +444,52 @@ server.on('request',(req,res) => {
             article = JSON.stringify(count);
             res.end(article); 
         });
-    }else{
+    }else if(req.url.split('=')[0] === '/clothing?userId'){
+        var it = qs.parse(req.url,"?",null,{maxKeys:2});
+        var id = it.userId;
+        let promise78 = new Promise(resolve=>{
+            con.query('select * from clothing where userId=?',[it.userId],(err,result)=>{
+                resolve(result);
+            })
+        }).then(value=>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        })
+    }
+    // else if(req.url.split('?')[0] === '/care?careId'){
+    //     //读取某用户被关注表的信息
+    //     var it = qs.parse(req.url,"?",null,{maxKeys:2});
+    //     console.log(it);
+    //     var id = it.careId;
+    //     console.log(id);
+    //     let promise79 = new Promise(resolve =>{
+    //         con.query('select * from care where careId=?',[id], (err, result) => {
+    //             console.log(id);
+    //             resolve(result);
+    //         })
+    //     }).then(value =>{
+    //         res.writeHead(200, {"Content-type":"application/json"});
+    //         article = JSON.stringify(value);
+    //         res.end(article); 
+    //     });
+    // }else if(req.url.split('?')[0] === '/care?userId'){
+    //     //读取某用户关注表的信息
+    //     var it = qs.parse(req.url,"?",null,{maxKeys:2});
+    //     var id = it.userId;
+    //     let promise6 = new Promise(resolve =>{
+    //         con.query('select * from care where userId=?',[id], (err, result) => {
+    //             console.log(result);
+    //             resolve(result);
+    //         })
+    //     }).then(value =>{
+    //         res.writeHead(200, {"Content-type":"application/json"});
+    //         article = JSON.stringify(value);
+    //         console.log(article);
+    //         res.end(article); 
+    //     });
+    // }
+    else{
         res.statusCode = 404;
         res.end('404 Error, resource not found!');
     }
