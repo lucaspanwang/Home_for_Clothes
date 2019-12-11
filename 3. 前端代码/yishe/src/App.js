@@ -21,6 +21,11 @@ import Robe from './store/Robe';
 import Trunk from './store/Trunk';
 import DiaryAdd from './diary/DiaryAdd';
 import ArticleAdd from './community/ArticleAdd';
+import MyArticle from './me/MyArticle';
+import MyClothing from './me/MyClothing';
+import MyCare from './me/MyCare';
+import MyFan from './me/MyFan';
+import MyCollect from './me/MyCollect';
 
 export default class App extends Component {
     render() {
@@ -66,6 +71,11 @@ export default class App extends Component {
                     <Route path='/trunk/:id' component={Trunk} />
                     <Route path='/diaryadd/:id' component={DiaryAdd} />
                     <Route path='/articleadd/:id' component={ArticleAdd} />
+                    <Route path='/myarticle/:id' component={MyArticle} />
+                    <Route path='/myclothing/:id' component={MyClothing} />
+                    <Route path='/mycare/:id' component={MyCare} />
+                    <Route path='/myfan/:id' component={MyFan} />
+                    <Route path='/mycollect/:id' component={MyCollect} />
                 </div> 
             </Router>
         )

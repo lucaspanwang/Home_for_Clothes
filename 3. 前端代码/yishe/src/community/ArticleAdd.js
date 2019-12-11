@@ -15,23 +15,27 @@ export default class ArticleAdd extends Component {
     }
     onPost=()=> {      
         // console.log(this.props.match.params.id);//获取到的用户id 
-        var today = new Date();
-        var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-        var cimgName = [];
-        for(var i=0;i<this.state.cimg.length;i++){
-            console.log(this.state.cimg[i].file.name.split(".")[1]);
-            cimgName[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+        if(this.state.value == '' && this.state.cimg == ''){
+            return ;
+        }else{
+            var today = new Date();
+            var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+            var cimgName = [];
+            for(var i=0;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                cimgName[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+            fetch('http://47.98.163.228:8086/articleAdd',{
+                method: 'post', 
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials" : true,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:this.state.cimg,cimgName:cimgName}) 
+            });
         }
-        fetch('http://47.98.163.228:8086/articleAdd',{
-            method: 'post', 
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Credentials" : true,
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:this.state.cimg,cimgName:cimgName}) 
-        });
     }
     
     onChange1 = ({ target: { value } }) => {
@@ -52,8 +56,7 @@ export default class ArticleAdd extends Component {
                     <Link to={"/shequtab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <Link to={"/shequtab/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
-                    // <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</span>
+                    <Link to={"/shequtab/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</Link>
                 ]}
                 >社区发布文章</NavBar>
 
@@ -67,7 +70,6 @@ export default class ArticleAdd extends Component {
                     files={this.state.cimg}
                     onChange={this.onChange}
                     onImageClick={(index, fs) => console.log(index, fs)}
-                    //selectable={files.length < 5}
                     accept="image/gif,image/jpeg,image/jpg,image/png"
                 />
             </div>

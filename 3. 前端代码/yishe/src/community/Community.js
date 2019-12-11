@@ -161,7 +161,6 @@ export default class Community extends Component {
     //关注/取消关注
     onCare = (id,event) =>{
         var users = this.state.users;
-        console.log(users);
         if(users.find(it => it.userId === id).follow === false){
             fetch("http://47.98.163.228:8086/careAdd?userId="+this.props.id+"&careId="+id)
             .then(res=>res.json())
@@ -170,7 +169,6 @@ export default class Community extends Component {
                 this.setState({
                     users:users
                 })
-                console.log(this.state.users);
             })
         }else{
             fetch("http://47.98.163.228:8086/careDelete?userId="+this.props.id+"&careId="+id)

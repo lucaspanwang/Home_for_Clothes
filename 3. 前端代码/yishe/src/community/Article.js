@@ -35,6 +35,7 @@ export default class Article extends Component {
       }
     }
     componentDidMount(){
+      // document.getElementById('ant-input').setAttribute = ('class','art-input');
       var articleId=this.props.match.params.id.split("&")[0];
       var userId=this.props.match.params.id.split("&")[1];
       // console.log(this.props.match.params.id.split("&")[1]);
