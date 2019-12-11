@@ -38,21 +38,21 @@ server.on('request',(req,res)=>{
         })
     }
     //获取用户信息
-    else if(req.url.split('=')[0]==='/users?userId'){
-        var userId = req.url.split('=')[1];
-        let promise = new Promise(resolve =>{
-            con.query(`select * 
-                       from users 
-                       where userId = ${userId};`, (err, result) => {
-                resolve(result)
-            })
-        })
-        .then(value =>{
-            var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
-            res.end(data.toString('utf8'));     
-        })
-    }
+    // else if(req.url.split('=')[0]==='/users?userId'){
+    //     var userId = req.url.split('=')[1];
+    //     let promise = new Promise(resolve =>{
+    //         con.query(`select * 
+    //                    from users 
+    //                    where userId = ${userId};`, (err, result) => {
+    //             resolve(result)
+    //         })
+    //     })
+    //     .then(value =>{
+    //         var data = JSON.stringify(value);   
+    //         res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+    //         res.end(data.toString('utf8'));     
+    //     })
+    // }
     //获取指定用户的日记数据
     else if(req.url.split('=')[0]==='/diary?userId'){
         var userId = req.url.split('=')[1];
