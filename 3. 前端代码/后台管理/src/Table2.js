@@ -1,6 +1,27 @@
 import React, { Component } from 'react'
+import shanchu from './删 除 .png'
+import tianjia from './添加.png'
+import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
+export default class Table2 extends Component {
+    constructor(){
+        super();
+        this.state=({
+            ress:[],
+            str:'',
+        })
+    }
+    componentDidMount(){
+        fetch('http://47.98.163.228:8088/users')
+        .then(res=>res.json())
+        .then(res=>{      
+            this.setState({
+                ress:res
+            },function(){
+                console.log(this.state.ress)
+            })
+        })
+    }
 
-export default class Table1 extends Component {
     render() {
         return (
             <div>
@@ -9,7 +30,7 @@ export default class Table1 extends Component {
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="page-header">
-                                文章
+                                用户
                             </h1>
                         </div>
                     </div>	
@@ -21,77 +42,25 @@ export default class Table1 extends Component {
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>Rendering engine</th>
-                                            <th>Browser</th>
-                                            <th>Platform(s)</th>
-                                            <th>Engine version</th>
-                                            <th>CSS grade</th>
+                                            <th style={{textAlign:'center'}}>昵称</th>
+                                            <th style={{textAlign:'center'}}>id</th>
+                                            <th style={{textAlign:'center'}}>密码</th>
+                                            <th style={{textAlign:'center'}}>城市</th>
+                                            <th style={{textAlign:'center'}}>手机号</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="odd gradeX">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 4.0</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">4</td>
-                                            <td class="center">X</td>
-                                        </tr>
-                                        <tr class="even gradeC">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 5.0</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">5</td>
-                                            <td class="center">C</td>
-                                        </tr>
-                                        <tr class="odd gradeA">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 5.5</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">5.5</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="even gradeA">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 6</td>
-                                            <td>Win 98+</td>
-                                            <td class="center">6</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="odd gradeA">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 7</td>
-                                            <td>Win XP SP2+</td>
-                                            <td class="center">7</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="even gradeA">
-                                            <td>Trident</td>
-                                            <td>AOL browser (AOL desktop)</td>
-                                            <td>Win XP</td>
-                                            <td class="center">6</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="gradeA">
-                                            <td>Gecko</td>
-                                            <td>Firefox 1.0</td>
-                                            <td>Win 98+ / OSX.2+</td>
-                                            <td class="center">1.7</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="gradeA">
-                                            <td>Gecko</td>
-                                            <td>Firefox 1.5</td>
-                                            <td>Win 98+ / OSX.2+</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="gradeA">
-                                            <td>Gecko</td>
-                                            <td>Firefox 2.0</td>
-                                            <td>Win 98+ / OSX.2+</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
-                                        </tr>
+                                        {
+                                            this.state.ress.map((item,idx)=>(
+                                                <tr id="lalala">
+                                                    <td>{item.userName}</td>
+                                                    <td>{item.userId}</td>
+                                                    <td>{item.userPwd}</td>
+                                                    <td>{item.userCity}</td>
+                                                    <td>{item.userPho}</td>
+                                                </tr>
+                                            ))
+                                            }
                                     </tbody>
                                 </table>
                             </div>                       

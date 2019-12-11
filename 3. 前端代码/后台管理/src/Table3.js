@@ -1,6 +1,37 @@
 import React, { Component } from 'react'
-
+import shanchu from './删 除 .png'
+import tianjia from './添加.png'
+import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
 export default class Table1 extends Component {
+    constructor(){
+        super();
+        this.state=({
+            ress:[],
+            str:'',
+        })
+    }
+    componentDidMount(){
+        fetch('http://47.98.163.228:8086/article')
+        .then(res=>res.json())
+        .then(res=>{      
+            this.setState({
+                ress:res
+            },function(){
+                console.log(this.state.ress)
+            })
+        })
+    }
+    shanchu=(idx)=>{
+        fetch("http://47.98.163.228:8086/articleshanchu", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({articleId:idx}) 
+      })
+    }
     render() {
         return (
             <div>
@@ -9,7 +40,7 @@ export default class Table1 extends Component {
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="page-header">
-                                用户
+                                文章
                             </h1>
                         </div>
                     </div>	
@@ -20,78 +51,33 @@ export default class Table1 extends Component {
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
+                                        <th>
+                                            <Link to='/tianjia'>
+                                            <img src={tianjia} style={{width:'20%'}}/>
+                                            </Link>
+                                        </th>
                                         <tr>
-                                            <th>Rendering engine</th>
-                                            <th>Browser</th>
-                                            <th>Platform(s)</th>
-                                            <th>Engine version</th>
-                                            <th>CSS grade</th>
+                                            <th style={{textAlign:'center'}}>作者</th>
+                                            <th style={{textAlign:'center'}}>内容</th>
+                                            <th style={{textAlign:'center'}}>点赞数</th>
+                                            <th style={{textAlign:'center'}}>收藏数</th>
+                                            <th style={{textAlign:'center'}}>发表时间</th>
+                                            <th style={{textAlign:'center'}}>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="odd gradeX">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 4.0</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">4</td>
-                                            <td class="center">X</td>
-                                        </tr>
-                                        <tr class="even gradeC">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 5.0</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">5</td>
-                                            <td class="center">C</td>
-                                        </tr>
-                                        <tr class="odd gradeA">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 5.5</td>
-                                            <td>Win 95+</td>
-                                            <td class="center">5.5</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="even gradeA">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 6</td>
-                                            <td>Win 98+</td>
-                                            <td class="center">6</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="odd gradeA">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 7</td>
-                                            <td>Win XP SP2+</td>
-                                            <td class="center">7</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="even gradeA">
-                                            <td>Trident</td>
-                                            <td>AOL browser (AOL desktop)</td>
-                                            <td>Win XP</td>
-                                            <td class="center">6</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="gradeA">
-                                            <td>Gecko</td>
-                                            <td>Firefox 1.0</td>
-                                            <td>Win 98+ / OSX.2+</td>
-                                            <td class="center">1.7</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="gradeA">
-                                            <td>Gecko</td>
-                                            <td>Firefox 1.5</td>
-                                            <td>Win 98+ / OSX.2+</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
-                                        </tr>
-                                        <tr class="gradeA">
-                                            <td>Gecko</td>
-                                            <td>Firefox 2.0</td>
-                                            <td>Win 98+ / OSX.2+</td>
-                                            <td class="center">1.8</td>
-                                            <td class="center">A</td>
-                                        </tr>
+                                        {
+                                            this.state.ress.map((item,idx)=>(
+                                                <tr id="lalala">
+                                                    <td>{item.articleId}</td>
+                                                    <td style={{width:'500px', textAlign:'left'}}>{item.content}</td>
+                                                    <td>{item.agree}</td>
+                                                    <td class="center">{item.save}</td>
+                                                    <td class="center">{item.time}</td>
+                                                    <td class="center" onClick={this.shanchu(idx)}><img src={shanchu} style={{width:'10%'}}/></td>
+                                                </tr>
+                                            ))
+                                            }
                                     </tbody>
                                 </table>
                             </div>                       

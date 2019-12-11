@@ -1,6 +1,29 @@
 import React, { Component } from 'react'
 
 export default class Body extends Component {
+    constructor(){
+        super();
+        this.state=({
+            num:0,
+            num2:0,
+        })
+    }
+    componentDidMount(){
+        fetch('http://47.98.163.228:8086/article')
+        .then(res=>res.json())
+        .then(res=>{      
+            this.setState({
+                num:res.length
+            })
+        })
+        fetch('http://47.98.163.228:8088/users')
+        .then(res=>res.json())
+        .then(res=>{      
+            this.setState({
+                num2:res.length
+            })
+        })    
+    }
     render() {
         return (
             <div>
@@ -21,7 +44,7 @@ export default class Body extends Component {
                                     <i class="fa fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="panel-right">
-                                 <h3>15,823 </h3>
+                                    <h3>{this.state.num2}</h3>
                                    <strong> 用户数量 </strong>
                                 </div>
                             </div>
@@ -32,7 +55,7 @@ export default class Body extends Component {
                                     <i class="fa fa-users fa-5x"></i>
                                 </div>
                                 <div class="panel-right">
-                                <h3>36,752 </h3>
+                                    <h3>{this.state.num}</h3>
                                  <strong>文章数量</strong>
                                 </div>
                             </div>
