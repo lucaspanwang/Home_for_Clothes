@@ -35,7 +35,6 @@ export default class Me extends Component {
         }
     }  
     componentDidMount(){
-        console.log(this.props.id);
         fetch("http://47.98.163.228:8086/users?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
@@ -46,7 +45,6 @@ export default class Me extends Component {
             this.setState({
                 user:res[0]
             })
-            console.log(this.state.user);
         });
         fetch("http://47.98.163.228:8086/detail?userId="+this.props.id)
         .then(res=>res.json())
@@ -54,7 +52,6 @@ export default class Me extends Component {
             this.setState({
                 detail:res
             })
-            console.log(this.state.detail);
         });
     }
     render() {
@@ -76,34 +73,34 @@ export default class Me extends Component {
                 <div className="gutter-example" style={{width:"100%",textAlign:'center',marginTop:"5px",}}>
                     <Row gutter={20} style={{margin:"0 3%",borderTop:"2px solid #ddd"}}>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{this.state.detail[0]}</h4><h4>发帖</h4></div>
+                            <Link to={"/myarticle/"+this.props.id}><div className="gutter-box"><h4>{this.state.detail[0]}</h4><h4>发帖</h4></div></Link>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{this.state.detail[1]}</h4><h4>衣服</h4></div>
+                            <Link to={"/myclothing/"+this.props.id}><div className="gutter-box"><h4>{this.state.detail[1]}</h4><h4>衣服</h4></div></Link>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{this.state.detail[2]}</h4><h4>关注</h4></div>
+                            <Link to={"/mycare/"+this.props.id}><div className="gutter-box"><h4>{this.state.detail[2]}</h4><h4>关注</h4></div></Link>
                         </Col>
                         <Col className="gutter-row" span={6}>
-                            <div className="gutter-box"><h4>{this.state.detail[3]}</h4><h4>粉丝</h4></div>
+                            <Link to={"/myfan/"+this.props.id}><div className="gutter-box"><h4>{this.state.detail[3]}</h4><h4>粉丝</h4></div></Link>
                         </Col>
                     </Row>
                 </div>
 
                 <List style={{borderTop:"5px solid #ddd",borderBottom:"5px solid #ddd",padding:"0 3%"}}>
-                    <Item
+                    <Link to={"/mycollect/"+this.props.id}><Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={shoucang}
                     arrow="horizontal"
                     onClick={() => {}}
-                    >收藏</Item>
+                    >收藏</Item></Link>
                     <Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={xiangce}
                     onClick={() => {}}
                     arrow="horizontal"
                     >相册</Item>
-                    <Item
+                    {/* <Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={kaquan}
                     onClick={() => {}}
@@ -114,7 +111,7 @@ export default class Me extends Component {
                     thumb={huishouzhan}
                     onClick={() => {}}
                     arrow="horizontal"
-                    >回收站</Item>
+                    >回收站</Item> */}
                     <Link to={"/setup/"+this.props.id}><Item
                     thumb={shezhi}
                     arrow="horizontal"
