@@ -8,9 +8,22 @@ const { TextArea } = Input;
 export default class DiaryAdd extends Component {
     constructor(){
         super();
-        var id = Number(Math.random().toString().substr(3,20) + Date.now()).toString(36);
-        var today = new Date(),
-            date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes();
+        var id = Number(Math.random().toString().substr(3,10) + Date.now()).toString(16);
+        var today = new Date();
+        var hour = '';
+        var minutes = '';
+        if(today.getHours()<10){
+            hour = '0'+today.getHours();
+        }else{
+            hour = today.getHours();
+        }
+        if(today.getMinutes()<10){
+            minutes = '0'+today.getMinutes();
+        }else{
+            minutes = today.getMinutes();
+        }
+
+        var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+hour+':'+minutes;
         this.state = {
             value: '',
             files: [],
@@ -26,12 +39,7 @@ export default class DiaryAdd extends Component {
         window.location.href = arr[0] + str;
     }
     onPost=()=> { 
-        var userId = this.props.match.params.id;   
-        this.setState({
-            userId:userId
-        })  
-        console.log(this.props.match.params.id);//获取到的用户id 
-        fetch('http://47.98.163.228:8081/dd',{
+        fetch('http://47.98.163.228:8081/diaryAdd',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,
@@ -39,7 +47,7 @@ export default class DiaryAdd extends Component {
             headers: {
                 'Content-Type': 'multipart/form-data;charset=utf-8'
             },
-            body:JSON.stringify({diaryId:this.state.diaryId,userId:this.state.userId,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
+            body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
         })
         console.log(this.state.files);
 
@@ -70,7 +78,7 @@ export default class DiaryAdd extends Component {
                     <Link to={"/rijitab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <Link to={"/rijitab/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
+                    <Link style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
                 ]}
                 >发布穿搭日记</NavBar>
 
