@@ -4,6 +4,7 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography,Menu, Dropdown, Icon } from 'antd';
 import './community.css';
 
+import tianjia from '../images/添加.png';
 import xiala from '../images/下拉.png';
 import fenxiang from '../images/分享(1).png';
 import shoucang from '../images/收藏.png';
@@ -28,6 +29,10 @@ export default class Community extends Component {
         }
     }    
     componentDidMount(){
+        // if(!this.state.isReload){
+        //     window.location.reload();
+        // }
+        // window.location.reload(false);
         // console.log(this.props.id);
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
@@ -55,7 +60,6 @@ export default class Community extends Component {
             this.setState({
                 users:users
             })
-            // console.log(this.state.users);
         })
         fetch("http://47.98.163.228:8086/agree?userId="+this.props.id)
         .then(res=>res.json())
@@ -89,6 +93,7 @@ export default class Community extends Component {
                 users:users
             })
         })
+        this.forceUpdate();
     }
     //修改时间
     standardTime = (time) => {
@@ -208,8 +213,8 @@ export default class Community extends Component {
             <div style={{width:'100%'}}>
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
+                rightContent={<Link to={"/articleadd/"+this.props.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >社区</NavBar>
-
                 <div style={{borderBottom:'5px dotted #bbb'}}>
                     <WhiteSpace size="lg" />
                     <WingBlank size="lg">
@@ -218,7 +223,6 @@ export default class Community extends Component {
                     </WingBlank>
                     <WhiteSpace size="lg" />
                 </div>
-                
                 {
                     this.state.users.map((item)=>(<div className="article" key={item.articleId}>
                         <div className='artUser'>
@@ -241,30 +245,6 @@ export default class Community extends Component {
                                 onSelect={this.onSelect}
                             ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
                             </Popover>
-                            {/* <Dropdown overlay={menu} trigger={['click']}>
-                                <a className="ant-dropdown-link" href="#">
-                                Click me <Icon type="down" />
-                                </a>
-                            </Dropdown> */}
-                            {/* <Popover mask
-                                // overlayClassName="fortest"
-                                // overlayStyle={{ color: 'currentColor' }}
-                                visible={this.state.visible}
-                                overlay={[
-                                (<Item key="4" value="scan" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Scan</Item>),
-                                (<Item key="5" value="special" icon={myImg('PKAgAqZWJVNwKsAJSmXd')} style={{ whiteSpace: 'nowrap' }}>My Qrcode</Item>),
-                                (<Item key="6" value="button ct" icon={myImg('uQIYTFeRrjPELImDRrPt')}>
-                                    <span style={{ marginRight: 5 }}>Help</span>
-                                </Item>),
-                                ]}
-                                align={{
-                                overflow: { adjustY: 0, adjustX: 0 },
-                                offset: [-10, 0],
-                                }}
-                                onVisibleChange={this.handleVisibleChange}
-                                onSelect={this.onSelect}
-                            ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
-                            </Popover> */}
                         </div>
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
@@ -272,7 +252,7 @@ export default class Community extends Component {
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
-                            <li><img src={`${pinglun}`} alt=''/><span>{item.review || "评论"}</span></li>
+                            <li><Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}><img src={`${pinglun}`} alt=''/><span style={{color:"#444"}}>{item.review || "评论"}</span></Link></li>
                             <li onClick={this.onCollect.bind(this,item.articleId)}><img src={item.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{item.save || "收藏"}</span></li>
                             <li onClick={this.onAgree.bind(this,item.articleId)}><img src={item.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{item.agree || "点赞"}</span></li>
                         </ul>

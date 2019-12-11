@@ -118,9 +118,99 @@ export default class Article extends Component {
             this.setState({
                 user:res[0]
             })
-            // console.log(this.state.user);
         });
     }
+    // componentDidUpdate(prevProps,prevState){
+    //   var articleId=this.props.match.params.id.split("&")[0];
+    //   var userId=this.props.match.params.id.split("&")[1];
+    //   if(prevState.article !== this.state.article){
+    //     fetch("http://47.98.163.228:8086/article?articleId="+articleId)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         for(var i=0;i<res.length;i++){
+    //           var j = res[i].userPic.indexOf('/');
+    //           res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+    //           for(var j=0;j<res[i].cimg.length;j++){
+    //               res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+    //               console.log(res[i].cimg[j]);
+    //           }
+    //         }
+    //         res[0].time = this.standardTime(res[0].time)
+    //         this.setState({
+    //           article:res[0]
+    //         })
+    //     });
+    //     fetch("http://47.98.163.228:8086/collect?userId="+userId)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         var article=this.state.article;
+    //         article.collect = false;
+    //         for(var i=0;i<res.length;i++){
+    //             if(res[i].articleId === article.articleId){
+    //               article.collect = true;
+    //             }
+    //         }
+    //         this.setState({
+    //             article:article
+    //         })
+    //     })
+    //     fetch("http://47.98.163.228:8086/agree?userId="+userId)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         var article=this.state.article;
+    //         article.like = false;
+    //         for(var i=0;i<res.length;i++){
+    //           if(article.articleId == res[i].articleId){
+    //             article.like = true;
+    //           }
+    //         }
+    //         this.setState({
+    //             article:article
+    //         })
+    //     })
+    //     fetch("http://47.98.163.228:8086/care?userId="+userId)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //       var article=this.state.article;
+    //       article.follow = false;
+    //       for(var i=0;i<res.length;i++){
+    //         if(article.userId == res[i].careId){
+    //           article.follow = true;
+    //         }
+    //       }
+    //       this.setState({
+    //           article:article
+    //       })
+    //     })
+    //   }
+    //   if(prevState.review !== this.state.review){
+    //     fetch("http://47.98.163.228:8086/review?articleId="+articleId)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         for(var i=0;i<res.length;i++){
+    //           var j = res[i].userPic.indexOf('/');
+    //           res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+    //         }
+    //         this.setState({
+    //           review:res
+    //         })
+    //         // console.log(this.state.review);
+    //     });
+    //   }
+    //   if(prevState.user !== this.state.user){
+    //     fetch("http://47.98.163.228:8086/users?userId="+userId)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         for(var i=0;i<res.length;i++){
+    //             var j = res[i].userPic.indexOf('/');
+    //             res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+    //         }
+    //         this.setState({
+    //             user:res[0]
+    //         })
+    //     });
+    //   }
+    // }
     onSelect = (opt) => {
         this.setState({
             visible: false,

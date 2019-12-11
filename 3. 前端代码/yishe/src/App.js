@@ -20,11 +20,12 @@ import Home from './store/Home';
 import Robe from './store/Robe';
 import Trunk from './store/Trunk';
 import DiaryAdd from './diary/DiaryAdd';
+import ArticleAdd from './community/ArticleAdd';
 
 export default class App extends Component {
     render() {
         return (
-            <Router>
+            <Router forceRefresh={true}>
                 <div>
                     <Route exact path='/' component={Advertise} />
                     <Route path='/login' component={Login} />
@@ -64,6 +65,7 @@ export default class App extends Component {
                     <Route path='/robe/:id' component={Robe} />
                     <Route path='/trunk/:id' component={Trunk} />
                     <Route path='/diaryadd/:id' component={DiaryAdd} />
+                    <Route path='/articleadd/:id' component={ArticleAdd} />
                 </div> 
             </Router>
         )
