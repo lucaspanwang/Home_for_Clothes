@@ -15,10 +15,7 @@ con.connect();
 
 var server = http.createServer().listen(8081);
 server.on('request',(req,res)=>{   
-    //res.setHeader("Access-Control-Allow-Origin", "*"); 
     if(req.url==='/diaryAdd'){
-
-        //res.setHeader("Access-Control-Allow-Origin", "*");
         var obj="";
         var di='';
         req.on('data',function(data){
@@ -48,8 +45,6 @@ server.on('request',(req,res)=>{
             let promise01 = new Promise(resolve =>{
                 con.query('insert into diary values(?,?,?,?,?)',[riji.diaryId,riji.userId,riji.value,di,riji.diarytime],(err, result) => {
                     result=[riji.diaryId,riji.userId,riji.value,di,riji.diarytime];
-                    // console.log(riji.diaryId);
-                    // console.log(result);
                     resolve(result);
                 });//添加日记
             }).then(value =>{
@@ -59,19 +54,6 @@ server.on('request',(req,res)=>{
             });
 
         })
-        
-        // let promise01 = new Promise(resolve =>{
-        //     con.query('insert into diary values(?,?,?,?,?)',[riji.diaryId,riji.userId,riji.value,di,riji.diarytime],(err, result) => {
-        //         result=[riji.diaryId,riji.userId,riji.value,di,riji.diarytime];
-        //         console.log(riji.diaryId);
-        //         console.log(result);
-        //         resolve(result);
-        //     });//添加日记
-        // }).then(value =>{
-        //     res.writeHead(200, {"Content-type":"application/json"});
-        //     diary = JSON.stringify(value);
-        //     res.end(diary); 
-        // });
         res.end();    
     }
     else if(req.url === '/diary'){
@@ -135,7 +117,6 @@ server.on('request',(req,res)=>{
     else if(req.url.split('/')[1] === 'images') {
         var photo = req.url.split('/')[2];
         optfile.readImg('../我的/images/'+photo, res);
-        //console.log("主程序结束");
     }
     
 });
