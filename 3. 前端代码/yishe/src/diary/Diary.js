@@ -9,6 +9,8 @@ import add from '../images/添加.png';
 import lunbo01 from '../images/lunbo01.jpg';
 import lunbo02 from '../images/lunbo02.jpg';
 
+var diaryIds = []; 
+
 export default class Diary extends Component {
     constructor(){
         super();
@@ -26,10 +28,11 @@ export default class Diary extends Component {
         fetch('http://47.98.163.228:8081/diary?userId='+this.props.id)
         .then(res=>res.json())
         .then(res=>{
-            {                 
+            {            
                 for(var i=0;i<res.length;i++){
                     var j = res[i].userPic.indexOf('/');
-                    res[i].userPic = "http://47.98.163.228:8081"+res[i].userPic.substr(j);
+                    res[i].userPic = "http://47.98.163.228:8081"+res[i].userPic.substr(j);  
+                    diaryIds.push(res[i].diaryId);    
                 }
                 for(var i=0;i<res.length;i++){
                     if(res[i].dimg[0]===''){
@@ -50,16 +53,51 @@ export default class Diary extends Component {
             this.setState({
             data: [lunbo01,lunbo02],
             });
-        }, 100);
+        }, 100);    
+
     }
-    // deleteItem=(id)=>{
-    //     var content = [...this.state.content];
-    //     content.splice(id,1);
-    //     this.setState({
-    //        content:content
-    //     })
-    //     diaryList.splice(id,1);
-    // }
+    formatUTC=(utc_datetime) =>{
+        // 转为正常的时间格式 年-月-日 时:分:秒
+        var T_pos = utc_datetime.indexOf('T');
+        var Z_pos = utc_datetime.indexOf('Z');
+        var year_month_day = utc_datetime.substr(0,T_pos);
+        var hour_minute_second = utc_datetime.substr(T_pos+1,Z_pos-T_pos-1);
+        var new_datetime = year_month_day+" "+hour_minute_second; // 2017-03-31 08:02:06
+      
+        // 处理成为时间戳
+        timestamp = new Date(Date.parse(new_datetime));
+        timestamp = timestamp.getTime();
+        timestamp = timestamp/1000;
+      
+        // 增加8个小时，北京时间比utc时间多八个时区
+        var timestamp = timestamp+8*60*60;
+      
+        // 时间戳转为时间
+        var beijing_datetime = new Date(parseInt(timestamp) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+        return beijing_datetime;
+    } 
+    deleteItem=(id)=>{
+        var content = [...this.state.content];
+        content.splice(id,1);
+        this.setState({
+           content:content,
+        })
+        // diaryIds[id]='0';
+        var diarys = diaryIds;
+        var diaryId = diarys[id];
+        diarys.splice(id,1);
+
+        fetch('http://47.98.163.228:8081/diaryDel',{
+            method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'multipart/form-data;charset=utf-8'
+            },
+            body:JSON.stringify({diaryId:diaryId}) 
+        })
+    }
     render() {
         return (
             <div style={{width:'100%'}}>
@@ -85,7 +123,7 @@ export default class Diary extends Component {
                     ))}
                     </Carousel>
                     {
-                        this.state.content.map((item)=>( <img src={this.state.content[0].userPic} alt='' style={{width:'15%',borderRadius:'50%',position: 'absolute',top:'85%',left:'0',zIndex:"99"}}/>))
+                        this.state.content.map((item,idx)=>( <img src={this.state.content[0].userPic} alt='' style={{width:'15%',borderRadius:'50%',position: 'absolute',top:'85%',left:'0',zIndex:"99"}}  key={idx}/>))
                     }
                    
                 </div>                
@@ -101,7 +139,7 @@ export default class Diary extends Component {
                                 )}
                                 />
                                 <p style={{color:'#1f8774',marginTop:'8px'}}>{item.diaryContent}</p>
-                                <span style={{color:'#888'}}>{item.diaryTime} <img src={del} alt='' style={{width:'7%',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
+                                <span style={{color:'#888'}}>{this.formatUTC(item.diaryTime)} <img src={del} alt='' style={{width:'7%',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
                             </div>    
                         </Timeline.Item>
                     )
