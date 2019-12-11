@@ -17,12 +17,6 @@ export default class Setup extends Component {
           checked1_2: true,
         };
       }
-      // hrefChange(str){
-      //   var h=window.location.href;
-      //   var index = h.lastIndexOf("\/");  
-      //   window.location.href = h.substring(0, index+1)+str;
-      // }
-
     render() {
         return (
             <div>
@@ -116,8 +110,6 @@ class SwitchExample extends React.Component {
   }
 
   const Se = createForm()(SwitchExample);
-
-
 
   const Item = List.Item;
   const Brief = Item.Brief;

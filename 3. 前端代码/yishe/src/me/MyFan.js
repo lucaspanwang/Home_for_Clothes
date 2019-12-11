@@ -22,10 +22,6 @@ export default class MyFan extends Component {
         }
     }
     componentWillMount(){
-        // console.log(new Date());
-        // var date = new Date("2019/12/10 20:42:13");
-        // var nowDate = [date.getFullYear(),date.getMonth()+1,date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds()];
-        // console.log(nowDate);
         fetch("http://47.98.163.228:8086/care?careId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
@@ -47,19 +43,7 @@ export default class MyFan extends Component {
         })
     }
     standardTime = (timestamp)=>{
-        // console.log(timestamp);
-        // console.log(Math.round(new Date() / 1000));
-        // console.log(Math.round(new Date(timestamp) / 1000));
-        // var mistiming=Math.round(new Date() / 1000)-Math.round(new Date(timestamp) / 1000);
         var mius=Math.round(new Date())-Math.round(new Date(timestamp));
-        // var arrr = ['年','个月','星期','天','小时','分钟','秒'];
-        // var arrn = [31536000,2592000,604800,86400,3600,60,1];
-        // for(var i=6;i>=0;i--){
-        //     var inm = Math.floor(mistiming/arrn[i]);
-        //     if(inm!=0){
-        //         return inm+arrr[i]+'前';
-        //     }
-        // }
         if(mius<(1000*60)){
             return Math.floor(mius/1000)+'秒前';
         }else if(mius<(1000*60*60)){
@@ -91,37 +75,6 @@ export default class MyFan extends Component {
             this.forceUpdate();
         });
     }
-    //修改时间
-    // standardTime = (time) => {
-    //     var date = new Date();
-    //     var nowDate = [date.getFullYear(),date.getMonth()+1,date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds()];
-    //     var myDate = time.split(/[ /:]/);
-    //     var timeDate = [];
-    //     var str = ['年前','月前','天前','小时前','分钟前','秒前']
-    //     for(var i=0;i<6;i++){
-    //       timeDate[i] = nowDate[i] - Number(myDate[i]);
-    //     }
-    //     for(var j=0;j<5;j++){
-    //       if(timeDate[j] > 1){
-    //         return timeDate[j]+str[j];
-    //       }else if(timeDate[j] === 1){
-    //         if(timeDate[j+1] >= 0){
-    //           return timeDate[j]+str[j];
-    //         }else{
-    //           if(j === 0){
-    //             timeDate[j+1] = timeDate[j+1]+12;
-    //           }else if(j === 1){
-    //             timeDate[j+1] = timeDate[j+1]+30;
-    //           }else if(j === 2){
-    //             timeDate[j+1] = timeDate[j+1]+24;
-    //           }else{
-    //             timeDate[j+1] = timeDate[j+1]+60;
-    //           }
-    //           return timeDate[j+1]+str[j+1];
-    //         }
-    //       }
-    //     }
-    // }
     render() {
         return (
             <div>

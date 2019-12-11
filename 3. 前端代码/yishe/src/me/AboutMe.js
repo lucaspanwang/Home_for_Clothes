@@ -16,11 +16,6 @@ export default class AboutMe extends Component {
             user:{}
         }
     }  
-    // hrefChange(str){
-    //     var h=window.location.href;
-    //     var index = h.lastIndexOf("\/");  
-    //     window.location.href = h.substring(0, index+1)+str;
-    // }
     componentDidMount(){
         console.log(this.props.match.params.id);
         fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)

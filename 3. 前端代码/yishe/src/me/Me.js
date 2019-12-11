@@ -4,7 +4,6 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
 // import fanhui from '../images/返回 (1).png';
-import touxiang from '../images/头像.png';
 import xiangqing from '../images/详情.png';
 import shoucang from '../images/收藏（1）.png';
 import xiangce from '../images/相册.png';
@@ -12,19 +11,9 @@ import kaquan from '../images/卡券.png';
 import huishouzhan from '../images/回收站.png';
 import shezhi from '../images/设置.png';
 import renwu from '../images/小人.png';
-import Setup from './Setup';
 
 const Item = List.Item;
 const Brief = Item.Brief;
-const user = {
-    // photo:`${touxiang}`,
-    // name:'我最美丽啦啦啦啦',
-    // infor:'我也不知道说些什么',
-    cloth:'35',
-    article:'14',
-    like:'241',
-    concern:'123'
-}
 
 export default class Me extends Component {
     constructor(){
