@@ -275,6 +275,14 @@ class Insert extends Component {
     this.setState({
       files,
     });
+    var filesType = [];
+        for(var i=0;i<this.state.files.length;i++){
+            console.log(this.state.files[i].file.name.split(".")[1]);
+            filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+        }
+        this.setState({
+            filesType:filesType
+        })
   }
   onSegChange = (e) => {
     const index = e.nativeEvent.selectedSegmentIndex;
@@ -309,7 +317,7 @@ class Insert extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({picName:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
+        body:JSON.stringify({filesType:this.state.filesType,userid:this.props.match.params.id,base64:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
       })
     }
     
