@@ -39,6 +39,27 @@ export default class Community extends Component {
         });
         this.forceUpdate();
     }
+    deleteArticle=(id)=>{
+        console.log(id);
+        fetch("http://47.98.163.228:8086/articleDelete?articleId="+id)
+          .then(res=>res.json())
+          .then(res=>{
+              fetch("http://47.98.163.228:8086/article?userId="+this.props.match.params.id)
+                .then(res=>res.json())
+                .then(res=>{
+                    for(var i=0;i<res.length;i++){
+                        var j = res[i].userPic.indexOf('/');
+                        res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                        for(var j=0;j<res[i].cimg.length;j++){
+                            res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+                        }
+                    }
+                    this.setState({
+                        users:res
+                    })
+            })
+        });
+    }
     //修改时间
     standardTime = (timestamp)=>{
       var mius=Math.round(new Date())-Math.round(new Date(timestamp));
@@ -71,6 +92,7 @@ export default class Community extends Component {
                         <div className='artUser'>
                             <img className='userImg' src={item.userPic} alt=""/>
                             <span className='userName'>{item.userName}</span>
+                            <button style={{float:"right",fontSize:"16px",color:"#fff",padding:"8px 15px",border:"2px solid #85c7fd",borderRadius:"6px",backgroundColor:"#97cdf9"}} onClick={()=>this.deleteArticle(item.articleId)}>删除文章</button>
                         </div>
                         <div className="artDetail">
                             {item.content}

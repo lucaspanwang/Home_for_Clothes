@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
+import { Popover, Button } from 'antd';
 import Back from '../images/返回 (1).png';
 
 export default class MyClothing extends Component {
@@ -34,7 +35,9 @@ export default class MyClothing extends Component {
                 <div>
                     {
                         this.state.picture.map((item)=>(
-                            <img src={item.cloPic} key={item.cloId} style={{width:'120px',height:'120px',margin:'2px',border:'1px solid #ddd'}}/>
+                            <Popover content={<p style={{fontSize:"20px"}}>{item.cloPlace}</p>} placement="bottom" title={<p style={{fontSize:"16px"}}>衣服所存位置</p>} trigger="hover">
+                                <img src={item.cloPic} key={item.cloId} style={{width:'120px',height:'120px',margin:'2px',border:'1px solid #ddd'}}/>
+                            </Popover>
                         ))
                     }
                 </div>

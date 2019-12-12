@@ -15,7 +15,17 @@ export default class Setup extends Component {
           checked1_1: true,
           checked_2: false,
           checked1_2: true,
+          user:{}
         };
+      }
+      componentDidMount(){
+        fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                user:res[0]
+            })
+        });
       }
     render() {
         return (
@@ -27,7 +37,7 @@ export default class Setup extends Component {
                 ]}
                 >设置</NavBar>
                 {/* 选择 */}
-                <ListExample />
+                <ListExample id={this.state.user.userPho}/>
                 <Se />
                 <List  className="my-list">
                 <Link to={"/aboutus/"+this.props.match.params.id}><Item arrow="horizontal" multipleLine>
@@ -122,9 +132,8 @@ class SwitchExample extends React.Component {
     render() {
       return (<div>
         <List className="my-list">
-          <Item extra={'123456744'} style={{height:'70px'}}>账号</Item>
+          <Item extra={this.props.id} style={{height:'70px'}}>账号</Item>
         </List>
-
       </div>);
     }
   }
