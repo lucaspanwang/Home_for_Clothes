@@ -269,7 +269,8 @@ class Insert extends Component {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body:JSON.stringify({filesType:this.state.filesType,userid:this.props.match.params.id,base64:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
-      })
+      });
+      window.location.reload()
     }
     
   componentDidMount(){

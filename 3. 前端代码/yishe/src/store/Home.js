@@ -12,6 +12,17 @@ export default class Home extends Component {
             num:-1
         }
     }
+    deleteItem=(i,that)=>{
+        // console.log(i)
+        var p=this.state.picture;
+        // console.log('删除前；',p)
+        p.splice(i,1);
+        // console.log('删除后：',p)
+        this.setState({
+            picture:p
+        })
+        
+    }
     componentDidMount(){
         // console.log(this.props.match.params.id);//获取用户id
         fetch(this.state.url)
@@ -58,13 +69,26 @@ export default class Home extends Component {
                         <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>家</NavBar>
-                <div>
+                <div style={{position:'relative'}}>
                     {
-                    this.state.picture.map((item,i)=>(
-                        console.log(i),
-                        i==this.state.num?<img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>:
-                    <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
-                    ))
+                    this.state.picture.map((item,i)=>{
+                        // i==this.state.num?
+                        // <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>
+                        // :   
+                        // <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
+                        if(i==this.state.num){
+                            return(
+                                <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>
+                                ,<span>jjj</span>
+                                )
+                        }else{
+                            return(
+                                <div style={{display:'inlinbe-block',position:'relative',width:'120px',height:"120px",margin:'2px',float:'left'}}>
+                                <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px'}}/>
+                                <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
+                                </div>
+                            )}
+                    })
                     }
                 </div>
             </div>
