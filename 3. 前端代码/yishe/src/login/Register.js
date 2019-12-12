@@ -15,6 +15,7 @@ import {Consumer} from '../context';
 
 import './login.css';
 import { userInfo } from "os";
+import Avatar from './Avatar';
 
 export default class Register extends Component{
     constructor(){
@@ -96,8 +97,9 @@ export default class Register extends Component{
                 </Flex>
                 <Flex direction="column" justify="center" align="center" style={{paddingTop:'5%'}}>
                     <div id="camera_div">
-                        <img src={camera} width="50%" style={{position:'absolute', left:'24%', top:'15%'}}/>
-                        <p style={{position:'absolute', top:'62%', left:'21%', color:'#a8a8a8'}}>添加头像</p>
+                        <Avatar />
+                        {/* <img src={camera} width="50%" style={{position:'absolute', left:'24%', top:'15%'}}/>
+                        <p style={{position:'absolute', top:'62%', left:'21%', color:'#a8a8a8'}}>添加头像</p> */}
                     </div>
                     <div id='register_info'>
                         <form id='step1'>

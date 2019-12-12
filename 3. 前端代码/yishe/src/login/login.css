@@ -148,9 +148,11 @@ li{
   margin-top:13%;
   width:105px;
   height:105px;
-  border:solid 1px #a8a8a8;
-  border-radius:105px;
+  /* border:solid 1px #a8a8a8;
+  border-radius:105px; */
   position:relative;
+  /* overflow: hidden; */
+  background-color:#fafafa;
 }
 
 #register_info{
