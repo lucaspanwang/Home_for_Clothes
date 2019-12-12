@@ -72,10 +72,6 @@ export default class Home extends Component {
                 <div style={{position:'relative'}}>
                     {
                     this.state.picture.map((item,i)=>{
-                        // i==this.state.num?
-                        // <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>
-                        // :   
-                        // <img src={`http://47.98.163.228:8084/${item}`} style={{width:'120px',height:'120px',margin:'2px'}}/>
                         if(i==this.state.num){
                             return(
                                 <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',margin:'2px',border:'2px solid red'}}/>
