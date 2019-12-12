@@ -1,9 +1,6 @@
 #!/usr/bin/node
 
 const http = require('http');
-const fs = require('fs');
-var optfile = require('./fs_read');
-var qs=require('querystring');
 
 //连接数据库
 const mysql = require('mysql'),
@@ -16,54 +13,98 @@ const mysql = require('mysql'),
 con.connect();
 let server = http.createServer();
 
-var userPho = '122';
-
-let promise = new Promise(userNum = function(resolve){
-    //查询数据库数据获得用户信息
-    con.query(`select * from users`, (err, result) => {
-        var userNum = result.length;
-        var userDB = [];
-        for(var i=0;i<userNum;i++){
-            userDB.push(result[i]);
-        }
-        resolve(userDB);
-    })
-})
-    .then(value =>{
+// let promise = new Promise(userNum = function(resolve){
+//     //查询数据库数据获得用户信息
+//     con.query(`select * from users`, (err, result) => {
+//         var userNum = result.length;
+//         var userDB = [];
+//         for(var i=0;i<userNum;i++){
+//             userDB.push(result[i]);
+//         }
+//         resolve(userDB);
+//     })
+// })
+//     .then(value =>{
             //创建服务
-            server.on('request',(req,res)=>{
-                if(req.url==='/login'){
-                    res.setHeader("Access-Control-Allow-Origin", "*"); 
-                    res.setHeader('Content-Type', 'application/json;charset=utf-8');
-                    res.end(JSON.stringify(value));   
+            server.on('request',(req,res)=>{         
+                if(req.url==='/register'){
+                    new Promise(userNum = function(resolve){
+                        //查询数据库数据获得用户信息
+                        con.query(`select * from users`, (err, result) => {
+                            var userNum = result.length;
+                            var userDB = [];
+                            for(var i=0;i<userNum;i++){
+                                userDB.push(result[i]);
+                            }
+                            resolve(userDB);
+                        })
+                    }).then(value=>{
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        var IdDB = [];
+                        var newId = 20190002;
+                        var userNum = value.length;
+                        console.log('length:'+value.length)
+                        for(var i=0;i<userNum;i++){
+                            var tempId = value[i].userId;
+                            tempId = parseInt(tempId);
+                            IdDB.push(tempId);
+                        }
+                        console.log(IdDB);//旧
+                        for(var i=0;i<userNum;i++){
+                            if(IdDB[i]>=newId)
+                                newId = IdDB[i]+1;
+                        }
+                        IdDB.push(newId);
+                        console.log(newId)
+                        req.on('data',function(data){
+                            console.log('接收：'+data);
+                            userPho=JSON.parse(data).userPho.replace(/\s*/g,'');
+                            userPwd=JSON.parse(data).userPwd;
+                            userName=JSON.parse(data).userName;
+                            userSex=JSON.parse(data).userSex;
+                            userCity=JSON.parse(data).userCity;
+                            console.log(userPho);
+                            console.log(userPwd);
+                            console.log(userName);
+                            console.log(userSex);
+                            console.log(userCity);
+                
+                            //将接收到的数据发送到数据库
+                            let promise34 = new Promise(resolve =>{
+                                con.query('insert into users values(?,?,?,?,?,?,?,?)',[newId.toString(),userPwd,userName,'我的/images/123/jpg',userSex,userPho,'这个人很饿，把内容吃掉了', userCity],(err, result) => {
+                                    result=[newId.toString(),userPwd,userName,'我的/images/123/jpg',userSex,userPho,'这个人很饿，把内容吃掉了', userCity];
+                                    resolve(result);
+                                });
+                            }).then(value =>{
+                                //将userId发送回前端注册页面
+                                console.log('id'+value)
+                                res.end(JSON.stringify(value));
+                            });
+                
+                        })
+                    })
+
                 }
-            })
+
+                if(req.url==='/login'){
+                    new Promise(userNum = function(resolve){
+                        //查询数据库数据获得用户信息
+                        con.query(`select * from users`, (err, result) => {
+                            var userNum = result.length;
+                            var userDB = [];
+                            for(var i=0;i<userNum;i++){
+                                userDB.push(result[i]);
+                            }
+                            resolve(userDB);
+                        })
+                    }).then(value =>{
+                        res.setHeader("Access-Control-Allow-Origin", "*"); 
+                        res.setHeader('Content-Type', 'application/json;charset=utf-8');
+                        res.end(JSON.stringify(value));
+                    });
+   
+                }
+            // })
     })
 
-server.on('request',(req,res)=>{
-    if(req.url==='/register'){
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        req.on('data',function(data){
-            console.log('接收：'+data);
-            userPho=JSON.parse(data).userPho;
-            userPwd=JSON.parse(data).userPwd;
-
-            //将接收到的数据发送到数据库
-            // let promise34 = new Promise(resolve =>{
-            //     con.query('insert into users values(?,?,?,?,?,?,?,?)',[value,it.userId,it.articleId,it.reviewContent,it.reviewTime],(err, result) => {
-            //         result=[value,it.userId,it.articleId,it.reviewContent,it.reviewTime];
-            //         resolve(result);
-            //     });
-            // }).then(value =>{
-            //     res.writeHead(200, {"Content-type":"application/json"});
-            //     review = JSON.stringify(value);
-            //     res.end(review); 
-            // });
-
-        })
-        res.end();
-    }
-})
-
-
-server.listen(8092);
+    server.listen(8082);

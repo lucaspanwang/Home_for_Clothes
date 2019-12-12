@@ -1,5 +1,7 @@
 #!/usr/bin/node
 
+//暂时不用了，运行register.js去
+
 const http = require('http');
 
 //连接数据库
@@ -33,7 +35,8 @@ let promise = new Promise(userNum = function(resolve){
                     res.end(JSON.stringify(value));   
                 }
                 if(req.url==='/register'){
-                    res.setHeader("Access-Control-Allow-Origin", "*");
+                    // res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin":"*"});
+                    res.setHeader("Access-Control-Allow-Origin", "*"); 
                     var IdDB = [];
                     var newId = 20190002;
                     var userNum = value.length;
@@ -47,7 +50,10 @@ let promise = new Promise(userNum = function(resolve){
                             newId = IdDB[i]+1;
                     }
                     req.on('data',function(data){
+                       
                         console.log('接收：'+data);
+                        // var data = req;
+                        console.log(JSON.parse(data));
                         userPho=JSON.parse(data).userPho.replace(/\s*/g,'');
                         userPwd=JSON.parse(data).userPwd;
                         userName=JSON.parse(data).userName;
@@ -63,23 +69,21 @@ let promise = new Promise(userNum = function(resolve){
                         let promise34 = new Promise(resolve =>{
                             con.query('insert into users values(?,?,?,?,?,?,?,?)',[newId.toString(),userPwd,userName,'我的/images/123/jpg',userSex,userPho,'这个人很饿，把内容吃掉了', userCity],(err, result) => {
                                 result=[newId.toString(),userPwd,userName,'我的/images/123/jpg',userSex,userPho,'这个人很饿，把内容吃掉了', userCity];
-                                resolve(result);
+                                resolve(newId.toString());
                             });
                         }).then(value =>{
-                            res.writeHead(200, {"Content-type":"application/json"});
-                            review = JSON.stringify(value);
-                            res.end(review); 
+                            
+                            // review = JSON.stringify(value);
+                            // res.end(review); 
+                            //将userId发送回前端注册页面
+                            console.log('id'+value)
+                            res.end(JSON.stringify(value));
                         });
-
-                        //将userId发送回前端注册页面
-                        resolve(newId.toString());
-
             
                     })
-                    res.end(newId.toString());
+
                 }
             })
     })
-
 
     server.listen(8082);
