@@ -21,6 +21,16 @@ export default class Robe extends Component {
         this.setState({
             picture:p
         })
+        fetch('http://47.98.163.228:8087/delete',{
+            method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body:JSON.stringify({nage:i,weizhi:'柜子'})
+        })
         
     }
     componentDidMount(){
