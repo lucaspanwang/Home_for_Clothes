@@ -81,7 +81,7 @@ export default class CitySelector extends React.Component {
                         value={this.state.pickerValue}
                         onChange={v => this.setState({ pickerValue: v })}
                         onOk={(v) => {this.setState({ pickerValue: v })}}
-                        onPickerChange={(v) => {this.setState({ pickerValue: v });this.changeCity();data.userCity=this.state.userCity;console.log(data.userCity)}}
+                        onPickerChange={(v) => {this.setState({ pickerValue: v });this.changeCity();data.userCity=this.state.userCity;}}
                         onClick={()=>{console.log('xx')}}
                     >
                         <CustomChildren>请选择城市</CustomChildren>

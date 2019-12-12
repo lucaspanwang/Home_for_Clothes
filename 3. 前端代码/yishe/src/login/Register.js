@@ -14,6 +14,7 @@ import CitySelector from './CitySelector';
 import {Consumer} from '../context';
 
 import './login.css';
+import { userInfo } from "os";
 
 export default class Register extends Component{
     constructor(){
@@ -23,36 +24,41 @@ export default class Register extends Component{
             userPho:'',
             userPwd:'',
             userName:'',
-            userSex:'',
-            userCity:''
+            userSex:'女',
+            userCity:'',
+            userId:''
         }
         this.nextStep = this.nextStep.bind(this);
         this.postData = this.postData.bind(this);
-        this.goLogin = this.goLogin.bind(this);
     }
 
     nextStep(){
         document.getElementById('step1').style.display='none';
         document.getElementById('step2').style.display='block';
     }
-
-    goLogin(){
-        document.getElementById('judgeR').style.display='block';
-    }
     
     postData(){
+        document.getElementById('judgeR').style.display='block';
         fetch("http://47.98.163.228:8082/register", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
+        // credentials: 'include',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: JSON.stringify({userPho:this.state.userPho, userPwd:this.state.userPwd, userName:this.state.userName, userSex:this.state.userSex, userCity:this.state.userCity})
       })
+        .then(res=>res.json())
+        .then(res=>{
+            {   
+                this.setState({userId:res[0]});
+            }
+        });
+        
     }
-    
+
+
     componentDidUpdate(){
         if(this.state.userSex=='男'){
             document.getElementById('malePic').style.display='inline-block';
@@ -85,7 +91,8 @@ export default class Register extends Component{
                 </NavBar>
                 <Flex id='judgeR' class="judge2" direction="column" justify="center" align="center" style={{display:'none'}}>
                         <p>&nbsp;&nbsp;注册成功！</p>
-                        <Link to="/login"><Button onClick={this.postData} style={{marginTop:'20%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'20%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>去 登 录</Button></Link>
+                        <p>您的用户ID是:{this.state.userId}</p>
+                        <Link to="/login"><Button style={{marginTop:'20%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'16%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>去 登 录</Button></Link>
                 </Flex>
                 <Flex direction="column" justify="center" align="center" style={{paddingTop:'5%'}}>
                     <div id="camera_div">
@@ -116,7 +123,7 @@ export default class Register extends Component{
                             <li><img src={lock} width="14%"/><InputItem className='register_input' placeholder='密码(6-16位数字字母组合)' type='password' maxLength='16' onChange={(e)=>this.setState({userPwd:e})}/></li>
                         </ul>
                             <Flex direction="column" justify="center" align="center">
-                                <Button onClick={this.goLogin} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>立 即 注 册</Button>
+                                <Button onClick={this.postData} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>立 即 注 册</Button>
                                 <p style={{marginTop:'8%', }}>注册代表您同意<a style={{color:'#fc9d9a'}}>《用户协议》</a></p>
                             </Flex>
                         </form>
