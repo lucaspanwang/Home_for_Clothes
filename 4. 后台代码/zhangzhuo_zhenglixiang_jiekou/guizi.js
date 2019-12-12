@@ -37,8 +37,17 @@ server.on('request',(req,res)=>{
                 }
                 p=[...p,'guizi'+i];
             }
-            // console.log(p);
-            
+
+            if(req.url==='/delete'){
+                res.setHeader('Access-Control-Allow-Origin','*');
+                var shanchu='';
+                req.on('data',function(data){
+                    shanchu+=data;
+                })
+                req.on('end',function(){
+                    console.log(shanchu);
+                })
+            }
             if(req.url==='/robe'){
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.writeHead(200,'ok',{
@@ -85,7 +94,7 @@ server.on('request',(req,res)=>{
                     }else if(zhonglei=='"裙子短裙"'){
                         cloSmallPic=JSON.stringify('我的/images/duanqun.png')
                     }else if(zhonglei=='"裙子长裙"'){
-                        cloSmallPic=JSON.stringify('我的/images/changchun.png')
+                        cloSmallPic=JSON.stringify('我的/images/changqun.png')
                     }else if(zhonglei=='"裙子吊带裙"'){
                         cloSmallPic=JSON.stringify('我的/images/heiqun.png')
                     }else if(zhonglei=='"裙子保守裙"'){
