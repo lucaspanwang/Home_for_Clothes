@@ -23,7 +23,7 @@ export default class DiaryAdd extends Component {
             minutes = today.getMinutes();
         }
 
-        var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+hour+':'+minutes;
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()+' '+hour+':'+minutes+':'+today.getSeconds();
         this.state = {
             value: '',
             files: [],
@@ -50,7 +50,6 @@ export default class DiaryAdd extends Component {
             body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
         })
         console.log(this.state.files);
-
     }
     
     onChange1 = ({ target: { value } }) => {
@@ -78,7 +77,7 @@ export default class DiaryAdd extends Component {
                     <Link to={"/rijitab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <Link style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
+                    <Link to={"/rijitab/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
                 ]}
                 >发布穿搭日记</NavBar>
 

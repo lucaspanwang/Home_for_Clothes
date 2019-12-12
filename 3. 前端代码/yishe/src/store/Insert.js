@@ -34,49 +34,21 @@ const kind=[
     label:(<span>裤子</span>),
     value:'裤子',
     children:[
-      {
-      label:(<span>毛呢裤子</span>),
-      value:'毛呢裤子'
-      },
-      {
-      label:(<span>铅笔裤</span>),
-      value:'铅笔裤'
-      },
+      
       {
       label:(<span>牛仔裤</span>),
       value:'牛仔裤'
       },
-      {
-        label:(<span>黑色直筒裤</span>),
-        value:'黑色直筒裤'
-      },
-      {
-        label:(<span>阔腿裤</span>),
-        value:'阔腿裤'
-      },
+      
       {
         label:(<span>运动裤</span>),
         value:'运动裤'
       },
+      {
+        label:(<span>短裤</span>),
+        value:'短裤'
+      },
   ]
-  },
-  {
-    label:(<span>袜子</span>),
-    value:'袜子',
-    children:[
-      {
-      label:(<span>中筒袜</span>),
-      value:'中筒袜'
-      },
-      {
-        label:(<span>长筒袜</span>),
-        value:'长筒袜'
-      },
-      {
-        label:(<span>船袜</span>),
-        value:'船袜'
-      },
-    ]
   },
   {
     label:(<span>裙子</span>),
@@ -90,43 +62,51 @@ const kind=[
         label:(<span>短裙</span>),
         value:'短裙'
       },
+      {
+        label:(<span>吊带裙</span>),
+        value:'吊带裙'
+      },
+      {
+        label:(<span>保守裙</span>),
+        value:'保守裙'
+      },
       
     ]
   },
+
   {
-    label:(<span>薄外套</span>),
-    value:'薄外套'
-  },
-  {
-    label:(<span>毛呢大衣</span>),
-    value:'毛呢大衣'
-  },
-  {
-    label:(<span>羽绒服</span>),
-    value:'羽绒服'
-  },
-  {
-    label:(<span>鞋子</span>),
-    value:'鞋子',
+    label:(<span>上衣</span>),
+    value:'上衣',
     children:[
       {
-        label:(<span>帆布鞋</span>),
-        value:'帆布鞋'
+      label:(<span>毛衣</span>),
+      value:'毛衣'
       },
       {
-        label:(<span>马丁靴</span>),
-        value:'马丁靴'
+        label:(<span>卫衣</span>),
+        value:'卫衣'
       },
       {
-        label:(<span>雪地靴</span>),
-        value:'雪地靴'
-      },
-      {
-        label:(<span>运动鞋</span>),
-        value:'运动鞋'
+        label:(<span>运动上衣</span>),
+        value:'运动上衣'
       },
     ]
-  }
+  },
+  {
+    label:(<span>外套</span>),
+    value:'外套',
+    children:[
+      {
+      label:(<span>薄外套</span>),
+      value:'薄外套'
+      },
+      {
+        label:(<span>厚外套</span>),
+        value:'厚外套'
+      },
+    ]
+  },
+  
 
 ]
 
@@ -150,6 +130,26 @@ const where=[
 ]
 
 const colors = [
+  {
+    label:
+      (<div>
+        <span
+          style={{ ...colorStyle, backgroundColor: '#0F0F0F' }}
+        />
+        <span>黑色</span>
+      </div>),
+    value: '黑色',
+  },
+  {
+    label:
+      (<div>
+        <span
+          style={{ ...colorStyle, backgroundColor: '#FFFFFF' }}
+        />
+        <span>白色</span>
+      </div>),
+    value: '白色',
+  },
   {
     label:
       (<div>
@@ -180,26 +180,7 @@ const colors = [
       </div>),
     value: '蓝色',
   },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#C0C0C0' }}
-        />
-        <span>灰色</span>
-      </div>),
-    value: '灰色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#FF7F00' }}
-        />
-        <span>橙色</span>
-      </div>),
-    value: '橙色',
-  },
+  
   {
     label:
       (<div>
@@ -209,36 +190,6 @@ const colors = [
         <span>黄色</span>
       </div>),
     value: '黄色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#C0FF3E' }}
-        />
-        <span>青色</span>
-      </div>),
-    value: '青色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#0F0F0F' }}
-        />
-        <span>黑色</span>
-      </div>),
-    value: '黑色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#FFFFFF' }}
-        />
-        <span>白色</span>
-      </div>),
-    value: '白色',
   },
   {
     label:
@@ -275,6 +226,14 @@ class Insert extends Component {
     this.setState({
       files,
     });
+    var filesType = [];
+        for(var i=0;i<this.state.files.length;i++){
+            console.log(this.state.files[i].file.name.split(".")[1]);
+            filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+        }
+        this.setState({
+            filesType:filesType
+        })
   }
   onSegChange = (e) => {
     const index = e.nativeEvent.selectedSegmentIndex;
@@ -309,7 +268,7 @@ class Insert extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({picName:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
+        body:JSON.stringify({filesType:this.state.filesType,userid:this.props.match.params.id,base64:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
       })
     }
     

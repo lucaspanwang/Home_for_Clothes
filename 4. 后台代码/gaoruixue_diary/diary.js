@@ -14,14 +14,59 @@ const mysql = require('mysql'),
 con.connect();
 
 var server = http.createServer().listen(8081);
-server.on('request',(req,res)=>{   
-    if(req.url==='/diaryAdd'){
+server.on('request',(req,res)=>{
+     //获取图片
+    if(req.url.split('/')[1] === 'images') {
+        var photo = req.url.split('/')[2];
+        optfile.readImg('../我的/images/'+photo, res);
+    }
+    //获得日记数据
+    else if(req.url === '/diary'){
+        let promise = new Promise(resolve =>{
+            con.query(`select * from diary order by diaryTime desc;`, (err, result) => {
+                for(var i=0;i<result.length;i++){
+                    dimg = result[i].dimg.split('+');
+                    result[i].dimg = dimg;
+                }
+                resolve(result)
+            })
+        })
+        .then(value =>{
+            var data = JSON.stringify(value);   
+            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+            res.end(data.toString('utf8'));     
+        })
+    }
+    //获取指定用户的日记数据
+    else if(req.url.split('=')[0]==='/diary?userId'){
+        var userId = req.url.split('=')[1];
+        let promise = new Promise(resolve =>{
+            con.query(`select diary.diaryId,diary.diaryContent,diary.dimg,diary.diaryTime,users.userPic 
+                       from diary,users 
+                       where diary.userId = users.userId and diary.userId = ${userId}
+                       order by diaryTime desc;`, (err, result) => {
+                for(var i=0;i<result.length;i++){
+                    dimg = result[i].dimg.split('+');
+                    result[i].dimg = dimg;
+                }
+                //console.log(result);
+                resolve(result)
+            })
+        })
+        .then(value =>{
+            var data = JSON.stringify(value);   
+            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+            res.end(data.toString('utf8'));     
+        })
+    }
+    //添加日记数据  
+    else if(req.url==='/diaryAdd'){
         var obj="";
         var di='';
         req.on('data',function(data){
             obj+=data;
         })
-        req.on('end',function(){
+        req.on('end',function(){//获取图片存入
             var riji = JSON.parse(obj);
             for(var i =0;i<riji.files.length;i++){
                 var path = '../我的/images/'+ riji.diaryId+i+riji.filesType[i];
@@ -38,16 +83,15 @@ server.on('request',(req,res)=>{
                     }else{
                        console.log('写入成功！');
                     }
-                })
-                
+                })    
             }
-            
-            let promise01 = new Promise(resolve =>{
+            let promise01 = new Promise(resolve =>{//添加日记数据
                 con.query('insert into diary values(?,?,?,?,?)',[riji.diaryId,riji.userId,riji.value,di,riji.diarytime],(err, result) => {
                     result=[riji.diaryId,riji.userId,riji.value,di,riji.diarytime];
                     resolve(result);
-                });//添加日记
+                });
             }).then(value =>{
+                //res.setHeader("Access-Control-Allow-Origin", "*");
                 res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
                 diary = JSON.stringify(value);
                 res.end(diary); 
@@ -56,67 +100,34 @@ server.on('request',(req,res)=>{
         })
         res.end();    
     }
-    else if(req.url === '/diary'){
-        let promise = new Promise(resolve =>{
-            //查询数据库数据获得用户信息
-            con.query(`select * 
-                       from diary;`, (err, result) => {
-                for(var i=0;i<result.length;i++){
-                    dimg = result[i].dimg.split('+');
-                    result[i].dimg = dimg;
-                }
-                resolve(result)
-            })
+    //删除日记数据
+    else if(req.url==='/diaryDel'){
+        var obj="";
+        var di='';
+        req.on('data',function(data){
+            obj+=data;
         })
-        .then(value =>{
-            var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
-            res.end(data.toString('utf8'));     
+        req.on('end',function(){//获取要删除的日记Id
+            var riji = JSON.parse(obj);
+            console.log(riji);
+            let promise01 = new Promise(resolve =>{//删除日记
+                con.query('delete from diary where diaryId = ?', [riji.diaryId], function(err, result){
+                      if(err) {
+                        console.error(err.message);
+                        process.exit(1);
+                      }
+                      console.log(result);
+                    });
+                    
+            }).then(value =>{
+                //res.setHeader("Access-Control-Allow-Origin", "*");
+                res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+                diary = JSON.stringify(value);
+                res.end(diary); 
+            });
+
         })
-    }
-    //获取用户信息
-    else if(req.url.split('=')[0]==='/users?userId'){
-        var userId = req.url.split('=')[1];
-        let promise = new Promise(resolve =>{
-            //查询数据库数据获得用户信息
-            con.query(`select * 
-                       from users 
-                       where userId = ${userId};`, (err, result) => {
-                resolve(result)
-            })
-        })
-        .then(value =>{
-            var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
-            res.end(data.toString('utf8'));     
-        })
-    }
-    //获取日记数据
-    else if(req.url.split('=')[0]==='/diary?userId'){
-        var userId = req.url.split('=')[1];
-        let promise = new Promise(resolve =>{
-            //查询数据库数据获得日记信息
-            con.query(`select diary.diaryId,diary.diaryContent,diary.dimg,diary.diaryTime,users.userPic 
-                       from diary,users 
-                       where diary.userId = users.userId and diary.userId = ${userId};`, (err, result) => {
-                for(var i=0;i<result.length;i++){
-                    dimg = result[i].dimg.split('+');
-                    result[i].dimg = dimg;
-                }
-                //console.log(result);
-                resolve(result)
-            })
-        })
-        .then(value =>{
-            var data = JSON.stringify(value);   
-            res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
-            res.end(data.toString('utf8'));     
-        })
-    }
-    //获取图片
-    else if(req.url.split('/')[1] === 'images') {
-        var photo = req.url.split('/')[2];
-        optfile.readImg('../我的/images/'+photo, res);
+        res.end();    
     }
     
 });

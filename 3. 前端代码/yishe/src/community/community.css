@@ -82,5 +82,8 @@ body{
     padding:0 !important;
 }
 textarea.ant-input{
-    min-height: 50px !important;
+    min-height: 40px !important;
+}
+.ant-input{
+    height: 50px !important;
 }

@@ -1,0 +1,15 @@
+/* .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    height:100px;
+} */
+.ant-collapse-content > .ant-collapse-content-box{
+    padding:0 !important;
+}
+.careUser>li{
+    padding:15px;
+    /* border-bottom:1px solid #ddd; */
+    font-size:16px;
+}
+.careUser>li>img{
+    width:25px;
+    margin-right:15px;
+}
