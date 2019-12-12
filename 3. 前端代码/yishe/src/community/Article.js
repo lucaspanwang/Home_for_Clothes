@@ -35,10 +35,8 @@ export default class Article extends Component {
       }
     }
     componentDidMount(){
-      // document.getElementById('ant-input').setAttribute = ('class','art-input');
       var articleId=this.props.match.params.id.split("&")[0];
       var userId=this.props.match.params.id.split("&")[1];
-      // console.log(this.props.match.params.id.split("&")[1]);
       fetch("http://47.98.163.228:8086/article?articleId="+articleId)
       .then(res=>res.json())
       .then(res=>{

@@ -62,18 +62,17 @@ server.on('request',(req,res) => {
         req.on('end',function(){
             var item = JSON.parse(obj);
             let promise45 = new Promise(resolve =>{
-                con.query('select *,count(articleId) rev from community', function(err, result){
+                con.query('select * from community', function(err, result){
                     var num;
                     if(result[0].rev === 0){
                         num=999999;
                     }else{
-                        num = JSON.stringify(result[0].reviewId).replace(/[^0-9]/ig,"")-1;
+                        num = JSON.stringify(result[0].articleId).replace(/[^0-9]/ig,"")-1;
                     }
                     resolve('Art'+num);
                 })
             }).then(value =>{
                 for(var i=0;i<item.cimg.length;i++){
-                    console.log(item.cimg[i].url);
                     var path = '../我的/images/'+value+'-'+i+item.cimgName[i];
                     if(i===0){
                         addCimg += path.slice(5);
@@ -90,8 +89,8 @@ server.on('request',(req,res) => {
                 let promise46 = new Promise(resolve =>{
                     con.query('insert into community values(?,?,?,?,?,?,?,?)',[value,item.userId,item.content,item.time,0,0,0,addCimg],(err, result) => {
                         result=[value,item.userId,item.content,item.time,0,0,0,addCimg];
-                        // console.log("添加文章"+value);
-                        // console.log(result);
+                        console.log("添加文章"+value);
+                        console.log(result);
                         resolve(result);
                     });//添加文章
                 }).then(value =>{
@@ -109,8 +108,14 @@ server.on('request',(req,res) => {
             id += data;
         });
         req.on('end',function(){
-            let promise38 = new Promise(resolve =>{
+            let promise39 = new Promise(resolve =>{
                 con.query('delete from community where articleId=?',[id],(err, result) => {
+                    console.log(id);
+                    if(err){
+                        console.log("shibai");
+                    }else{
+                        console.log('chenggong');
+                    }
                     resolve(result);
                 });
             }).then(value =>{
@@ -119,6 +124,18 @@ server.on('request',(req,res) => {
                 res.end(review); 
             });
         })
+    }else if(req.url.split('?')[0] === '/articleDelete'){
+        //删除文章
+        var it = qs.parse(req.url.split('?')[1]);
+        let promise39 = new Promise(resolve =>{
+            con.query('delete from community where articleId=?',[it.articleId],(err, result) => {
+                resolve(result);
+            });
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
     }else if(req.url.split('=')[0] === '/article?articleId'){
         //读取文章详情页文章信息
         var it = qs.parse(req.url,"?",null,{maxKeys:2});
@@ -456,40 +473,7 @@ server.on('request',(req,res) => {
             article = JSON.stringify(value);
             res.end(article); 
         })
-    }
-    // else if(req.url.split('?')[0] === '/care?careId'){
-    //     //读取某用户被关注表的信息
-    //     var it = qs.parse(req.url,"?",null,{maxKeys:2});
-    //     console.log(it);
-    //     var id = it.careId;
-    //     console.log(id);
-    //     let promise79 = new Promise(resolve =>{
-    //         con.query('select * from care where careId=?',[id], (err, result) => {
-    //             console.log(id);
-    //             resolve(result);
-    //         })
-    //     }).then(value =>{
-    //         res.writeHead(200, {"Content-type":"application/json"});
-    //         article = JSON.stringify(value);
-    //         res.end(article); 
-    //     });
-    // }else if(req.url.split('?')[0] === '/care?userId'){
-    //     //读取某用户关注表的信息
-    //     var it = qs.parse(req.url,"?",null,{maxKeys:2});
-    //     var id = it.userId;
-    //     let promise6 = new Promise(resolve =>{
-    //         con.query('select * from care where userId=?',[id], (err, result) => {
-    //             console.log(result);
-    //             resolve(result);
-    //         })
-    //     }).then(value =>{
-    //         res.writeHead(200, {"Content-type":"application/json"});
-    //         article = JSON.stringify(value);
-    //         console.log(article);
-    //         res.end(article); 
-    //     });
-    // }
-    else{
+    }else{
         res.statusCode = 404;
         res.end('404 Error, resource not found!');
     }

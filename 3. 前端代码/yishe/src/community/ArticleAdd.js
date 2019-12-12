@@ -15,6 +15,8 @@ export default class ArticleAdd extends Component {
     }
     onPost=()=> {      
         // console.log(this.props.match.params.id);//获取到的用户id 
+        console.log(this.state.value);
+        console.log(this.state.cimg);
         if(this.state.value == '' && this.state.cimg == ''){
             return ;
         }else{
