@@ -89,13 +89,23 @@ server.on('request',(req,res)=>{
                     }else if(zhonglei=='"裙子吊带裙"'){
                         cloSmallPic=JSON.stringify('我的/images/heiqun.png')
                     }else if(zhonglei=='"裙子保守裙"'){
-                        if(yanse=='')
-                        cloSmallPic=JSON.stringify('我的/images/duanqun.png')
+                        if(yanse=='"红色"'){
+                            cloSmallPic=JSON.stringify('我的/images/hongqun.png')
+                        }else if(yanse=='"黑色"'){
+                            cloSmallPic=JSON.stringify('我的/images/qunqun.png"')
+                        }else{
+                            cloSmallPic=JSON.stringify('我的/images/qun.png')
+                        }
                     }else if(zhonglei=='"上衣毛衣"'){
                         cloSmallPic=JSON.stringify('我的/images/maoyi.png')
                     }else if(zhonglei=='"上衣运动衣"'){
-                        if(yanse=='')
-                        cloSmallPic=JSON.stringify('我的/images/duanqun.png')
+                        if(yanse=='"蓝色"'){
+                            cloSmallPic=JSON.stringify('我的/images/yundongyi.png')
+                        }else if(yanse=='"红色"'){
+                            cloSmallPic=JSON.stringify('我的/images/bangqiuyi.png')
+                        }else{
+                            cloSmallPic=JSON.stringify('我的/images/chenshanyi.png')
+                        }
                     }else if(zhonglei=='"上衣卫衣"'){
                         cloSmallPic=JSON.stringify('我的/images/changshangyi.png')
                     }else if(zhonglei=='"外套薄外套"'){
@@ -104,18 +114,18 @@ server.on('request',(req,res)=>{
                         cloSmallPic=JSON.stringify('我的/images/waitao.png')
                     }
 
-                    // con.query(`insert into clothing values(${cloId},${userid},${zhonglei},${weizhi},${yanse},${cloPic},${cloSmallPic})`);
+                    con.query(`insert into clothing values(${cloId},${userid},${zhonglei},${weizhi},${yanse},${cloPic},${cloSmallPic})`);
 
-                //     var path='../我的/images/'+cloId1+filesType;
-                //     console.log(path);
-                //     var dataBuffer=new Buffer(base64,'base64');
-                //     fs.writeFile(path,dataBuffer,function(err){
-                //         if(err){
-                //             console.log(err);
-                //         }else{
-                //             console.log('写入成功');
-                //         }
-                //     })
+                    var path='../我的/images/'+cloId1+filesType;
+                    console.log(path);
+                    var dataBuffer=new Buffer(base64,'base64');
+                    fs.writeFile(path,dataBuffer,function(err){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            console.log('写入成功');
+                        }
+                    })
                 })
             }
         })
