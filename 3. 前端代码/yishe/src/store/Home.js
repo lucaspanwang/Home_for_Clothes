@@ -29,7 +29,7 @@ export default class Home extends Component {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body:JSON.stringify({nage:i,weizhi:'家'})
+            body:JSON.stringify({nage:i,weizhi:'家',userId:this.props.match.params.id})
         })
     }
     componentDidMount(){

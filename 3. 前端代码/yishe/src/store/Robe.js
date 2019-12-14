@@ -29,7 +29,7 @@ export default class Robe extends Component {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body:JSON.stringify({nage:i,weizhi:'柜子'})
+            body:JSON.stringify({nage:i,weizhi:'柜子',userId:this.props.match.params.id})
         })
         
     }

@@ -29,7 +29,7 @@ export default class Trunk extends Component {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body:JSON.stringify({nage:i,weizhi:'行李箱'})
+            body:JSON.stringify({nage:i,weizhi:'行李箱',userId:this.props.match.params.id})
         })
         
     }
