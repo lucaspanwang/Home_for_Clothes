@@ -12,6 +12,9 @@ con=mysql.createConnection({
 con.connect();
 let server=http.createServer();
 let user='123';
+var place='家';
+var nage;
+var userId='123';
 server.on('request',(req,res)=>{
     // console.log(req.url);
     if(req.url==='/userid'){
@@ -22,6 +25,41 @@ server.on('request',(req,res)=>{
         })
         
     }
+    if(req.url==='/delete'){
+        res.setHeader('Access-Control-Allow-Origin','*');
+        var shanchu='';
+        req.on('data',function(data){
+            shanchu+=data;
+        })
+        req.on('end',function(){
+            place=JSON.stringify(JSON.parse(shanchu).weizhi);
+            console.log(place)
+            nage=JSON.parse(shanchu).nage;
+            console.log(nage);
+            userId=JSON.parse(shanchu).userId;
+            console.log(userId);
+            let promises = new Promise(resolve=>{
+                con.query(`select*from clothing where cloPlace=${place} and userId=${userId}`,(err,result)=>{
+                    resolve(result);
+                    // console.log(result);
+                })
+            })
+            .then(value=>{
+                var cloId=value[nage].cloId;
+                console.log(cloId);
+                con.query(`delete from clothing where cloId=${cloId}`)
+            })
+        })
+    }
+    // let promises = new Promise(resolve=>{
+    //     con.query(`select*from clothing where cloPlace='家' and userId=${userId}`,(err,result)=>{
+    //         resolve(result);
+    //         // console.log(result);
+    //     })
+    // })
+    // .then(value=>{
+    //     console.log(value)
+    // })
     let promise = new Promise(resolve=>{
         con.query(`select*from clothing where cloPlace='柜子' and userId=${user}`,(err,result)=>{
             resolve(result);
@@ -38,16 +76,7 @@ server.on('request',(req,res)=>{
                 p=[...p,'guizi'+i];
             }
 
-            if(req.url==='/delete'){
-                res.setHeader('Access-Control-Allow-Origin','*');
-                var shanchu='';
-                req.on('data',function(data){
-                    shanchu+=data;
-                })
-                req.on('end',function(){
-                    console.log(shanchu);
-                })
-            }
+            
             if(req.url==='/robe'){
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.writeHead(200,'ok',{
