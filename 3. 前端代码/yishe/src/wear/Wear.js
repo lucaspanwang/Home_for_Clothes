@@ -22,7 +22,7 @@ import jubao from '../images/举报.png'
 import xiaoren from '../images/小人.png'
 import beijing from '../images/雨.jpg'
 import beijing2 from '../images/晴.jpg'
-
+import {Link} from 'react-router-dom'
 const src =[beijing,beijing2];
 
 const data = Array.from(new Array(5)).map((_val, i) => ({
@@ -60,6 +60,7 @@ export default class Wear extends Component {
         userId:'',
         ress:[],
         linshi:0,
+        tiaosrc : ['/diaryAdd/']
     }
   }    
   componentDidMount(){
@@ -84,7 +85,8 @@ export default class Wear extends Component {
         temperature:weather.data[0].tem1,
         temperature2:weather.data[0].tem,
         dressing_advice:weather.data[0].index[3].desc,
-        weather:weather.data[0].wea
+        weather:weather.data[0].wea,
+        tiaosrc : ['/diaryAdd/'+this.props.id]
       })
         if(this.state.weather.indexOf('雨')!=-1){
           this.setState({
@@ -420,12 +422,12 @@ export default class Wear extends Component {
                   <Grid data={data2}
                       columnNum={5}
                       renderItem={(dataItem,idx) => (
-                          <div >
+                          <Link to={this.state.tiaosrc+this.props.id}>
                           <img src={dataItem.icon[idx]} style={{ width: '40px', height: '40px', marginTop:'20px'}} alt="" />
                           <div>
                               <span>{this.state.ss1[idx]}</span>
                           </div>
-                          </div>
+                          </Link>
                       )}
                     />
                     <hr />
