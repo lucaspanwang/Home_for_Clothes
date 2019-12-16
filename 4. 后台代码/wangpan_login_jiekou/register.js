@@ -1,6 +1,7 @@
 #!/usr/bin/node
 
 const http = require('http');
+const fs = require('fs');
 
 //连接数据库
 const mysql = require('mysql'),
@@ -40,29 +41,45 @@ let server = http.createServer();
                         })
                     }).then(value=>{
                         res.setHeader("Access-Control-Allow-Origin", "*");
+                        var obj = '';
                         var IdDB = [];
                         var newId = 20190002;
                         var userNum = value.length;
-                        console.log('length:'+value.length)
+                        // console.log('length:'+value.length)
                         for(var i=0;i<userNum;i++){
                             var tempId = value[i].userId;
                             tempId = parseInt(tempId);
                             IdDB.push(tempId);
                         }
-                        console.log(IdDB);//旧
+                        // console.log(IdDB);//旧
                         for(var i=0;i<userNum;i++){
                             if(IdDB[i]>=newId)
                                 newId = IdDB[i]+1;
                         }
                         IdDB.push(newId);
-                        console.log(newId)
+                        // console.log(newId);
                         req.on('data',function(data){
-                            console.log('接收：'+data);
-                            userPho=JSON.parse(data).userPho.replace(/\s*/g,'');
-                            userPwd=JSON.parse(data).userPwd;
-                            userName=JSON.parse(data).userName;
-                            userSex=JSON.parse(data).userSex;
-                            userCity=JSON.parse(data).userCity;
+                            obj += data;//data就是传过来的数据
+                        });                
+                        
+                        req.on('end',function(){
+                            var item = JSON.parse(obj); 
+                            userPho=item.userPho.replace(/\s*/g,'');
+                            userPwd=item.userPwd;
+                            userName=item.userName;
+                            userSex=item.userSex;
+                            userCity=item.userCity;
+                            path= '../我的/images/'+newId+'.'+item.picData.split('/')[1].split(';')[0];
+                            userPic = '我的/images/'+newId+'.'+item.picData.split('/')[1].split(';')[0];
+                            
+                            //设置图片
+                            var base64 = item.picData.replace(/^data:image\/\w+;base64,/, "");
+                            var dataBuffer = new Buffer(base64, 'base64'); 
+                            fs.writeFile(path,dataBuffer,function(err){
+                                if(err){console.log(err);
+                                }else{console.log('写入成功！');}
+                            });        
+
                             console.log(userPho);
                             console.log(userPwd);
                             console.log(userName);
@@ -71,8 +88,8 @@ let server = http.createServer();
                 
                             //将接收到的数据发送到数据库
                             let promise34 = new Promise(resolve =>{
-                                con.query('insert into users values(?,?,?,?,?,?,?,?)',[newId.toString(),userPwd,userName,'我的/images/123/jpg',userSex,userPho,'这个人很饿，把内容吃掉了', userCity],(err, result) => {
-                                    result=[newId.toString(),userPwd,userName,'我的/images/123/jpg',userSex,userPho,'这个人很饿，把内容吃掉了', userCity];
+                                con.query('insert into users values(?,?,?,?,?,?,?,?)',[newId.toString(),userPwd,userName, userPic,userSex,userPho,'这个人很饿，把内容吃掉了', userCity],(err, result) => {
+                                    result=[newId.toString(),userPwd,userName, userPic,userSex,userPho,'这个人很饿，把内容吃掉了', userCity];
                                     resolve(result);
                                 });
                             }).then(value =>{
