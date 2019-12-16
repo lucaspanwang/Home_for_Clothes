@@ -43,38 +43,7 @@ export default class AppTab extends React.Component {
           tintColor="#fc9d9a"
           barTintColor="white"
         >
-          <TabBar.Item
-            title="社区"
-            key="shequ"
-            icon={
-              <div
-                style={{
-                  width: "22px",
-                  height: "22px",
-                  background:
-                    "url("+shequ+") center center /  21px 21px no-repeat"
-                }}
-              />
-            }
-            selectedIcon={
-              <div
-                style={{
-                  width: "22px",
-                  height: "22px",
-                  background:
-                    "url("+shequ1+") center center /  21px 21px no-repeat"
-                }}
-              />
-            }
-            selected={this.state.selectedTab === "shequTab"}
-            onPress={() => {
-              this.setState({
-                selectedTab: "shequTab"
-              });
-            }}
-          >
-            <Community id={this.props.match.params.id}/>
-          </TabBar.Item>
+          
           <TabBar.Item
             icon={{
               uri:chuanda
@@ -129,6 +98,38 @@ export default class AppTab extends React.Component {
           {/* <Add />
           <Home />
           <TestWrapper /> */}
+          </TabBar.Item>
+          <TabBar.Item
+            title="社区"
+            key="shequ"
+            icon={
+              <div
+                style={{
+                  width: "22px",
+                  height: "22px",
+                  background:
+                    "url("+shequ+") center center /  21px 21px no-repeat"
+                }}
+              />
+            }
+            selectedIcon={
+              <div
+                style={{
+                  width: "22px",
+                  height: "22px",
+                  background:
+                    "url("+shequ1+") center center /  21px 21px no-repeat"
+                }}
+              />
+            }
+            selected={this.state.selectedTab === "shequTab"}
+            onPress={() => {
+              this.setState({
+                selectedTab: "shequTab"
+              });
+            }}
+          >
+            <Community id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
