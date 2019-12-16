@@ -221,8 +221,21 @@ export default class Wear extends Component {
           }else{
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
-            document.getElementById('mote2').src=this.state.tuijian[idx];
-            document.getElementById('mote2').style.display = 'block';
+            if(this.state.tuijian[idx].indexOf('ku')!==-1){
+              document.getElementById('mote2').src=this.state.tuijian[idx];
+              document.getElementById('mote2').style.display = 'block';
+            }
+            if(this.state.tuijian[idx].indexOf('qun')!==-1){
+              document.getElementById('mote2').src=this.state.tuijian[idx];
+              document.getElementById('mote2').style.display = 'block';
+            }
+            if(this.state.tuijian[idx].indexOf('yi')!==-1){
+              document.getElementById('mote3').src=this.state.tuijian[idx];
+              document.getElementById('mote3').style.display = 'block';
+            }else{
+              document.getElementById('mote4').src=this.state.tuijian[idx];
+              document.getElementById('mote4').style.display = 'block';
+            }
             this.setState({
               count:0
             })
