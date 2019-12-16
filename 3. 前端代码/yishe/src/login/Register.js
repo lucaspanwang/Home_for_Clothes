@@ -27,7 +27,8 @@ export default class Register extends Component{
             userName:'',
             userSex:'女',
             userCity:'',
-            userId:''
+            userId:'',
+            picData:''
         }
         this.nextStep = this.nextStep.bind(this);
         this.postData = this.postData.bind(this);
@@ -48,7 +49,7 @@ export default class Register extends Component{
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify({userPho:this.state.userPho, userPwd:this.state.userPwd, userName:this.state.userName, userSex:this.state.userSex, userCity:this.state.userCity})
+        body: JSON.stringify({userPho:this.state.userPho, userPwd:this.state.userPwd, userName:this.state.userName, userSex:this.state.userSex, userCity:this.state.userCity, picData:this.state.picData})
       })
         .then(res=>res.json())
         .then(res=>{
@@ -115,12 +116,12 @@ export default class Register extends Component{
                             </li>
                         </ul>
                             <Flex direction="column" justify="center" align="center">
-                                <Button onClick={()=>{this.nextStep();this.setState({userCity: data.userCity})}} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>下 一 步</Button>
+                                <Button onClick={()=>{this.nextStep();this.setState({userCity: data.userCity, picData:data.picData})}} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>下 一 步</Button>
                             </Flex>
                         </form>
                         <form id='step2' style={{display:'none'}}>
                         <ul id='register_input2'>
-                            <li><img src={phone} width="14%"/><InputItem className='register_input' placeholder='手机号码' type='phone' onChange={(e)=>this.setState({userPho:e})}/></li>
+                            <li><img src={phone} width="14%" /><InputItem className='register_input' placeholder='手机号码' type='phone' onChange={(e)=>this.setState({userPho:e})}/></li>
                             {/* <li style={{position:'relative'}}><img src={doc} width="14%"/><InputItem className='register_input' placeholder='验证码' type='number' maxLength='6'/><Button style={{position:'absolute', right:'0', top:'0',  backgroundColor:'#fc9d9a', width:'35%', color:'white'}}>发送验证码</Button></li> */}
                             <li><img src={lock} width="14%"/><InputItem className='register_input' placeholder='密码(6-16位数字字母组合)' type='password' maxLength='16' onChange={(e)=>this.setState({userPwd:e})}/></li>
                         </ul>
