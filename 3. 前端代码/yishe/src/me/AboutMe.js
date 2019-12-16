@@ -4,6 +4,8 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import {Tooltip} from 'antd';
 
 import fanhui from '../images/返回 (1).png';
+import touxiang from '../images/头像.png';
+import erweima from '../images/二维码.png';
 import xiaoren from '../images/小人.png';
 
 const Item = List.Item;
@@ -13,9 +15,20 @@ export default class AboutMe extends Component {
     constructor(){
         super();
         this.state = {
-            user:{}
+            user:{},
+            previewPic:'',
+            userSex:'', 
+            name:'',
+              
         }
-    }  
+        this.handleUpload = this.handleUpload.bind(this);
+    }
+    hrefChange(str){
+        var h=window.location.href;
+        var arr = h.split('/');
+        window.location.href = arr[0] + str;
+    }
+
     componentDidMount(){
         console.log(this.props.match.params.id);
         fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)
@@ -25,14 +38,45 @@ export default class AboutMe extends Component {
             var j = res[i].userPic.indexOf('/');
             res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
           }
-          this.setState({
-              user:res[0]
-          })
-          console.log(this.state.user);
+          var nname = localStorage.getItem('newName');
+          if(nname!==null){
+              console.log(nname)
+              this.setState({
+                  name:nname,
+                  user:res[0],
+                  previewPic:res[0].userPic,
+              },function(){
+                  localStorage.removeItem('newName')
+              })
+          }else{
+            this.setState({
+                user:res[0],
+                previewPic:res[0].userPic,
+                name:res[0].userName,
+            })
+            console.log(this.state.user);
+          }
       });
+
+
     }
+    //头像
+    handleUpload(e) {
+        console.log(e.target.files[0]);
+        const reader = new FileReader();
+        // 读取文件内容，结果用data:url的字符串形式表示
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = function(e) {
+            console.log(e.target.result);  // 上传的图片的编码
+            this.setState({
+                previewPic: e.target.result
+            });
+        }.bind(this);
+    }
+     
     render() {
         return (
+           
             <div style={{width:'100%'}}>
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
@@ -41,9 +85,14 @@ export default class AboutMe extends Component {
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">
-                    <Item arrow="horizontal" multipleLine onClick={() => {}}>
+                    <Item arrow="horizontal" multipleLine style={{position:"relative",height:'20%'}} onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>头像</span>
-                       <img src={this.state.user.userPic} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
+                       <input id='ddd' type="file" style={{width:'12%',height:'100%',position: 'absolute',top: '10%',left:'80%', Zindex: '9999',opacity:'0'}} onChange={this.handleUpload}/> 
+                       <img id="gzzImg"  src={this.state.previewPic} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
+                    </Item>
+                    <Item arrow="empty" multipleLine onClick={() => {}}>
+                       <span style={{lineHeight:'100%',fontSize:'14px'}}>账号</span>
+                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userId}</span>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>性别</span>
@@ -51,12 +100,9 @@ export default class AboutMe extends Component {
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>昵称</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userName}</span>
+                       <Link to={"/name/"+this.props.match.params.id} style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.name}</Link>
                     </Item>
-                    <Item arrow="horizontal" multipleLine onClick={() => {}}>
-                       <span style={{lineHeight:'100%',fontSize:'14px'}}>账号</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userPho}</span>
-                    </Item>
+                    
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>城市</span>
                        <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userCity}</span>
