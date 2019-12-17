@@ -386,7 +386,7 @@ export default class Article extends Component {
                       data={this.state.article.cimg}
                       columnNum="3"
                       renderItem={dataItem => (
-                          <img src={dataItem} style={{ width:'100%'}} alt="" />
+                          <img src={dataItem} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
                       )}
                       />
                       <span>发布于{this.state.article.time}</span>

@@ -141,7 +141,7 @@ export default class MyCare extends Component {
                                             data={it.cimg}
                                             columnNum="3"
                                             renderItem={dataItem => (
-                                                <img src={dataItem} style={{ width:'100%'}} alt="" />
+                                                <img src={dataItem} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
                                             )}
                                             />
                                         </div>

@@ -20,7 +20,7 @@ const CustomChildren = props => (
     </div>
   </div>
 );
-let change='';
+
 const colorStyle = {
   display: 'inline-block',
   verticalAlign: 'middle',
@@ -123,11 +123,14 @@ const where=[
     label:(<span>柜子</span>),
     value:'柜子'
   },
-  // {
-  // label:(<span>{change}</span>),
-  // value:{change}
-  // }
+  
 ]
+// for(var i=0;i<3;i++){
+//   where.push({
+//       label:(<span>家</span>),
+//       value:'家'
+//     },)
+// }
 
 const colors = [
   {
@@ -274,14 +277,7 @@ class Insert extends Component {
     }
     
   componentDidMount(){
-    // console.log(this.props.match.params.id);//获取用户id
     
-    // fetch('http://47.98.163.228:8084/change')
-    // .then(res=>res.json())
-    // .then(res=>{
-    //   console.log(res)
-    //   change=res;
-    // })
   }
   
   render() {
