@@ -30,36 +30,8 @@ export default class Register extends Component{
             userId:'',
             picData:''
         }
-        this.nextStep = this.nextStep.bind(this);
-        this.postData = this.postData.bind(this);
-    }
-
-    nextStep(){
-        document.getElementById('step1').style.display='none';
-        document.getElementById('step2').style.display='block';
     }
     
-    postData(){
-        document.getElementById('judgeR').style.display='block';
-        fetch("http://47.98.163.228:8082/register", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        // credentials: 'include',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: JSON.stringify({userPho:this.state.userPho, userPwd:this.state.userPwd, userName:this.state.userName, userSex:this.state.userSex, userCity:this.state.userCity, picData:this.state.picData})
-      })
-        .then(res=>res.json())
-        .then(res=>{
-            {   
-                this.setState({userId:res[0]});
-            }
-        });
-        
-    }
-
 
     componentDidUpdate(){
         if(this.state.userSex=='男'){
@@ -91,6 +63,27 @@ export default class Register extends Component{
                         ]}
                         >注册
                 </NavBar>
+
+                <Flex id='inforError' class="judge2" direction="column" justify="center" align="center" style={{display:'none', paddingTop:'40%'}}>
+                        <p> 请将信息填写完整！</p>
+                        <Button onClick={()=>{document.getElementById('inforError').style.display='none';}} style={{marginTop:'50%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'16%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>返 回</Button>
+                </Flex>
+
+                <Flex id='avatarError' class="judge2" direction="column" justify="center" align="center" style={{display:'none', paddingTop:'40%'}}>
+                        <p> 请先添加头像！</p>
+                        <Button onClick={()=>{document.getElementById('avatarError').style.display='none';}} style={{marginTop:'50%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'16%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>返 回</Button>
+                </Flex>
+
+                <Flex id='phoneError' class="judge2" direction="column" justify="center" align="center" style={{display:'none', paddingTop:'40%', fontSize:'25px'}}>
+                        <p> 请输入正确格式的手机号！</p>
+                        <Button onClick={()=>{document.getElementById('phoneError').style.display='none';}} style={{marginTop:'30%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'16%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>返 回</Button>
+                </Flex>
+
+                <Flex id='pwdError' class="judge2" direction="column" justify="center" align="center" style={{display:'none', paddingTop:'40%', fontSize:'25px'}}>
+                        <p> 请输入正确长度的密码！</p>
+                        <Button onClick={()=>{document.getElementById('pwdError').style.display='none';}} style={{marginTop:'30%', marginLeft:'15%', color:'white', fontSize:'90%', fontWeight:'bold', width:'70%', height:'16%', backgroundColor:'rgb(36,217,238)', border:'solid 1px blue'}}>返 回</Button>
+                </Flex>
+
                 <Flex id='judgeR' class="judge2" direction="column" justify="center" align="center" style={{display:'none'}}>
                         <p>&nbsp;&nbsp;注册成功！</p>
                         <p>您的用户ID是:{this.state.userId}</p>
@@ -116,17 +109,52 @@ export default class Register extends Component{
                             </li>
                         </ul>
                             <Flex direction="column" justify="center" align="center">
-                                <Button onClick={()=>{this.nextStep();this.setState({userCity: data.userCity, picData:data.picData})}} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>下 一 步</Button>
+                                <Button onClick={()=>{
+                                    this.setState({userCity: data.userCity, picData:data.picData});
+                                    if(this.state.userName=='' || data.userCity==''){
+                                        document.getElementById('inforError').style.display='block';
+                                    }
+                                    else if(data.picData=='' || data.picData==undefined){
+                                        document.getElementById('avatarError').style.display='block';
+                                    }
+                                    else{
+                                        document.getElementById('step1').style.display='none';
+                                        document.getElementById('step2').style.display='block';}
+                                    }} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>下 一 步</Button>
                             </Flex>
                         </form>
                         <form id='step2' style={{display:'none'}}>
                         <ul id='register_input2'>
                             <li><img src={phone} width="14%" /><InputItem className='register_input' placeholder='手机号码' type='phone' onChange={(e)=>this.setState({userPho:e})}/></li>
                             {/* <li style={{position:'relative'}}><img src={doc} width="14%"/><InputItem className='register_input' placeholder='验证码' type='number' maxLength='6'/><Button style={{position:'absolute', right:'0', top:'0',  backgroundColor:'#fc9d9a', width:'35%', color:'white'}}>发送验证码</Button></li> */}
-                            <li><img src={lock} width="14%"/><InputItem className='register_input' placeholder='密码(6-16位数字字母组合)' type='password' maxLength='16' onChange={(e)=>this.setState({userPwd:e})}/></li>
+                            <li><img src={lock} width="14%"/><InputItem className='register_input' placeholder='密码(长度应在6-16位)' type='password' maxLength='16' onChange={(e)=>this.setState({userPwd:e})}/></li>
                         </ul>
                             <Flex direction="column" justify="center" align="center">
-                                <Button onClick={this.postData} style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>立 即 注 册</Button>
+                                <Button onClick={()=>{
+                                    if(this.state.userPho.length!=13)
+                                        document.getElementById('phoneError').style.display='block';
+                                    else if(this.state.userPwd.length<6)
+                                        document.getElementById('pwdError').style.display='block';
+                                    else
+                                        document.getElementById('judgeR').style.display='block';
+                                    fetch("http://47.98.163.228:8082/register", {
+                                    method: 'post', 
+                                    "Access-Control-Allow-Origin" : "*",
+                                    "Access-Control-Allow-Credentials" : true,
+                                    // credentials: 'include',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    body: JSON.stringify({userPho:this.state.userPho, userPwd:this.state.userPwd, userName:this.state.userName, userSex:this.state.userSex, userCity:this.state.userCity, picData:this.state.picData})
+                                  })
+                                    .then(res=>res.json())
+                                    .then(res=>{
+                                        {   
+                                            this.setState({userId:res[0]});
+                                        }
+                                    });
+                                }}
+                                style={{textAlign:'center', backgroundColor:'#fc9d9a', color:'white', width:'80%', marginTop:'5%'}}>立 即 注 册</Button>
                                 <p style={{marginTop:'8%', }}>注册代表您同意<a style={{color:'#fc9d9a'}}>《用户协议》</a></p>
                             </Flex>
                         </form>
