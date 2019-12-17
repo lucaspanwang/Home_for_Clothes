@@ -458,7 +458,7 @@ export default class Wear extends Component {
                   <Grid data={data2}
                       columnNum={5}
                       renderItem={(dataItem,idx) => (
-                          <Link to={this.state.tiaosrc[idx]+this.props.id}>
+                          <Link to={this.state.tiaosrc[idx]}>
                           <img src={dataItem.icon[idx]} style={{ width: '40px', height: '40px', marginTop:'20px'}} alt="" />
                           <div>
                               <span>{this.state.ss1[idx]}</span>
