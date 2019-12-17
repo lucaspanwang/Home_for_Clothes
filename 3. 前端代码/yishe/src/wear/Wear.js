@@ -251,20 +251,26 @@ export default class Wear extends Component {
             if(this.state.tuijian[idx].indexOf('ku')!==-1){
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
+              document.getElementById('mote_bai').style.display = 'none'
             }
             if(this.state.tuijian[idx].indexOf('qun')!==-1){
-              document.getElementById('mote2').src=this.state.tuijian[idx];
+              // document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
+              document.getElementById('mote2').src='http://47.98.163.228:8083/images/qunqun_bai.png'
+              document.getElementById('mote_bai').style.display = 'block'
+              document.getElementById('mote_bai').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'none';
               document.getElementById('mote4').style.display = 'none';
             }
             if(this.state.tuijian[idx].indexOf('yi')!==-1){
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
+              document.getElementById('mote_bai').style.display = 'none'
             }
             if(this.state.tuijian[idx].indexOf('tao')!==-1){
               document.getElementById('mote4').src=this.state.tuijian[idx];
               document.getElementById('mote4').style.display = 'block';
+              document.getElementById('mote_bai').style.display = 'none'
             }
             this.setState({
               count:0
@@ -351,7 +357,10 @@ export default class Wear extends Component {
                 {/* 模特 */}
                 <img src={mote} id="mote"/>
                 <img src={mote2} id="mote_2"/>
-                <img  id='mote2' />
+
+                <img id="mote2"/>
+                <div class="icon" id="mote22"><img id="mote_bai" class="icon icon-del" /></div>
+
                 <img  id='mote3' />
                 <img  id='mote4' />
                 {/* 衣物栏 */}
