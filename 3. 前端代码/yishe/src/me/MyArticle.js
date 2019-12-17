@@ -100,7 +100,7 @@ export default class Community extends Component {
                             data={item.cimg}
                             columnNum="3"
                             renderItem={dataItem => (
-                                <img src={dataItem} style={{ width:'100%'}} alt="" />
+                                <img src={dataItem} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
                             )}
                             />
                         </div>
