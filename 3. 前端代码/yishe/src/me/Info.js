@@ -27,12 +27,6 @@ export default class Info extends Component {
             body:JSON.stringify({info:this.state.value,userId:this.props.match.params.id}) 
         })
     }
-    // handlePost = () => {
-    //     var InputValue = this.state.value;
-    //     console.log(InputValue,'------InputValue');
-    //     localStorage.setItem('newInfo',InputValue)
-    //     window.location.href = "/#/aboutme/"+this.props.match.params.id
-    // }
     render() {
         return (
             <div>

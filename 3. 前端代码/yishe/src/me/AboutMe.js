@@ -4,8 +4,6 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import {Tooltip} from 'antd';
 
 import fanhui from '../images/返回 (1).png';
-import touxiang from '../images/头像.png';
-import erweima from '../images/二维码.png';
 import xiaoren from '../images/小人.png';
 
 const Item = List.Item;
@@ -48,43 +46,6 @@ export default class AboutMe extends Component {
                 city:res[0].userCity,
                 sex:res[0].userSex
             })
-        //     var pic = localStorage.getItem('newImg');
-        //     var ssex = localStorage.getItem('newSex');
-        //     var nname = localStorage.getItem('newName');
-        //     var iinfo = localStorage.getItem('newInfo');
-        //     var ccity = localStorage.getItem('newCity');
-        //     if(nname!==null && nname!==''){
-        //         console.log(nname)
-        //         this.setState({
-        //             name:nname,
-        //         })
-        //     }
-        //     if(iinfo !== null && iinfo!==''){
-        //       console.log(iinfo)
-        //       this.setState({
-        //           info:iinfo,
-        //       })
-        //     }
-        //     if(ccity !== null && ccity!==''){
-        //         console.log(ccity)
-        //         this.setState({
-        //             city:ccity,
-        //         })
-        //     }
-        //     if(pic !== null && pic!==''){
-        //         console.log(pic)
-        //         this.setState({
-        //             previewPic:pic,
-        //         })
-        //     }
-        //     if(ssex !== null && ssex!==''){
-        //         console.log(ssex)
-        //         this.setState({
-        //             sex:ssex,
-        //         })
-        //     }
-
-
         })
     }
     //头像
