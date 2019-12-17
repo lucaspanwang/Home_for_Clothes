@@ -32,10 +32,6 @@ export default class Community extends Component {
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
-            // for(var i=0;i<res.length;i++){
-            //     var j = res[i].userPic.indexOf('/');
-            //     res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
-            // }
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
                 res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
@@ -53,14 +49,15 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                // users[j].collect = false;
+                users[j].collect = false;
                 for(var i=0;i<res.length;i++){
                     if(users[j].articleId == res[i].articleId){
                         users[j].collect = true;
-                    }else{
-                        users[j].collect = false;
                     }
                 }
+            }
+            for(var j=0;j<users.length;j++){
+                console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
             }
             this.setState({
                 users:users
@@ -71,14 +68,15 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                // users[j].like = false;
+                users[j].like = false;
                 for(var i=0;i<res.length;i++){
                     if(users[j].articleId == res[i].articleId){
                         users[j].like = true;
-                    }else{
-                        users[j].like = false;
                     }
                 }
+            }
+            for(var j=0;j<users.length;j++){
+                console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
             }
             this.setState({
                 users:users
@@ -95,6 +93,9 @@ export default class Community extends Component {
                         users[j].follow = true;
                     }
                 }
+            }
+            for(var j=0;j<users.length;j++){
+                console.log(users[j].follow);
             }
             this.setState({
                 users:users
