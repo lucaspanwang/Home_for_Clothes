@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popover, NavBar, WingBlank,WhiteSpace } from 'antd-mobile';
+import { Popover, NavBar, WingBlank,WhiteSpace,Grid } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography,Menu, Dropdown, Icon } from 'antd';
 import './community.css';
@@ -29,18 +29,21 @@ export default class Community extends Component {
         }
     }    
     componentDidMount(){
-        // if(!this.state.isReload){
-        //     window.location.reload();
-        // }
-        // window.location.reload(false);
-        // console.log(this.props.id);
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
+            // for(var i=0;i<res.length;i++){
+            //     var j = res[i].userPic.indexOf('/');
+            //     res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+            // }
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
                 res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
-            }
+                for(var j=0;j<res[i].cimg.length;j++){
+                    res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+                    console.log(res[i].cimg[j]);
+                }
+              }
             this.setState({
                 users:res
             })
@@ -50,10 +53,12 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                users[j].collect = false;
+                // users[j].collect = false;
                 for(var i=0;i<res.length;i++){
                     if(users[j].articleId == res[i].articleId){
                         users[j].collect = true;
+                    }else{
+                        users[j].collect = false;
                     }
                 }
             }
@@ -66,10 +71,12 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                users[j].like = false;
+                // users[j].like = false;
                 for(var i=0;i<res.length;i++){
                     if(users[j].articleId == res[i].articleId){
                         users[j].like = true;
+                    }else{
+                        users[j].like = false;
                     }
                 }
             }
@@ -233,6 +240,13 @@ export default class Community extends Component {
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
                             <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
+                            <Grid square
+                            data={item.cimg}
+                            columnNum="3"
+                            renderItem={dataItem => (
+                                <img src={dataItem} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
+                            )}
+                            />
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
