@@ -191,6 +191,13 @@ export default class Wear extends Component {
     }
     })
   }
+    aaa=(idx)=>{
+      if(idx==1){
+        window.location.href ='/#/articleadd/'+this.props.id
+      }else{
+        window.location.href ='/#'+ this.state.tiaosrc[idx]
+      }
+    }
     click_share=()=>{
       var div = document.getElementById('fenxiang');
       div.style.display='block'
@@ -458,12 +465,12 @@ export default class Wear extends Component {
                   <Grid data={data2}
                       columnNum={5}
                       renderItem={(dataItem,idx) => (
-                          <Link to={this.state.tiaosrc[idx]}>
+                        <div onClick={()=>this.aaa(idx)}>
                           <img src={dataItem.icon[idx]} style={{ width: '40px', height: '40px', marginTop:'20px'}} alt="" />
                           <div>
                               <span>{this.state.ss1[idx]}</span>
                           </div>
-                          </Link>
+                        </div>
                       )}
                     />
                     <hr />
