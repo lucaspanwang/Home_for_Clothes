@@ -17,9 +17,11 @@ export default class AboutMe extends Component {
         this.state = {
             user:{},
             previewPic:'',
-            userSex:'', 
+            sex:'', 
             name:'',
-              
+            info:'',
+            nnname:'',
+            city:''
         }
         this.handleUpload = this.handleUpload.bind(this);
     }
@@ -32,33 +34,59 @@ export default class AboutMe extends Component {
     componentDidMount(){
         console.log(this.props.match.params.id);
         fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)
-      .then(res=>res.json())
-      .then(res=>{
-          for(var i=0;i<res.length;i++){
-            var j = res[i].userPic.indexOf('/');
-            res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
-          }
-          var nname = localStorage.getItem('newName');
-          if(nname!==null){
-              console.log(nname)
-              this.setState({
-                  name:nname,
-                  user:res[0],
-                  previewPic:res[0].userPic,
-              },function(){
-                  localStorage.removeItem('newName')
-              })
-          }else{
+        .then(res=>res.json())
+        .then(res=>{
+            for(var i=0;i<res.length;i++){
+                var j = res[i].userPic.indexOf('/');
+                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+            }
+            var newInfo = res[0].userIntro.length>12?res[0].userIntro.substr(0,12)+'...':res[0].userIntro;
             this.setState({
                 user:res[0],
                 previewPic:res[0].userPic,
+                info:newInfo,
                 name:res[0].userName,
+                city:res[0].userCity,
+                sex:res[0].userSex
             })
-            console.log(this.state.user);
-          }
-      });
+            var pic = localStorage.getItem('newImg');
+            var ssex = localStorage.getItem('newSex');
+            var nname = localStorage.getItem('newName');
+            var iinfo = localStorage.getItem('newInfo');
+            var ccity = localStorage.getItem('newCity');
+            if(nname!==null && nname!==''){
+                console.log(nname)
+                this.setState({
+                    name:nname,
+                })
+            }
+            if(iinfo !== null && iinfo!==''){
+              console.log(iinfo)
+              this.setState({
+                  info:iinfo,
+              })
+            }
+            if(ccity !== null && ccity!==''){
+                console.log(ccity)
+                this.setState({
+                    city:ccity,
+                })
+            }
+            if(pic !== null && pic!==''){
+                console.log(pic)
+                this.setState({
+                    previewPic:pic,
+                })
+            }
+            if(ssex !== null && ssex!==''){
+                console.log(ssex)
+                this.setState({
+                    sex:ssex,
+                })
+            }
 
 
+        })
     }
     //头像
     handleUpload(e) {
@@ -71,7 +99,9 @@ export default class AboutMe extends Component {
             this.setState({
                 previewPic: e.target.result
             });
+            localStorage.setItem('newImg',e.target.result)
         }.bind(this);
+        
     }
      
     render() {
@@ -96,7 +126,7 @@ export default class AboutMe extends Component {
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>性别</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userSex}</span>
+                       <Link to={"/sex/"+this.props.match.params.id} style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.sex}</Link>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>昵称</span>
@@ -105,11 +135,11 @@ export default class AboutMe extends Component {
                     
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>城市</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userCity}</span>
+                       <Link to={"/city/"+this.props.match.params.id} style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.city}</Link>
                     </Item>
                     <Item arrow="horizontal" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>简介</span>
-                       <span style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.user.userIntro}</span>
+                       <Link to={"/info/"+this.props.match.params.id}  style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.info}</Link>
                     </Item>
                 </List>
                 <Tooltip placement="right" title={text}>

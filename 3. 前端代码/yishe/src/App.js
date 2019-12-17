@@ -27,9 +27,9 @@ import MyCare from './me/MyCare';
 import MyFan from './me/MyFan';
 import MyCollect from './me/MyCollect';
 import Name from './me/Name.js';
-import Id from './me/Id.js';
 import City from './me/City.js';
 import Info from './me/Info.js';
+import Sex from './me/Sex';
 
 export default class App extends Component {
     render() {
@@ -63,9 +63,9 @@ export default class App extends Component {
                     <Route path='/myfan/:id' component={MyFan} />
                     <Route path='/mycollect/:id' component={MyCollect} />
                     <Route path='/name/:id' component={Name} />
-                    <Route path='/id/:id' component={Id} />
                     <Route path='/city/:id' component={City} />
                     <Route path='/info/:id' component={Info} />
+                    <Route path='/sex/:id' component={Sex} />
                 </div> 
             </Router>
         )

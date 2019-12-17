@@ -3,7 +3,6 @@ import { NavBar,List } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
-// import fanhui from '../images/返回 (1).png';
 import touxiang from '../images/头像.png';
 import xiangqing from '../images/详情.png';
 import shoucang from '../images/收藏（1）.png';
