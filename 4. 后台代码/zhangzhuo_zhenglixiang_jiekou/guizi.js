@@ -51,15 +51,7 @@ server.on('request',(req,res)=>{
             })
         })
     }
-    // let promises = new Promise(resolve=>{
-    //     con.query(`select*from clothing where cloPlace='家' and userId=${userId}`,(err,result)=>{
-    //         resolve(result);
-    //         // console.log(result);
-    //     })
-    // })
-    // .then(value=>{
-    //     console.log(value)
-    // })
+   
     let promise = new Promise(resolve=>{
         con.query(`select*from clothing where cloPlace='柜子' and userId=${user}`,(err,result)=>{
             resolve(result);
