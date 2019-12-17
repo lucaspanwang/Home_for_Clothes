@@ -76,7 +76,7 @@ export default class Wear extends Component {
         userId:'',
         ress:[],
         linshi:0,
-        tiaosrc : ['/diaryAdd/']
+        tiaosrc : ['/diaryAdd/','/articleadd/','']
     }
   }    
   componentDidMount(){
@@ -94,6 +94,7 @@ export default class Wear extends Component {
     fetch(this.state.url0)
     .then(res=>res.json())
     .then(res=>{
+      console.log(res);
       var weather = res[res.length-1]
       this.setState({
         city:weather.city,
@@ -114,7 +115,7 @@ export default class Wear extends Component {
           })
         }
         //把读取的图片放进来
-        if(res.cloSmallPic){     
+        if(res[0].cloSmallPic){     
         for(var i=0;i<res.length-1;i++){
           var j = res[i].cloSmallPic.indexOf('/');
           res[i].cloSmallPic = "http://47.98.163.228:8083"+res[i].cloSmallPic.substr(j);
@@ -209,6 +210,8 @@ export default class Wear extends Component {
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote2').src=this.state.qun[idx];
       document.getElementById('mote2').style.display = 'block';
+      document.getElementById('mote3').style.display = 'none';
+      document.getElementById('mote4').style.display = 'none';
     }
     kuzi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
@@ -245,11 +248,14 @@ export default class Wear extends Component {
             if(this.state.tuijian[idx].indexOf('qun')!==-1){
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
+              document.getElementById('mote3').style.display = 'none';
+              document.getElementById('mote4').style.display = 'none';
             }
             if(this.state.tuijian[idx].indexOf('yi')!==-1){
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
-            }else{
+            }
+            if(this.state.tuijian[idx].indexOf('tao')!==-1){
               document.getElementById('mote4').src=this.state.tuijian[idx];
               document.getElementById('mote4').style.display = 'block';
             }
@@ -433,7 +439,7 @@ export default class Wear extends Component {
                     <img src={fenxiang} style={{width:'30px',float:'right',position:'relative',bottom:'-170px',right:'10px'}} key="fanxiang"/>
                 </a>
                 {/* 小人 */}
-                <img src={xiaoren[randomNum(0,3)]} id="xiaoren"/>
+                <img src={xiaoren0} id="xiaoren"/>
                 {/* 分享栏 */}
                   <div id="fenxiang">
                     <p style={{textAlign:'center'}}>分享至</p>
@@ -452,7 +458,7 @@ export default class Wear extends Component {
                   <Grid data={data2}
                       columnNum={5}
                       renderItem={(dataItem,idx) => (
-                          <Link to={this.state.tiaosrc+this.props.id}>
+                          <Link to={this.state.tiaosrc[idx]+this.props.id}>
                           <img src={dataItem.icon[idx]} style={{ width: '40px', height: '40px', marginTop:'20px'}} alt="" />
                           <div>
                               <span>{this.state.ss1[idx]}</span>
