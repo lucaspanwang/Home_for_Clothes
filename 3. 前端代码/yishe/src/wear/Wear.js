@@ -19,12 +19,15 @@ import chuandariji from '../images/图片.png'
 import fuzhilianjie from '../images/复制链接.png'
 import buganxingqu from '../images/不感兴趣_44.png'
 import jubao from '../images/举报.png'
-import xiaoren from '../images/小人.png'
+import xiaoren0 from '../images/小人.png'
+import xiaoren1 from '../images/小人1.png'
+import xiaoren2 from '../images/小人2.png'
+import xiaoren3 from '../images/小人3.png'
 import beijing from '../images/雨.jpg'
 import beijing2 from '../images/晴.jpg'
 import {Link} from 'react-router-dom'
 const src =[beijing,beijing2];
-
+const xiaoren=[xiaoren0,xiaoren1,xiaoren2,xiaoren3]
 const data = Array.from(new Array(5)).map((_val, i) => ({
     icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
     text: `name${i}`,
@@ -37,7 +40,20 @@ const data1 = Array.from(new Array(5)).map(() => ({
 }));
 const c=['#00cc00','#ccff99','white','#3399ff','#FFCC66'];
 const w_t=[xiayu,qing]
-
+//生成从minNum到maxNum的随机数
+function randomNum(minNum,maxNum){ 
+  switch(arguments.length){ 
+      case 1: 
+          return parseInt(Math.random()*minNum+1,10); 
+      break; 
+      case 2: 
+          return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+      break; 
+          default: 
+              return 0; 
+          break; 
+  } 
+} 
 export default class Wear extends Component {
   constructor(){
     super();
@@ -417,7 +433,7 @@ export default class Wear extends Component {
                     <img src={fenxiang} style={{width:'30px',float:'right',position:'relative',bottom:'-170px',right:'10px'}} key="fanxiang"/>
                 </a>
                 {/* 小人 */}
-                <img src={xiaoren} id="xiaoren"/>
+                <img src={xiaoren[randomNum(0,3)]} id="xiaoren"/>
                 {/* 分享栏 */}
                   <div id="fenxiang">
                     <p style={{textAlign:'center'}}>分享至</p>
