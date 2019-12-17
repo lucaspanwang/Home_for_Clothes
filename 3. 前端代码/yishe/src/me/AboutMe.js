@@ -20,7 +20,6 @@ export default class AboutMe extends Component {
             sex:'', 
             name:'',
             info:'',
-            nnname:'',
             city:''
         }
         this.handleUpload = this.handleUpload.bind(this);
@@ -103,6 +102,19 @@ export default class AboutMe extends Component {
         }.bind(this);
         
     }
+    //向后端传值
+    onPost=()=> { 
+        fetch('http://47.98.163.228:8000/changeuser',{
+            method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'multipart/form-data;charset=utf-8'
+            },
+            body:JSON.stringify({pic:this.state.previewPic,userId:this.props.match.params.id,sex:this.state.sex,name:this.state.name,info:this.state.info,city:this.state.city}) 
+        })
+    }
      
     render() {
         return (
@@ -111,7 +123,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={this.onPost}/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">
