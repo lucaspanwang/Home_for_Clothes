@@ -48,41 +48,41 @@ export default class AboutMe extends Component {
                 city:res[0].userCity,
                 sex:res[0].userSex
             })
-            var pic = localStorage.getItem('newImg');
-            var ssex = localStorage.getItem('newSex');
-            var nname = localStorage.getItem('newName');
-            var iinfo = localStorage.getItem('newInfo');
-            var ccity = localStorage.getItem('newCity');
-            if(nname!==null && nname!==''){
-                console.log(nname)
-                this.setState({
-                    name:nname,
-                })
-            }
-            if(iinfo !== null && iinfo!==''){
-              console.log(iinfo)
-              this.setState({
-                  info:iinfo,
-              })
-            }
-            if(ccity !== null && ccity!==''){
-                console.log(ccity)
-                this.setState({
-                    city:ccity,
-                })
-            }
-            if(pic !== null && pic!==''){
-                console.log(pic)
-                this.setState({
-                    previewPic:pic,
-                })
-            }
-            if(ssex !== null && ssex!==''){
-                console.log(ssex)
-                this.setState({
-                    sex:ssex,
-                })
-            }
+        //     var pic = localStorage.getItem('newImg');
+        //     var ssex = localStorage.getItem('newSex');
+        //     var nname = localStorage.getItem('newName');
+        //     var iinfo = localStorage.getItem('newInfo');
+        //     var ccity = localStorage.getItem('newCity');
+        //     if(nname!==null && nname!==''){
+        //         console.log(nname)
+        //         this.setState({
+        //             name:nname,
+        //         })
+        //     }
+        //     if(iinfo !== null && iinfo!==''){
+        //       console.log(iinfo)
+        //       this.setState({
+        //           info:iinfo,
+        //       })
+        //     }
+        //     if(ccity !== null && ccity!==''){
+        //         console.log(ccity)
+        //         this.setState({
+        //             city:ccity,
+        //         })
+        //     }
+        //     if(pic !== null && pic!==''){
+        //         console.log(pic)
+        //         this.setState({
+        //             previewPic:pic,
+        //         })
+        //     }
+        //     if(ssex !== null && ssex!==''){
+        //         console.log(ssex)
+        //         this.setState({
+        //             sex:ssex,
+        //         })
+        //     }
 
 
         })
@@ -94,17 +94,15 @@ export default class AboutMe extends Component {
         // 读取文件内容，结果用data:url的字符串形式表示
         reader.readAsDataURL(e.target.files[0]);
         reader.onload = function(e) {
-            console.log(e.target.result);  // 上传的图片的编码
             this.setState({
                 previewPic: e.target.result
             });
-            localStorage.setItem('newImg',e.target.result)
         }.bind(this);
         
     }
     //向后端传值
     onPost=()=> { 
-        fetch('http://47.98.163.228:8000/changeuser',{
+        fetch('http://47.98.163.228:8000/changePic',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,
@@ -112,7 +110,7 @@ export default class AboutMe extends Component {
             headers: {
                 'Content-Type': 'multipart/form-data;charset=utf-8'
             },
-            body:JSON.stringify({pic:this.state.previewPic,userId:this.props.match.params.id,sex:this.state.sex,name:this.state.name,info:this.state.info,city:this.state.city}) 
+            body:JSON.stringify({pic:this.state.previewPic,userId:this.props.match.params.id}) 
         })
     }
      

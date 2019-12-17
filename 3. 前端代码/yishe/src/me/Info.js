@@ -15,12 +15,24 @@ export default class Info extends Component {
     onChange = ({ target: { value } }) => {
         this.setState({ value });
     };
-    handlePost = () => {
-        var InputValue = this.state.value;
-        console.log(InputValue,'------InputValue');
-        localStorage.setItem('newInfo',InputValue)
-        window.location.href = "/#/aboutme/"+this.props.match.params.id
+    handlePost =(data)=> { 
+        fetch('http://47.98.163.228:8000/changeInfo',{
+            method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'multipart/form-data;charset=utf-8'
+            },
+            body:JSON.stringify({info:this.state.value,userId:this.props.match.params.id}) 
+        })
     }
+    // handlePost = () => {
+    //     var InputValue = this.state.value;
+    //     console.log(InputValue,'------InputValue');
+    //     localStorage.setItem('newInfo',InputValue)
+    //     window.location.href = "/#/aboutme/"+this.props.match.params.id
+    // }
     render() {
         return (
             <div>
@@ -30,7 +42,7 @@ export default class Info extends Component {
                     <Link to={"/aboutme/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <p style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'18%'}} onClick={this.handlePost}>完成</p>
+                    <Link to={"/aboutme/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'18%'}} onClick={this.handlePost}>完成</Link>
                 ]}
                 >个人简介</NavBar>
                 <TextArea style={{marginTop:'5%',marginLeft:'3%',width:'94%',backgroundColor:'rgb(252,251,251)'}}

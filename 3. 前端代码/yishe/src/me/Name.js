@@ -14,13 +14,18 @@ export default class Name extends Component {
         this.setState({
             value:e.target.value
         })
-        // console.log(this.state.value);
     }
-    handlePost = () => {
-        var InputValue = this.state.value;
-        console.log(InputValue,'------InputValue');
-        localStorage.setItem('newName',InputValue)
-        window.location.href = "/#/aboutme/"+this.props.match.params.id
+    handlePost =()=> { 
+        fetch('http://47.98.163.228:8000/changename',{
+            method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'multipart/form-data;charset=utf-8'
+            },
+            body:JSON.stringify({name:this.state.value,userId:this.props.match.params.id}) 
+        })
     }
     render() {
         return (
@@ -31,7 +36,7 @@ export default class Name extends Component {
                     <Link to={"/aboutme/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <p style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'18%'}} onClick={this.handlePost}>完成</p>
+                    <Link to={"/aboutme/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'18%'}} onClick={this.handlePost}>完成</Link>
                 ]}
                 >更改昵称</NavBar>
                 <span style={{marginLeft:'5%',fontSize:'16px'}}>昵称：</span><input type='text' style={{width:'70%',height:'30px',border:'none',borderBottom:'1px solid blue'}} onChange={this.handelChange.bind(this)} defaultValue={this.state.value}/>
