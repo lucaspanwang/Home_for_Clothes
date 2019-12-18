@@ -56,9 +56,9 @@ export default class Community extends Component {
                     }
                 }
             }
-            for(var j=0;j<users.length;j++){
-                console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
-            }
+            // for(var j=0;j<users.length;j++){
+            //     console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
+            // }
             this.setState({
                 users:users
             })
@@ -75,9 +75,9 @@ export default class Community extends Component {
                     }
                 }
             }
-            for(var j=0;j<users.length;j++){
-                console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
-            }
+            // for(var j=0;j<users.length;j++){
+            //     console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
+            // }
             this.setState({
                 users:users
             })
@@ -94,9 +94,9 @@ export default class Community extends Component {
                     }
                 }
             }
-            for(var j=0;j<users.length;j++){
-                console.log(users[j].follow);
-            }
+            // for(var j=0;j<users.length;j++){
+            //     console.log(users[j].follow);
+            // }
             this.setState({
                 users:users
             })
