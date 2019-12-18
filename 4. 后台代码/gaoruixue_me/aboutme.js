@@ -35,39 +35,15 @@ server.on('request',(req,res)=>{
             res.end(data.toString('utf8'));     
         })
     } 
-    //修改用户信息  
+    //修改用户昵称  
     else if(req.url==='/changename'){
         var obj="";
         var di='';
         req.on('data',function(data){
             obj+=data;
         })
-        req.on('end',function(){//获取头像存入
+        req.on('end',function(){
             var user = JSON.parse(obj);
-            // var path = '../我的/images/'+ user.userId+'.jpg';
-            // di = di+path.slice(3);
-            console.log(user);
-            // var base64 = user.pic.replace(/^data:image\/\w+;base64,/, "");//去掉图片base64码前面部分data:image/png;base64
-            // var dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
-            // fs.writeFile(path,dataBuffer,function(err){//用fs写入文件
-            //     if(err){
-            //         console.log(err);
-            //     }else{
-            //         console.log('写入成功！');
-            //     }
-            // })    
-            
-            // let promise01 = new Promise(resolve =>{//添加日记数据
-            //     con.query('update users set userName=?,userPic=?,userSex=?,userIntro=?,userCity=? where userId=?',[user.name,di,user.sex,user.info,user.city,user.userId],(err, result) => {
-            //         result=[user.name,di,user.sex,user.info,user.city,user.userId];
-            //         resolve(result);
-            //     });
-            // }).then(value =>{
-            //     // res.setHeader("Access-Control-Allow-Origin", "*");
-            //     res.writeHead(200, {"Content-type":"application/json"},{"Access-Control-Allow-Origin": "*"});
-            //     var userInfo = JSON.stringify(value);
-            //     res.end(userInfo); 
-            // });
             let promise01 = new Promise(resolve =>{//添加日记数据
                 con.query('update users set userName=? where userId=?',[user.name,user.userId],(err, result) => {
                     result=[user.name,user.userId];
@@ -83,6 +59,7 @@ server.on('request',(req,res)=>{
         })
         res.end();    
     }  
+    //修改用户所在城市
     else if(req.url==='/changeCity'){
         var obj="";
         var di='';
@@ -91,7 +68,6 @@ server.on('request',(req,res)=>{
         })
         req.on('end',function(){
             var user = JSON.parse(obj);
-            console.log(user);
             let promise01 = new Promise(resolve =>{
                 con.query('update users set userCity=? where userId=?',[user.city,user.userId],(err, result) => {
                     result=[user.city,user.userId];
@@ -107,6 +83,7 @@ server.on('request',(req,res)=>{
         })
         res.end();    
     }  
+    //修改用户简介
     else if(req.url==='/changeInfo'){
         var obj="";
         var di='';
@@ -115,7 +92,7 @@ server.on('request',(req,res)=>{
         })
         req.on('end',function(){
             var user = JSON.parse(obj);
-            console.log(user);
+            //console.log(user);
             let promise01 = new Promise(resolve =>{
                 con.query('update users set userIntro =? where userId=?',[user.info,user.userId],(err, result) => {
                     result=[user.info,user.userId];
@@ -130,7 +107,8 @@ server.on('request',(req,res)=>{
 
         })
         res.end();    
-    }  
+    } 
+    //修改用户性别 
     else if(req.url==='/changeSex'){
         var obj="";
         var di='';
@@ -154,7 +132,8 @@ server.on('request',(req,res)=>{
 
         })
         res.end();    
-    }  
+    } 
+    //修改用户头像 
     else if(req.url==='/changePic'){
         var obj="";
         var di='';
@@ -174,7 +153,7 @@ server.on('request',(req,res)=>{
                     console.log('写入成功！');
                 }
             })    
-            console.log(user);
+            //console.log(user);
             let promise01 = new Promise(resolve =>{//添加日记数据
                 con.query('update users set userPic=? where userId=?',[di,user.userId],(err, result) => {
                     result=[di,user.userId];
