@@ -29,8 +29,10 @@ server.on('request',(req,res) => {
             con.query(`select community.*,users.userName,users.userPic from community,users where community.userId=users.userId`, (err, result) => {
                 var cimg;
                 for(var i=0;i<result.length;i++){
-                    cimg = result[i].cimg.split('+');
-                    result[i].cimg = cimg;
+                    if(result[i].cimg.length !== 0){
+                        cimg = result[i].cimg.split('+');
+                        result[i].cimg = cimg;
+                    }
                 }
                 resolve(result);
                 // console.log("社区读取所有文章信息");
@@ -79,18 +81,19 @@ server.on('request',(req,res) => {
                     }else{
                         addCimg += '+'+path.slice(5);
                     }
-                    var base64 = item.cimg[i].url.replace(/^data:image\/\w+;base64,/, "");
+                    // var base64 = item.cimg[i].url.replace(/^data:image\/\w+;base64,/, "");
+                    var base64 = item.cimg[i].replace(/^data:image\/\w+;base64,/, "");
                     var dataBuffer = new Buffer(base64, 'base64'); 
                     fs.writeFile(path,dataBuffer,function(err){
                         if(err){console.log(err);
-                        }else{console.log('写入成功！');}
+                        }else{
+                            console.log('写入成功！');
+                        }
                     })
                 }
                 let promise46 = new Promise(resolve =>{
                     con.query('insert into community values(?,?,?,?,?,?,?,?)',[value,item.userId,item.content,item.time,0,0,0,addCimg],(err, result) => {
-                        result=[value,item.userId,item.content,item.time,0,0,0,addCimg];
                         console.log("添加文章"+value);
-                        console.log(result);
                         resolve(result);
                     });//添加文章
                 }).then(value =>{
@@ -128,7 +131,29 @@ server.on('request',(req,res) => {
         //删除文章
         var it = qs.parse(req.url.split('?')[1]);
         let promise39 = new Promise(resolve =>{
+            con.query('select * from community where articleId=?',[it.articleId], (err, result) => {
+                var cimg;
+                for(var i=0;i<result.length;i++){
+                    if(result[i].cimg.length !== 0){
+                        cimg = result[i].cimg.split('+');
+                        for(var j=0;j<cimg.length;j++){
+                            fs.unlinkSync('../我的'+cimg[j]);
+                        }
+                    }
+                }
+                resolve(result);
+            })
+            con.query('delete from saveTable where articleId=?',[it.articleId],(err, result) => {
+                console.log('删除文章的收藏')
+            });
+            con.query('delete from agreeTable where articleId=?',[it.articleId],(err, result) => {
+                console.log('删除文章的点赞')
+            });
+            con.query('delete from reviewTable where articleId=?',[it.articleId],(err, result) => {
+                console.log('删除文章的评论')
+            });
             con.query('delete from community where articleId=?',[it.articleId],(err, result) => {
+                console.log('删除文章'+it.articleId);
                 resolve(result);
             });
         }).then(value =>{
@@ -374,20 +399,6 @@ server.on('request',(req,res) => {
             article = JSON.stringify(value);
             res.end(article); 
         });
-    //     var it = qs.parse(req.url,"?",null,{maxKeys:2});
-    //     console.log(it);
-    //     var id = it.careId;
-    //     console.log(id);
-    //     let promise79 = new Promise(resolve =>{
-    //         con.query('select * from care where careId=?',[id], (err, result) => {
-    //             console.log(id);
-    //             resolve(result);
-    //         })
-    //     }).then(value =>{
-    //         res.writeHead(200, {"Content-type":"application/json"});
-    //         article = JSON.stringify(value);
-    //         res.end(article); 
-    //     });
     }else if(req.url.split('?')[0] === '/careAdd'){
         //关注其他用户
         var it = qs.parse(req.url.split('?')[1]);
