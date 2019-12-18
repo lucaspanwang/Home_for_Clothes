@@ -76,9 +76,112 @@ export default class Wear extends Component {
         userId:'',
         ress:[],
         linshi:0,
-        tiaosrc : ['/diaryAdd/','/articleadd/','']
+        tiaosrc : ['/diaryAdd/','/articleadd/',''],
     }
   }    
+  componentWillMount(){
+        //获取图片信息
+        var small=[],big=[];
+        fetch(this.state.url0)
+        .then(res=>res.json())
+        .then(res=>{
+          console.log(res);
+          var weather = res[res.length-1]
+          this.setState({
+            city:weather.city,
+            temperature:weather.data[0].tem1,
+            temperature2:weather.data[0].tem,
+            dressing_advice:weather.data[0].index[3].desc,
+            weather:weather.data[0].wea,
+            tiaosrc : ['/diaryAdd/'+this.props.id]
+          })
+            if(this.state.weather.indexOf('雨')!=-1){
+              this.setState({
+                  idx:0,
+              })
+            }
+            else{
+              this.setState({
+                idx:1,
+              })
+            }
+            //把读取的图片放进来
+            if(res[0].cloSmallPic){     
+            for(var i=0;i<res.length-1;i++){
+              var j = res[i].cloSmallPic.indexOf('/');
+              res[i].cloSmallPic = "http://47.98.163.228:8083"+res[i].cloSmallPic.substr(j);
+              big[i] = res[i].cloSmallPic;
+              var name = res[i].cloSmallPic.substr(j).split('/')[4];
+              var n = name.split('.')[0];
+              small[i] = "http://47.98.163.228:8083/images/"+n+'_s.png'
+              this.setState({
+                ress:res,
+                arr:big,
+                arr_s:small
+             })
+            }
+          //分类存小图标
+          var kuku=[],kuku_s=[];
+          var qunqun=[],qunqun_s=[];
+          var yiyi=[],yiyi_s=[];
+          var taotao=[],taotao_s=[];
+          for(var i = 0;i<this.state.arr.length;i++){
+            var n = this.state.arr[i].split('/')[4];
+            //判断裤子类别
+            if(n.indexOf('ku')!=-1){
+              kuku.push(this.state.arr[i]);
+              kuku_s.push(this.state.arr_s[i])
+            }
+            //判断裙子类别
+            if(n.indexOf('qun')!=-1){
+              qunqun.push(this.state.arr[i]);
+              qunqun_s.push(this.state.arr_s[i])
+            }
+            //判断上衣
+            if(n.indexOf('yi')!=-1){
+              yiyi.push(this.state.arr[i]);
+              yiyi_s.push(this.state.arr_s[i])
+            }
+            //判断外套
+            if(n.indexOf('tao')!=-1){
+              taotao.push(this.state.arr[i]);
+              taotao_s.push(this.state.arr_s[i])
+            }
+          }
+          this.setState({
+            qun:qunqun,
+            qun_s:qunqun_s,
+            yi:yiyi,
+            yi_s:yiyi_s,
+            tao:taotao,
+            tao_s:taotao_s,
+            ku:kuku,
+            ku_s:kuku_s
+          })
+          //实现推荐
+          var tuitui=[],tuitui_s=[];
+          var diwen = this.state.temperature.charAt(0);
+          if(diwen<0){
+            this.setState({
+              tuijian:this.state.yi,
+              tuijian_s:this.state.yi_s
+            })
+          }else{
+            for(var i = 0;i<this.state.arr.length;i++){
+              var n = this.state.arr[i].split('/')[4];
+              if(n.indexOf('duan')==-1){
+                tuitui.push(this.state.arr[i]);
+                tuitui_s.push(this.state.arr_s[i])
+              }
+            }  
+            this.setState({
+              tuijian:tuitui,
+              tuijian_s:tuitui_s
+            })
+          }
+        }
+        })
+  }
   componentDidMount(){
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
@@ -197,6 +300,7 @@ export default class Wear extends Component {
       }else{
         window.location.href ='/#'+ this.state.tiaosrc[idx]
       }
+      // window.location.href ='/#'+ this.state.tiaosrc[idx]+this.props.id
     }
     click_share=()=>{
       var div = document.getElementById('fenxiang');
@@ -252,6 +356,7 @@ export default class Wear extends Component {
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
               document.getElementById('mote_bai').style.display = 'none'
+              document.getElementById('mote2').style.display = 'none';
             }
             if(this.state.tuijian[idx].indexOf('qun')!==-1){
               // document.getElementById('mote2').src=this.state.tuijian[idx];
@@ -266,11 +371,13 @@ export default class Wear extends Component {
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
               document.getElementById('mote_bai').style.display = 'none'
+              document.getElementById('mote2').style.display = 'none';
             }
             if(this.state.tuijian[idx].indexOf('tao')!==-1){
               document.getElementById('mote4').src=this.state.tuijian[idx];
               document.getElementById('mote4').style.display = 'block';
               document.getElementById('mote_bai').style.display = 'none'
+              document.getElementById('mote2').style.display = 'none';
             }
             this.setState({
               count:0
