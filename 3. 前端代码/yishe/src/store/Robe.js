@@ -21,7 +21,7 @@ export default class Robe extends Component {
         this.setState({
             picture:p
         })
-        fetch('http://47.98.163.228:8087/delete',{
+        fetch('http://47.98.163.228:8084/delete',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,
@@ -33,8 +33,20 @@ export default class Robe extends Component {
         })
         
     }
+    // componentWillMount(){
+    //     fetch("http://47.98.163.228:8084/userid", {
+    //     method: 'post', 
+    //     "Access-Control-Allow-Origin" : "*",
+    //     "Access-Control-Allow-Credentials" : true,
+    //     credentials: 'include',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body:JSON.stringify({userId:this.props.match.params.id,zhengli:'柜子'}) 
+    //   });
+    // }
     componentDidMount(){
-        // console.log(this.props.match.params.id);//获取用户id
+        console.log(this.props.match.params.id);//获取用户id
         fetch("http://47.98.163.228:8087/userid", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
@@ -51,7 +63,7 @@ export default class Robe extends Component {
             this.setState({
                 picture:res
             })
-            // console.log(res)
+            console.log(res)
         });
         
       fetch('http://47.98.163.228:8083/pp2')

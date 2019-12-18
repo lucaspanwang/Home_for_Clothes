@@ -90,6 +90,10 @@ const kind=[
         label:(<span>运动上衣</span>),
         value:'运动上衣'
       },
+      {
+        label:(<span>短袖</span>),
+        value:'短袖'
+        },
     ]
   },
   {

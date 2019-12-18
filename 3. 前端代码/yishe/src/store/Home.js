@@ -32,6 +32,18 @@ export default class Home extends Component {
             body:JSON.stringify({nage:i,weizhi:'家',userId:this.props.match.params.id})
         })
     }
+    // componentWillMount(){
+    //     fetch("http://47.98.163.228:8084/userid", {
+    //     method: 'post', 
+    //     "Access-Control-Allow-Origin" : "*",
+    //     "Access-Control-Allow-Credentials" : true,
+    //     credentials: 'include',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body:JSON.stringify({userId:this.props.match.params.id,zhengli:'家'}) 
+    //   });
+    // }
     componentDidMount(){
         fetch("http://47.98.163.228:8084/userid", {
         method: 'post', 
@@ -41,7 +53,7 @@ export default class Home extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({userId:this.props.match.params.id}) 
+        body:JSON.stringify({userId:this.props.match.params.id,zhengli:'家'}) 
       });
         // console.log(this.props.match.params.id);//获取用户id
         fetch(this.state.url)

@@ -51,7 +51,7 @@ export default class Trunk extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({userId:this.props.match.params.id}) 
+        body:JSON.stringify({userId:this.props.match.params.id,zhengli:'行李箱'}) 
       });
       fetch('http://47.98.163.228:8083/pp2')
         .then(res=>res.json())
