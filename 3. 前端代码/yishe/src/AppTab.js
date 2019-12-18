@@ -54,8 +54,10 @@ export default class AppTab extends React.Component {
             }}
             title="穿搭"
             key="chuanda"
+            // onClick={()=>{window.location.href='/#/apptab'+this.props.id}}
             selected={this.state.selectedTab === "chuandaTab"}
             onPress={() => {
+              window.location.href = '/#/apptab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "chuandaTab"
               });
@@ -89,6 +91,7 @@ export default class AppTab extends React.Component {
             // dot
             selected={this.state.selectedTab === "zhengliTab"}
             onPress={() => {
+              window.location.href = '/#/zhenglitab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "zhengliTab"
               });
@@ -124,6 +127,7 @@ export default class AppTab extends React.Component {
             }
             selected={this.state.selectedTab === "shequTab"}
             onPress={() => {
+              window.location.href = '/#/shequtab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "shequTab"
               });
@@ -143,6 +147,7 @@ export default class AppTab extends React.Component {
             key="riji"
             selected={this.state.selectedTab === "rijiTab"}
             onPress={() => {
+              window.location.href = '/#/rijitab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "rijiTab"
               });
@@ -162,6 +167,7 @@ export default class AppTab extends React.Component {
             key="geren"
             selected={this.state.selectedTab === "gerenTab"}
             onPress={() => {
+              window.location.href = '/#/gerentab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "gerenTab"
               });
