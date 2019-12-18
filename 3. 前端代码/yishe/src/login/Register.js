@@ -111,7 +111,7 @@ export default class Register extends Component{
                             <Flex direction="column" justify="center" align="center">
                                 <Button onClick={()=>{
                                     this.setState({userCity: data.userCity, picData:data.picData});
-                                    if(this.state.userName=='' || data.userCity==''){
+                                    if(this.state.userName=='' || data.userCity=='' || data.userCity=='请选择'){
                                         document.getElementById('inforError').style.display='block';
                                     }
                                     else if(data.picData=='' || data.picData==undefined){
