@@ -28,6 +28,7 @@ body{
 }
 .article>.artUser>.userImg{
     width:45px;
+    height:45px;
     border-radius:10px;
     float: left;
 }
