@@ -80,9 +80,23 @@ export default class Wear extends Component {
     }
   }    
   componentWillMount(){
+    console.log('componentWillMount')
+    fetch("http://47.98.163.228:8083/aa", {
+      method: 'post', 
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Credentials" : true,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: JSON.stringify({userId:localStorage.getItem('userId')}) 
+    },function(){
+      console.log('fetch aa发送userid了')
+    })
         //获取图片信息
         var small=[],big=[];
-        fetch(this.state.url0)
+        fetch('http://47.98.163.228:8083/react',function(){
+          console.log('我fetch react 了')
+        })
         .then(res=>res.json())
         .then(res=>{
           console.log(res);
@@ -180,120 +194,12 @@ export default class Wear extends Component {
             })
           }
         }
-        })
+      })
   }
-  componentDidMount(){
-    fetch("http://47.98.163.228:8083/aa", {
-      method: 'post', 
-      "Access-Control-Allow-Origin" : "*",
-      "Access-Control-Allow-Credentials" : true,
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: JSON.stringify({userId:localStorage.getItem('userId')}) 
-  })
-    //获取图片信息
-    var small=[],big=[];
-    fetch(this.state.url0)
-    .then(res=>res.json())
-    .then(res=>{
-      console.log(res);
-      var weather = res[res.length-1]
-      this.setState({
-        city:weather.city,
-        temperature:weather.data[0].tem1,
-        temperature2:weather.data[0].tem,
-        dressing_advice:weather.data[0].index[3].desc,
-        weather:weather.data[0].wea,
-        tiaosrc : ['/diaryAdd/'+this.props.id]
-      })
-        if(this.state.weather.indexOf('雨')!=-1){
-          this.setState({
-              idx:0,
-          })
-        }
-        else{
-          this.setState({
-            idx:1,
-          })
-        }
-        //把读取的图片放进来
-        if(res[0].cloSmallPic){     
-        for(var i=0;i<res.length-1;i++){
-          var j = res[i].cloSmallPic.indexOf('/');
-          res[i].cloSmallPic = "http://47.98.163.228:8083"+res[i].cloSmallPic.substr(j);
-          big[i] = res[i].cloSmallPic;
-          var name = res[i].cloSmallPic.substr(j).split('/')[4];
-          var n = name.split('.')[0];
-          small[i] = "http://47.98.163.228:8083/images/"+n+'_s.png'
-          this.setState({
-            ress:res,
-            arr:big,
-            arr_s:small
-         })
-        }
-      //分类存小图标
-      var kuku=[],kuku_s=[];
-      var qunqun=[],qunqun_s=[];
-      var yiyi=[],yiyi_s=[];
-      var taotao=[],taotao_s=[];
-      for(var i = 0;i<this.state.arr.length;i++){
-        var n = this.state.arr[i].split('/')[4];
-        //判断裤子类别
-        if(n.indexOf('ku')!=-1){
-          kuku.push(this.state.arr[i]);
-          kuku_s.push(this.state.arr_s[i])
-        }
-        //判断裙子类别
-        if(n.indexOf('qun')!=-1){
-          qunqun.push(this.state.arr[i]);
-          qunqun_s.push(this.state.arr_s[i])
-        }
-        //判断上衣
-        if(n.indexOf('yi')!=-1){
-          yiyi.push(this.state.arr[i]);
-          yiyi_s.push(this.state.arr_s[i])
-        }
-        //判断外套
-        if(n.indexOf('tao')!=-1){
-          taotao.push(this.state.arr[i]);
-          taotao_s.push(this.state.arr_s[i])
-        }
-      }
-      this.setState({
-        qun:qunqun,
-        qun_s:qunqun_s,
-        yi:yiyi,
-        yi_s:yiyi_s,
-        tao:taotao,
-        tao_s:taotao_s,
-        ku:kuku,
-        ku_s:kuku_s
-      })
-      //实现推荐
-      var tuitui=[],tuitui_s=[];
-      var diwen = this.state.temperature.charAt(0);
-      if(diwen<0){
-        this.setState({
-          tuijian:this.state.yi,
-          tuijian_s:this.state.yi_s
-        })
-      }else{
-        for(var i = 0;i<this.state.arr.length;i++){
-          var n = this.state.arr[i].split('/')[4];
-          if(n.indexOf('duan')==-1){
-            tuitui.push(this.state.arr[i]);
-            tuitui_s.push(this.state.arr_s[i])
-          }
-        }  
-        this.setState({
-          tuijian:tuitui,
-          tuijian_s:tuitui_s
-        })
-      }
+
+    componentWillUnmount(){
+      
     }
-    })
-  }
     aaa=(idx)=>{
       if(idx==1){
         window.location.href ='/#/articleadd/'+this.props.id
@@ -352,32 +258,26 @@ export default class Wear extends Component {
           }else{
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
-            if(this.state.tuijian[idx].indexOf('ku')!==-1){
+            if(this.state.tuijian[idx].indexOf('ku')!==-1){ //裤子2
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
-              document.getElementById('mote_bai').style.display = 'none'
-              document.getElementById('mote2').style.display = 'none';
             }
-            if(this.state.tuijian[idx].indexOf('qun')!==-1){
-              // document.getElementById('mote2').src=this.state.tuijian[idx];
+            if(this.state.tuijian[idx].indexOf('qun')!==-1){ //裙子2
+              document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
-              document.getElementById('mote2').src='http://47.98.163.228:8083/images/qunqun_bai.png'
-              document.getElementById('mote_bai').style.display = 'block'
-              document.getElementById('mote_bai').src=this.state.tuijian[idx];
-              document.getElementById('mote3').style.display = 'none';
-              document.getElementById('mote4').style.display = 'none';
+              // document.getElementById('mote2').src='http://47.98.163.228:8083/images/qunqun_bai.png'
+              // document.getElementById('mote_bai').style.display = 'block'
+              // document.getElementById('mote_bai').src=this.state.tuijian[idx];
+              // document.getElementById('mote3').style.display = 'none';
+              // document.getElementById('mote4').style.display = 'none';
             }
             if(this.state.tuijian[idx].indexOf('yi')!==-1){
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
-              document.getElementById('mote_bai').style.display = 'none'
-              document.getElementById('mote2').style.display = 'none';
             }
             if(this.state.tuijian[idx].indexOf('tao')!==-1){
               document.getElementById('mote4').src=this.state.tuijian[idx];
               document.getElementById('mote4').style.display = 'block';
-              document.getElementById('mote_bai').style.display = 'none'
-              document.getElementById('mote2').style.display = 'none';
             }
             this.setState({
               count:0
@@ -466,7 +366,7 @@ export default class Wear extends Component {
                 <img src={mote2} id="mote_2"/>
 
                 <img id="mote2"/>
-                <div class="icon" id="mote22"><img id="mote_bai" class="icon icon-del" /></div>
+                {/* <div class="icon" id="mote22"><img id="mote_bai" class="icon icon-del" /></div> */}
 
                 <img  id='mote3' />
                 <img  id='mote4' />
@@ -480,7 +380,7 @@ export default class Wear extends Component {
                     tabDirection="vertical"
                   >
                     <div style={{width:'100px', display: 'flex',
-                      height: '500px', backgroundColor: '#fff' }}>
+                      height: '1000px', backgroundColor: '#fff' }}>
                       <ul className="yifu" id='yifu1'>
                       {
                           this.state.tuijian_s.map((item,idx)=>(
@@ -615,10 +515,14 @@ const TabExample = () => (
       tabDirection="vertical"
     >
       <div style={{width:'100px', display: 'flex',
-        height: '500px', backgroundColor: '#fff' }}>
+        height: '700px', backgroundColor: '#fff' }}>
         <ul className="yifu">
             <li style={{height:'100px'}}></li>
             <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px',backgroundColor: '#fff'}}></li>
             <li style={{height:'100px'}}></li>
             <li style={{height:'100px'}}></li>
             <li style={{height:'100px'}}></li>
