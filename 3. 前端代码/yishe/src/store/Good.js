@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
 import Back from '../images/返回 (1).png';
 
-export default class Home extends Component {
+export default class Good extends Component {
     constructor(){
         super();
         this.state={
-            url:'http://47.98.163.228:8084/home',
+            url:'http://47.98.163.228:8084/good',
             picture:[],
             num:-1
         }
@@ -33,6 +33,15 @@ export default class Home extends Component {
         })
     }
     componentDidMount(){
+        // console.log(this.props.match.params.id);//获取用户id
+        fetch(this.state.url)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                picture:res
+            })
+            console.log(this.state.picture)
+        });
         fetch("http://47.98.163.228:8084/userid", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
@@ -43,21 +52,9 @@ export default class Home extends Component {
         },
         body:JSON.stringify({userId:this.props.match.params.id}) 
       });
-        // console.log(this.props.match.params.id);//获取用户id
-        fetch(this.state.url)
-        .then(res=>res.json())
-        .then(res=>{
-            console.log(res.length)
-            this.setState({
-                picture:res
-            })
-            console.log(this.state.picture)
-        });
-        
       fetch('http://47.98.163.228:8083/pp2')
         .then(res=>res.json())
         .then(res=>{
-            console.log(res);
             console.log('????'+res.msg)
             var n = localStorage.getItem('count')
             localStorage.setItem('count', n+1)

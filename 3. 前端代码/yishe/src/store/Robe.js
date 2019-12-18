@@ -34,15 +34,7 @@ export default class Robe extends Component {
         
     }
     componentDidMount(){
-        console.log(this.props.match.params.id);//获取用户id
-        fetch(this.state.url)
-        .then(res=>res.json())
-        .then(res=>{
-            this.setState({
-                picture:res
-            })
-            console.log(res)
-        });
+        // console.log(this.props.match.params.id);//获取用户id
         fetch("http://47.98.163.228:8087/userid", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
@@ -53,6 +45,15 @@ export default class Robe extends Component {
         },
         body:JSON.stringify({userId:this.props.match.params.id}) 
       });
+        fetch(this.state.url)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                picture:res
+            })
+            // console.log(res)
+        });
+        
       fetch('http://47.98.163.228:8083/pp2')
         .then(res=>res.json())
         .then(res=>{
