@@ -9,7 +9,7 @@ con=mysql.createConnection({
 })
 con.connect();
 let server=http.createServer();
-let user='123';
+let user='';
 server.on('request',(req,res)=>{
     if(req.url==='/userid'){
         res.setHeader('Access-Control-Allow-Origin','*');
@@ -26,7 +26,7 @@ server.on('request',(req,res)=>{
         })
     })
     .then(value=>{
-        
+        if(value!=undefined){
             var p=[];
             for(var i=0;i<value.length;i++){
                 // console.log(value[i].cloPic)
@@ -35,8 +35,8 @@ server.on('request',(req,res)=>{
                 }
                 p=[...p,'xinglixiang'+i];
             }
+        }
             // console.log(p);
-            
             if(req.url==='/trunk'){
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.writeHead(200,'ok',{
@@ -49,8 +49,6 @@ server.on('request',(req,res)=>{
         })
         
 })
-
-
 server.listen(8089);
 
 

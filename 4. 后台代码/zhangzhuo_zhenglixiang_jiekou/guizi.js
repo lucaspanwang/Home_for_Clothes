@@ -11,10 +11,10 @@ con=mysql.createConnection({
 })
 con.connect();
 let server=http.createServer();
-let user='123';
-var place='家';
+let user='';
+var place='柜子';
 var nage;
-var userId='123';
+var userId='';
 server.on('request',(req,res)=>{
     // console.log(req.url);
     if(req.url==='/userid'){
@@ -59,6 +59,7 @@ server.on('request',(req,res)=>{
         })
     })
     .then(value=>{
+        if(value!=undefined){
             var p=[];
             for(var i=0;i<value.length;i++){
                 // console.log(value[i].cloPic)
@@ -67,14 +68,14 @@ server.on('request',(req,res)=>{
                 }
                 p=[...p,'guizi'+i];
             }
-
-            
+        }else{
+            p=[];
+        }
             if(req.url==='/robe'){
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.writeHead(200,'ok',{
                     'Content-Type':'text/palin'
                 })
-                // console.log(JSON.stringify(p));
                 res.end(JSON.stringify(p));
                 
             }
