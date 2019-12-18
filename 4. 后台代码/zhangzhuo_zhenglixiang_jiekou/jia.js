@@ -9,7 +9,7 @@ con=mysql.createConnection({
 })
 con.connect();
 let server=http.createServer();
-let user='123';
+let user='';
 let add="添加";
 server.on('request',(req,res)=>{
     if(req.url==='/userid'){
@@ -28,15 +28,20 @@ server.on('request',(req,res)=>{
         })
     })
     .then(value=>{
-        // server.on('request',(req,res)=>{
+        if(value!=undefined){
             var p=[];
             for(var i=0;i<value.length;i++){
                 // console.log(value[i].cloPic)
                 if(req.url==='/jia'+i){
                     optfile.readImg('../'+value[i].cloPic,res);
+                    console.log('我是图片')
                 }
                 p=[...p,'jia'+i];
             }
+        }else{
+            p=[]
+        }
+
             // console.log(p);
             
             if(req.url==='/home'){
@@ -44,7 +49,9 @@ server.on('request',(req,res)=>{
                 res.writeHead(200,'ok',{
                     'Content-Type':'text/palin'
                 })
+                console.log('我是home');
                 // console.log(JSON.stringify(p));
+                // console.log(p.length);
                 res.end(JSON.stringify(p));           
             }
             //获取添加的内容
