@@ -27,9 +27,18 @@ export default class Community extends Component {
             visible: false,
             selected: '',
             users:[],
+            office:''
         }
     }    
     componentDidMount(){
+        fetch("http://47.98.163.228:8086/office")
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                office:res[0]
+            })
+            console.log(this.state.office);
+        });
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
@@ -56,9 +65,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
-            // }
             this.setState({
                 users:users
             })
@@ -75,9 +81,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
-            // }
             this.setState({
                 users:users
             })
@@ -94,9 +97,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log(users[j].follow);
-            // }
             this.setState({
                 users:users
             })
@@ -211,7 +211,7 @@ export default class Community extends Component {
                     <WhiteSpace size="lg" />
                     <WingBlank size="lg">
                         <span style={{fontSize:'16px'}}>官方消息</span>
-                        <div className="official">温馨提示：近日北京市寒潮即将抵达，温度降低，大家要做好保暖措施。</div>
+                        <div className="official">温馨提示：{this.state.office.offContent}</div>
                     </WingBlank>
                     <WhiteSpace size="lg" />
                 </div>
