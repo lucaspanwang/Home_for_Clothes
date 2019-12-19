@@ -35,24 +35,35 @@
     margin-top:20px;
     display: none;
   }
-  
+  #mote_3{
+    width:100%;
+    /* display: none; */
+    /* left:-120px; */
+  }
   #mote_bai{
     display:none;
     width:100%;
   }
   .icon {
     display: block;
-    top:165px;
+    top:155px;
     left:11px;
     width:40%;
     position:absolute;
     overflow: hidden;
   }
-  .icon > .icon {
+  .icon > .icon2 {
       position: relative;
-      top:0px;
-      left:0px;
-      /* filter: drop-shadow(0px 0 blue); */
+      top:-0px;
+      left:-150px;
+      filter: drop-shadow(150px 0 blue);
+  }
+  #mote5{
+    top:155px;
+    left:11px;
+    width:40%;
+    position:absolute;
+    display:none;
   }
   #mote2{
     top:155px;

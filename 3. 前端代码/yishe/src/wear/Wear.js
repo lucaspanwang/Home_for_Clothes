@@ -8,6 +8,8 @@ import xiayu from '../images/下雨.png'
 import qing from '../images/晴.png'
 import mote from '../images/模特.png'
 import mote2 from '../images/模特2.png'
+import mote3 from '../images/模特2_bai(1).png'
+import mote4 from '../images/模特_头发丝.png'
 import fenxiang from '../images/分享.png'
 import pengyouquan from '../images/朋友圈.png'
 import weixin from '../images/微信.png'
@@ -274,7 +276,7 @@ export default class Wear extends Component {
               // document.getElementById('mote_bai').src=this.state.tuijian[idx];
               // document.getElementById('mote3').style.display = 'none';
               // document.getElementById('mote4').style.display = 'none';
-              if(this.state.qun[idx].indexOf('duan')!=-1){ //包括短裙
+              if(this.state.tuijian[idx].indexOf('duan')!=-1){ //包括短裙
 
               }else{//连衣裙
                 document.getElementById('mote3').style.display = 'none';
@@ -377,12 +379,13 @@ export default class Wear extends Component {
               </p>
 
                 {/* 模特 */}
-                <img src={mote} id="mote"/>
+                <img src={mote2} id="mote"/>
                 <img src={mote2} id="mote_2"/>
 
-                <img id="mote2"/>
-                {/* <div class="icon" id="mote22"><img id="mote_bai" class="icon icon-del" /></div> */}
+                <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3" /></div>
+               <img src={mote4} id='mote5'style={{display:'block'}}/> 
 
+                <img  id='mote2' />
                 <img  id='mote3' />
                 <img  id='mote4' />
                 {/* 衣物栏 */}
