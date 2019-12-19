@@ -82,10 +82,11 @@ export default class Wear extends Component {
         linshi:0,
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
         color:'',
+        color2:'',
+        cc:[],
     }
   }    
   componentDidMount(){
-
     console.log('componentDidMount')
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
@@ -137,7 +138,7 @@ export default class Wear extends Component {
               this.setState({
                 ress:res,
                 arr:big,
-                arr_s:small
+                arr_s:small,
              })
             }
           //分类存小图标
@@ -196,23 +197,18 @@ export default class Wear extends Component {
             }  
             this.setState({
               tuijian:tuitui,
-              tuijian_s:tuitui_s
+              tuijian_s:tuitui_s,
             })
           }
         }
       })
   }
-
-    componentWillUnmount(){
-      
-    }
     aaa=(idx)=>{
       if(idx==1){
         window.location.href ='/#/articleadd/'+this.props.id
       }else{
         window.location.href ='/#'+ this.state.tiaosrc[idx]
       }
-      // window.location.href ='/#'+ this.state.tiaosrc[idx]+this.props.id
     }
     click_share=()=>{
       var div = document.getElementById('fenxiang');
@@ -275,9 +271,15 @@ export default class Wear extends Component {
             if(this.state.tuijian[idx].indexOf('qun')!==-1){ //裙子2
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
-              if(this.state.tuijian[idx].indexOf('changqun')!==-1){
+              if(this.state.tuijian[idx].indexOf('changqun')!==-1){//长裙变色
                 document.getElementById('mote_4').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
                 document.getElementById('mote_4').style.display = 'block';
+                for(var i =0;i<this.state.ress.length-1;i++){
+                  if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
+                    var color = this.whichColor(this.state.ress[i].cloColor);
+                    document.getElementById('mote_4').style.filter=`drop-shadow(150px 0 ${color})`;
+                  }
+                }
               }
               if(this.state.tuijian[idx].indexOf('duan')!=-1){ //包括短裙
 
@@ -292,6 +294,7 @@ export default class Wear extends Component {
               if(document.getElementById('mote2').src.indexOf('qun')!=-1){
                 if(document.getElementById('mote2').src.indexOf('dun')==-1){
                   document.getElementById('mote2').style.display = 'none';
+                  document.getElementById('mote4').style.display = 'none';
                 }
               }
             }
@@ -363,10 +366,10 @@ export default class Wear extends Component {
     }
     lalala=()=>{
       document.getElementById('imgpick').style.display='block';
-      console.log(document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value)
-      this.setState({
-        color:document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value
-      })
+      document.getElementById('mote_3').style.display='block';
+      console.log(this.state.color)
+      document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
+      document.getElementById('mote_3').style.opacity=0.9
       this.state.count++;//判断点击几次
       var a = setTimeout(()=>{
         if(this.state.count>1){//双击
@@ -376,6 +379,44 @@ export default class Wear extends Component {
           })
         }
       }) 
+    }
+    huance=()=>{
+      this.setState({
+        color:document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value
+      })
+      console.log(document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value)
+      document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
+      document.getElementById('mote_3').style.opacity=0.9
+    }
+    whichColor=(name)=>{
+      var color='';
+      switch(name){
+        case '白色':
+          color='white';
+          break;
+        case '黑色':
+            color='black';
+            break;
+        case '红色':
+          color='red';
+          break;
+        case '绿色':
+          color='green';
+          break;
+        case '蓝色':
+          color='blue';
+          break;
+        case '黄色':
+          color='yellow';
+          break;
+        case '紫色':
+          color='purple';
+          break;
+        default:
+          color='purple';
+          break;
+      }
+      return color;
     }
     render() {
         return (
@@ -397,7 +438,7 @@ export default class Wear extends Component {
               </p>
               {/* <CompactPicker/> */}
               <div id="imgpick">
-                <AlphaPicker id="imgpick2" color={this.state.color}/>
+                <AlphaPicker id="imgpick2" color={this.state.color} onChange={this.huance}/>
               </div>
                 {/* 模特 */}
                 <img src={mote2} id="mote"/>
@@ -408,7 +449,7 @@ export default class Wear extends Component {
                 <img  id='mote3' />
                 <img  id='mote4' />
                 
-                <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3" /></div>
+                <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3"/></div>
                <img src={mote4} id='mote5'style={{display:'block'}} onClick={this.lalala}/> 
                 {/* 衣物栏 */}
                 {/* <TabExample /> */}
