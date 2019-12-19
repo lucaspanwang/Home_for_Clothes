@@ -241,7 +241,7 @@ export default class Community extends Component {
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
                             <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
-                            <Gongge id={item.cimg}/>
+                            <Gongge cimg={item.cimg}/>
                             {/* <Grid square="false"
                             data={item.cimg}
                             columnNum="1"

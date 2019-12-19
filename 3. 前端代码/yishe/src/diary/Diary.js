@@ -135,7 +135,7 @@ export default class Diary extends Component {
                             <Grid data={item.dimg}
                                 columnNum={3}
                                 renderItem={dataItem => (
-                                    <img src={dataItem} alt="" style={{width:'100%'}}/>
+                                    <img src={dataItem} onClick={()=>{window.location.href=dataItem}} alt="" style={{width:'100%'}}/>
                                 )}
                                 />
                                 <p style={{color:'#1f8774',marginTop:'8px'}}>{item.diaryContent}</p>
@@ -145,8 +145,7 @@ export default class Diary extends Component {
                     )
                 }
                 </Timeline>           
-            </div>
-            
+            </div>    
         );
     }
 }

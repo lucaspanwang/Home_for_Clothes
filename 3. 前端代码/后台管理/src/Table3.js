@@ -22,15 +22,8 @@ export default class Table1 extends Component {
         })
     }
     shanchu=(idx)=>{
-        fetch("http://47.98.163.228:8086/articleshanchu", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: JSON.stringify({articleId:idx}) 
-      })
+        console.log(idx);
+        fetch("http://47.98.163.228:8086/articleDelete?articleId="+idx)
     }
     render() {
         return (
@@ -57,6 +50,7 @@ export default class Table1 extends Component {
                                             </Link>
                                         </th>
                                         <tr>
+                                            <th style={{textAlign:'center'}}>文章ID</th>
                                             <th style={{textAlign:'center'}}>作者</th>
                                             <th style={{textAlign:'center'}}>内容</th>
                                             <th style={{textAlign:'center'}}>点赞数</th>
@@ -70,11 +64,12 @@ export default class Table1 extends Component {
                                             this.state.ress.map((item,idx)=>(
                                                 <tr id="lalala">
                                                     <td>{item.articleId}</td>
+                                                    <td>{item.userName}</td>
                                                     <td style={{width:'500px', textAlign:'left'}}>{item.content}</td>
                                                     <td>{item.agree}</td>
                                                     <td class="center">{item.save}</td>
                                                     <td class="center">{item.time}</td>
-                                                    <td class="center" onClick={this.shanchu(idx)}><img src={shanchu} style={{width:'10%'}}/></td>
+                                                    <td class="center" onClick={()=>this.shanchu(item.articleId)}><img src={shanchu} style={{width:'10%'}}/></td>
                                                 </tr>
                                             ))
                                             }
