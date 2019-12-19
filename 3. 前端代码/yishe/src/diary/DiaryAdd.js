@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { NavBar ,ImagePicker  } from 'antd-mobile';
+import { NavBar ,ImagePicker,Toast} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import fanhui from '../images/返回 (1).png';
 import { Input } from 'antd';
@@ -38,6 +38,11 @@ export default class DiaryAdd extends Component {
         var arr = h.split('/');
         window.location.href = arr[0] + str;
     }
+    onToast=()=>{
+        Toast.loading('日记上传中...',2, () => {
+            window.location.href="#/rijitab/"+this.props.match.params.id
+        });
+    }
     onPost=()=> { 
         fetch('http://47.98.163.228:8081/diaryAdd',{
             method: 'post', 
@@ -50,6 +55,7 @@ export default class DiaryAdd extends Component {
             body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
         })
         console.log(this.state.files);
+        this.onToast();
     }
     
     onChange1 = ({ target: { value } }) => {
@@ -77,7 +83,7 @@ export default class DiaryAdd extends Component {
                     <Link to={"/rijitab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <Link to={"/rijitab/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
+                    <Link style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
                 ]}
                 >发布穿搭日记</NavBar>
 
