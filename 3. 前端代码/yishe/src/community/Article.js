@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { NavBar,Popover,Grid } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input,Row, Col } from 'antd';
+import Gongge from './Gongge';
 import moment from 'moment';
 import { Consumer } from '../context';
 import './community.css';
@@ -29,6 +30,7 @@ export default class Article extends Component {
         selected: '',
         user:{},
         article:{},
+        cimg:[],
         review:[],
         submitting: false,
         value: '',
@@ -45,13 +47,20 @@ export default class Article extends Component {
             res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
             for(var j=0;j<res[i].cimg.length;j++){
                 res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
-                console.log(res[i].cimg[j]);
             }
           }
+          // var arr = [];
+          // for(i in this.state.article.cimg){
+          //   arr[i] = this.state.article.cimg[i].toString();
+          //   // arr.push(this.state.article.cimg[i]);
+          //   console.log(this.state.article.cimg[i].toString())
+          // }
           res[0].time = this.standardTime(res[0].time)
           this.setState({
-            article:res[0]
+            article:res[0],
+            // cimg:arr
           })
+          // console.log(this.state.cimg);
       });
       fetch("http://47.98.163.228:8086/collect?userId="+userId)
       .then(res=>res.json())
@@ -290,14 +299,17 @@ export default class Article extends Component {
                     </Popover>
                   </div>
                   <div className="artDetail">
-                      <p>{this.state.article.content}</p>
+                    <p>{this.state.article.content}</p>
+                    <Gongge id={this.state.article.cimg}/>
+                    {/* <Gongge id={this.props.match.params.id.split("&")[0]}/> */}
+                      {/* 
                       <Grid square
                       data={this.state.article.cimg}
                       columnNum="3"
                       renderItem={dataItem => (
                           <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
                       )}
-                      />
+                      /> */}
                       <span>发布于{this.state.article.time}</span>
                   </div>
                   <ul className="artState">
