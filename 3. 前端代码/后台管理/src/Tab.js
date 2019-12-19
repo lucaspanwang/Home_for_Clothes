@@ -64,33 +64,33 @@ export default class Tab extends Component {
                 <div class="sidebar-collapse">
                     <ul class="nav" id="main-menu">
                         <li>
-                            <Link to='/index'>
+                            <Link to='/tab/index'>
                             <i class="fa fa-dashboard"></i> 首页
                             </Link>
                         </li>
                         <li>
-                            <Link to='/table1'>
+                            <Link to='/tab/table1'>
                                 <i class="fa fa-desktop"></i>
                                 管理员系统
                             </Link>
                         </li>
                         <li>
-                            <Link to='/table2'>
+                            <Link to='/tab/table2'>
                                 <i class="fa fa-bar-chart-o"></i> 用户管理  
                             </Link>
                         </li>
                         <li>
-                            <Link to='/muxing'>
+                            <Link to='/tab/muxing'>
                             <i class="fa fa-qrcode"></i>模型管理
                             </Link>
                         </li>
                         <li>
-                            <Link to='/table3'>
+                            <Link to='/tab/table3'>
                                 <i class="fa fa-table"></i>文章管理
                             </Link>
                         </li>
                         <li>
-                            <Link to='/table4'>
+                            <Link to='/tab/table4'>
                                 <i class="fa fa-table"></i>官方消息
                             </Link>
                         </li>

@@ -59,13 +59,13 @@
       position: relative;
       top:-0px;
       left:-150px;
-      filter: drop-shadow(150px 0 blue);
+      /* filter: drop-shadow(150px 0 pink); */
   }
   .icon > .icon3{
     position: relative;
     top:0px;
     left:-150px;
-    filter: drop-shadow(150px 0 pink);
+    /* filter: drop-shadow(150px 0 pink); */
 }
   #imgpick{
     display: none;

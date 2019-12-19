@@ -14,14 +14,31 @@ export default class ArticleAdd extends Component {
             cimg: [],
         };
     }
-    onToast=()=>{
+    onToastSuccess=()=>{
         Toast.loading('文章上传中...',2, () => {
             window.location.href="#/shequtab/"+this.props.match.params.id
         });
     }
+    onToastFail=()=>{
+        Toast.offline('文章不能为空!!!',2);
+    }
     onPost=()=> { 
         if(this.state.value == '' && this.state.cimg == ''){
-            return ;
+            this.onToastFail();
+        }if(this.state.value !== '' && this.state.cimg == ''){
+            var today = new Date();
+            var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+            fetch('http://47.98.163.228:8086/articleAdd',{
+                method: 'post', 
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials" : true,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:[],cimgName:[]}) 
+            });
+            this.onToastSuccess();
         }else{
             var today = new Date();
             var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
@@ -49,7 +66,7 @@ export default class ArticleAdd extends Component {
                     },
                     body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
                 });
-                this.onToast();
+                this.onToastSuccess();
             })
         }
         localStorage.setItem('come',1);
@@ -71,7 +88,7 @@ export default class ArticleAdd extends Component {
                     <Link to={"/shequtab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
-                    <p style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</p>
+                    <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</span>
                     // <Link to={this.state.url} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</Link>
                 ]}
                 >社区发布文章</NavBar>

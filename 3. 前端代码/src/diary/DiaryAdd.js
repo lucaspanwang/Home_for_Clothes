@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import { NavBar ,ImagePicker,Toast} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import fanhui from '../images/返回 (1).png';
+import lrz from 'lrz';
 import { Input } from 'antd';
 const { TextArea } = Input;
 
@@ -43,19 +44,55 @@ export default class DiaryAdd extends Component {
             window.location.href="#/rijitab/"+this.props.match.params.id
         });
     }
+    onFail=()=>{
+        Toast.offline('日记不能为空',2);
+    }
     onPost=()=> { 
-        fetch('http://47.98.163.228:8081/diaryAdd',{
-            method: 'post', 
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Credentials" : true,
-            // credentials: 'include',
-            headers: {
-                'Content-Type': 'multipart/form-data;charset=utf-8'
-            },
-            body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
-        })
-        console.log(this.state.files);
-        this.onToast();
+        if(this.state.value == '' && this.state.files == ''){
+            this.onFail();
+        }if(this.state.value !== '' && this.state.files == ''){
+            fetch('http://47.98.163.228:8081/diaryAdd',{
+                method: 'post', 
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials" : true,
+                // credentials: 'include',
+                headers: {
+                    'Content-Type': 'multipart/form-data;charset=utf-8'
+                },
+                body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:this.state.filesType,files:this.state.files,diarytime:this.state.diarytime}) 
+            })
+            console.log(this.state.files);
+            this.onToast();
+        }else{
+            var filesType = [];
+            var files = [];
+            let promise = new Promise(resolve =>{
+                for(var i=0;i<this.state.files.length;i++){
+                    filesType.push('.'+this.state.files[i].file.name.split(".")[1]);
+                    lrz(this.state.files[i].url, {quality:0.1})
+                    .then((res)=>{
+                        files.push(res.base64);
+                        console.log(files);
+                        resolve({files:files,filesType:filesType});
+                    });
+                }
+            }).then((value)=>{
+                console.log(value);
+                fetch('http://47.98.163.228:8081/diaryAdd',{
+                    method: 'post', 
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Credentials" : true,
+                    // credentials: 'include',
+                    headers: {
+                        'Content-Type': 'multipart/form-data;charset=utf-8'
+                    },
+                    body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:value.filesType,files:value.files,diarytime:this.state.diarytime}) 
+                })
+                console.log(this.state.files);
+                this.onToast();
+            })
+        }
+        localStorage.setItem('come',1);
     }
     
     onChange1 = ({ target: { value } }) => {

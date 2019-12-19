@@ -11,7 +11,7 @@ export default class Addoffice extends Component {
     }
     success = () => {
         message.success('消息提交中...',1,()=>{
-            window.location.href="/table4"
+            window.location.href="/tab/table4"
         });
     };
     error = () => {

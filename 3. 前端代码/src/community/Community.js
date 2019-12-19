@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Popover, NavBar, WingBlank,WhiteSpace,Grid } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import { Typography,Menu, Dropdown, Icon } from 'antd';
+import { Typography,Menu, Dropdown, Icon,Row, Col } from 'antd';
 import './community.css';
 
 import tianjia from '../images/添加.png';
@@ -15,6 +15,7 @@ import yiguanzhu from '../images/关注(1).png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
 import yidianzan from '../images/点赞(1).png';
+import Gongge from './Gongge';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
@@ -26,9 +27,18 @@ export default class Community extends Component {
             visible: false,
             selected: '',
             users:[],
+            office:''
         }
     }    
     componentDidMount(){
+        fetch("http://47.98.163.228:8086/office")
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                office:res[0]
+            })
+            console.log(this.state.office);
+        });
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
@@ -55,9 +65,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
-            // }
             this.setState({
                 users:users
             })
@@ -74,9 +81,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
-            // }
             this.setState({
                 users:users
             })
@@ -93,9 +97,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log(users[j].follow);
-            // }
             this.setState({
                 users:users
             })
@@ -210,7 +211,7 @@ export default class Community extends Component {
                     <WhiteSpace size="lg" />
                     <WingBlank size="lg">
                         <span style={{fontSize:'16px'}}>官方消息</span>
-                        <div className="official">温馨提示：近日北京市寒潮即将抵达，温度降低，大家要做好保暖措施。</div>
+                        <div className="official">温馨提示：{this.state.office.offContent}</div>
                     </WingBlank>
                     <WhiteSpace size="lg" />
                 </div>
@@ -240,13 +241,14 @@ export default class Community extends Component {
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
                             <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
-                            <Grid square
+                            <Gongge cimg={item.cimg}/>
+                            {/* <Grid square="false"
                             data={item.cimg}
-                            columnNum="3"
+                            columnNum="1"
                             renderItem={dataItem => (
                                 <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
-                            )}
-                            />
+                            )} 
+                            />*/}
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>

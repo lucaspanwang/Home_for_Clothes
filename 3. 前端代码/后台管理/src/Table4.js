@@ -44,7 +44,7 @@ export default class Table4 extends Component {
                             <h1 class="page-header">
                                 官方消息
                             </h1>
-                            <Link to='/tianjiaxiaoxi'>
+                            <Link to='/tab/tianjiaxiaoxi'>
                                 <img src={tianjia} style={{width:'2%'}}/>添加官方消息
                             </Link>
                         </div>

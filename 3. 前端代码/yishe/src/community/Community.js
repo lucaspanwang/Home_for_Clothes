@@ -37,7 +37,6 @@ export default class Community extends Component {
             this.setState({
                 office:res[0]
             })
-            console.log(this.state.office);
         });
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
