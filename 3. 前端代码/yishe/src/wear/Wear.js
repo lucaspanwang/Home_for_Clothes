@@ -79,7 +79,7 @@ export default class Wear extends Component {
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
     }
   }    
-  componentWillMount(){
+  componentDidMount(){
     console.log('componentWillMount')
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
@@ -384,7 +384,7 @@ export default class Wear extends Component {
                       <ul className="yifu" id='yifu1'>
                       {
                           this.state.tuijian_s.map((item,idx)=>(
-                            <li style={{height:'100px'}}>
+                            <li key={idx} style={{height:'100px'}}>
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.tuijian.bind(this,idx)}
@@ -399,7 +399,7 @@ export default class Wear extends Component {
                       <ul className="yifu" id='yifu2'>
                       {
                           this.state.tao_s.map((item,idx)=>(
-                            <li style={{height:'100px'}}>
+                            <li  key={idx} style={{height:'100px'}}>
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.waitao.bind(this,idx)}
@@ -414,7 +414,7 @@ export default class Wear extends Component {
                       <ul className="yifu" id='yifu3'>
                       {
                           this.state.yi_s.map((item,idx)=>(
-                            <li style={{height:'100px'}}>
+                            <li key={idx} style={{height:'100px'}}>
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.shangyi.bind(this,idx)}
@@ -430,7 +430,7 @@ export default class Wear extends Component {
                       <ul className="yifu" id='yifu4'>
                         {
                           this.state.ku_s.map((item,idx)=>(
-                            <li style={{height:'100px'}}>
+                            <li key={idx} style={{height:'100px'}}>
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.kuzi.bind(this,idx)}
@@ -445,7 +445,7 @@ export default class Wear extends Component {
                       <ul className="yifu" id='yifu5'>
                           {
                           this.state.qun_s.map((item,idx)=>(
-                            <li style={{height:'100px'}}>
+                            <li key={idx} style={{height:'100px'}}>
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.qunzi.bind(this,idx)}

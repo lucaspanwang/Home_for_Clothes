@@ -105,7 +105,7 @@ export default class Home extends Component {
                                 )
                         }else{
                             return(
-                                <div style={{display:'inlinbe-block',position:'relative',width:'120px',height:"120px",margin:'2px',float:'left'}}>
+                                <div key={i} style={{display:'inlinbe-block',position:'relative',width:'120px',height:"120px",margin:'2px',float:'left'}}>
                                 <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>

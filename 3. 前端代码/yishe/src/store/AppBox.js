@@ -34,7 +34,7 @@ export default class AppBox extends Component {
             <div style={{ backgroundImage: `url(${BoxBack})`, backgroundSize: '150%,100%' }}>
                 <NavBar style={{ color: 'white', backgroundColor: 'rgb(252, 157, 154)' }}>整理箱</NavBar>
                 <Router>
-                    <Link to={"/insert/"+this.props.id}><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
+                    <Button onClick={()=>{window.location.href="/#/insert/"+this.props.id}} style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button>
                     <div id="store">
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
