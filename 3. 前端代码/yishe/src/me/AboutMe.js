@@ -57,9 +57,21 @@ export default class AboutMe extends Component {
         reader.onload = function(e) {
             this.setState({
                 previewPic: e.target.result
+            },function(){
+                console.log('this.state.previewPic'+this.state.previewPic)
+                fetch('http://47.98.163.228:8000/changePic',{
+                    method: 'post', 
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Credentials" : true,
+                    // credentials: 'include',
+                    headers: {
+                        'Content-Type': 'multipart/form-data;charset=utf-8'
+                    },
+                    body:JSON.stringify({pic:this.state.previewPic,userId:this.props.match.params.id}) 
+                })
             });
         }.bind(this);
-        
+
     }
     //向后端传值
     onPost=()=> { 
@@ -67,7 +79,7 @@ export default class AboutMe extends Component {
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
                 'Content-Type': 'multipart/form-data;charset=utf-8'
             },
@@ -82,7 +94,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={this.onPost}/></Link>
+                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={()=>{localStorage.setItem('comee',1);}}/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">

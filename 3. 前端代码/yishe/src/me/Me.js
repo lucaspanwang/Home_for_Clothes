@@ -23,6 +23,10 @@ export default class Me extends Component {
         }
     }  
     componentDidMount(){
+        if(localStorage.getItem('comee')){
+            window.location.reload();
+            localStorage.removeItem('comee')
+        }
         fetch("http://47.98.163.228:8086/users?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{

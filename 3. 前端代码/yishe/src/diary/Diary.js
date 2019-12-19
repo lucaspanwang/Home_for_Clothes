@@ -91,7 +91,7 @@ export default class Diary extends Component {
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
                 'Content-Type': 'multipart/form-data;charset=utf-8'
             },
