@@ -11,6 +11,7 @@ import jianjie from '../images/jianjie.png';
 import shoucang from '../images/收藏.png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
+import Gongge from '../community/Gongge';
 
 const { Panel } = Collapse;
 export default class MyFan extends Component {
@@ -108,13 +109,14 @@ export default class MyFan extends Component {
                                         </div>
                                         <div className="artDetail">
                                             {it.content}
-                                            <Grid square
+                                            <Gongge cimg={it.cimg}/>
+                                            {/* <Grid square
                                             data={it.cimg}
                                             columnNum="3"
                                             renderItem={dataItem => (
                                                 <img src={dataItem} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
                                             )}
-                                            />
+                                            /> */}
                                         </div>
                                         <ul className="artState">
                                             <li><span>{this.standardTime(it.time)}</span></li>

@@ -16,6 +16,7 @@ import yiguanzhu from '../images/关注(1).png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
 import yidianzan from '../images/点赞(1).png';
+import Gongge from '../community/Gongge';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
@@ -90,13 +91,14 @@ export default class MyCollect extends Component {
                         </div>
                         <div className="artDetail">
                             {item.content}
-                            <Grid square
+                            <Gongge cimg={item.cimg}/>
+                            {/* <Grid square
                             data={item.cimg}
                             columnNum="3"
                             renderItem={dataItem => (
                                 <img src={dataItem} style={{ width:'100%'}} alt="" />
                             )}
-                            />
+                            /> */}
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
