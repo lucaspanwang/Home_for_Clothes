@@ -63,6 +63,7 @@ server.on('request',(req,res)=>{
     else if(req.url==='/diaryAdd'){
         var obj="";
         var di='';
+        res.setHeader("Access-Control-Allow-Origin", "*");
         req.on('data',function(data){
             obj+=data;
         })
@@ -91,8 +92,7 @@ server.on('request',(req,res)=>{
                     resolve(result);
                 });
             }).then(value =>{
-                //res.setHeader("Access-Control-Allow-Origin", "*");
-                res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+                // res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
                 diary = JSON.stringify(value);
                 res.end(diary); 
             });
@@ -104,6 +104,7 @@ server.on('request',(req,res)=>{
     else if(req.url==='/diaryDel'){
         var obj="";
         var di='';
+        res.setHeader("Access-Control-Allow-Origin", "*");
         req.on('data',function(data){
             obj+=data;
         })
@@ -120,8 +121,7 @@ server.on('request',(req,res)=>{
                     });
                     
             }).then(value =>{
-                //res.setHeader("Access-Control-Allow-Origin", "*");
-                res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
+                // res.writeHead(200, {"Content-type":"application/json","Access-Control-Allow-Origin": "*"});
                 diary = JSON.stringify(value);
                 res.end(diary); 
             });
