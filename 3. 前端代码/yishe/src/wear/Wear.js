@@ -392,25 +392,25 @@ export default class Wear extends Component {
       var color='';
       switch(name){
         case '白色':
-          color='white';
+          color='#fffbf0';
           break;
         case '黑色':
             color='black';
             break;
         case '红色':
-          color='red';
+          color='#be002f';
           break;
         case '绿色':
-          color='green';
+          color='#7ecad';
           break;
         case '蓝色':
-          color='blue';
+          color='#3eede7';
           break;
         case '黄色':
-          color='yellow';
+          color='#ffc773';
           break;
         case '紫色':
-          color='purple';
+          color='#815476';
           break;
         default:
           color='purple';
