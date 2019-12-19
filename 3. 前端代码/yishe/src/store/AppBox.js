@@ -19,7 +19,6 @@ export default class AppBox extends Component {
         }
     }    
     componentDidMount(){
-        // console.log(this.props.id);//获取用户id
         fetch('http://47.98.163.228:8084/change')
         .then(res=>res.json())
         .then(res=>{
@@ -34,12 +33,12 @@ export default class AppBox extends Component {
             <div style={{ backgroundImage: `url(${BoxBack})`, backgroundSize: '150%,100%' }}>
                 <NavBar style={{ color: 'white', backgroundColor: 'rgb(252, 157, 154)' }}>整理箱</NavBar>
                 <Router>
-                    <Button onClick={()=>{window.location.href="/#/insert/"+this.props.id}} style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button>
+                    <Link to={"/insert/"+this.props.id}><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
                     <div id="store">
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-        <Link to={"/add/"+this.props.id}><button>+<br />{this.state.value}</button></Link>
+                                <Link to={"/add/"+this.props.id}><button>+<br />{this.state.value}</button></Link>
                                 <Link to={"/add/"+this.props.id}><button>+<br />添加</button></Link>
                             </li>
                             <li id='twoBut'>

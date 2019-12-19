@@ -2,8 +2,8 @@ import React, { Component} from 'react';
 import { NavBar ,ImagePicker,Toast} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import fanhui from '../images/返回 (1).png';
-import lrz from 'lrz';
 import { Input } from 'antd';
+import lrz from 'lrz';
 const { TextArea } = Input;
 
 export default class DiaryAdd extends Component {
@@ -41,7 +41,7 @@ export default class DiaryAdd extends Component {
     }
     onToast=()=>{
         Toast.loading('日记上传中...',2, () => {
-            window.location.href="#/rijitab/"+this.props.match.params.id
+            window.location.href=window.location.href.split('#')[0]+"#/rijitab/"+this.props.match.params.id
         });
     }
     onFail=()=>{
@@ -92,7 +92,6 @@ export default class DiaryAdd extends Component {
                 this.onToast();
             })
         }
-        localStorage.setItem('come',1);
     }
     
     onChange1 = ({ target: { value } }) => {

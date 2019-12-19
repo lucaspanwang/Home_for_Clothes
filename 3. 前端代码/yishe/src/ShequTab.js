@@ -22,8 +22,15 @@ export default class ShequTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "shequTab"
+      selectedTab: "shequTab",
+      url:""
     };
+  }
+  componentDidMount(){
+    console.log(window.location.href.split('#')[0]);
+    this.setState({
+      url:window.location.href.split('#')[0]
+    })
   }
   render() {
     return (
@@ -53,7 +60,7 @@ export default class ShequTab extends React.Component {
             key="chuanda"
             selected={this.state.selectedTab === "chuandaTab"}
             onPress={() => {
-              window.location.href = '/#/apptab/'+this.props.match.params.id;
+              window.location.href = this.state.url+'#/apptab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "chuandaTab"
               });
@@ -84,19 +91,15 @@ export default class ShequTab extends React.Component {
             }
             title="整理箱"
             key="zhenglixiang"
-            // dot
             selected={this.state.selectedTab === "zhengliTab"}
             onPress={() => {
-              window.location.href = '/#/zhenglitab/'+this.props.match.params.id;
+              window.location.href = this.state.url+'#/zhenglitab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "zhengliTab"
               });
             }}
           >
           <AppBox id={this.props.match.params.id}/>
-          {/* <Add />
-          <Home />
-          <TestWrapper /> */}
           </TabBar.Item>
           <TabBar.Item
             title="社区"
@@ -123,7 +126,7 @@ export default class ShequTab extends React.Component {
             }
             selected={this.state.selectedTab === "shequTab"}
             onPress={() => {
-              window.location.href = '/#/shequtab/'+this.props.match.params.id;
+              window.location.href = this.state.url+'#/shequtab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "shequTab"
               });
@@ -143,7 +146,7 @@ export default class ShequTab extends React.Component {
             key="riji"
             selected={this.state.selectedTab === "rijiTab"}
             onPress={() => {
-              window.location.href = '/#/rijitab/'+this.props.match.params.id;
+              window.location.href = this.state.url+'#/rijitab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "rijiTab"
               });
@@ -163,16 +166,13 @@ export default class ShequTab extends React.Component {
             key="geren"
             selected={this.state.selectedTab === "gerenTab"}
             onPress={() => {
-              window.location.href = '/#/gerentab/'+this.props.match.params.id;
+              window.location.href = this.state.url+'#/gerentab/'+this.props.match.params.id;
               this.setState({
                 selectedTab: "gerenTab"
               });
             }}
           >
             <Me id={this.props.match.params.id}/>
-            {/* <AboutUs/>
-            <Setup />
-            <AboutMe /> */}
           </TabBar.Item>
         </TabBar>
       </div>

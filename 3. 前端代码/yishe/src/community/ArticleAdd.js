@@ -16,7 +16,7 @@ export default class ArticleAdd extends Component {
     }
     onToastSuccess=()=>{
         Toast.loading('文章上传中...',2, () => {
-            window.location.href="#/shequtab/"+this.props.match.params.id
+            window.location.href=window.location.href.split('#')[0]+"#/shequtab/"+this.props.match.params.id
         });
     }
     onToastFail=()=>{
