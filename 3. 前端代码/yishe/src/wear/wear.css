@@ -38,7 +38,10 @@
   #mote_3{
     width:100%;
     /* display: none; */
-    /* left:-120px; */
+    opacity:0
+  }
+  #mote_4{
+    width:100%;
   }
   #mote_bai{
     display:none;
@@ -58,6 +61,21 @@
       left:-150px;
       filter: drop-shadow(150px 0 blue);
   }
+  .icon > .icon3{
+    position: relative;
+    top:0px;
+    left:-150px;
+    filter: drop-shadow(150px 0 pink);
+}
+  #imgpick{
+    display: none;
+    position: absolute;
+    left:150px;
+    z-index: 10000;
+  }
+  /* .chrome-picker{
+    width:70px;
+  } */
   #mote5{
     top:155px;
     left:11px;

@@ -28,6 +28,8 @@ import xiaoren3 from '../images/小人3.png'
 import beijing from '../images/雨.jpg'
 import beijing2 from '../images/晴.jpg'
 import {Link} from 'react-router-dom'
+import AlphaPicker from 'react-color'
+import { CompactPicker } from 'react-color';
 const src =[beijing,beijing2];
 const xiaoren=[xiaoren0,xiaoren1,xiaoren2,xiaoren3]
 const data = Array.from(new Array(5)).map((_val, i) => ({
@@ -79,9 +81,11 @@ export default class Wear extends Component {
         ress:[],
         linshi:0,
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
+        color:'',
     }
   }    
   componentDidMount(){
+
     console.log('componentDidMount')
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
@@ -271,11 +275,10 @@ export default class Wear extends Component {
             if(this.state.tuijian[idx].indexOf('qun')!==-1){ //裙子2
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
-              // document.getElementById('mote2').src='http://47.98.163.228:8083/images/qunqun_bai.png'
-              // document.getElementById('mote_bai').style.display = 'block'
-              // document.getElementById('mote_bai').src=this.state.tuijian[idx];
-              // document.getElementById('mote3').style.display = 'none';
-              // document.getElementById('mote4').style.display = 'none';
+              if(this.state.tuijian[idx].indexOf('changqun')!==-1){
+                document.getElementById('mote_4').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
+                document.getElementById('mote_4').style.display = 'block';
+              }
               if(this.state.tuijian[idx].indexOf('duan')!=-1){ //包括短裙
 
               }else{//连衣裙
@@ -358,7 +361,22 @@ export default class Wear extends Component {
       }
       window.location.href = '/#/'+p+'/'+this.props.id;
     }
-
+    lalala=()=>{
+      document.getElementById('imgpick').style.display='block';
+      console.log(document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value)
+      this.setState({
+        color:document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value
+      })
+      this.state.count++;//判断点击几次
+      var a = setTimeout(()=>{
+        if(this.state.count>1){//双击
+          document.getElementById('imgpick').style.display='none';
+          this.setState({
+            count:0
+          })
+        }
+      }) 
+    }
     render() {
         return (
             <div id="beijingg" className="body" style={{width:'100%',height:'100%',background:`url(${src[this.state.idx]})`}}>
@@ -377,17 +395,21 @@ export default class Wear extends Component {
               <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px'}}>
                   {this.state.dressing_advice}
               </p>
-
+              {/* <CompactPicker/> */}
+              <div id="imgpick">
+                <AlphaPicker id="imgpick2" color={this.state.color}/>
+              </div>
                 {/* 模特 */}
                 <img src={mote2} id="mote"/>
                 <img src={mote2} id="mote_2"/>
 
-                <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3" /></div>
-               <img src={mote4} id='mote5'style={{display:'block'}}/> 
-
+               <div class="icon" id="mote22"><img  class='icon3'  id="mote_4" /></div>
                 <img  id='mote2' />
                 <img  id='mote3' />
                 <img  id='mote4' />
+                
+                <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3" /></div>
+               <img src={mote4} id='mote5'style={{display:'block'}} onClick={this.lalala}/> 
                 {/* 衣物栏 */}
                 {/* <TabExample /> */}
                 <div id="yiwu">
