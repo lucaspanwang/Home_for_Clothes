@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import shanchu from './删 除 .png'
 import tianjia from './添加.png'
+
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
-export default class Table3 extends Component {
+export default class Table4 extends Component {
     constructor(){
         super();
         this.state=({
@@ -11,7 +12,7 @@ export default class Table3 extends Component {
         })
     }
     componentDidMount(){
-        fetch('http://47.98.163.228:8086/article')
+        fetch('http://47.98.163.228:8086/office')
         .then(res=>res.json())
         .then(res=>{      
             this.setState({
@@ -22,8 +23,8 @@ export default class Table3 extends Component {
         })
     }
     shanchu=(idx)=>{
-        fetch("http://47.98.163.228:8086/articleDelete?articleId="+idx);
-        fetch('http://47.98.163.228:8086/article')
+        fetch("http://47.98.163.228:8086/officeDelete?offId="+idx);
+        fetch('http://47.98.163.228:8086/office')
         .then(res=>res.json())
         .then(res=>{      
             this.setState({
@@ -41,10 +42,10 @@ export default class Table3 extends Component {
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="page-header">
-                                文章
+                                官方消息
                             </h1>
-                            <Link to='/tianjia'>
-                                <img src={tianjia} style={{width:'2%'}}/>添加文章
+                            <Link to='/tianjiaxiaoxi'>
+                                <img src={tianjia} style={{width:'2%'}}/>添加官方消息
                             </Link>
                         </div>
                     </div>	
@@ -54,15 +55,12 @@ export default class Table3 extends Component {
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    
                                     <thead>
                                         <tr>
-                                            <th style={{textAlign:'center'}}>文章ID</th>
-                                            <th style={{textAlign:'center'}}>作者</th>
+                                            <th style={{textAlign:'center'}}>消息ID</th>
                                             <th style={{textAlign:'center'}}>内容</th>
-                                            <th style={{textAlign:'center'}}>点赞数</th>
-                                            <th style={{textAlign:'center'}}>收藏数</th>
                                             <th style={{textAlign:'center'}}>发表时间</th>
+                                            <th style={{textAlign:'center'}}>城市</th>
                                             <th style={{textAlign:'center'}}>操作</th>
                                         </tr>
                                     </thead>
@@ -70,13 +68,11 @@ export default class Table3 extends Component {
                                         {
                                             this.state.ress.map((item,idx)=>(
                                                 <tr id="lalala">
-                                                    <td>{item.articleId}</td>
-                                                    <td>{item.userName}</td>
-                                                    <td style={{width:'500px', textAlign:'left'}}>{item.content}</td>
-                                                    <td>{item.agree}</td>
-                                                    <td class="center">{item.save}</td>
-                                                    <td class="center">{item.time}</td>
-                                                    <td class="center" onClick={()=>this.shanchu(item.articleId)}><img src={shanchu} style={{width:'10%'}}/></td>
+                                                    <td>{item.offId}</td>
+                                                    <td style={{width:'600px', textAlign:'left'}}>{item.offContent}</td>
+                                                    <td class="center">{item.offTime}</td>
+                                                    <td class="center">{item.city}</td>
+                                                    <td class="center" onClick={()=>this.shanchu(item.offId)}><img src={shanchu} style={{width:'10%'}}/></td>
                                                 </tr>
                                             ))
                                             }

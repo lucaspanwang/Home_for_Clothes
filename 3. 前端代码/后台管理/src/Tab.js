@@ -89,6 +89,11 @@ export default class Tab extends Component {
                                 <i class="fa fa-table"></i>文章管理
                             </Link>
                         </li>
+                        <li>
+                            <Link to='/table4'>
+                                <i class="fa fa-table"></i>官方消息
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
