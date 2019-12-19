@@ -3,8 +3,8 @@ import { Row, Col } from 'antd';
 
 export default function Gongge(props) {
     var img=[],num,width;
-    for(var j in props.id){
-        img.push(props.id[j]);
+    for(var j in props.cimg){
+        img.push(props.cimg[j]);
     }
     if(img.length === 1){
       num = 24;

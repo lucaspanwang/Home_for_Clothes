@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Popover, NavBar, WingBlank,WhiteSpace,Grid } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import { Typography,Menu, Dropdown, Icon,Row, Col } from 'antd';
+import { Typography,Menu, Dropdown, Icon } from 'antd';
 import './community.css';
 
 import tianjia from '../images/添加.png';
@@ -15,7 +15,6 @@ import yiguanzhu from '../images/关注(1).png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
 import yidianzan from '../images/点赞(1).png';
-import Gongge from './Gongge';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
@@ -241,14 +240,13 @@ export default class Community extends Component {
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
                             <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
-                            <Gongge cimg={item.cimg}/>
-                            {/* <Grid square="false"
+                            <Grid square
                             data={item.cimg}
-                            columnNum="1"
+                            columnNum="3"
                             renderItem={dataItem => (
                                 <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
-                            )} 
-                            />*/}
+                            )}
+                            />
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
