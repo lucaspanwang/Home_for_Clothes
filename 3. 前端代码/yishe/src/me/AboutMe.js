@@ -18,8 +18,7 @@ export default class AboutMe extends Component {
             sex:'', 
             name:'',
             info:'',
-            city:'',
-            filesType:''
+            city:''
         }
         this.handleUpload = this.handleUpload.bind(this);
     }
@@ -31,12 +30,12 @@ export default class AboutMe extends Component {
 
     componentDidMount(){
         console.log(this.props.match.params.id);
-        fetch("http://47.98.163.228:8000/users?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:8000"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
             }
             var newInfo = res[0].userIntro.length>12?res[0].userIntro.substr(0,12)+'...':res[0].userIntro;
             this.setState({
@@ -47,31 +46,11 @@ export default class AboutMe extends Component {
                 city:res[0].userCity,
                 sex:res[0].userSex
             })
-            console.log(this.state.previewPic);
-            var filesType = '';
-            console.log(this.state.previewPic.split(".")[4]);
-            filesType='.'+this.state.previewPic.split(".")[4];
-            this.setState({
-                filesType:filesType
-            },()=>{
-                console.log(this.state.filesType);
-            })
-            // this.onPost();
         })
     }
     //头像
     handleUpload(e) {
         console.log(e.target.files[0]);
-        var filesType = '';
-        console.log(e.target.files[0].name.split(".")[1]);
-        filesType='.'+e.target.files[0].name.split(".")[1];
-        console.log(filesType);
-        this.setState({
-            filesType:filesType
-        },()=>{
-            console.log(this.state.filesType);
-        })
-        
         const reader = new FileReader();
         // 读取文件内容，结果用data:url的字符串形式表示
         reader.readAsDataURL(e.target.files[0]);
@@ -80,8 +59,7 @@ export default class AboutMe extends Component {
                 previewPic: e.target.result
             });
         }.bind(this);
-
-        // this.onPost();
+        
     }
     //向后端传值
     onPost=()=> { 
@@ -93,7 +71,7 @@ export default class AboutMe extends Component {
             headers: {
                 'Content-Type': 'multipart/form-data;charset=utf-8'
             },
-            body:JSON.stringify({pic:this.state.previewPic,userId:this.props.match.params.id,filesType:this.state.filesType}) 
+            body:JSON.stringify({pic:this.state.previewPic,userId:this.props.match.params.id}) 
         })
     }
      
@@ -104,14 +82,14 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id} onclick={this.onPost}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={this.onPost}/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">
                     <Item arrow="horizontal" multipleLine style={{position:"relative",height:'20%'}} onClick={() => {}}>
-                       <span style={{lineHeight:'100%',fontSize:'14px',marginRight:'75%'}}>头像</span>
+                       <span style={{lineHeight:'100%',fontSize:'14px'}}>头像</span>
                        <input id='ddd' type="file" style={{width:'12%',height:'100%',position: 'absolute',top: '10%',left:'80%', Zindex: '9999',opacity:'0'}} onChange={this.handleUpload}/> 
-                        <img id="gzzImg"  src={this.state.previewPic} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
+                       <img id="gzzImg"  src={this.state.previewPic} alt='' style={{width:'12%',height:'12%',float:'right'}}/>
                     </Item>
                     <Item arrow="empty" multipleLine onClick={() => {}}>
                        <span style={{lineHeight:'100%',fontSize:'14px'}}>账号</span>
