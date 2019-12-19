@@ -80,7 +80,7 @@ export default class Wear extends Component {
     }
   }    
   componentDidMount(){
-    console.log('componentWillMount')
+    console.log('componentDidMount')
     fetch("http://47.98.163.228:8083/aa", {
       method: 'post', 
       "Access-Control-Allow-Origin" : "*",
@@ -227,8 +227,12 @@ export default class Wear extends Component {
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote2').src=this.state.qun[idx];
       document.getElementById('mote2').style.display = 'block';
-      document.getElementById('mote3').style.display = 'none';
-      document.getElementById('mote4').style.display = 'none';
+      if(this.state.qun[idx].indexOf('duan')!=-1){
+
+      }else{
+        document.getElementById('mote3').style.display = 'none';
+        document.getElementById('mote4').style.display = 'none';
+      }
     }
     kuzi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
@@ -270,10 +274,21 @@ export default class Wear extends Component {
               // document.getElementById('mote_bai').src=this.state.tuijian[idx];
               // document.getElementById('mote3').style.display = 'none';
               // document.getElementById('mote4').style.display = 'none';
+              if(this.state.qun[idx].indexOf('duan')!=-1){ //包括短裙
+
+              }else{//连衣裙
+                document.getElementById('mote3').style.display = 'none';
+                document.getElementById('mote4').style.display = 'none';
+              }
             }
             if(this.state.tuijian[idx].indexOf('yi')!==-1){
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
+              if(document.getElementById('mote2').src.indexOf('qun')!=-1){
+                if(document.getElementById('mote2').src.indexOf('dun')==-1){
+                  document.getElementById('mote2').style.display = 'none';
+                }
+              }
             }
             if(this.state.tuijian[idx].indexOf('tao')!==-1){
               document.getElementById('mote4').src=this.state.tuijian[idx];
@@ -357,7 +372,7 @@ export default class Wear extends Component {
                     <span style={{marginLeft:'5px',marginRight:'5px'}}>{this.state.weather}</span>
                     <span>{this.state.temperature}~{this.state.temperature2}</span>
               </NoticeBar>
-              <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px'}}>
+              <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px'}}>
                   {this.state.dressing_advice}
               </p>
 
