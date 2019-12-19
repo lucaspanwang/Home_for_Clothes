@@ -225,6 +225,7 @@ export default class Wear extends Component {
       window.location.href = h.substring(0, index+1)+str;
     }
     qunzi=(idx)=>{
+      document.getElementById('mote_4').style.display='none'
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote2').src=this.state.qun[idx];
@@ -265,10 +266,12 @@ export default class Wear extends Component {
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
             if(this.state.tuijian[idx].indexOf('ku')!==-1){ //裤子2
+              document.getElementById('mote_4').style.display = 'none';
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
             }
             if(this.state.tuijian[idx].indexOf('qun')!==-1){ //裙子2
+              document.getElementById('mote_4').style.display='none'
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
               if(this.state.tuijian[idx].indexOf('changqun')!==-1){//长裙变色
@@ -292,7 +295,7 @@ export default class Wear extends Component {
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
               if(document.getElementById('mote2').src.indexOf('qun')!=-1){
-                if(document.getElementById('mote2').src.indexOf('dun')==-1){
+                if(document.getElementById('mote2').src.indexOf('dun')!=-1){
                   document.getElementById('mote2').style.display = 'none';
                   document.getElementById('mote4').style.display = 'none';
                 }
