@@ -5,6 +5,7 @@ import './wear.css';
 import {Consumer} from '../context'
 import didian from '../images/地点.png'
 import xiayu from '../images/下雨.png'
+
 import qing from '../images/晴.png'
 import mote from '../images/模特.png'
 import mote2 from '../images/模特2.png'
@@ -26,6 +27,7 @@ import xiaoren1 from '../images/小人1.png'
 import xiaoren2 from '../images/小人2.png'
 import xiaoren3 from '../images/小人3.png'
 import beijing from '../images/雨.jpg'
+// import beijing from '../images/tumblr.gif'
 import beijing2 from '../images/晴.jpg'
 import {Link} from 'react-router-dom'
 import AlphaPicker from 'react-color'
@@ -84,6 +86,8 @@ export default class Wear extends Component {
         color:'',
         color2:'',
         cc:[],
+        num:0,
+        feng:'',
     }
   }    
   componentDidMount(){
@@ -266,23 +270,62 @@ export default class Wear extends Component {
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
             if(this.state.tuijian[idx].indexOf('ku')!==-1){ //裤子2
+              document.getElementById('mote6').style.display = 'none';
+              document.getElementById('mote_5').style.display = 'none';
               document.getElementById('mote_4').style.display = 'none';
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
             }
             if(this.state.tuijian[idx].indexOf('qun')!==-1){ //裙子2
+              document.getElementById('mote6').style.display = 'none'
+              document.getElementById('mote_5').style.display = 'none';
               document.getElementById('mote_4').style.display='none'
+              document.getElementById('mote_5').style.display='none'
               document.getElementById('mote2').src=this.state.tuijian[idx];
               document.getElementById('mote2').style.display = 'block';
+              
+              
               if(this.state.tuijian[idx].indexOf('changqun')!==-1){//长裙变色
-                document.getElementById('mote_4').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
-                document.getElementById('mote_4').style.display = 'block';
-                for(var i =0;i<this.state.ress.length-1;i++){
-                  if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
-                    var color = this.whichColor(this.state.ress[i].cloColor);
+                this.setState({
+                  num:this.state.num+1,
+                },function(){
+                  if(this.state.num==1){
+                    console.log(this.state.num)
+                    document.getElementById('mote_4').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
+                    document.getElementById('mote_4').style.display = 'block';
+                    var color='';
+                    for(var i =0;i<this.state.ress.length-1;i++){
+                      if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
+                        color = this.whichColor(this.state.ress[i].cloColor);
+                        this.setState({
+                          feng:color,
+                        })
+                        break;
+                      }
+                    }
                     document.getElementById('mote_4').style.filter=`drop-shadow(150px 0 ${color})`;
+                  }else{
+                    //第二件
+                    console.log(this.state.num)
+                    document.getElementById('mote6').src=this.state.tuijian[idx];
+                    document.getElementById('mote6').style.display = 'block';
+                    document.getElementById('mote_5').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
+                    document.getElementById('mote_5').style.display = 'block';
+                    for(var i =0;i<this.state.ress.length-1;i++){
+                      if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
+                        var color2 = this.whichColor(this.state.ress[i].cloColor);
+                        document.getElementById('mote_5').style.filter=`drop-shadow(150px 0 ${color2})`;
+                      }
+                    }
+                    this.setState({
+                      num:0,
+                    })
                   }
-                }
+                })
+               
+
+                
+                
               }
               if(this.state.tuijian[idx].indexOf('duan')!=-1){ //包括短裙
 
@@ -292,6 +335,8 @@ export default class Wear extends Component {
               }
             }
             if(this.state.tuijian[idx].indexOf('yi')!==-1){
+              document.getElementById('mote6').style.display = 'none';
+              document.getElementById('mote_5').style.display = 'none';
               document.getElementById('mote3').src=this.state.tuijian[idx];
               document.getElementById('mote3').style.display = 'block';
               if(document.getElementById('mote2').src.indexOf('qun')!=-1){
@@ -302,6 +347,8 @@ export default class Wear extends Component {
               }
             }
             if(this.state.tuijian[idx].indexOf('tao')!==-1){
+              document.getElementById('mote6').style.display = 'none';
+              document.getElementById('mote_5').style.display = 'none';
               document.getElementById('mote4').src=this.state.tuijian[idx];
               document.getElementById('mote4').style.display = 'block';
             }
@@ -423,7 +470,7 @@ export default class Wear extends Component {
     }
     render() {
         return (
-            <div id="beijingg" className="body" style={{width:'100%',height:'100%',background:`url(${src[this.state.idx]})`}}>
+            <div id="beijingg" className="body" style={{width:'100%',height:'100%',background:`url(${src[this.state.idx]})`,backgroundRepeat: 'no-repeat',backgroundPosition: 'right bottom'}}>
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 >穿搭</NavBar>
@@ -452,6 +499,9 @@ export default class Wear extends Component {
                 <img  id='mote3' />
                 <img  id='mote4' />
                 
+                <div class="icon" id="mote22"><img  class='icon4'  id="mote_5" /></div>
+                <img  id='mote6' />
+
                 <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3"/></div>
                <img src={mote4} id='mote5'style={{display:'block'}} onClick={this.lalala}/> 
                 {/* 衣物栏 */}

@@ -43,6 +43,9 @@
   #mote_4{
     width:100%;
   }
+  #mote_5{
+    width:100%;
+  }
   #mote_bai{
     display:none;
     width:100%;
@@ -67,6 +70,12 @@
     left:-150px;
     /* filter: drop-shadow(150px 0 pink); */
 }
+.icon > .icon4{
+  position: relative;
+  top:0px;
+  left:-150px;
+  /* filter: drop-shadow(150px 0 pink); */
+}
   #imgpick{
     display: none;
     position: absolute;
@@ -77,6 +86,13 @@
     width:70px;
   } */
   #mote5{
+    top:155px;
+    left:11px;
+    width:40%;
+    position:absolute;
+    display:none;
+  }
+  #mote6{
     top:155px;
     left:11px;
     width:40%;
