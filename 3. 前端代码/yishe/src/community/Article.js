@@ -49,18 +49,10 @@ export default class Article extends Component {
                 res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
             }
           }
-          // var arr = [];
-          // for(i in this.state.article.cimg){
-          //   arr[i] = this.state.article.cimg[i].toString();
-          //   // arr.push(this.state.article.cimg[i]);
-          //   console.log(this.state.article.cimg[i].toString())
-          // }
           res[0].time = this.standardTime(res[0].time)
           this.setState({
             article:res[0],
-            // cimg:arr
           })
-          // console.log(this.state.cimg);
       });
       fetch("http://47.98.163.228:8086/collect?userId="+userId)
       .then(res=>res.json())
@@ -300,16 +292,7 @@ export default class Article extends Component {
                   </div>
                   <div className="artDetail">
                     <p>{this.state.article.content}</p>
-                    <Gongge id={this.state.article.cimg}/>
-                    {/* <Gongge id={this.props.match.params.id.split("&")[0]}/> */}
-                      {/* 
-                      <Grid square
-                      data={this.state.article.cimg}
-                      columnNum="3"
-                      renderItem={dataItem => (
-                          <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
-                      )}
-                      /> */}
+                    <Gongge cimg={this.state.article.cimg}/>
                       <span>发布于{this.state.article.time}</span>
                   </div>
                   <ul className="artState">
