@@ -26,8 +26,8 @@ import xiaoren0 from '../images/小人.png'
 import xiaoren1 from '../images/小人1.png'
 import xiaoren2 from '../images/小人2.png'
 import xiaoren3 from '../images/小人3.png'
-import beijing from '../images/雨.jpg'
-// import beijing from '../images/tumblr.gif'
+// import beijing from '../images/雨.jpg'
+import beijing from '../images/雨.gif'
 import beijing2 from '../images/晴.jpg'
 import {Link} from 'react-router-dom'
 import AlphaPicker from 'react-color'
@@ -87,6 +87,7 @@ export default class Wear extends Component {
         color2:'',
         cc:[],
         num:0,
+        num2:0,
         feng:'',
     }
   }    
@@ -192,12 +193,58 @@ export default class Wear extends Component {
               tuijian_s:this.state.yi_s
             })
           }else{
-            for(var i = 0;i<this.state.arr.length;i++){
-              var n = this.state.arr[i].split('/')[4];
+            for(var i = 0;i<this.state.ress.length-1;i++){
+
+              var j = this.state.ress[i].cloSmallPic.indexOf('/');
+              big[i]  = "http:"+this.state.ress[i].cloSmallPic.substr(j);
+
+              var name = this.state.ress[i].cloSmallPic.substr(j).split('/')[4];
+              var n = name.split('.')[0];
+              small[i] = "http://47.98.163.228:8083/images/"+n+'_s.png'
+              // var n = this.state.ress[i].split('/')[4];
+
+
               if(n.indexOf('duan')==-1){
-                tuitui.push(this.state.arr[i]);
-                tuitui_s.push(this.state.arr_s[i])
+                // tuitui.push(this.state.arr[i]);
+                tuitui.push(big[i]);
+                tuitui_s.push(small[i])
+                
+                if(n.indexOf('changqun')!=-1){
+                  console.log(this.state.ress[i].cloColor)
+                  console.log(i)
+                  this.setState({
+                    num2:this.state.num2+1,
+                  },function(){
+                    if(this.state.num2==2){
+                      console.log(this.state.num2)
+                      if(this.state.ress[i].cloColor=='白色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_bai.png'
+                      }
+                      if(this.state.ress[i].cloColor=='黑色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_hei.png'
+                      }if(this.state.ress[i].cloColor=='红色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_hong.png'
+                      }if(this.state.ress[i].cloColor=='黄色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_huang.png'
+                      }
+                      if(this.state.ress[i].cloColor=='绿色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_lv.png'
+                      }
+                      if(this.state.ress[i].cloColor=='紫色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_zi.png'
+                      }
+                      this.setState({
+                        num2:0,
+                      })
+                    }
+                  })
+
+                }
+                
               }
+
+
+
             }  
             this.setState({
               tuijian:tuitui,
@@ -286,6 +333,8 @@ export default class Wear extends Component {
               
               
               if(this.state.tuijian[idx].indexOf('changqun')!==-1){//长裙变色
+                
+                console.log(this.state.tuijian_s[idx])
                 this.setState({
                   num:this.state.num+1,
                 },function(){
@@ -483,7 +532,7 @@ export default class Wear extends Component {
                     <span style={{marginLeft:'5px',marginRight:'5px'}}>{this.state.weather}</span>
                     <span>{this.state.temperature}~{this.state.temperature2}</span>
               </NoticeBar>
-              <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px'}}>
+              <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px',color:'white'}}>
                   {this.state.dressing_advice}
               </p>
               {/* <CompactPicker/> */}
