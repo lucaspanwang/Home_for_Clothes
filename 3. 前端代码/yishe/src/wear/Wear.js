@@ -119,7 +119,7 @@ export default class Wear extends Component {
             temperature2:weather.data[0].tem,
             dressing_advice:weather.data[0].index[3].desc,
             weather:weather.data[0].wea,
-            tiaosrc : ['/diaryAdd/'+this.props.id]
+            tiaosrc : ['/diaryAdd/']
           })
             if(this.state.weather.indexOf('雨')!=-1){
               this.setState({
@@ -256,9 +256,9 @@ export default class Wear extends Component {
   }
     aaa=(idx)=>{
       if(idx==1){
-        window.location.href ='/#/articleadd/'+this.props.id
+        window.location.href =window.location.href.split('#')[0]+'#/articleadd/'+this.props.id
       }else{
-        window.location.href ='/#'+ this.state.tiaosrc[idx]
+        window.location.href =window.location.href.split('#')[0]+'#'+ this.state.tiaosrc[idx]+this.props.id
       }
     }
     click_share=()=>{
@@ -461,7 +461,7 @@ export default class Wear extends Component {
             p='robe'
             break;
       }
-      window.location.href = '/#/'+p+'/'+this.props.id;
+      window.location.href =window.location.href.split('#')[0]+ '#/'+p+'/'+this.props.id;
     }
     lalala=()=>{
       document.getElementById('imgpick').style.display='block';

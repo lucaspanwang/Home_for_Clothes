@@ -27,9 +27,17 @@ export default class Community extends Component {
             visible: false,
             selected: '',
             users:[],
+            office:''
         }
     }    
     componentDidMount(){
+        fetch("http://47.98.163.228:8086/office")	
+        .then(res=>res.json())	
+        .then(res=>{	
+            this.setState({	
+                office:res[0]	
+            })	
+        });
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
@@ -56,9 +64,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
-            // }
             this.setState({
                 users:users
             })
@@ -75,9 +80,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
-            // }
             this.setState({
                 users:users
             })
@@ -94,9 +96,6 @@ export default class Community extends Component {
                     }
                 }
             }
-            // for(var j=0;j<users.length;j++){
-            //     console.log(users[j].follow);
-            // }
             this.setState({
                 users:users
             })
@@ -211,7 +210,7 @@ export default class Community extends Component {
                     <WhiteSpace size="lg" />
                     <WingBlank size="lg">
                         <span style={{fontSize:'16px'}}>官方消息</span>
-                        <div className="official">温馨提示：近日北京市寒潮即将抵达，温度降低，大家要做好保暖措施。</div>
+                        <div className="official">温馨提示：{this.state.office.offContent}</div>
                     </WingBlank>
                     <WhiteSpace size="lg" />
                 </div>
@@ -242,13 +241,6 @@ export default class Community extends Component {
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
                             <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
                             <Gongge id={item.cimg}/>
-                            {/* <Grid square="false"
-                            data={item.cimg}
-                            columnNum="1"
-                            renderItem={dataItem => (
-                                <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
-                            )} 
-                            />*/}
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
