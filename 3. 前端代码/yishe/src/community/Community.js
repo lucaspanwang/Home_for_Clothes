@@ -27,17 +27,9 @@ export default class Community extends Component {
             visible: false,
             selected: '',
             users:[],
-            office:''
         }
     }    
     componentDidMount(){
-        fetch("http://47.98.163.228:8086/office")
-        .then(res=>res.json())
-        .then(res=>{
-            this.setState({
-                office:res[0]
-            })
-        });
         fetch("http://47.98.163.228:8086/article")
         .then(res=>res.json())
         .then(res=>{
@@ -57,13 +49,16 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                users[j].collect = shoucang;
+                users[j].collect = false;
                 for(var i=0;i<res.length;i++){
-                    if(res[i].articleId === users[j].articleId){
-                        users[j].collect = yishoucang;
+                    if(users[j].articleId == res[i].articleId){
+                        users[j].collect = true;
                     }
                 }
             }
+            // for(var j=0;j<users.length;j++){
+            //     console.log("文章"+users[j].articleId+"的收藏"+users[j].collect);
+            // }
             this.setState({
                 users:users
             })
@@ -73,13 +68,16 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                users[j].like = dianzan;
+                users[j].like = false;
                 for(var i=0;i<res.length;i++){
-                    if(res[i].articleId === users[j].articleId){
-                        users[j].like = yidianzan;
+                    if(users[j].articleId == res[i].articleId){
+                        users[j].like = true;
                     }
                 }
             }
+            // for(var j=0;j<users.length;j++){
+            //     console.log("文章"+users[j].articleId+"的点赞"+users[j].like);
+            // }
             this.setState({
                 users:users
             })
@@ -89,13 +87,16 @@ export default class Community extends Component {
         .then(res=>{
             var users=this.state.users;
             for(var j=0;j<users.length;j++){
-                users[j].follow = guanzhu;
+                users[j].follow = false;
                 for(var i=0;i<res.length;i++){
                     if(users[j].userId == res[i].careId){
-                        users[j].follow = yiguanzhu;
+                        users[j].follow = true;
                     }
                 }
             }
+            // for(var j=0;j<users.length;j++){
+            //     console.log(users[j].follow);
+            // }
             this.setState({
                 users:users
             })
@@ -129,11 +130,11 @@ export default class Community extends Component {
     //收藏/取消收藏
     onCollect = (id,event) =>{
         var users = this.state.users;
-        if(users.find(it => it.articleId === id).collect === shoucang){
+        if(users.find(it => it.articleId === id).collect === false){
             fetch("http://47.98.163.228:8086/collectAdd?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
-                users.find(it => it.articleId === id).collect = yishoucang;
+                users.find(it => it.articleId === id).collect = true;
                 users.find(it => it.articleId === id).save += 1;
                 this.setState({
                     users:users
@@ -143,7 +144,7 @@ export default class Community extends Component {
             fetch("http://47.98.163.228:8086/collectDelete?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
-                users.find(it => it.articleId === id).collect = shoucang;
+                users.find(it => it.articleId === id).collect = false;
                 users.find(it => it.articleId === id).save -= 1;
                 this.setState({
                     users:users
@@ -154,11 +155,11 @@ export default class Community extends Component {
     //关注/取消关注
     onCare = (id,event) =>{
         var users = this.state.users;
-        if(users.find(it => it.userId === id).follow === guanzhu){
+        if(users.find(it => it.userId === id).follow === false){
             fetch("http://47.98.163.228:8086/careAdd?userId="+this.props.id+"&careId="+id)
             .then(res=>res.json())
             .then(res=>{
-                users.find(it => it.userId === id).follow = yiguanzhu;
+                users.find(it => it.userId === id).follow = true;
                 this.setState({
                     users:users
                 })
@@ -167,7 +168,7 @@ export default class Community extends Component {
             fetch("http://47.98.163.228:8086/careDelete?userId="+this.props.id+"&careId="+id)
             .then(res=>res.json())
             .then(res=>{
-                users.find(it => it.userId === id).follow = guanzhu;
+                users.find(it => it.userId === id).follow = false;
                 this.setState({
                     users:users
                 })
@@ -177,11 +178,11 @@ export default class Community extends Component {
     //点赞/取消点赞
     onAgree = (id,event) =>{
         var users = this.state.users;
-        if(users.find(it => it.articleId === id).like === dianzan){
+        if(users.find(it => it.articleId === id).like === false){
             fetch("http://47.98.163.228:8086/agreeAdd?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
-                users.find(it => it.articleId === id).like = yidianzan;
+                users.find(it => it.articleId === id).like = true;
                 users.find(it => it.articleId === id).agree += 1;
                 this.setState({
                     users:users
@@ -191,7 +192,7 @@ export default class Community extends Component {
             fetch("http://47.98.163.228:8086/agreeDelete?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
-                users.find(it => it.articleId === id).like = dianzan;
+                users.find(it => it.articleId === id).like = false;
                 users.find(it => it.articleId === id).agree -= 1;
                 this.setState({
                     users:users
@@ -210,7 +211,7 @@ export default class Community extends Component {
                     <WhiteSpace size="lg" />
                     <WingBlank size="lg">
                         <span style={{fontSize:'16px'}}>官方消息</span>
-                        <div className="official">温馨提示：{this.state.office.offContent}</div>
+                        <div className="official">温馨提示：近日北京市寒潮即将抵达，温度降低，大家要做好保暖措施。</div>
                     </WingBlank>
                     <WhiteSpace size="lg" />
                 </div>
@@ -228,8 +229,8 @@ export default class Community extends Component {
                                     </Item>),
                                     (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
                                         <div onClick={this.onCare.bind(this,item.userId)}>
-                                            <img src={item.follow} alt='' style={{width:'25px'}}/>
-                                            <span style={{padding:'0 20px',fontSize:'18px'}}>{item.follow===yiguanzhu?"已关注":"关注"}</span>
+                                            <img src={item.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
+                                            <span style={{padding:'0 20px',fontSize:'18px'}}>{item.follow?"已关注":"关注"}</span>
                                         </div>
                                     </Item>)
                                 ]}
@@ -240,13 +241,20 @@ export default class Community extends Component {
                         <div className="artDetail">
                             <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
                             <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
-                            <Gongge cimg={item.cimg}/>
+                            <Gongge id={item.cimg}/>
+                            {/* <Grid square="false"
+                            data={item.cimg}
+                            columnNum="1"
+                            renderItem={dataItem => (
+                                <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
+                            )} 
+                            />*/}
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>
                             <li><Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}><img src={`${pinglun}`} alt=''/><span style={{color:"#444"}}>{item.review || "评论"}</span></Link></li>
-                            <li onClick={this.onCollect.bind(this,item.articleId)}><img src={item.collect} alt=''/><span>{item.save || "收藏"}</span></li>
-                            <li onClick={this.onAgree.bind(this,item.articleId)}><img src={item.like} alt=''/><span>{item.agree || "点赞"}</span></li>
+                            <li onClick={this.onCollect.bind(this,item.articleId)}><img src={item.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{item.save || "收藏"}</span></li>
+                            <li onClick={this.onAgree.bind(this,item.articleId)}><img src={item.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{item.agree || "点赞"}</span></li>
                         </ul>
                     </div>))
                 }

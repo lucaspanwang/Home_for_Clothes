@@ -49,19 +49,27 @@ export default class Article extends Component {
                 res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
             }
           }
+          // var arr = [];
+          // for(i in this.state.article.cimg){
+          //   arr[i] = this.state.article.cimg[i].toString();
+          //   // arr.push(this.state.article.cimg[i]);
+          //   console.log(this.state.article.cimg[i].toString())
+          // }
           res[0].time = this.standardTime(res[0].time)
           this.setState({
             article:res[0],
+            // cimg:arr
           })
+          // console.log(this.state.cimg);
       });
       fetch("http://47.98.163.228:8086/collect?userId="+userId)
       .then(res=>res.json())
       .then(res=>{
           var article=this.state.article;
-          article.collect = shoucang;
+          article.collect = false;
           for(var i=0;i<res.length;i++){
               if(res[i].articleId === article.articleId){
-                article.collect = yishoucang;
+                article.collect = true;
               }
           }
           this.setState({
@@ -72,10 +80,10 @@ export default class Article extends Component {
       .then(res=>res.json())
       .then(res=>{
           var article=this.state.article;
-          article.like = dianzan;
+          article.like = false;
           for(var i=0;i<res.length;i++){
             if(article.articleId == res[i].articleId){
-              article.like = yidianzan;
+              article.like = true;
             }
           }
           this.setState({
@@ -86,10 +94,10 @@ export default class Article extends Component {
       .then(res=>res.json())
       .then(res=>{
         var article=this.state.article;
-        article.follow = guanzhu;
+        article.follow = false;
         for(var i=0;i<res.length;i++){
           if(article.userId == res[i].careId){
-            article.follow = yiguanzhu;
+            article.follow = true;
           }
         }
         this.setState({
@@ -106,6 +114,7 @@ export default class Article extends Component {
           this.setState({
             review:res
           })
+          // console.log(this.state.review);
       });
       fetch("http://47.98.163.228:8086/users?userId="+userId)
         .then(res=>res.json())
@@ -186,11 +195,11 @@ export default class Article extends Component {
     //收藏/取消收藏
     onCollect = (id,event) =>{
       var article=this.state.article;
-      if(article.collect === shoucang){
+      if(article.collect === false){
           fetch("http://47.98.163.228:8086/collectAdd?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
           .then(res=>res.json())
           .then(res=>{
-              article.collect = yishoucang;
+              article.collect = true;
               article.save += 1;
               this.setState({
                   article:article
@@ -200,7 +209,7 @@ export default class Article extends Component {
           fetch("http://47.98.163.228:8086/collectDelete?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
           .then(res=>res.json())
           .then(res=>{
-              article.collect = shoucang;
+              article.collect = false;
               article.save -= 1;
               this.setState({
                   article:article
@@ -211,11 +220,11 @@ export default class Article extends Component {
     //关注/取消关注
     onCare = (id,event) =>{
       var article=this.state.article;
-      if(article.follow === guanzhu){
+      if(article.follow === false){
           fetch("http://47.98.163.228:8086/careAdd?userId="+this.props.match.params.id.split("&")[1]+"&careId="+id)
           .then(res=>res.json())
           .then(res=>{
-            article.follow = yiguanzhu;
+            article.follow = true;
             this.setState({
               article:article 
             })
@@ -224,7 +233,7 @@ export default class Article extends Component {
           fetch("http://47.98.163.228:8086/careDelete?userId="+this.props.match.params.id.split("&")[1]+"&careId="+id)
           .then(res=>res.json())
           .then(res=>{
-            article.follow = guanzhu;
+            article.follow = false;
             this.setState({
               article:article
             })
@@ -234,11 +243,11 @@ export default class Article extends Component {
     //点赞/取消点赞
     onAgree = (id,event) =>{
       var article=this.state.article;
-      if(article.like === dianzan){
+      if(article.like === false){
           fetch("http://47.98.163.228:8086/agreeAdd?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
           .then(res=>res.json())
           .then(res=>{
-              article.like = yidianzan;
+              article.like = true;
               article.agree += 1;
               this.setState({
                   article:article
@@ -248,7 +257,7 @@ export default class Article extends Component {
             fetch("http://47.98.163.228:8086/agreeDelete?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
-              article.like = dianzan;
+              article.like = false;
               article.agree -= 1;
               this.setState({
                   article:article
@@ -280,8 +289,8 @@ export default class Article extends Component {
                             </Item>),
                             (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
                                 <div onClick={this.onCare.bind(this,this.state.article.userId)}>
-                                    <img src={this.state.article.follow} alt='' style={{width:'25px'}}/>
-                                    <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow===yiguanzhu?"已关注":"关注"}</span>
+                                    <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
+                                    <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
                                 </div>
                             </Item>)
                         ]}
@@ -291,13 +300,22 @@ export default class Article extends Component {
                   </div>
                   <div className="artDetail">
                     <p>{this.state.article.content}</p>
-                      <Gongge cimg={this.state.article.cimg}/>
+                    <Gongge id={this.state.article.cimg}/>
+                    {/* <Gongge id={this.props.match.params.id.split("&")[0]}/> */}
+                      {/* 
+                      <Grid square
+                      data={this.state.article.cimg}
+                      columnNum="3"
+                      renderItem={dataItem => (
+                          <img src={dataItem} onClick={()=>{window.location.href=dataItem}} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
+                      )}
+                      /> */}
                       <span>发布于{this.state.article.time}</span>
                   </div>
                   <ul className="artState">
                     <li><img src={`${pinglun}`}/><span>评论</span></li>
-                    <li onClick={this.onCollect.bind(this,this.state.article.articleId)}><img src={this.state.article.collect} alt=''/><span>{this.state.article.save || "收藏"}</span></li>
-                    <li onClick={this.onAgree.bind(this,this.state.article.articleId)}><img src={this.state.article.like} alt=''/><span>{this.state.article.agree || "点赞"}</span></li>
+                    <li onClick={this.onCollect.bind(this,this.state.article.articleId)}><img src={this.state.article.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{this.state.article.save || "收藏"}</span></li>
+                    <li onClick={this.onAgree.bind(this,this.state.article.articleId)}><img src={this.state.article.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{this.state.article.agree || "点赞"}</span></li>
                   </ul>
               </div>
               <Comment

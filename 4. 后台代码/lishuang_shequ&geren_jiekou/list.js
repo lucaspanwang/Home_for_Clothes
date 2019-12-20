@@ -42,6 +42,17 @@ server.on('request',(req,res) => {
             article = JSON.stringify(value);
             res.end(article); 
         });
+    }else if(req.url === "/office"){
+        //读取所有文章信息
+        let promise10 = new Promise(resolve =>{
+            con.query(`select * from office order by offTime desc`, (err, result) => {
+                resolve(result);
+            })
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
     }else if(req.url === "/review"){
         //读取所有评论信息
         let promise2 = new Promise(resolve =>{
@@ -54,6 +65,38 @@ server.on('request',(req,res) => {
             review = JSON.stringify(value);
             res.end(review);
         });
+    }else if(req.url === "/officeAdd"){
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        var obj = '';
+        req.on('data',function(data){
+            obj += data;
+        });
+        req.on('end',function(){
+            var item = JSON.parse(obj);
+            let promise45 = new Promise(resolve =>{
+                con.query('select * from office order by offTime desc', function(err, result){
+                    var num;
+                    if(result[0].rev === 0){
+                        num=999999;
+                    }else{
+                        num = JSON.stringify(result[0].offId).replace(/[^0-9]/ig,"")-1;
+                    }
+                    resolve('Off'+num);
+                })
+            }).then(value =>{
+                let promise46 = new Promise(resolve =>{
+                    con.query('insert into office values(?,?,?,?)',[value,item.time,item.content,item.city],(err, result) => {
+                        console.log("添加官方消息"+value);
+                        resolve(result);
+                    });
+                }).then(value =>{
+                    res.writeHead(200, {"Content-type":"application/json"});
+                    review = JSON.stringify(value);
+                    res.end(review); 
+                });
+            })
+        })
+        res.end();
     }else if(req.url === "/articleAdd"){
         res.setHeader("Access-Control-Allow-Origin", "*");
         var obj = '';
@@ -104,29 +147,19 @@ server.on('request',(req,res) => {
             })
         })
         res.end();
-    }else if(req.url === '/articleshanchu'){
-        //删除文章
-        var id = '';
-        req.on('data',function(data){
-            id += data;
-        });
-        req.on('end',function(){
-            let promise39 = new Promise(resolve =>{
-                con.query('delete from community where articleId=?',[id],(err, result) => {
-                    console.log(id);
-                    if(err){
-                        console.log("shibai");
-                    }else{
-                        console.log('chenggong');
-                    }
-                    resolve(result);
-                });
-            }).then(value =>{
-                res.writeHead(200, {"Content-type":"application/json"});
-                review = JSON.stringify(value);
-                res.end(review); 
+    }else if(req.url.split('?')[0] === '/officeDelete'){
+        var it = qs.parse(req.url.split('?')[1]);
+        console.log(req.url);
+        let promise35 = new Promise(resolve =>{
+            con.query('delete from office where offId=?',[it.offId],(err, result) => {
+                console.log('删除官方消息'+it.offId);
+                resolve(result);
             });
-        })
+        }).then(value =>{
+            res.writeHead(200, {"Content-type":"application/json"});
+            article = JSON.stringify(value);
+            res.end(article); 
+        });
     }else if(req.url.split('?')[0] === '/articleDelete'){
         //删除文章
         var it = qs.parse(req.url.split('?')[1]);
