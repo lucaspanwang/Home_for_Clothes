@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavBar, Button } from 'antd-mobile';
+import { NavBar, Button,SearchBar,WhiteSpace, WingBlank } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import './store.css'
 
@@ -28,12 +28,24 @@ export default class AppBox extends Component {
             console.log('后台传来：',res);
         })
     }
+
+    
+
     render() {
         return (
             <div style={{ backgroundImage: `url(${BoxBack})`, backgroundSize: '150%,100%' }}>
                 <NavBar style={{ color: 'white', backgroundColor: 'rgb(252, 157, 154)' }}>整理箱</NavBar>
                 <Router>
-                    <Link to={"/insert/"+this.props.id}><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
+                    <Link to={"/insert/"+this.props.id}><Button style={{ 
+                        backgroundColor: 'rgb(252,157,154)', width: '60px', margin: '10px' }}>
+                            导入</Button>
+                    </Link>
+                    <div id="nameCha" >
+                        <SearchBar placeholder="请输入你要查找的名字" maxLength={4} 
+                        style={{width:'280px',position:'absolute',top:'7.5%',
+                        left:'120%',backgroundColor: 'rgba(252,157,154,0.7)',borderRadius:'5px'}}
+                        />
+                    </div>
                     <div id="store">
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
