@@ -30,12 +30,12 @@ export default class AboutMe extends Component {
 
     componentDidMount(){
         console.log(this.props.match.params.id);
-        fetch("http://47.98.163.228:8086/users?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:3000/users?userId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:3000"+res[i].userPic.substr(j);
             }
             var newInfo = res[0].userIntro.length>12?res[0].userIntro.substr(0,12)+'...':res[0].userIntro;
             this.setState({
@@ -59,7 +59,7 @@ export default class AboutMe extends Component {
                 previewPic: e.target.result
             },function(){
                 console.log('this.state.previewPic'+this.state.previewPic)
-                fetch('http://47.98.163.228:8000/changePic',{
+                fetch('http://47.98.163.228:3000/changePic',{
                     method: 'post', 
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : true,
@@ -75,7 +75,7 @@ export default class AboutMe extends Component {
     }
     //向后端传值
     onPost=()=> { 
-        fetch('http://47.98.163.228:8000/changePic',{
+        fetch('http://47.98.163.228:3000/changePic',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,

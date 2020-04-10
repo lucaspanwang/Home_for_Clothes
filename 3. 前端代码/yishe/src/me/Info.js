@@ -16,7 +16,7 @@ export default class Info extends Component {
         this.setState({ value });
     };
     handlePost =(data)=> { 
-        fetch('http://47.98.163.228:8000/changeInfo',{
+        fetch('http://47.98.163.228:3000/changeInfo',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,

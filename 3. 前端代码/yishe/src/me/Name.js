@@ -16,7 +16,7 @@ export default class Name extends Component {
         })
     }
     handlePost =()=> { 
-        fetch('http://47.98.163.228:8000/changename',{
+        fetch('http://47.98.163.228:3000/changename',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,

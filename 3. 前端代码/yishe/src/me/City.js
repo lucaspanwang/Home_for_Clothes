@@ -6,7 +6,7 @@ import CitySelector from '../login/CitySelector';
 import {Consumer} from '../context'
 export default class City extends Component {
     handlePost =(data)=> { 
-        fetch('http://47.98.163.228:8000/changeCity',{
+        fetch('http://47.98.163.228:3000/changeCity',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,

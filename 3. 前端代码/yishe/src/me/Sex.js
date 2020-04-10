@@ -26,7 +26,7 @@ export default class Sex extends Component {
             sex = '女'
         }
         console.log(sex);
-        fetch('http://47.98.163.228:8000/changeSex',{
+        fetch('http://47.98.163.228:3000/changeSex',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,

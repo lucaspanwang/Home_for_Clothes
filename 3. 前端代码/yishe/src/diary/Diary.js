@@ -25,13 +25,13 @@ export default class Diary extends Component {
         window.location.href = arr[0] + str;
     }
     componentDidMount() {
-        fetch('http://47.98.163.228:8081/diary?userId='+this.props.id)
+        fetch('http://47.98.163.228:3000/diary/'+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             {            
                 for(var i=0;i<res.length;i++){
                     var j = res[i].userPic.indexOf('/');
-                    res[i].userPic = "http://47.98.163.228:8081"+res[i].userPic.substr(j);  
+                    res[i].userPic = "http://47.98.163.228:3000"+res[i].userPic.substr(j);  
                     diaryIds.push(res[i].diaryId);    
                 }
                 for(var i=0;i<res.length;i++){
@@ -40,7 +40,7 @@ export default class Diary extends Component {
                     }else{
                         for(var j=0;j<res[i].dimg.length;j++){
                             var n = res[i].dimg[j].indexOf('/');
-                            res[i].dimg[j] = "http://47.98.163.228:8081"+res[i].dimg[j].substr(n);
+                            res[i].dimg[j] = "http://47.98.163.228:3000"+res[i].dimg[j].substr(n);
                         }
                     }
                 }               
@@ -87,7 +87,7 @@ export default class Diary extends Component {
         var diaryId = diarys[id];
         diarys.splice(id,1);
 
-        fetch('http://47.98.163.228:8081/diaryDel',{
+        fetch('http://47.98.163.228:3000/diaryDel',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,

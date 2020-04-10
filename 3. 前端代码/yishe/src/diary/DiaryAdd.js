@@ -51,7 +51,7 @@ export default class DiaryAdd extends Component {
         if(this.state.value == '' && this.state.files == ''){
             this.onFail();
         }if(this.state.value !== '' && this.state.files == ''){
-            fetch('http://47.98.163.228:8081/diaryAdd',{
+            fetch('http://47.98.163.228:3000/diaryAdd',{
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Credentials" : true,
@@ -78,7 +78,7 @@ export default class DiaryAdd extends Component {
                 }
             }).then((value)=>{
                 console.log(value);
-                fetch('http://47.98.163.228:8081/diaryAdd',{
+                fetch('http://47.98.163.228:3000/diaryAdd',{
                     method: 'post', 
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : true,
