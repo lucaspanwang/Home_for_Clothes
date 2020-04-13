@@ -1,4 +1,3 @@
-//引入
 import React, { Component } from 'react'
 import { NavBar,Grid,Tabs,WhiteSpace} from 'antd-mobile';
 import { NoticeBar, Icon } from 'antd-mobile';
@@ -6,6 +5,7 @@ import './wear.css';
 import {Consumer} from '../context'
 import didian from '../images/地点.png'
 import xiayu from '../images/下雨.png'
+
 import qing from '../images/晴.png'
 import mote from '../images/模特.png'
 import mote2 from '../images/模特2.png'
@@ -23,13 +23,21 @@ import fuzhilianjie from '../images/复制链接.png'
 import buganxingqu from '../images/不感兴趣_44.png'
 import jubao from '../images/举报.png'
 import xiaoren0 from '../images/小人.png'
+import xiaoren1 from '../images/小人1.png'
+import xiaoren2 from '../images/小人2.png'
+import xiaoren3 from '../images/小人3.png'
+// import beijing from '../images/雨.jpg'
 import beijing from '../images/雨.gif'
 import beijing2 from '../images/晴.jpg'
 import {Link} from 'react-router-dom'
 import AlphaPicker from 'react-color'
 import { CompactPicker } from 'react-color';
 const src =[beijing,beijing2];
-//分享按钮
+const xiaoren=[xiaoren0,xiaoren1,xiaoren2,xiaoren3]
+const data = Array.from(new Array(5)).map((_val, i) => ({
+    icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
+    text: `name${i}`,
+}));
 const data2 = Array.from(new Array(5)).map(() => ({
     icon:[chuandariji,shequ,fuzhilianjie,buganxingqu,jubao]
 }));
@@ -38,7 +46,20 @@ const data1 = Array.from(new Array(5)).map(() => ({
 }));
 const c=['#00cc00','#ccff99','white','#3399ff','#FFCC66'];
 const w_t=[xiayu,qing]
-
+//生成从minNum到maxNum的随机数
+function randomNum(minNum,maxNum){ 
+  switch(arguments.length){ 
+      case 1: 
+          return parseInt(Math.random()*minNum+1,10); 
+      break; 
+      case 2: 
+          return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+      break; 
+          default: 
+              return 0; 
+          break; 
+  } 
+} 
 export default class Wear extends Component {
   constructor(){
     super();
@@ -46,19 +67,19 @@ export default class Wear extends Component {
         data:[],
         ss: ['微信好友','朋友圈','微博','QQ好友','QQ空间'],
         ss1: ['穿搭日记','社区','复制链接','不感兴趣','举报'],
-        url0:'http://47.98.163.228:3001/react',
-        url:'http://47.98.163.228:3001/weather',
+        url0:'http://47.98.163.228:8083/react',
+        url:'http://47.98.163.228:8083/weather',
         city:'南京',
-        temperature:'2',//最低气温
-        temperature2:'13',//最高气温
-        dressing_advice:'',//穿衣建议
-        weather:'晴',//天气
-        idx:0,//显示天气图标
-        arr:[],arr_s:[],//大小图地址
-        ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],//小图标
+        temperature:'2',
+        temperature2:'13',
+        dressing_advice:'',
+        weather:'晴',
+        idx:0,
+        arr:[],arr_s:[],
+        ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],
         count:0,
         href:'#/apptab',
-        userId:'122',
+        userId:'',
         ress:[],
         linshi:0,
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
@@ -71,45 +92,68 @@ export default class Wear extends Component {
     }
   }    
   componentDidMount(){
+    console.log('componentDidMount')
+    fetch("http://47.98.163.228:8083/aa", {
+      method: 'post', 
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Credentials" : true,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: JSON.stringify({userId:localStorage.getItem('userId')}) 
+    },function(){
+      console.log('fetch aa发送userid了')
+    })
         //获取图片信息
         var small=[],big=[];
-        fetch('http://47.98.163.228:3001/react',{
-            method: 'post', 
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Credentials" : true,
-            headers: {
-                // 'Content-Type': 'application/x-www-form-urlencoded'
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({userId:localStorage.getItem('userId')})  
+        fetch('http://47.98.163.228:8083/react',function(){
+          console.log('我fetch react 了')
         })
         .then(res=>res.json())
         .then(res=>{
+          console.log(res);
+          var weather = res[res.length-1]
+          this.setState({
+            city:weather.city,
+            temperature:weather.data[0].tem1,
+            temperature2:weather.data[0].tem,
+            dressing_advice:weather.data[0].index[3].desc,
+            weather:weather.data[0].wea,
+            tiaosrc : ['/diaryAdd/']
+          })
+            if(this.state.weather.indexOf('雨')!=-1){
+              this.setState({
+                  idx:0,
+              })
+            }
+            else{
+              this.setState({
+                idx:1,
+              })
+            }
             //把读取的图片放进来
             if(res[0].cloSmallPic){     
-            for(var i=0;i<res.length;i++){//循环res的图
+            for(var i=0;i<res.length-1;i++){
               var j = res[i].cloSmallPic.indexOf('/');
-              res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
+              res[i].cloSmallPic = "http://47.98.163.228:8083"+res[i].cloSmallPic.substr(j);
               big[i] = res[i].cloSmallPic;
               var name = res[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
-              small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png'
-              console.log(big[i])//大图地址
-              console.log(small[i])//小图地址
+              small[i] = "http://47.98.163.228:8083/images/"+n+'_s.png'
               this.setState({
-                ress:res,//意义不大
+                ress:res,
                 arr:big,
                 arr_s:small,
              })
             }
           //分类存小图标
-          var kuku=[],kuku_s=[];//裤子
-          var qunqun=[],qunqun_s=[];//裙子
-          var yiyi=[],yiyi_s=[];//上衣
-          var taotao=[],taotao_s=[];//外套
+          var kuku=[],kuku_s=[];
+          var qunqun=[],qunqun_s=[];
+          var yiyi=[],yiyi_s=[];
+          var taotao=[],taotao_s=[];
           for(var i = 0;i<this.state.arr.length;i++){
             var n = this.state.arr[i].split('/')[4];
-            //判断裤子，把图存进去
+            //判断裤子类别
             if(n.indexOf('ku')!=-1){
               kuku.push(this.state.arr[i]);
               kuku_s.push(this.state.arr_s[i])
@@ -131,7 +175,14 @@ export default class Wear extends Component {
             }
           }
           this.setState({
-            qun:qunqun,qun_s:qunqun_s,yi:yiyi,yi_s:yiyi_s,tao:taotao,tao_s:taotao_s,ku:kuku,ku_s:kuku_s
+            qun:qunqun,
+            qun_s:qunqun_s,
+            yi:yiyi,
+            yi_s:yiyi_s,
+            tao:taotao,
+            tao_s:taotao_s,
+            ku:kuku,
+            ku_s:kuku_s
           })
           //实现推荐
           var tuitui=[],tuitui_s=[];
@@ -141,45 +192,59 @@ export default class Wear extends Component {
               tuijian:this.state.yi,
               tuijian_s:this.state.yi_s
             })
-          }else{//最低温度大于0
-            for(var i = 0;i<=this.state.ress.length-1;i++){
+          }else{
+            for(var i = 0;i<this.state.ress.length-1;i++){
+
               var j = this.state.ress[i].cloSmallPic.indexOf('/');
               big[i]  = "http:"+this.state.ress[i].cloSmallPic.substr(j);
+
               var name = this.state.ress[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
-              small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png'
-              if(n.indexOf('duan')==-1){//如果是短裙
+              small[i] = "http://47.98.163.228:8083/images/"+n+'_s.png'
+              // var n = this.state.ress[i].split('/')[4];
+
+
+              if(n.indexOf('duan')==-1){
+                // tuitui.push(this.state.arr[i]);
                 tuitui.push(big[i]);
-                tuitui_s.push(small[i])    
-                //长裙变色
-                // if(n.indexOf('changqun')!=-1){
-                //   this.setState({
-                //     num2:this.state.num2+1,
-                //   },function(){
-                //     if(this.state.num2==2){
-                //       if(this.state.ress[i].cloColor=='白色'){
-                //         tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_bai.png'
-                //       }
-                //       if(this.state.ress[i].cloColor=='黑色'){
-                //         tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_hei.png'
-                //       }if(this.state.ress[i].cloColor=='红色'){
-                //         tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_hong.png'
-                //       }if(this.state.ress[i].cloColor=='黄色'){
-                //         tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_huang.png'
-                //       }
-                //       if(this.state.ress[i].cloColor=='绿色'){
-                //         tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_lv.png'
-                //       }
-                //       if(this.state.ress[i].cloColor=='紫色'){
-                //         tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_zi.png'
-                //       }
-                //       this.setState({
-                //         num2:0,
-                //       })
-                //     }
-                //   })
-                // }
+                tuitui_s.push(small[i])
+                
+                if(n.indexOf('changqun')!=-1){
+                  console.log(this.state.ress[i].cloColor)
+                  console.log(i)
+                  this.setState({
+                    num2:this.state.num2+1,
+                  },function(){
+                    if(this.state.num2==2){
+                      console.log(this.state.num2)
+                      if(this.state.ress[i].cloColor=='白色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_bai.png'
+                      }
+                      if(this.state.ress[i].cloColor=='黑色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_hei.png'
+                      }if(this.state.ress[i].cloColor=='红色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_hong.png'
+                      }if(this.state.ress[i].cloColor=='黄色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_huang.png'
+                      }
+                      if(this.state.ress[i].cloColor=='绿色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_lv.png'
+                      }
+                      if(this.state.ress[i].cloColor=='紫色'){
+                        tuitui_s[i-1]="http://47.98.163.228:8083/images/"+n+'_s_zi.png'
+                      }
+                      this.setState({
+                        num2:0,
+                      })
+                    }
+                  })
+
+                }
+                
               }
+
+
+
             }  
             this.setState({
               tuijian:tuitui,
@@ -196,7 +261,6 @@ export default class Wear extends Component {
         window.location.href =window.location.href.split('#')[0]+'#'+ this.state.tiaosrc[idx]+this.props.id
       }
     }
-    //分享
     click_share=()=>{
       var div = document.getElementById('fenxiang');
       div.style.display='block'
@@ -211,7 +275,6 @@ export default class Wear extends Component {
       var index = h.lastIndexOf("\/");  
       window.location.href = h.substring(0, index+1)+str;
     }
-    //给模特穿衣服
     qunzi=(idx)=>{
       document.getElementById('mote_4').style.display='none'
       document.getElementById('mote').style.display = 'none';
@@ -266,44 +329,53 @@ export default class Wear extends Component {
               document.getElementById('mote_4').style.display='none'
               document.getElementById('mote_5').style.display='none'
               document.getElementById('mote2').src=this.state.tuijian[idx];
-              document.getElementById('mote2').style.display = 'block';      
-              // if(this.state.tuijian[idx].indexOf('changqun')!==-1){//长裙变色
-              //   this.setState({
-              //     num:this.state.num+1,
-              //   },function(){
-              //     if(this.state.num==1){
-              //       console.log(this.state.num)
-              //       document.getElementById('mote_4').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
-              //       document.getElementById('mote_4').style.display = 'block';
-              //       var color='';
-              //       for(var i =0;i<this.state.ress.length-1;i++){
-              //         if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
-              //           color = this.whichColor(this.state.ress[i].cloColor);
-              //           this.setState({
-              //             feng:color,
-              //           })
-              //           break;
-              //         }
-              //       }
-              //       document.getElementById('mote_4').style.filter=`drop-shadow(150px 0 ${color})`;
-              //     }else{
-              //       //第二件
-              //       document.getElementById('mote6').src=this.state.tuijian[idx];
-              //       document.getElementById('mote6').style.display = 'block';
-              //       document.getElementById('mote_5').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
-              //       document.getElementById('mote_5').style.display = 'block';
-              //       for(var i =0;i<this.state.ress.length-1;i++){
-              //         if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
-              //           var color2 = this.whichColor(this.state.ress[i].cloColor);
-              //           document.getElementById('mote_5').style.filter=`drop-shadow(150px 0 ${color2})`;
-              //         }
-              //       }
-              //       this.setState({
-              //         num:0,
-              //       })
-              //     }
-              //   })
-              // }
+              document.getElementById('mote2').style.display = 'block';
+              
+              
+              if(this.state.tuijian[idx].indexOf('changqun')!==-1){//长裙变色
+                
+                console.log(this.state.tuijian_s[idx])
+                this.setState({
+                  num:this.state.num+1,
+                },function(){
+                  if(this.state.num==1){
+                    console.log(this.state.num)
+                    document.getElementById('mote_4').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
+                    document.getElementById('mote_4').style.display = 'block';
+                    var color='';
+                    for(var i =0;i<this.state.ress.length-1;i++){
+                      if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
+                        color = this.whichColor(this.state.ress[i].cloColor);
+                        this.setState({
+                          feng:color,
+                        })
+                        break;
+                      }
+                    }
+                    document.getElementById('mote_4').style.filter=`drop-shadow(150px 0 ${color})`;
+                  }else{
+                    //第二件
+                    console.log(this.state.num)
+                    document.getElementById('mote6').src=this.state.tuijian[idx];
+                    document.getElementById('mote6').style.display = 'block';
+                    document.getElementById('mote_5').src = this.state.tuijian[idx].split('.')[0]+'.'+this.state.tuijian[idx].split('.')[1]+'.'+this.state.tuijian[idx].split('.')[2]+'.'+this.state.tuijian[idx].split('.')[3]+'_bai.'+this.state.tuijian[idx].split('.')[4]
+                    document.getElementById('mote_5').style.display = 'block';
+                    for(var i =0;i<this.state.ress.length-1;i++){
+                      if(this.state.ress[i].cloSmallPic.indexOf(this.state.tuijian[idx])!=-1){
+                        var color2 = this.whichColor(this.state.ress[i].cloColor);
+                        document.getElementById('mote_5').style.filter=`drop-shadow(150px 0 ${color2})`;
+                      }
+                    }
+                    this.setState({
+                      num:0,
+                    })
+                  }
+                })
+               
+
+                
+                
+              }
               if(this.state.tuijian[idx].indexOf('duan')!=-1){ //包括短裙
 
               }else{//连衣裙
@@ -340,6 +412,7 @@ export default class Wear extends Component {
       var place='';
       //找到它的存储地点
       var nnn = weizhi[idx].split('/')[4].split('.')[0];
+      // var nnn = this.state.tuijian[idx].split('/')[4].split('.')[0];
       for(var i = 0;i<this.state.ress.length-1;i++){
         if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
             place = this.state.ress[i].cloPlace
@@ -359,10 +432,11 @@ export default class Wear extends Component {
     }
     return place
     }
-    //向整理箱发送衣物编号（从1开始）
+    //发送衣物编号（从1开始）
     fasong=(idx,place)=>{
       localStorage.setItem('count',0);
-      fetch("http://47.98.163.228:3001/pp", {
+      console.log('衣服编号'+idx)
+      fetch("http://47.98.163.228:8083/pp", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
@@ -373,19 +447,26 @@ export default class Wear extends Component {
       })
       .then(this.tiaozhuan(place))
     }
-    //跳转整理箱url
+    //跳转
     tiaozhuan=(place)=>{
       var p = '';
       switch(place){
-        case '家':p='home';break;
-        case '行李箱':p='trunk';break;
-        case '柜子':p='robe';break;
+        case '家':
+          p='home';
+          break;
+        case '行李箱':
+          p='trunk'
+          break;
+        case '柜子':
+            p='robe'
+            break;
       }
       window.location.href =window.location.href.split('#')[0]+ '#/'+p+'/'+this.props.id;
     }
     lalala=()=>{
       document.getElementById('imgpick').style.display='block';
       document.getElementById('mote_3').style.display='block';
+      console.log(this.state.color)
       document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
       document.getElementById('mote_3').style.opacity=0.9
       this.state.count++;//判断点击几次
@@ -406,22 +487,36 @@ export default class Wear extends Component {
       document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
       document.getElementById('mote_3').style.opacity=0.9
     }
-    //颜色转换
     whichColor=(name)=>{
       var color='';
       switch(name){
-        case '白色':color='#fffbf0';break;
-        case '黑色':color='black';break;
-        case '红色':color='#be002f';break;
-        case '绿色':color='#7ecad';break;
-        case '蓝色':color='#3eede7';break;
-        case '黄色':color='#ffc773';break;
-        case '紫色':color='#815476';break;
-        default:color='purple';break;
+        case '白色':
+          color='#fffbf0';
+          break;
+        case '黑色':
+            color='black';
+            break;
+        case '红色':
+          color='#be002f';
+          break;
+        case '绿色':
+          color='#7ecad';
+          break;
+        case '蓝色':
+          color='#3eede7';
+          break;
+        case '黄色':
+          color='#ffc773';
+          break;
+        case '紫色':
+          color='#815476';
+          break;
+        default:
+          color='purple';
+          break;
       }
       return color;
     }
-    //渲染组件
     render() {
         return (
             <div id="beijingg" className="body" style={{width:'100%',height:'100%',background:`url(${src[this.state.idx]})`,backgroundRepeat: 'no-repeat',backgroundPosition: 'right bottom'}}>
@@ -447,12 +542,15 @@ export default class Wear extends Component {
                 {/* 模特 */}
                 <img src={mote2} id="mote"/>
                 <img src={mote2} id="mote_2"/>
+
                <div class="icon" id="mote22"><img  class='icon3'  id="mote_4" /></div>
                 <img  id='mote2' />
                 <img  id='mote3' />
-                <img  id='mote4' />               
+                <img  id='mote4' />
+                
                 <div class="icon" id="mote22"><img  class='icon4'  id="mote_5" /></div>
                 <img  id='mote6' />
+
                 <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3"/></div>
                <img src={mote4} id='mote5'style={{display:'block'}} onClick={this.lalala}/> 
                 {/* 衣物栏 */}
@@ -508,7 +606,8 @@ export default class Wear extends Component {
                           ))
                         }
                       </ul>
-                    </div>   
+                    </div>
+                    
                     <div style={{width:'100px', display: 'flex',
                       height: '500px', backgroundColor: '#fff' }}>
                       <ul className="yifu" id='yifu4'>
@@ -589,3 +688,70 @@ const tabs = [
   { title: '裤子'},
   { title: '连衣裙'},
 ];
+
+const TabExample = () => (
+  <div id="yiwu">
+    <WhiteSpace />
+    <Tabs tabs={tabs}
+      initialPage={0}
+      tabBarPosition="left"
+      tabDirection="vertical"
+    >
+      <div style={{width:'100px', display: 'flex',
+        height: '700px', backgroundColor: '#fff' }}>
+        <ul className="yifu">
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px',backgroundColor: '#fff'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+        </ul>
+      </div>
+      <div style={{width:'100px', display: 'flex',
+        height: '500px', backgroundColor: '#fff' }}>
+        <ul className="yifu">
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+        </ul>
+      </div>
+      <div style={{width:'100px', display: 'flex',
+        height: '500px', backgroundColor: '#fff' }}>
+        <ul className="yifu">
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+        </ul>
+      </div>
+      <div style={{width:'100px', display: 'flex',
+        height: '500px', backgroundColor: '#fff' }}>
+        <ul className="yifu">
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+        </ul>
+      </div>
+      <div style={{width:'100px', display: 'flex',
+        height: '500px', backgroundColor: '#fff' }}>
+        <ul className="yifu">
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+            <li style={{height:'100px'}}></li>
+        </ul>
+      </div>
+    </Tabs>
+    <WhiteSpace />
+  </div>
+);
