@@ -50,8 +50,9 @@ export default class AppBox extends Component {
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                <Link to={"/add/"+this.props.id}><button>+<br />{this.state.value}</button></Link>
-                                <Link to={"/add/"+this.props.id}><button>+<br />添加</button></Link>
+                                <Link to={"/add/"+this.props.id}><button>{this.state.value}</button></Link>
+                                {/* <button><input type="text" value={this.state.value} disabled/></button> */}
+                                <Link to={"/add/"+this.props.id}><button>添加</button></Link>
                             </li>
                             <li id='twoBut'>
                                 <Link to={"/home/"+this.props.id}><button>家</button></Link>

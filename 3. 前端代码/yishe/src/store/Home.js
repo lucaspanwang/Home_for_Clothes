@@ -45,6 +45,7 @@ export default class Home extends Component {
     //   });
     // }
     componentDidMount(){
+        console.log(this.props.match.params.id)
         fetch("http://47.98.163.228:8084/userid", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
