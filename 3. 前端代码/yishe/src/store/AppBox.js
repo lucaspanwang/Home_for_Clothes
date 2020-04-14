@@ -12,12 +12,27 @@ var style = {
     backgroundImg: `url(${BoxBack})`
 }
 export default class AppBox extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
-            value:'添加'
+            value:'添加',
+            where:'家'
         }
-    }    
+    }   
+    
+    fondWhere=(value)=>{
+        console.log(value);
+        if(this.state.where=='家'){
+            window.location.href='http://localhost:3000/#/home/'+this.props.id
+        }else if(this.state.where=='柜子'){
+            window.location.href='http://localhost:3000/#/robe/'+this.props.id
+        }else if(this.state.where=='行李箱'){
+            window.location.href='http://localhost:3000/#/trunk/'+this.props.id
+        }else{
+            
+        }
+       
+    } 
     componentDidMount(){
         fetch('http://47.98.163.228:8084/change')
         .then(res=>res.json())
@@ -44,6 +59,7 @@ export default class AppBox extends Component {
                         <SearchBar placeholder="请输入你要查找的名字" maxLength={4} 
                         style={{width:'280px',position:'absolute',top:'7.5%',
                         left:'120%',backgroundColor: 'rgba(252,157,154,0.7)',borderRadius:'5px'}}
+                        onSubmit={this.fondWhere.bind(this.value)}
                         />
                     </div>
                     <div id="store">
