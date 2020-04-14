@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavBar, Button } from 'antd-mobile';
+import { NavBar, Button,SearchBar,WhiteSpace, WingBlank } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import './store.css'
 
@@ -12,27 +12,72 @@ var style = {
     backgroundImg: `url(${BoxBack})`
 }
 export default class AppBox extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            value:'添加',
+            where:'家'
+        }
+    }   
+    
+    fondWhere=(value)=>{
+        console.log(value);
+        if(this.state.where=='家'){
+            window.location.href='http://localhost:3000/#/home/'+this.props.id
+        }else if(this.state.where=='柜子'){
+            window.location.href='http://localhost:3000/#/robe/'+this.props.id
+        }else if(this.state.where=='行李箱'){
+            window.location.href='http://localhost:3000/#/trunk/'+this.props.id
+        }else{
+            
+        }
+       
+    } 
+    componentDidMount(){
+        fetch('http://47.98.163.228:8084/change')
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                value:res
+            })
+            console.log('后台传来：',res);
+        })
+    }
+
+    
+
     render() {
         return (
             <div style={{ backgroundImage: `url(${BoxBack})`, backgroundSize: '150%,100%' }}>
                 <NavBar style={{ color: 'white', backgroundColor: 'rgb(252, 157, 154)' }}>整理箱</NavBar>
                 <Router>
-                    <Link to="/insert"><Button style={{ backgroundColor: 'rgb(252,157,154)', width: '80px', margin: '10px' }}>导入</Button></Link>
+                    <Link to={"/insert/"+this.props.id}><Button style={{ 
+                        backgroundColor: 'rgb(252,157,154)', width: '60px', margin: '10px' }}>
+                            导入</Button>
+                    </Link>
+                    <div id="nameCha" >
+                        <SearchBar placeholder="请输入你要查找的名字" maxLength={4} 
+                        style={{width:'280px',position:'absolute',top:'7.5%',
+                        left:'120%',backgroundColor: 'rgba(252,157,154,0.7)',borderRadius:'5px'}}
+                        onSubmit={this.fondWhere.bind(this.value)}
+                        />
+                    </div>
                     <div id="store">
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                <Link to="/add"><button>+<br />添加</button></Link>
-                                <Link to="/add"><button>+<br />添加</button></Link>
+                                <Link to={"/add/"+this.props.id}><button>{this.state.value}</button></Link>
+                                {/* <button><input type="text" value={this.state.value} disabled/></button> */}
+                                <Link to={"/add/"+this.props.id}><button>添加</button></Link>
                             </li>
                             <li id='twoBut'>
-                                <Link to="/home"><button>家</button></Link>
+                                <Link to={"/home/"+this.props.id}><button>家</button></Link>
                             </li>
                             <li id='twoBut'>
-                                <Link  to="/robe"><button>衣柜</button></Link>
+                                <Link  to={"/robe/"+this.props.id}><button>衣柜</button></Link>
                             </li>
                             <li id='twoBut'>
-                                <Link to="/trunk"><button>行李箱</button></Link>
+                                <Link to={"/trunk/"+this.props.id}><button>行李箱</button></Link>
                             </li>
                         </div>
                     </div>

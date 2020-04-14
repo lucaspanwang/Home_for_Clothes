@@ -27,19 +27,21 @@
 }
 #oneBut button{
   /* border:1px solid blue; */
+  font-size: large;
   border:none;
   width:50%;
   height:100%;
   background: rgba(255, 255, 255, 0.3);
-  color:white;
+  color:#a3a1a1;
 }
 #twoBut button{
+  font-size: large;
   border:none;
   /* border:1px solid blue; */
   height:100%;
   width:100%;
   background: rgba(255, 255, 255, 0.3);
-  color:white;
+  color:#a3a1a1;
 }
 #list li{
   /* display: inline-block; */

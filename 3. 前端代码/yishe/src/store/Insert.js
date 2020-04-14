@@ -5,6 +5,7 @@ import Back from '../images/返回 (1).png';
 import { createForm } from 'rc-form';
 import './store.css';
 import { thisTypeAnnotation } from '@babel/types';
+const sex='女';
 //图片选择器
 const data = [];
 //图片选择器
@@ -28,8 +29,8 @@ const colorStyle = {
   height: '16px',
   marginRight: '10px',
 };
-
-const kind=[
+let kind;
+sex=='女'?kind=[
   {
     label:(<span>裤子</span>),
     value:'裤子',
@@ -48,6 +49,14 @@ const kind=[
         label:(<span>短裤</span>),
         value:'短裤'
       },
+      {
+        label:(<span>西装裤</span>),
+        value:'西装裤'
+      },
+      {
+        label:(<span>直筒裤</span>),
+        value:'直筒裤'
+      },
   ]
   },
   {
@@ -55,8 +64,8 @@ const kind=[
     value:'裙子',
     children:[
       {
-      label:(<span>长裙</span>),
-      value:'长裙'
+      label:(<span>半身长裙</span>),
+      value:'半身长裙'
       },
       {
         label:(<span>短裙</span>),
@@ -65,10 +74,6 @@ const kind=[
       {
         label:(<span>吊带裙</span>),
         value:'吊带裙'
-      },
-      {
-        label:(<span>保守裙</span>),
-        value:'保守裙'
       },
       
     ]
@@ -87,8 +92,8 @@ const kind=[
         value:'卫衣'
       },
       {
-        label:(<span>运动上衣</span>),
-        value:'运动上衣'
+        label:(<span>打底衫</span>),
+        value:'打底衫'
       },
       {
         label:(<span>短袖</span>),
@@ -101,18 +106,73 @@ const kind=[
     value:'外套',
     children:[
       {
-      label:(<span>薄外套</span>),
-      value:'薄外套'
+      label:(<span>牛仔外套</span>),
+      value:'牛仔外套'
       },
       {
-        label:(<span>厚外套</span>),
-        value:'厚外套'
+        label:(<span>运动外套</span>),
+        value:'运动外套'
+      },
+      {
+        label:(<span>风衣</span>),
+        value:'风衣'
+      },
+      {
+        label:(<span>衬衫</span>),
+        value:'衬衫'
+      },
+      {
+        label:(<span>毛呢大衣</span>),
+        value:'毛呢大衣'
       },
     ]
   },
-  
-
+]:kind=[
+  {
+    label:(<span>裤子</span>),
+    value:'裤子',
+    children:[
+      
+      {
+      label:(<span>牛仔裤</span>),
+      value:'牛仔裤'
+      },
+      
+      {
+        label:(<span>运动裤</span>),
+        value:'运动裤'
+      }
+  ]
+  },
+  {
+    label:(<span>外套</span>),
+    value:'外套',
+    children:[
+      {
+      label:(<span>牛仔外套</span>),
+      value:'牛仔外套'
+      },
+      {
+        label:(<span>运动外套</span>),
+        value:'运动外套'
+      },
+      {
+        label:(<span>风衣</span>),
+        value:'风衣'
+      },
+      {
+        label:(<span>衬衫</span>),
+        value:'衬衫'
+      },
+      {
+        label:(<span>毛呢大衣</span>),
+        value:'毛呢大衣'
+      },
+    ]
+  },
 ]
+
+
 
 const where=[
   {
@@ -129,12 +189,7 @@ const where=[
   },
   
 ]
-// for(var i=0;i<3;i++){
-//   where.push({
-//       label:(<span>家</span>),
-//       value:'家'
-//     },)
-// }
+
 
 const colors = [
   {
@@ -214,6 +269,7 @@ const colors = [
 const picName='';
 class Insert extends Component {
   state = {
+    kinds:kind,
     picName:'',
     change:'',
     files: data,
@@ -304,7 +360,8 @@ class Insert extends Component {
           <Picker
             title="种类确定"
             extra="请选择(可选)"
-            data={kind}
+            // data={kind}
+            data={this.state.kinds}
             value={this.state.pickerValue}
             onChange={v => this.setState({ pickerValue: v })}
             onOk={v => this.setState({ zhonglei: v })}
