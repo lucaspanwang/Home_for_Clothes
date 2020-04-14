@@ -51,17 +51,17 @@ export default class MyCare extends Component {
         }
     }
     componentWillMount(){
-        fetch("http://47.98.163.228:8086/care?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:3004/care?userId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             var result = [];
             for(var k=0;k<res.length;k++){
-                fetch("http://47.98.163.228:8086/users?userId="+res[k].careId)
+                fetch("http://47.98.163.228:3004/users?userId="+res[k].careId)
                 .then(value=>value.json())
                 .then(value=>{
                     for(var i=0;i<value.length;i++){
                         var j = value[i].userPic.indexOf('/');
-                        value[i].userPic = "http://47.98.163.228:8086"+value[i].userPic.substr(j);
+                        value[i].userPic = "http://47.98.163.228:3004"+value[i].userPic.substr(j);
                     }
                     result.push(...value);
                     this.setState({
@@ -72,14 +72,14 @@ export default class MyCare extends Component {
         })
     }
     myCareArticle = (id,event)=>{
-        fetch("http://47.98.163.228:8086/article?userId="+id)
+        fetch("http://47.98.163.228:3004/article?userId="+id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
                 for(var j=0;j<res[i].cimg.length;j++){
-                    res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+                    res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
                 }
             }
             this.setState({

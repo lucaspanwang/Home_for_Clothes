@@ -27,18 +27,18 @@ export default class Me extends Component {
             window.location.reload();
             localStorage.removeItem('comee')
         }
-        fetch("http://47.98.163.228:8086/users?userId="+this.props.id)
+        fetch("http://47.98.163.228:3004/users?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
             }
             this.setState({
                 user:res[0]
             })
         });
-        fetch("http://47.98.163.228:8086/detail?userId="+this.props.id)
+        fetch("http://47.98.163.228:3004/detail?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             this.setState({

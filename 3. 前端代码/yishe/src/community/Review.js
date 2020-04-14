@@ -22,7 +22,7 @@ import yidianzan from '../images/点赞(1).png';
 const Item = Popover.Item;
 const { TextArea } = Input;
 
-export default class Article extends Component {
+export default class Review extends Component {
     constructor(){
       super();
       this.state = {
@@ -265,41 +265,24 @@ export default class Article extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/shequtab/"+this.props.match.params.id.split("&")[1]}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>
+                  <Link to={"/shequarticle/"+'Art999975&111'}><img src={fanhui} style={{width:'30px'}} key="revfan"/></Link>
                 ]}
-                >阅读全文</NavBar>
-              <div className="article">
-                  <div className='artUser'>
+                >{this.state.review.length}条回复</NavBar>
+                <div className="secReview">
+                  <div className="left">
                       <img className='userImg' src={this.state.article.userPic} alt=""/>
+                  </div>
+                  <div className="right">
                       <span className='userName'>{this.state.article.userName}</span>
-                      <Popover mask
-                        visible={this.state.visible}
-                        overlay={[
-                            (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
-                                <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
-                                <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
-                            </Item>),
-                            (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
-                                <div onClick={this.onCare.bind(this,this.state.article.userId)}>
-                                    <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
-                                    <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
-                                </div>
-                            </Item>)
-                        ]}
-                        onSelect={this.onSelect}
-                    ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
-                    </Popover>
+                      <p>{this.state.article.content}</p>
                   </div>
-                  <div className="artDetail">
-                    <p>{this.state.article.content}</p>
-                    <Gongge cimg={this.state.article.cimg}/>
-                      <span>发布于{this.state.article.time}</span>
+                  <div className="revState">
+                    <span>发布于{this.state.article.time}</span>
+                    <div onClick={this.onAgree.bind(this,this.state.article.articleId)}>
+                        <img src={this.state.article.like?`${yidianzan}`:`${dianzan}`} alt=''/>
+                        <span>{this.state.article.agree || "点赞"}</span>
+                    </div>
                   </div>
-                  <ul className="artState">
-                    <li><img src={`${pinglun}`}/><span>评论</span></li>
-                    <li onClick={this.onCollect.bind(this,this.state.article.articleId)}><img src={this.state.article.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{this.state.article.save || "收藏"}</span></li>
-                    <li onClick={this.onAgree.bind(this,this.state.article.articleId)}><img src={this.state.article.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{this.state.article.agree || "点赞"}</span></li>
-                  </ul>
               </div>
               <Comment
                 avatar={
@@ -326,17 +309,8 @@ export default class Article extends Component {
                       author={item.userName}
                       avatar={item.userPic}
                       content={item.reviewContent}
-                      actions={[<div>
-                        <Link to={"/review/"+'Art999975&111'}>
-                          <div style={{width:'100%',height:'30px',margin:'5px 0',lineHeight:'30px',fontSize:'12px',borderRadius:'5px',backgroundColor:'#ddd'}}>共3条回复</div>
-                        </Link>
-                        <div style={{width:'100%',fontSize:'10px',color:'#888',display:'flex',justifyContent:'space-between'}}>
-                          <span>发布于{item.reviewTime}</span>
-                          <div><img style={{width:'18px',height:'18px',marginRight:'3px'}} src={dianzan} alt=''/><span>{this.state.article.agree || 0}</span></div>
-                        </div>
-                      </div>]}
+                      datetime={item.reviewTime}
                     />
-                    
                   </li>
                 )}
               />

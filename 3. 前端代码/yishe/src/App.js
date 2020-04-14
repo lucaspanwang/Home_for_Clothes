@@ -7,6 +7,8 @@ import Forget from './login/Forget';
 import Register from './login/Register';
 import ResetPwd from './login/ResetPwd';
 import ShequArticle from './community/Article';
+import Review from './community/Review';
+import Office from './community/Office';
 import ShequTab from './ShequTab';
 import ZhengliTab from './ZhengliTab';
 import RijiTab from './RijiTab';
@@ -47,6 +49,8 @@ export default class App extends Component {
                     <Route path='/register' component={Register} />
                     <Route path='/resetpwd' component={ResetPwd} />
                     <Route path="/shequarticle/:id" component={ShequArticle} />
+                    <Route path="/office/:id" component={Office} />
+                    <Route path="/review/:id" component={Review} />
                     <Route path="/setup/:id" component={Setup} />
                     <Route path="/aboutme/:id" component={AboutMe} />
                     <Route path="/aboutus/:id" component={AboutUs} />

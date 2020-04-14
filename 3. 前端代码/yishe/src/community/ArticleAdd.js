@@ -28,7 +28,7 @@ export default class ArticleAdd extends Component {
         }if(this.state.value !== '' && this.state.cimg == ''){
             var today = new Date();
             var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-            fetch('http://47.98.163.228:8086/articleAdd',{
+            fetch('http://47.98.163.228:3004/articleAdd',{
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Credentials" : true,
@@ -56,7 +56,7 @@ export default class ArticleAdd extends Component {
                 }
             }).then((value)=>{
                 console.log(value);
-                fetch('http://47.98.163.228:8086/articleAdd',{
+                fetch('http://47.98.163.228:3004/articleAdd',{
                     method: 'post', 
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : true,

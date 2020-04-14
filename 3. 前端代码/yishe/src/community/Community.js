@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Popover, NavBar, WingBlank,WhiteSpace,Grid } from 'antd-mobile';
+import { Popover, NavBar, WingBlank,WhiteSpace,Grid,SearchBar } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import { Typography,Menu, Dropdown, Icon,Row, Col } from 'antd';
+import { Typography,Menu, Dropdown, Icon,Row, Col} from 'antd';
 import './community.css';
 
 import tianjia from '../images/添加.png';
@@ -15,6 +15,7 @@ import yiguanzhu from '../images/关注(1).png';
 import pinglun from '../images/评论.png';
 import dianzan from '../images/点赞.png';
 import yidianzan from '../images/点赞(1).png';
+import photo from '../images/lunbo02.jpg';
 import Gongge from './Gongge';
 
 const { Paragraph } = Typography;
@@ -31,28 +32,28 @@ export default class Community extends Component {
         }
     }    
     componentDidMount(){
-        fetch("http://47.98.163.228:8086/office")	
+        fetch("http://47.98.163.228:3004/office")	
         .then(res=>res.json())	
         .then(res=>{	
             this.setState({	
                 office:res[0]	
             })	
         });
-        fetch("http://47.98.163.228:8086/article")
+        fetch("http://47.98.163.228:3004/article")
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
                 for(var j=0;j<res[i].cimg.length;j++){
-                    res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+                    res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
                 }
               }
             this.setState({
                 users:res
             })
         });
-        fetch("http://47.98.163.228:8086/collect?userId="+this.props.id)
+        fetch("http://47.98.163.228:3004/collect?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             var users=this.state.users;
@@ -68,7 +69,7 @@ export default class Community extends Component {
                 users:users
             })
         })
-        fetch("http://47.98.163.228:8086/agree?userId="+this.props.id)
+        fetch("http://47.98.163.228:3004/agree?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             var users=this.state.users;
@@ -84,7 +85,7 @@ export default class Community extends Component {
                 users:users
             })
         })
-        fetch("http://47.98.163.228:8086/care?userId="+this.props.id)
+        fetch("http://47.98.163.228:3004/care?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             var users=this.state.users;
@@ -130,7 +131,7 @@ export default class Community extends Component {
     onCollect = (id,event) =>{
         var users = this.state.users;
         if(users.find(it => it.articleId === id).collect === false){
-            fetch("http://47.98.163.228:8086/collectAdd?userId="+this.props.id+"&articleId="+id)
+            fetch("http://47.98.163.228:3004/collectAdd?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
                 users.find(it => it.articleId === id).collect = true;
@@ -140,7 +141,7 @@ export default class Community extends Component {
                 })
             })
         }else{
-            fetch("http://47.98.163.228:8086/collectDelete?userId="+this.props.id+"&articleId="+id)
+            fetch("http://47.98.163.228:3004/collectDelete?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
                 users.find(it => it.articleId === id).collect = false;
@@ -155,7 +156,7 @@ export default class Community extends Component {
     onCare = (id,event) =>{
         var users = this.state.users;
         if(users.find(it => it.userId === id).follow === false){
-            fetch("http://47.98.163.228:8086/careAdd?userId="+this.props.id+"&careId="+id)
+            fetch("http://47.98.163.228:3004/careAdd?userId="+this.props.id+"&careId="+id)
             .then(res=>res.json())
             .then(res=>{
                 users.find(it => it.userId === id).follow = true;
@@ -164,7 +165,7 @@ export default class Community extends Component {
                 })
             })
         }else{
-            fetch("http://47.98.163.228:8086/careDelete?userId="+this.props.id+"&careId="+id)
+            fetch("http://47.98.163.228:3004/careDelete?userId="+this.props.id+"&careId="+id)
             .then(res=>res.json())
             .then(res=>{
                 users.find(it => it.userId === id).follow = false;
@@ -178,7 +179,7 @@ export default class Community extends Component {
     onAgree = (id,event) =>{
         var users = this.state.users;
         if(users.find(it => it.articleId === id).like === false){
-            fetch("http://47.98.163.228:8086/agreeAdd?userId="+this.props.id+"&articleId="+id)
+            fetch("http://47.98.163.228:3004/agreeAdd?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
                 users.find(it => it.articleId === id).like = true;
@@ -188,7 +189,7 @@ export default class Community extends Component {
                 })
             })
         }else{
-            fetch("http://47.98.163.228:8086/agreeDelete?userId="+this.props.id+"&articleId="+id)
+            fetch("http://47.98.163.228:3004/agreeDelete?userId="+this.props.id+"&articleId="+id)
             .then(res=>res.json())
             .then(res=>{
                 users.find(it => it.articleId === id).like = false;
@@ -206,13 +207,34 @@ export default class Community extends Component {
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 rightContent={<Link to={"/articleadd/"+this.props.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >社区</NavBar>
-                <div style={{borderBottom:'5px dotted #bbb'}}>
+                {/* <div style={{borderBottom:'5px dotted #bbb'}}>
                     <WhiteSpace size="lg" />
                     <WingBlank size="lg">
                         <span style={{fontSize:'16px'}}>官方消息</span>
                         <div className="official">温馨提示：{this.state.office.offContent}</div>
                     </WingBlank>
                     <WhiteSpace size="lg" />
+                </div> */}
+                <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
+                <div className="office">
+                    <div className="msg">
+                        <span>官方消息</span>
+                        <Link to={"/office/123"}>查看更多</Link>
+                    </div>
+                    <div className="message">
+                        <img src={photo}/>
+                        <div>
+                            <p className="title">衣舍联名推出智能衣柜</p>
+                            <p>衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物</p>
+                        </div>
+                    </div>
+                    <div className="message">
+                        <img src={photo}/>
+                        <div>
+                            <p className="title">衣舍联名推出智能衣柜</p>
+                            <p>衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物</p>
+                        </div>
+                    </div>
                 </div>
                 {
                     this.state.users.map((item)=>(<div className="article" key={item.articleId}>

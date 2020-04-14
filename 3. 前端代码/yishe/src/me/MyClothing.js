@@ -12,12 +12,12 @@ export default class MyClothing extends Component {
         }
     }
     componentDidMount(){
-        fetch('http://47.98.163.228:8086/clothing?userId='+this.props.match.params.id)
+        fetch('http://47.98.163.228:3004/clothing?userId='+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].cloPic.indexOf('/');
-                res[i].cloPic = "http://47.98.163.228:8086"+res[i].cloPic.substr(j);
+                res[i].cloPic = "http://47.98.163.228:3004"+res[i].cloPic.substr(j);
             }
             this.setState({
                 picture:res

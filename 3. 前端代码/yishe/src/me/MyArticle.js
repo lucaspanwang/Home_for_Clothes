@@ -24,14 +24,14 @@ export default class Community extends Component {
         }
     }    
     componentDidMount(){
-        fetch("http://47.98.163.228:8086/article?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:3004/article?userId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
                 for(var j=0;j<res[i].cimg.length;j++){
-                    res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+                    res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
                 }
             }
             this.setState({
@@ -42,17 +42,17 @@ export default class Community extends Component {
     }
     deleteArticle=(id)=>{
         console.log(id);
-        fetch("http://47.98.163.228:8086/articleDelete?articleId="+id)
+        fetch("http://47.98.163.228:3004/articleDelete?articleId="+id)
           .then(res=>res.json())
           .then(res=>{
-              fetch("http://47.98.163.228:8086/article?userId="+this.props.match.params.id)
+              fetch("http://47.98.163.228:3004/article?userId="+this.props.match.params.id)
                 .then(res=>res.json())
                 .then(res=>{
                     for(var i=0;i<res.length;i++){
                         var j = res[i].userPic.indexOf('/');
-                        res[i].userPic = "http://47.98.163.228:8086"+res[i].userPic.substr(j);
+                        res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
                         for(var j=0;j<res[i].cimg.length;j++){
-                            res[i].cimg[j] = "http://47.98.163.228:8086"+res[i].cimg[j];
+                            res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
                         }
                     }
                     this.setState({

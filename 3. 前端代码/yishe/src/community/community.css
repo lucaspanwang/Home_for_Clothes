@@ -8,19 +8,48 @@ ul li{
 body{
     background-color:#fff !important;
 }
-.official{
-    margin-top:10px;
-    padding:20px 15px;
-    border:1px solid #bbb;
-    border-radius:8px;
-    background-color:rgba(249,194,118,0.6);
-    font-size:16px;
-    line-height:20px;
+.office{
+    padding:5px 10px;
+    border-bottom:4px dotted #ddd;
 }
-.article{
+.msg{
+    width:100%;
+    padding:4px 0;
+    display:flex;
+    justify-content:space-between;
+}
+.message{
+    width:100%;
+    padding:5px 0;
+    color:#222;
+    display:flex;
+    justify-content:space-around;
+}
+.message>img{
+    width:60px;
+    height:60px;
+    border:1px solid #ddd;
+}
+.message>div{
+    width:78%;
+    padding-left:2%;
+}
+.message>div>p{
+    width:100%;
+    line-height:20px;
+    margin:0;
+    color:#888;
+    font-size:13px;
+}
+.message>div>.title{
+    font-size:15px;
+    font-weight:bold;
+    color:#444;
+}
+.article,.secReview{
     margin-top:10px;
-    padding:0 15px;
-    border-bottom:3px solid rgb(212, 210, 210);
+    padding:0 12px;
+    border-bottom:4px solid #eee;
 }
 .article>.artUser{
     width:100%;
@@ -63,7 +92,61 @@ body{
     line-height:28px;
     float: left;
 }
+.secReview>.left{
+    width:20%;
+    float: left;
+}
+.secReview>.right{
+    width:80%;
+    float: left;
+}
+.secReview>.left>.userImg{
+    width:45px;
+    height:45px;
+    border-radius:23px;
+    float: left;
+}
+.secReview>.right>.userName{
+    height:auto;
+    line-height:40px;
+    font-size:18px;
+}
+.secReview>.revState{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid #ddd;
+    padding:5px;
+}
+.secReview>.revState div{
+    width:20%;
+}
+.secReview>.revState div img{
+    width:27px;
+    margin:0 2px;
+    float: left;
+}
+.secReview>.revState div span{
+    line-height:28px;
+    float: left;
+}
 
+/*评论区部分*/
+textarea.ant-input{
+    width:75%;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 2px 4px;
+}
+.ant-form-item-control{
+    line-height: normal !important;
+}
+.ant-btn{
+    height: 30px !important;
+    padding:0 10px !important;
+    margin:0 5px !important;
+}
 .am-grid.am-grid-square .am-grid-item .am-grid-item-content{
     top:0 !important;
 }
@@ -76,15 +159,17 @@ body{
 .ant-comment-inner{
     padding-bottom: 0 !important;
 }
+.ant-comment-actions{
+    margin:0 !important;
+}
+.ant-comment-actions>li{
+    width:100%;
+    padding:4px 0;
+    border-bottom:1px solid #ddd;
+}
 .ant-list-split{
     padding-bottom:15px !important;
 }
 .ant-list-header, .ant-list-footer{
     padding:0 !important;
-}
-textarea.ant-input{
-    min-height: 40px !important;
-}
-.ant-input{
-    height: 50px !important;
 }
