@@ -4,6 +4,8 @@ import { NavBar, Picker, List, WhiteSpace,ImagePicker, WingBlank, SegmentedContr
 import Back from '../images/返回 (1).png';
 import { createForm } from 'rc-form';
 import './store.css';
+import { thisTypeAnnotation } from '@babel/types';
+const sex='女';
 //图片选择器
 const data = [];
 //图片选择器
@@ -27,107 +29,150 @@ const colorStyle = {
   height: '16px',
   marginRight: '10px',
 };
-
-const kind=[
+let kind;
+sex=='女'?kind=[
   {
     label:(<span>裤子</span>),
     value:'裤子',
     children:[
-      {
-      label:(<span>毛呢裤子</span>),
-      value:'毛呢裤子'
-      },
-      {
-      label:(<span>铅笔裤</span>),
-      value:'铅笔裤'
-      },
+      
       {
       label:(<span>牛仔裤</span>),
       value:'牛仔裤'
       },
-      {
-        label:(<span>黑色直筒裤</span>),
-        value:'黑色直筒裤'
-      },
-      {
-        label:(<span>阔腿裤</span>),
-        value:'阔腿裤'
-      },
+      
       {
         label:(<span>运动裤</span>),
         value:'运动裤'
       },
+      {
+        label:(<span>短裤</span>),
+        value:'短裤'
+      },
+      {
+        label:(<span>西装裤</span>),
+        value:'西装裤'
+      },
+      {
+        label:(<span>直筒裤</span>),
+        value:'直筒裤'
+      },
   ]
-  },
-  {
-    label:(<span>袜子</span>),
-    value:'袜子',
-    children:[
-      {
-      label:(<span>中筒袜</span>),
-      value:'中筒袜'
-      },
-      {
-        label:(<span>长筒袜</span>),
-        value:'长筒袜'
-      },
-      {
-        label:(<span>船袜</span>),
-        value:'船袜'
-      },
-    ]
   },
   {
     label:(<span>裙子</span>),
     value:'裙子',
     children:[
       {
-      label:(<span>长裙</span>),
-      value:'长裙'
+      label:(<span>半身长裙</span>),
+      value:'半身长裙'
       },
       {
         label:(<span>短裙</span>),
         value:'短裙'
       },
+      {
+        label:(<span>吊带裙</span>),
+        value:'吊带裙'
+      },
       
     ]
   },
+
   {
-    label:(<span>薄外套</span>),
-    value:'薄外套'
-  },
-  {
-    label:(<span>毛呢大衣</span>),
-    value:'毛呢大衣'
-  },
-  {
-    label:(<span>羽绒服</span>),
-    value:'羽绒服'
-  },
-  {
-    label:(<span>鞋子</span>),
-    value:'鞋子',
+    label:(<span>上衣</span>),
+    value:'上衣',
     children:[
       {
-        label:(<span>帆布鞋</span>),
-        value:'帆布鞋'
+      label:(<span>毛衣</span>),
+      value:'毛衣'
       },
       {
-        label:(<span>马丁靴</span>),
-        value:'马丁靴'
+        label:(<span>卫衣</span>),
+        value:'卫衣'
       },
       {
-        label:(<span>雪地靴</span>),
-        value:'雪地靴'
+        label:(<span>打底衫</span>),
+        value:'打底衫'
       },
       {
-        label:(<span>运动鞋</span>),
-        value:'运动鞋'
+        label:(<span>短袖</span>),
+        value:'短袖'
+        },
+    ]
+  },
+  {
+    label:(<span>外套</span>),
+    value:'外套',
+    children:[
+      {
+      label:(<span>牛仔外套</span>),
+      value:'牛仔外套'
+      },
+      {
+        label:(<span>运动外套</span>),
+        value:'运动外套'
+      },
+      {
+        label:(<span>风衣</span>),
+        value:'风衣'
+      },
+      {
+        label:(<span>衬衫</span>),
+        value:'衬衫'
+      },
+      {
+        label:(<span>毛呢大衣</span>),
+        value:'毛呢大衣'
       },
     ]
-  }
-
+  },
+]:kind=[
+  {
+    label:(<span>裤子</span>),
+    value:'裤子',
+    children:[
+      
+      {
+      label:(<span>牛仔裤</span>),
+      value:'牛仔裤'
+      },
+      
+      {
+        label:(<span>运动裤</span>),
+        value:'运动裤'
+      }
+  ]
+  },
+  {
+    label:(<span>外套</span>),
+    value:'外套',
+    children:[
+      {
+      label:(<span>牛仔外套</span>),
+      value:'牛仔外套'
+      },
+      {
+        label:(<span>运动外套</span>),
+        value:'运动外套'
+      },
+      {
+        label:(<span>风衣</span>),
+        value:'风衣'
+      },
+      {
+        label:(<span>衬衫</span>),
+        value:'衬衫'
+      },
+      {
+        label:(<span>毛呢大衣</span>),
+        value:'毛呢大衣'
+      },
+    ]
+  },
 ]
+
+
 
 const where=[
   {
@@ -141,10 +186,32 @@ const where=[
   {
     label:(<span>柜子</span>),
     value:'柜子'
-  }
+  },
+  
 ]
 
+
 const colors = [
+  {
+    label:
+      (<div>
+        <span
+          style={{ ...colorStyle, backgroundColor: '#0F0F0F' }}
+        />
+        <span>黑色</span>
+      </div>),
+    value: '黑色',
+  },
+  {
+    label:
+      (<div>
+        <span
+          style={{ ...colorStyle, backgroundColor: '#FFFFFF' }}
+        />
+        <span>白色</span>
+      </div>),
+    value: '白色',
+  },
   {
     label:
       (<div>
@@ -175,26 +242,7 @@ const colors = [
       </div>),
     value: '蓝色',
   },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#C0C0C0' }}
-        />
-        <span>灰色</span>
-      </div>),
-    value: '灰色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#FF7F00' }}
-        />
-        <span>橙色</span>
-      </div>),
-    value: '橙色',
-  },
+  
   {
     label:
       (<div>
@@ -209,36 +257,6 @@ const colors = [
     label:
       (<div>
         <span
-          style={{ ...colorStyle, backgroundColor: '#C0FF3E' }}
-        />
-        <span>青色</span>
-      </div>),
-    value: '青色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#0F0F0F' }}
-        />
-        <span>黑色</span>
-      </div>),
-    value: '黑色',
-  },
-  {
-    label:
-      (<div>
-        <span
-          style={{ ...colorStyle, backgroundColor: '#FFFFFF' }}
-        />
-        <span>白色</span>
-      </div>),
-    value: '白色',
-  },
-  {
-    label:
-      (<div>
-        <span
           style={{ ...colorStyle, backgroundColor: '#EEAEEE' }}
         />
         <span>紫色</span>
@@ -248,13 +266,16 @@ const colors = [
 ];
 
 
-
+const picName='';
 class Insert extends Component {
   state = {
+    kinds:kind,
+    picName:'',
+    change:'',
     files: data,
     multiple: false,
     data: [],
-    clothing:[],
+    // clothing:[],
     zhonglei:[],
     mingzi:[],
     cols: 1,
@@ -264,10 +285,18 @@ class Insert extends Component {
   };
   //图片选择器
   onChange = (files, type, index) => {
-    console.log(files, type, index);
+    console.log(files)
     this.setState({
       files,
     });
+    var filesType = [];
+        for(var i=0;i<this.state.files.length;i++){
+            console.log(this.state.files[i].file.name.split(".")[1]);
+            filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+        }
+        this.setState({
+            filesType:filesType
+        })
   }
   onSegChange = (e) => {
     const index = e.nativeEvent.selectedSegmentIndex;
@@ -294,26 +323,7 @@ class Insert extends Component {
     })
   }
   todata=()=>{
-    const p=[this.state.zhonglei,this.state.whereValue,this.state.colorValue];
-    console.log(p)
-    this.setState({
-      clothing:p
-    },function(){
-      console.log(this.state.clothing[0][1]);
-    })
-    // fetch("http://47.98.163.228:8084/insert", {
-    //     method: 'post', 
-    //     "Access-Control-Allow-Origin" : "*",
-    //     "Access-Control-Allow-Credentials" : true,
-    //     credentials: 'include',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     body: JSON.stringify({zhonglei:'123'}) 
-    //   })
-  }
-  componentDidMount(){
-    fetch("http://47.98.163.228:8084/insert", {
+      fetch("http://47.98.163.228:8087/insert", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
@@ -321,8 +331,13 @@ class Insert extends Component {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:JSON.stringify({userId:"123"}) 
-      })
+        body:JSON.stringify({filesType:this.state.filesType,userid:this.props.match.params.id,base64:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
+      });
+      window.location.reload()
+    }
+    
+  componentDidMount(){
+    
   }
   
   render() {
@@ -334,7 +349,7 @@ class Insert extends Component {
         {/* ----导航栏 */}
         <NavBar
           leftContent={
-            <Link to="/zhenglitab"><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+            <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
                 </NavBar>
@@ -345,7 +360,8 @@ class Insert extends Component {
           <Picker
             title="种类确定"
             extra="请选择(可选)"
-            data={kind}
+            // data={kind}
+            data={this.state.kinds}
             value={this.state.pickerValue}
             onChange={v => this.setState({ pickerValue: v })}
             onOk={v => this.setState({ zhonglei: v })}
@@ -381,12 +397,12 @@ class Insert extends Component {
         {/* 添加图片 */}
         <WingBlank >
         <ImagePicker
+          length='1'
           files={files}
           onChange={this.onChange}
-          onImageClick={(index, fs) => console.log(index, fs)}
           selectable={files.length < 7}
           multiple={this.state.multiple}
-        />
+        style={{width:'300px',height:'100%'}}/>
       </WingBlank>
       {/* 添加图片结束 */}
 
