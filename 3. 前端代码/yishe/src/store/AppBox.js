@@ -5,7 +5,7 @@ import './store.css'
 
 import BoxBack from '../images/box-back.jpeg';
 import Box from '../images/timg9.png';
-
+let count=0;
 var style = {
     width: "100%",
     height: "400px",
@@ -15,7 +15,7 @@ export default class AppBox extends Component {
     constructor(props){
         super(props);
         this.state={
-            value:'添加',
+            value:'公司',
             where:'家'
         }
     }   
@@ -31,8 +31,20 @@ export default class AppBox extends Component {
         }else{
             
         }
-       
     } 
+    
+    double=()=>{
+        count+=1;
+        setTimeout(()=>{
+            if(count==1){
+                window.location.href='http://localhost:3000/#/customize/'+this.props.id
+                count=0;
+            }else if(count==2){
+                window.location.href='http://localhost:3000/#/add/'+this.props.id
+                count=0;
+            }
+        },200)
+    }
     componentDidMount(){
         fetch('http://47.98.163.228:8084/change')
         .then(res=>res.json())
@@ -66,8 +78,8 @@ export default class AppBox extends Component {
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                <Link to={"/add/"+this.props.id}><button>{this.state.value}</button></Link>
-                                {/* <button><input type="text" value={this.state.value} disabled/></button> */}
+                                {/* <Link to={"/add/"+this.props.id}><button>{this.state.value}</button></Link> */}
+                                <button onClick={this.double}>{this.state.value}</button>
                                 <Link to={"/add/"+this.props.id}><button>添加</button></Link>
                             </li>
                             <li id='twoBut'>
