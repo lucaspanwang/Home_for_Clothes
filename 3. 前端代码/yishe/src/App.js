@@ -21,6 +21,7 @@ import Add from './store/Add';
 import Home from './store/Home';
 import Robe from './store/Robe';
 import Trunk from './store/Trunk';
+import Customize from './store/Customize'
 import DiaryAdd from './diary/DiaryAdd';
 import ArticleAdd from './community/ArticleAdd';
 import MyArticle from './me/MyArticle';
@@ -59,6 +60,7 @@ export default class App extends Component {
                     <Route path='/home/:id' component={Home} />
                     <Route path='/robe/:id' component={Robe} />
                     <Route path='/trunk/:id' component={Trunk} />
+                    <Route path='/customize/:id' component={Customize} />
                     <Route path='/diaryadd/:id' component={DiaryAdd} />
                     <Route path='/articleadd/:id' component={ArticleAdd} />
                     <Route path='/myarticle/:id' component={MyArticle} />
