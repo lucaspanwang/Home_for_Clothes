@@ -173,4 +173,38 @@
   height:50%;
   border:1px solid black;
   float:left;
+  overflow: hidden;
+}
+.pretty2{
+  position: relative;
+  top:-10px;
+  left:-7px;
+}
+.pretty3{
+  position: relative;
+  top:12px;
+  left:-7px;
+}
+#t0{
+  position: absolute;
+  left:83px;
+  top:34px;
+  width:45%;
+}
+.mi{
+  position: absolute;
+  overflow: hidden;
+  width:100%;
+}
+#t3{
+  position: absolute;
+  left:130px;
+  top:114px;
+  width:32%;
+}
+#t2{
+  position: absolute;
+  left:153px;
+  top:124px;
+  width:25%;
 }
