@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import { NavBar, Icon } from 'antd-mobile';
+import { NavBar, SearchBar } from 'antd-mobile';
 import { Popover, Button } from 'antd';
 import Back from '../images/返回 (1).png';
 
@@ -32,6 +32,7 @@ export default class MyClothing extends Component {
                         <Link to={"/gerentab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>衣服</NavBar>
+                <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 <div>
                     {
                         this.state.picture.map((item)=>(

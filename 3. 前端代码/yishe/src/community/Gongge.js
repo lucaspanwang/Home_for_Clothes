@@ -6,10 +6,7 @@ export default function Gongge(props) {
     for(var j in props.cimg){
         img.push(props.cimg[j]);
     }
-    if(img.length === 1){
-      num = 24;
-      width = 90;
-    }else if(img.length === 2 || img.length === 4){
+    if(img.length === 1 || img.length === 2 || img.length === 4){
       num = 12;
       width = 45;
     }else{
@@ -21,7 +18,7 @@ export default function Gongge(props) {
           <Row>
             {
               img.map((item)=>(
-                <Col span={num}><img src={item} onClick={()=>{window.location.href=item}} style={{ padding:"1px",width:width+'vw',height:width+'vw',objectFit:'cover'}}/></Col>
+                <Col span={num}><img src={item} onClick={()=>{window.location.href=item}} style={{width:width+'vw',height:width+'vw',objectFit:'cover'}}/></Col>
               ))
             }
           </Row>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popover, NavBar, WingBlank,WhiteSpace,Grid } from 'antd-mobile';
+import { Popover, NavBar, SearchBar } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography,Menu, Dropdown, Icon } from 'antd';
 import './me.css';
@@ -83,6 +83,7 @@ export default class MyCollect extends Component {
                 ]}
                 rightContent={<Link to={"/articleadd/"+this.props.match.params.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >收藏</NavBar>
+                <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 {
                     this.state.collect.map((item)=>(<div className="article" key={item.articleId}>
                         <div className='artUser'>
@@ -92,13 +93,6 @@ export default class MyCollect extends Component {
                         <div className="artDetail">
                             {item.content}
                             <Gongge cimg={item.cimg}/>
-                            {/* <Grid square
-                            data={item.cimg}
-                            columnNum="3"
-                            renderItem={dataItem => (
-                                <img src={dataItem} style={{ width:'100%'}} alt="" />
-                            )}
-                            /> */}
                         </div>
                         <ul className="artState">
                             <li><span>{this.standardTime(item.time)}</span></li>

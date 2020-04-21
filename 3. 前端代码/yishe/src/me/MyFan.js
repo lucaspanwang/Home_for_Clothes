@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Collapse } from 'antd';
 import {Link} from 'react-router-dom';
-import { NavBar,Grid } from 'antd-mobile';
+import { NavBar,SearchBar } from 'antd-mobile';
 
 import Back from '../images/返回 (1).png';
 import yonghu from '../images/yonghu.png';
@@ -84,6 +84,7 @@ export default class MyFan extends Component {
                         <Link to={"/gerentab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>粉丝</NavBar>
+                <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 <Collapse bordered={true} accordion>
                 {
                     this.state.care.map((item)=>(
@@ -110,13 +111,6 @@ export default class MyFan extends Component {
                                         <div className="artDetail">
                                             {it.content}
                                             <Gongge cimg={it.cimg}/>
-                                            {/* <Grid square
-                                            data={it.cimg}
-                                            columnNum="3"
-                                            renderItem={dataItem => (
-                                                <img src={dataItem} style={{ width:'100%',height:'100%',objectFit:'cover'}} alt="" />
-                                            )}
-                                            /> */}
                                         </div>
                                         <ul className="artState">
                                             <li><span>{this.standardTime(it.time)}</span></li>
