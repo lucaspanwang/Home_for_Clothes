@@ -6,7 +6,7 @@ import { Row, Col } from 'antd';
 import xiangqing from '../images/详情.png';
 import shoucang from '../images/收藏（1）.png';
 import xiangce from '../images/相册.png';
-import kaquan from '../images/卡券.png';
+import diary from '../images/diary.png';
 import huishouzhan from '../images/回收站.png';
 import shezhi from '../images/设置.png';
 import renwu from '../images/小人.png';
@@ -86,18 +86,18 @@ export default class Me extends Component {
                     arrow="horizontal"
                     onClick={() => {}}
                     >收藏</Item></Link>
+                    <Link to={"/diary/"+this.props.id}><Item
+                    style={{borderBottom:"1px solid #ddd"}}
+                    thumb={diary}
+                    onClick={() => {}}
+                    arrow="horizontal"
+                    >日记</Item></Link>
                     <Link to={"/myclothing/"+this.props.id}><Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={xiangce}
                     onClick={() => {}}
                     arrow="horizontal"
                     >相册</Item></Link>
-                    <Item
-                    style={{borderBottom:"1px solid #ddd"}}
-                    thumb={kaquan}
-                    onClick={() => {}}
-                    arrow="horizontal"
-                    >卡券</Item>
                     <Item
                     style={{borderBottom:"1px solid #ddd"}}
                     thumb={huishouzhan}
