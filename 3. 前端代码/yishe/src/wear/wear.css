@@ -80,11 +80,9 @@
     display: none;
     position: absolute;
     left:150px;
-    z-index: 10000;
+    top:300px;
+    /* z-index: 10000; */
   }
-  /* .chrome-picker{
-    width:70px;
-  } */
   #mote5{
     top:155px;
     left:11px;
@@ -168,6 +166,7 @@
     text-align: center;
     font-size:20px;
   }
+/* Pretty */
 .pretty1{
   width:20%;
   height:50%;
@@ -188,23 +187,24 @@
 #t0{
   position: absolute;
   left:83px;
-  top:34px;
+  top:134px;
   width:45%;
 }
-.mi{
-  position: absolute;
-  overflow: hidden;
-  width:100%;
+.m1{
+  /* position: absolute; */
+  /* overflow: hidden;
+  width:100%; */
+  margin-top:100px;
 }
 #t3{
   position: absolute;
   left:130px;
-  top:114px;
+  top:214px;
   width:32%;
 }
 #t2{
   position: absolute;
   left:153px;
-  top:124px;
+  top:224px;
   width:25%;
 }
