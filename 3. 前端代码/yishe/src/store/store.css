@@ -26,7 +26,7 @@
   /* border:1px solid blue; */
 }
 #oneBut button{
-  /* border:1px solid blue; */
+  /* border:1px solid red; */
   font-size: large;
   border:none;
   width:50%;
@@ -34,6 +34,7 @@
   background: rgba(255, 255, 255, 0.3);
   color:#a3a1a1;
 }
+
 #twoBut button{
   font-size: large;
   border:none;

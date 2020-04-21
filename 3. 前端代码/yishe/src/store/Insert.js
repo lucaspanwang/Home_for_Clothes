@@ -323,17 +323,25 @@ class Insert extends Component {
     })
   }
   todata=()=>{
-      fetch("http://47.98.163.228:8087/insert", {
+    // console.log(this.state.mingzi)
+      fetch("http://47.98.163.228:3003/insert", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
+        // credentials: 'include',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            // 'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        body:JSON.stringify({filesType:this.state.filesType,userid:this.props.match.params.id,base64:this.state.files,zhonglei:this.state.zhonglei,weizhi:this.state.whereValue,yanse:this.state.colorValue,mingzi:this.state.mingzi}) 
+        body:JSON.stringify({filesType:this.state.filesType,
+          userid:this.props.match.params.id,base64:this.state.files,
+          zhonglei:this.state.zhonglei,
+          weizhi:this.state.whereValue,
+          yanse:this.state.colorValue,
+          mingzi:this.state.mingzi}) 
       });
-      window.location.reload()
+      console.log('post成功')
+      // window.location.reload()
     }
     
   componentDidMount(){

@@ -36,6 +36,7 @@ export default class AppBox extends Component {
     double=()=>{
         count+=1;
         setTimeout(()=>{
+            console.log(count)
             if(count==1){
                 window.location.href='http://localhost:3000/#/customize/'+this.props.id
                 count=0;
@@ -78,7 +79,6 @@ export default class AppBox extends Component {
                         <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                {/* <Link to={"/add/"+this.props.id}><button>{this.state.value}</button></Link> */}
                                 <button onClick={this.double}>{this.state.value}</button>
                                 <Link to={"/add/"+this.props.id}><button>添加</button></Link>
                             </li>
