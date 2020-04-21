@@ -33,7 +33,7 @@ import Name from './me/Name.js';
 import City from './me/City.js';
 import Info from './me/Info.js';
 import Sex from './me/Sex';
-
+import Pretty from './wear/Pretty'
 export default class App extends Component {
     render() {
         return (
@@ -46,6 +46,7 @@ export default class App extends Component {
                     <Route path="/rijitab/:id" component={RijiTab} />
                     <Route path="/gerentab/:id" component={GerenTab} />
                     <Route path='/apptab/:id' component={AppTab} />
+                    <Route path='/pretty/:id' component={Pretty} />
                     <Route path='/forget' component={Forget} />
                     <Route path='/register' component={Register} />
                     <Route path='/resetpwd' component={ResetPwd} />

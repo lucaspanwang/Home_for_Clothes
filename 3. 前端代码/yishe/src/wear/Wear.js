@@ -9,8 +9,6 @@ import xiayu from '../images/下雨.png'
 import qing from '../images/晴.png'
 import mote from '../images/模特.png'
 import mote2 from '../images/模特2.png'
-import mote3 from '../images/模特2_bai(1).png'
-import mote4 from '../images/模特_头发丝.png'
 import fenxiang from '../images/分享.png'
 import pengyouquan from '../images/朋友圈.png'
 import weixin from '../images/微信.png'
@@ -62,7 +60,7 @@ export default class Wear extends Component {
         ress:[],
         linshi:0,
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
-        color:'',
+        color:'',//发色
         color2:'',
         cc:[],
         num:0,
@@ -383,29 +381,6 @@ export default class Wear extends Component {
       }
       window.location.href =window.location.href.split('#')[0]+ '#/'+p+'/'+this.props.id;
     }
-    lalala=()=>{
-      document.getElementById('imgpick').style.display='block';
-      document.getElementById('mote_3').style.display='block';
-      document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
-      document.getElementById('mote_3').style.opacity=0.9
-      this.state.count++;//判断点击几次
-      var a = setTimeout(()=>{
-        if(this.state.count>1){//双击
-          document.getElementById('imgpick').style.display='none';
-          this.setState({
-            count:0
-          })
-        }
-      }) 
-    }
-    huance=()=>{
-      this.setState({
-        color:document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value
-      })
-      console.log(document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value)
-      document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
-      document.getElementById('mote_3').style.opacity=0.9
-    }
     //颜色转换
     whichColor=(name)=>{
       var color='';
@@ -440,12 +415,10 @@ export default class Wear extends Component {
               <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px',color:'white'}}>
                   {this.state.dressing_advice}
               </p>
-              {/* <CompactPicker/> */}
-              <div id="imgpick">
-                <AlphaPicker id="imgpick2" color={this.state.color} onChange={this.huance}/>
-              </div>
                 {/* 模特 */}
+                <Link to={"/pretty/"+this.props.id}>
                 <img src={mote2} id="mote"/>
+                </Link>
                 <img src={mote2} id="mote_2"/>
                <div class="icon" id="mote22"><img  class='icon3'  id="mote_4" /></div>
                 <img  id='mote2' />
@@ -453,10 +426,7 @@ export default class Wear extends Component {
                 <img  id='mote4' />               
                 <div class="icon" id="mote22"><img  class='icon4'  id="mote_5" /></div>
                 <img  id='mote6' />
-                <div class="icon" id="mote22"><img  class='icon2' src={mote3} id="mote_3"/></div>
-               <img src={mote4} id='mote5'style={{display:'block'}} onClick={this.lalala}/> 
                 {/* 衣物栏 */}
-                {/* <TabExample /> */}
                 <div id="yiwu">
                   <WhiteSpace />
                   <Tabs tabs={tabs}
