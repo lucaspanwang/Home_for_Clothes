@@ -11,7 +11,6 @@ import Review from './community/Review';
 import Office from './community/Office';
 import ShequTab from './ShequTab';
 import ZhengliTab from './ZhengliTab';
-import RijiTab from './RijiTab';
 import GerenTab from './GerenTab';
 import Setup from './me/Setup';
 import AboutMe from './me/AboutMe';
@@ -36,6 +35,7 @@ import City from './me/City.js';
 import Info from './me/Info.js';
 import Sex from './me/Sex';
 import Pretty from './wear/Pretty'
+import OfficeArticle from './community/OfficeArticle';
 export default class App extends Component {
     render() {
         return (
@@ -45,7 +45,6 @@ export default class App extends Component {
                     <Route path='/login' component={Login} />
                     <Route path="/shequtab/:id" component={ShequTab} />
                     <Route path="/zhenglitab/:id" component={ZhengliTab} />
-                    <Route path="/rijitab/:id" component={RijiTab} />
                     <Route path="/gerentab/:id" component={GerenTab} />
                     <Route path='/apptab/:id' component={AppTab} />
                     <Route path='/pretty/:id' component={Pretty} />
@@ -54,6 +53,7 @@ export default class App extends Component {
                     <Route path='/resetpwd' component={ResetPwd} />
                     <Route path="/shequarticle/:id" component={ShequArticle} />
                     <Route path="/office/:id" component={Office} />
+                    <Route path="/officearticle/:id" component={OfficeArticle} />
                     <Route path="/review/:id" component={Review} />
                     <Route path="/setup/:id" component={Setup} />
                     <Route path="/aboutme/:id" component={AboutMe} />

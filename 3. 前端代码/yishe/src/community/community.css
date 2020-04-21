@@ -8,6 +8,7 @@ ul li{
 body{
     background-color:#fff !important;
 }
+/* 官方消息部分 */
 .office{
     padding:5px 10px;
     border-bottom:4px dotted #ddd;
@@ -29,10 +30,13 @@ body{
     width:60px;
     height:60px;
     border:1px solid #ddd;
+    object-fit:cover;
 }
 .message>div{
     width:78%;
     padding-left:2%;
+    height:60px;
+    overflow: hidden;
 }
 .message>div>p{
     width:100%;
@@ -46,6 +50,26 @@ body{
     font-weight:bold;
     color:#444;
 }
+.offArt{
+    width:96%;
+    margin:2%;
+}
+.offArt>.offTitle{
+    font-size:22px;
+    font-weight:600;
+    line-height:40px;
+    margin:10px;
+}
+.offArt>.offDetail{
+    font-size:16px;
+    line-height:20px;
+    color:#444;
+}
+.offArt>.offDetail>img{
+    width:96%;
+    margin:10px 2%; 
+}
+/* 文章部分 */
 .article,.secReview{
     margin-top:10px;
     padding:0 12px;
@@ -92,6 +116,7 @@ body{
     line-height:28px;
     float: left;
 }
+
 .secReview>.left{
     width:20%;
     float: left;

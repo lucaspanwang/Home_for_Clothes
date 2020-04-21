@@ -327,7 +327,7 @@ export default class Article extends Component {
                       avatar={item.userPic}
                       content={item.reviewContent}
                       actions={[<div>
-                        <Link to={"/review/"+'Art999975&111'}>
+                        <Link to={"/review/"+this.props.match.params.id}>
                           <div style={{width:'100%',height:'30px',margin:'5px 0',lineHeight:'30px',fontSize:'12px',borderRadius:'5px',backgroundColor:'#ddd'}}>共3条回复</div>
                         </Link>
                         <div style={{width:'100%',fontSize:'10px',color:'#888',display:'flex',justifyContent:'space-between'}}>

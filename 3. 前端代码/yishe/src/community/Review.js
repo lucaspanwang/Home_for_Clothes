@@ -265,7 +265,7 @@ export default class Review extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/shequarticle/"+'Art999975&111'}><img src={fanhui} style={{width:'30px'}} key="revfan"/></Link>
+                  <Link to={"/shequarticle/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="revfan"/></Link>
                 ]}
                 >{this.state.review.length}条回复</NavBar>
                 <div className="secReview">

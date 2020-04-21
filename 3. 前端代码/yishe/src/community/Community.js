@@ -28,16 +28,21 @@ export default class Community extends Component {
             visible: false,
             selected: '',
             users:[],
-            office:''
+            office:[]
         }
     }    
     componentDidMount(){
-        fetch("http://47.98.163.228:3004/office")	
-        .then(res=>res.json())	
-        .then(res=>{	
-            this.setState({	
-                office:res[0]	
-            })	
+        fetch("http://47.98.163.228:3004/office?limit=2")
+        .then(res=>res.json())
+        .then(res=>{
+            for(var i=0;i<res.length;i++){
+                res[i].offImg = "http://47.98.163.228:3004"+res[i].offImg;
+                res[i].offTime = this.standardTime(res[i].offTime)
+            }
+            this.setState({
+                office:res,
+            })
+            console.log(this.state.office);
         });
         fetch("http://47.98.163.228:3004/article")
         .then(res=>res.json())
@@ -219,9 +224,20 @@ export default class Community extends Component {
                 <div className="office">
                     <div className="msg">
                         <span>官方消息</span>
-                        <Link to={"/office/123"}>查看更多</Link>
+                        <Link to={"/office/"+this.props.id}>查看更多</Link>
                     </div>
-                    <div className="message">
+                    {
+                        this.state.office.map((item)=>(
+                            <div className="message">
+                                <img src={item.offImg}/>
+                                <div>
+                                    <p className="title">{item.offTitle}</p>
+                                    <p>{item.offContent}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                    {/* <div className="message">
                         <img src={photo}/>
                         <div>
                             <p className="title">衣舍联名推出智能衣柜</p>
@@ -234,7 +250,7 @@ export default class Community extends Component {
                             <p className="title">衣舍联名推出智能衣柜</p>
                             <p>衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {
                     this.state.users.map((item)=>(<div className="article" key={item.articleId}>
