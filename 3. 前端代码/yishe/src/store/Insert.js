@@ -323,15 +323,20 @@ class Insert extends Component {
     })
   }
   todata=()=>{
-    // console.log(this.state.mingzi)
-      fetch("http://47.98.163.228:3003/insert", {
+    if(this.state.mingzi==''|
+    this.state.zhonglei==''|
+    this.state.colorValue==''|this.state.where==''){
+      alert('不能为空');
+    }else{
+      console.log(this.state.mingzi)
+      fetch("http://47.98.163.228:8087/insert", {
         method: 'post', 
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Credentials" : true,
-        // credentials: 'include',
+        credentials: 'include',
         headers: {
-            // 'Content-Type': 'application/x-www-form-urlencoded'
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded'
+            // 'Content-Type': 'application/json'
         },
         body:JSON.stringify({filesType:this.state.filesType,
           userid:this.props.match.params.id,base64:this.state.files,
@@ -341,7 +346,9 @@ class Insert extends Component {
           mingzi:this.state.mingzi}) 
       });
       console.log('post成功')
-      // window.location.reload()
+      window.location.reload()
+    }
+    
     }
     
   componentDidMount(){

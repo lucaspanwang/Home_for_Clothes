@@ -15,7 +15,7 @@ export default class AppBox extends Component {
     constructor(props){
         super(props);
         this.state={
-            value:'公司',
+            value:'添加',
             where:'家'
         }
     }   
@@ -33,18 +33,21 @@ export default class AppBox extends Component {
         }
     } 
     
-    double=()=>{
-        count+=1;
-        setTimeout(()=>{
+    double = () => {
+        count += 1;
+        setTimeout(() => {
             console.log(count)
-            if(count==1){
-                window.location.href='http://localhost:3000/#/customize/'+this.props.id
-                count=0;
-            }else if(count==2){
-                window.location.href='http://localhost:3000/#/add/'+this.props.id
-                count=0;
+            if (count == 1) {
+                if(this.state.value!='添加'){
+                    window.location.href = 'http://localhost:3000/#/customize/' + this.props.id
+                }
+                count = 0;
+            } else if (count == 2) {
+                window.location.href = 'http://localhost:3000/#/add/' + this.props.id
+                count = 0;
             }
-        },200)
+        }, 200)
+
     }
     componentDidMount(){
         fetch('http://47.98.163.228:8084/change')
