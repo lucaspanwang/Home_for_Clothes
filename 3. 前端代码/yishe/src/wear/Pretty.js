@@ -30,11 +30,10 @@ export default class Pretty extends Component {
     constructor(){
         super();
         this.state = {
-            index:0,
-            index2:-1,
-            index3:-1,
-            color:'',
-            color2:'',
+            index:0,//发型
+            index2:-1,//瞳色
+            index3:-1,//眼镜
+            color:'',//发色
             count:0,//点击次数
         }
       }   
@@ -55,9 +54,6 @@ export default class Pretty extends Component {
     }
     lalala=()=>{//换发色的点击事件
         document.getElementById('imgpick').style.display='block';
-        // document.getElementById('mote_3').style.display='block';
-        // document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
-        // document.getElementById('mote_3').style.opacity=0.9
         console.log(this)
         this.state.count++;//判断点击几次
         var a = setTimeout(()=>{
@@ -74,8 +70,6 @@ export default class Pretty extends Component {
           color:document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value
         })
         console.log(document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value)
-        // document.getElementById('mote_3').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
-        // document.getElementById('mote_3').style.opacity=0.9
       }
     render() {
         return (
@@ -87,7 +81,6 @@ export default class Pretty extends Component {
                             <img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>穿搭</NavBar>
-
               {/* 模特脸 */}
               <div className="m1" onClick={this.lalala}>
                   {/* 依次是：模特本身、发型、瞳色、眼镜 */}
@@ -97,11 +90,11 @@ export default class Pretty extends Component {
                   <img src={hair[this.state.index]} id="t0"/>
               </div>
             {/* <CompactPicker/> */}
-                          <div id="imgpick">
-                <AlphaPicker
-                style={{width:'50px'}}
-                id="imgpick2" color={this.state.color} onChange={this.huance}/>
-              </div>
+              <div id="imgpick">
+                  <AlphaPicker
+                  style={{width:'50px'}}
+                  id="imgpick2" color={this.state.color} onChange={this.huance}/>
+                </div>
               <div>
                 <Tabs tabs={tabs}
                     initialPage={1}
