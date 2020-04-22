@@ -25,7 +25,7 @@ import yun from '../images/yun.png'
 import xiayu from '../images/xiayu.png'
 import {Link} from 'react-router-dom'
 
-const src =[beijing,beijing2];
+const src =[beijing2,beijing];
 //分享按钮
 const data2 = Array.from(new Array(5)).map(() => ({
     icon:[chuandariji,shequ,fuzhilianjie,buganxingqu,jubao]
@@ -34,7 +34,7 @@ const data1 = Array.from(new Array(5)).map(() => ({
   icon:[weixin,pengyouquan,weibo,QQ,kongjian]
 }));
 const c=['#00cc00','#ccff99','white','#3399ff','#FFCC66'];
-const w_t=[yun,xiayu,qing]
+const w_t=[yun,xiayu,qing]//天气预报小图标
 
 export default class Wear extends Component {
   constructor(){
@@ -100,25 +100,7 @@ export default class Wear extends Component {
                 arr:big,
                 arr_s:small,
              },function(){
-                //获取天气
-                fetch('http://47.98.163.228:3001/weather',{
-                  method: 'post', 
-                  "Access-Control-Allow-Origin" : "*",
-                  "Access-Control-Allow-Credentials" : true,
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({userCity:this.state.city})  
-              })
-              .then(res=>res.json())
-              .then(res=>{
-                console.log(res);
-                this.setState({
-                  temperature:res.data[0].tem2,
-                  temperature2:res.data[0].tem1,
-                  dressing_advice:res.data[0].index[3].desc
-                })
-              })
+              this.weather();
              })
             }
           //分类存小图标
@@ -180,7 +162,39 @@ export default class Wear extends Component {
           }
         }
       })
-
+  }
+  //获取用户天气
+  weather(){
+      fetch('http://47.98.163.228:3001/weather',{
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({userCity:this.state.city})  
+    })
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+      this.setState({
+        temperature:res.data[0].tem2,
+        temperature2:res.data[0].tem1,
+        dressing_advice:res.data[0].index[3].desc,
+        weather:res.data[0].wea,
+      })
+    })
+  }
+  //根据天气显示背景和图标
+  weather_icon(){
+    switch(this.state.weather){
+      case '多云':
+        this.idx = 0;
+        break;
+      default:
+        this.idx = 0;
+        break;
+    }
   }
     aaa=(idx)=>{
       if(idx==1){
