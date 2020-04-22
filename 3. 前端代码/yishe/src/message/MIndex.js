@@ -29,13 +29,13 @@ export default class ResetPwd extends Component{
                             <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
                         </div>
                     </li></Link>
-                    <li style={{position:'relative', marginBottom:'4%', lineHeight:'30px', fontSize:'18px'}}>
+                    <Link to='/like'><li style={{position:'relative', marginBottom:'4%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
                         <img src={thumb} width="16%" style={{borderRadius:'100%', marginLeft:'0%'}}/>
                         <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%'}}>
                             赞
                             <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
                         </div>
-                    </li>
+                    </li></Link>
                     <li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px'}}>
                         <img src={user123} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
                         <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%'}}>

@@ -22,7 +22,7 @@ export default class ResetPwd extends Component{
             leftContent={[
                 <Link to="/message"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
             ]}
-            >评论
+            >赞
                 </NavBar>
         <div style={{margin:'0', padding:'0', backgroundColor:'#eeeeee'}}>
             <form style={{width:'100%', padding:'0'}}>
@@ -36,7 +36,7 @@ export default class ResetPwd extends Component{
                             </div>
                         </div>
                         <div style={{margin:'0', padding:'0', marginRight:'3%'}}>
-                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>你的这个衣服好漂亮呀!我喜欢！</p>
+                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>赞了这篇文章👍</p>
                             <div style={{backgroundColor:'#eeeeee', fontSize:'15px', marginTop:'4%'}}>
                                 <img src={user122} width="30%" style={{}}/>
                                 <div style={{width:'50%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
@@ -55,7 +55,7 @@ export default class ResetPwd extends Component{
                             </div>
                         </div>
                         <div style={{margin:'0', padding:'0', marginRight:'3%'}}>
-                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>你的这个衣服好漂亮呀!我喜欢！</p>
+                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>赞了这篇文章👍</p>
                             <div style={{backgroundColor:'#eeeeee', fontSize:'15px', marginTop:'4%'}}>
                                 <img src={user122} width="30%" style={{}}/>
                                 <div style={{width:'50%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
@@ -74,7 +74,7 @@ export default class ResetPwd extends Component{
                             </div>
                         </div>
                         <div style={{margin:'0', padding:'0', marginRight:'3%'}}>
-                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>你的这个衣服好漂亮呀!我喜欢！</p>
+                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>赞了这篇文章👍</p>
                             <div style={{backgroundColor:'#eeeeee', fontSize:'15px', marginTop:'4%'}}>
                                 <img src={user122} width="30%" style={{}}/>
                                 <div style={{width:'50%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>

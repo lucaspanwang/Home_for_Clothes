@@ -16,53 +16,77 @@ export default class ResetPwd extends Component{
     }    
 
     render(){
-        return <div style={{width:'100%', height:'100%', position:'relative', backgroundColor:'white'}}>
+        return <div style={{width:'100%', height:'100%', position:'relative', backgroundColor:'#dddddd'}}>
         <NavBar 
             style={{backgroundColor:'#fc9d9a',color:'white'}}
             leftContent={[
-                <Link to="/"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
+                <Link to="/message"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
             ]}
-            >注册
+            >评论
                 </NavBar>
-        <Flex direction="column" justify="center" align="center" style={{paddingTop:'6%'}}>
-            <form style={{paddingLeft:'3%', width:'100%'}}>
-                <ul style={{paddingLeft:'0', color:'black'}}>
-                    <li style={{position:'relative', marginBottom:'2%', lineHeight:'30px', fontSize:'18px'}}>
-                        <img src={remark} width="16%" style={{borderRadius:'100%', marginLeft:'0%'}}/>
-                        <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%'}}>
-                            评论
-                            <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
+        <div style={{margin:'0', padding:'0', backgroundColor:'#eeeeee'}}>
+            <form style={{width:'100%', padding:'0'}}>
+                <ul style={{margin:'0', paddingLeft:'0', color:'black'}}>
+                    <li style={{marginBottom:'5%', lineHeight:'30px', fontSize:'15px', backgroundColor:'white', paddingTop:'3%', paddingBottom:'4%'}}>
+                        <div style={{paddingLeft:'4%'}}>
+                            <img src={user123} width="14%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
+                            <div style={{width:'80%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
+                                <p style={{margin:'0', lineHeight:'15px'}}>张三</p>
+                                <p style={{color:'#666666', margin:'0', fontSize:'13px'}}>昨天 14:23</p>
+                            </div>
+                        </div>
+                        <div style={{margin:'0', padding:'0', marginRight:'3%'}}>
+                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>你的这个衣服好漂亮呀!我喜欢！</p>
+                            <div style={{backgroundColor:'#eeeeee', fontSize:'15px', marginTop:'4%'}}>
+                                <img src={user122} width="30%" style={{}}/>
+                                <div style={{width:'50%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
+                                    <p style={{margin:'0', lineHeight:'16px'}}>@ 小小卢卡斯</p>
+                                    <p style={{color:'#666666', margin:'0', fontSize:'14px'}}>分享图片</p>
+                                </div>
+                            </div>
                         </div>
                     </li>
-                    <li style={{position:'relative', marginBottom:'4%', lineHeight:'30px', fontSize:'18px'}}>
-                        <img src={thumb} width="16%" style={{borderRadius:'100%', marginLeft:'0%'}}/>
-                        <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%'}}>
-                            赞
-                            <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
+                    <li style={{marginBottom:'5%', lineHeight:'30px', fontSize:'15px', backgroundColor:'white', paddingTop:'3%', paddingBottom:'4%'}}>
+                        <div style={{paddingLeft:'4%'}}>
+                            <img src={user123} width="14%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
+                            <div style={{width:'80%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
+                                <p style={{margin:'0', lineHeight:'15px'}}>张三</p>
+                                <p style={{color:'#666666', margin:'0', fontSize:'13px'}}>昨天 14:23</p>
+                            </div>
+                        </div>
+                        <div style={{margin:'0', padding:'0', marginRight:'3%'}}>
+                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>你的这个衣服好漂亮呀!我喜欢！</p>
+                            <div style={{backgroundColor:'#eeeeee', fontSize:'15px', marginTop:'4%'}}>
+                                <img src={user122} width="30%" style={{}}/>
+                                <div style={{width:'50%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
+                                    <p style={{margin:'0', lineHeight:'16px'}}>@ 小小卢卡斯</p>
+                                    <p style={{color:'#666666', margin:'0', fontSize:'14px'}}>分享图片</p>
+                                </div>
+                            </div>
                         </div>
                     </li>
-                    <li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px'}}>
-                        <img src={user123} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
-                        <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%'}}>
-                            张三
-                            <p style={{fontSize:'15px', color:'#a8a8a8', float:'right', marginTop:'0', marginRight:'2%'}}>4-19</p>
-                            <p style={{color:'#666666', margin:'0', fontSize:'16px'}}>嗯嗯，好滴~</p>
+                    <li style={{marginBottom:'5%', lineHeight:'30px', fontSize:'15px', backgroundColor:'white', paddingTop:'3%', paddingBottom:'4%'}}>
+                        <div style={{paddingLeft:'4%'}}>
+                            <img src={user123} width="14%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
+                            <div style={{width:'80%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
+                                <p style={{margin:'0', lineHeight:'15px'}}>张三</p>
+                                <p style={{color:'#666666', margin:'0', fontSize:'13px'}}>昨天 14:23</p>
+                            </div>
                         </div>
-                    </li>
-                    <li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px'}}>
-                        <img src={user122} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
-                        <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%'}}>
-                            小萌新
-                            <p style={{fontSize:'15px', color:'#a8a8a8', float:'right', marginTop:'0', marginRight:'2%'}}>4-19</p>
-                            <p style={{color:'#666666', margin:'0', fontSize:'16px'}}>OK，拜拜啦</p>
+                        <div style={{margin:'0', padding:'0', marginRight:'3%'}}>
+                            <p style={{paddingLeft:'4%', marginTop:'-2%', lineHeight:'15px'}}>你的这个衣服好漂亮呀!我喜欢！</p>
+                            <div style={{backgroundColor:'#eeeeee', fontSize:'15px', marginTop:'4%'}}>
+                                <img src={user122} width="30%" style={{}}/>
+                                <div style={{width:'50%', marginLeft:'4%', display:'inline-block', fontSize:'15px', paddingLeft:'2%', paddingBottom:'4%'}}>
+                                    <p style={{margin:'0', lineHeight:'16px'}}>@ 小小卢卡斯</p>
+                                    <p style={{color:'#666666', margin:'0', fontSize:'14px'}}>分享图片</p>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 </ul>
-                {/* <Flex direction="column" justify="center" align="center">
-                    <Link to="/login"><Button style={{marginTop:'7%' ,backgroundColor:'#fc9d9a', width:'90%', color:'white', fontSize:'15px'}}>重新登录</Button></Link>
-                </Flex> */}
             </form>  
-        </Flex>
+        </div>
     </div>
     }
 }
