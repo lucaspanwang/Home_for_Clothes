@@ -12,6 +12,7 @@ import Office from './community/Office';
 import ShequTab from './ShequTab';
 import ZhengliTab from './ZhengliTab';
 import GerenTab from './GerenTab';
+import XiaoxiTab from './XiaoxiTab';
 import Setup from './me/Setup';
 import AboutMe from './me/AboutMe';
 import AboutUs from './me/AboutUs';
@@ -36,6 +37,11 @@ import Info from './me/Info.js';
 import Sex from './me/Sex';
 import Pretty from './wear/Pretty'
 import OfficeArticle from './community/OfficeArticle';
+import Chat from './message/Chat/Chat';
+import Remark from './message/Remark';
+import Like from './message/Like';
+
+
 export default class App extends Component {
     render() {
         return (
@@ -43,6 +49,7 @@ export default class App extends Component {
                 <div>
                     <Route exact path='/' component={Advertise} />
                     <Route path='/login' component={Login} />
+                    <Route path="/xiaoxitab/:id" component={XiaoxiTab} />
                     <Route path="/shequtab/:id" component={ShequTab} />
                     <Route path="/zhenglitab/:id" component={ZhengliTab} />
                     <Route path="/gerentab/:id" component={GerenTab} />
@@ -77,6 +84,9 @@ export default class App extends Component {
                     <Route path='/city/:id' component={City} />
                     <Route path='/info/:id' component={Info} />
                     <Route path='/sex/:id' component={Sex} />
+                    <Route path='/chat/:id' component={Chat} />
+                    <Route path="/remark/:id" component={Remark} />
+                    <Route path="/like/:id" component={Like} />
                 </div> 
             </Router>
         )

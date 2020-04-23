@@ -22,14 +22,14 @@ export default class ResetPwd extends Component{
         <Flex direction="column" justify="center" align="center" style={{paddingTop:'6%'}}>
             <form style={{paddingLeft:'3%', width:'100%'}}>
                 <ul style={{paddingLeft:'0', color:'black'}}>
-                    <Link to='/remark'><li style={{position:'relative', marginBottom:'2%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
+                    <Link to={"/remark/"+this.props.id}><li style={{position:'relative', marginBottom:'2%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
                         <img src={remark} width="16%" style={{borderRadius:'100%', marginLeft:'0%'}}/>
                         <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%'}}>
                             评论
                             <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
                         </div>
                     </li></Link>
-                    <Link to='/like'><li style={{position:'relative', marginBottom:'4%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
+                    <Link to={"/like/"+this.props.id}><li style={{position:'relative', marginBottom:'4%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
                         <img src={thumb} width="16%" style={{borderRadius:'100%', marginLeft:'0%'}}/>
                         <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%'}}>
                             赞

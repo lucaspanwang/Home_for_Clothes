@@ -23,7 +23,7 @@ export default class RijiTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "shequTab",
+      selectedTab: "xiaoxiTab",
       url:""
     };
   }

@@ -7,15 +7,19 @@ import chuanda from './images/试衣间.png'
 import chuanda1 from './images/试衣间 (1).png'
 import zhenglixiang from './images/整理箱.png'
 import zhenglixiang1 from './images/整理箱 (1).png'
+import xiaoxi from './images/message.png'
+import xiaoxi1 from './images/message(1).png'
 import geren from './images/个人.png'
 import geren1 from './images/个人 (1).png'
 
+
 import Wear from './wear/Wear'
+import Message from './message/MIndex'
 import Community from "./community/Community";
 import Me from "./me/Me";
 import AppBox from "./store/AppBox";
 
-export default class ZhengliTab extends React.Component {
+export default class RijiTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -131,6 +135,40 @@ export default class ZhengliTab extends React.Component {
             }}
           >
             <Community id={this.props.match.params.id}/>
+          </TabBar.Item>
+          <TabBar.Item
+            title="消息"
+            key="xiaoxi"
+            icon={
+              <div
+                style={{
+                  width: "22px",
+                  height: "22px",
+                  background:
+                    "url("+xiaoxi+") center center /  21px 21px no-repeat"
+                }}
+              />
+            }
+            selectedIcon={
+              <div
+                style={{
+                  width: "22px",
+                  height: "22px",
+                  background:
+                    "url("+xiaoxi1+") center center /  21px 21px no-repeat"
+                }}
+              />
+            }
+            selected={this.state.selectedTab === "xiaoxiTab"}
+            onPress={() => {
+              window.location.href = this.state.url+'#/xiaoxitab/'+this.props.match.params.id;
+              console.log(window.location.href);
+              this.setState({
+                selectedTab: "xiaoxiTab"
+              });
+            }}
+          >
+            <Message id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{

@@ -9,9 +9,12 @@ import zhenglixiang from './images/整理箱.png'
 import zhenglixiang1 from './images/整理箱 (1).png'
 import geren from './images/个人.png'
 import geren1 from './images/个人 (1).png'
+import xiaoxi from './images/message.png'
+import xiaoxi1 from './images/message(1).png'
 import Wear from './wear/Wear'
 import Community from "./community/Community";
 import Me from "./me/Me";
+import Message from './message/MIndex'
 import AppBox from "./store/AppBox";
 
 export default class AppTab extends React.Component {
@@ -132,6 +135,27 @@ export default class AppTab extends React.Component {
             }}
           >
             <Community id={this.props.match.params.id}/>
+          </TabBar.Item>
+          <TabBar.Item
+            icon={{
+              uri:xiaoxi
+            }}
+            selectedIcon={{
+              uri:
+                xiaoxi1
+            }}
+            title="消息"
+            key="xiaoxi"
+            selected={this.state.selectedTab === "xiaoxiTab"}
+            onPress={() => {
+              window.location.href = this.state.url+'#/xiaoxitab/'+this.props.match.params.id;
+              console.log(window.location.href);
+              this.setState({
+                selectedTab: "xiaoxiTab"
+              });
+            }}
+          >
+            <Message id={this.props.match.params.id}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{

@@ -20,7 +20,7 @@ export default class ResetPwd extends Component{
         <NavBar 
             style={{backgroundColor:'#fc9d9a',color:'white'}}
             leftContent={[
-                <Link to="/message"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
+                <Link to={"/xiaoxitab/"+this.props.match.params.id}><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
             ]}
             >赞
                 </NavBar>
