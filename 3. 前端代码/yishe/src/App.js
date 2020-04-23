@@ -31,6 +31,7 @@ import MyClothing from './me/MyClothing';
 import MyCare from './me/MyCare';
 import MyFan from './me/MyFan';
 import MyCollect from './me/MyCollect';
+import Myfankui from './me/Myfankui';
 import Name from './me/Name.js';
 import City from './me/City.js';
 import Info from './me/Info.js';
@@ -79,6 +80,7 @@ export default class App extends Component {
                     <Route path='/myclothing/:id' component={MyClothing} />
                     <Route path='/mycare/:id' component={MyCare} />
                     <Route path='/myfan/:id' component={MyFan} />
+                    <Route path='/myfankui/:id' component={Myfankui} />
                     <Route path='/mycollect/:id' component={MyCollect} />
                     <Route path='/name/:id' component={Name} />
                     <Route path='/city/:id' component={City} />

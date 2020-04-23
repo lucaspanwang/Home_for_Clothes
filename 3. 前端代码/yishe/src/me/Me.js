@@ -7,7 +7,7 @@ import xiangqing from '../images/详情.png';
 import shoucang from '../images/收藏（1）.png';
 import xiangce from '../images/相册.png';
 import diary from '../images/diary.png';
-import huishouzhan from '../images/回收站.png';
+import fankui from '../images/fankui.png';
 import shezhi from '../images/设置.png';
 import renwu from '../images/小人.png';
 
@@ -98,12 +98,13 @@ export default class Me extends Component {
                     onClick={() => {}}
                     arrow="horizontal"
                     >相册</Item></Link>
+                    <Link to={"/myfankui/"+this.props.id}>
                     <Item
                     style={{borderBottom:"1px solid #ddd"}}
-                    thumb={huishouzhan}
+                    thumb={fankui}
                     onClick={() => {}}
                     arrow="horizontal"
-                    >回收站</Item>
+                    >反馈</Item></Link>
                     <Link to={"/setup/"+this.props.id}><Item
                     thumb={shezhi}
                     arrow="horizontal"
