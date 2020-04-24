@@ -27,8 +27,6 @@ export default class OfficeArticle extends Component {
         value: '',
       }
     }
-    // <Route path="/office/:id" component={Office} />
-    //                 <Route path="/officearticle/:id" component={OfficeArticle} />
     componentDidMount(){
       var offId=this.props.match.params.id.split("&")[0];
       var userId=this.props.match.params.id.split("&")[1];
@@ -151,7 +149,7 @@ export default class OfficeArticle extends Component {
                   />
                 }
                 content={
-                  <Form.Item>
+                  <Form.Item className="reviewInput">
                     <TextArea rows={1} onChange={this.handleChange} value={this.state.value} />
                     <Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit} type="primary">回复</Button>
                   </Form.Item>

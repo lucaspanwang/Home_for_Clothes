@@ -60,7 +60,9 @@ export default class Office extends Component {
                   <Link to={"/shequtab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="offfan"/></Link>
                 ]}
                 >官方消息</NavBar>
-                <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
+                <Link to={"/search/"+this.props.id}>
+                    <SearchBar placeholder="搜索" style={{backgroundColor:'#ccc'}} disabled/>
+                </Link>
                 <div className="office" style={{border:"none"}}>
                     {
                         this.state.office.map((item)=>(

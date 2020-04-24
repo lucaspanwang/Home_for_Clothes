@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
-import { Popover, NavBar, WingBlank,WhiteSpace,Grid,SearchBar } from 'antd-mobile';
-import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import { Typography,Menu, Dropdown, Icon,Row, Col} from 'antd';
+import { NavBar, SearchBar } from 'antd-mobile';
+import { Link } from 'react-router-dom';
+
+import ArticleModule from './common/ArticleModule';
 import './community.css';
 
 import tianjia from '../images/添加.png';
-import xiala from '../images/下拉.png';
-import fenxiang from '../images/分享(1).png';
-import shoucang from '../images/收藏.png';
-import yishoucang from '../images/收藏(1).png';
-import pingbi from '../images/屏蔽.png';
-import guanzhu from '../images/关注.png';
-import yiguanzhu from '../images/关注(1).png';
-import pinglun from '../images/评论.png';
-import dianzan from '../images/点赞.png';
-import yidianzan from '../images/点赞(1).png';
-import photo from '../images/lunbo02.jpg';
-import Gongge from './Gongge';
-
-const { Paragraph } = Typography;
-const Item = Popover.Item;
 
 export default class Community extends Component {
     constructor(){
@@ -37,7 +23,6 @@ export default class Community extends Component {
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 res[i].offImg = "http://47.98.163.228:3004"+res[i].offImg;
-                res[i].offTime = this.standardTime(res[i].offTime)
             }
             this.setState({
                 office:res,
@@ -47,163 +32,8 @@ export default class Community extends Component {
         fetch("http://47.98.163.228:3004/article")
         .then(res=>res.json())
         .then(res=>{
-            for(var i=0;i<res.length;i++){
-                var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
-                for(var j=0;j<res[i].cimg.length;j++){
-                    res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
-                }
-              }
-            this.setState({
-                users:res
-            })
+            this.setState({users:res})
         });
-        fetch("http://47.98.163.228:3004/collect?userId="+this.props.id)
-        .then(res=>res.json())
-        .then(res=>{
-            var users=this.state.users;
-            for(var j=0;j<users.length;j++){
-                users[j].collect = false;
-                for(var i=0;i<res.length;i++){
-                    if(users[j].articleId == res[i].articleId){
-                        users[j].collect = true;
-                    }
-                }
-            }
-            this.setState({
-                users:users
-            })
-        })
-        fetch("http://47.98.163.228:3004/agree?userId="+this.props.id)
-        .then(res=>res.json())
-        .then(res=>{
-            var users=this.state.users;
-            for(var j=0;j<users.length;j++){
-                users[j].like = false;
-                for(var i=0;i<res.length;i++){
-                    if(users[j].articleId == res[i].articleId){
-                        users[j].like = true;
-                    }
-                }
-            }
-            this.setState({
-                users:users
-            })
-        })
-        fetch("http://47.98.163.228:3004/care?userId="+this.props.id)
-        .then(res=>res.json())
-        .then(res=>{
-            var users=this.state.users;
-            for(var j=0;j<users.length;j++){
-                users[j].follow = false;
-                for(var i=0;i<res.length;i++){
-                    if(users[j].userId == res[i].careId){
-                        users[j].follow = true;
-                    }
-                }
-            }
-            this.setState({
-                users:users
-            })
-        })
-        this.forceUpdate();
-    }
-    //修改时间
-    standardTime = (timestamp)=>{
-        var mius=Math.round(new Date())-Math.round(new Date(timestamp));
-        if(mius<(1000*60)){
-            return Math.floor(mius/1000)+'秒前';
-        }else if(mius<(1000*60*60)){
-            return Math.floor(mius/(1000*60))+'分钟前';
-        }else if(mius<(1000*60*60*24)){
-            return Math.floor(mius/(1000*60*60))+'小时前';
-        }else if(mius<(1000*60*60*24*30)){
-            return Math.floor(mius/(1000*60*60*24))+'天前';
-        }else if(mius<(1000*60*60*24*30*12)){
-            return Math.floor(mius/(1000*60*60*24*30))+'个月前';
-        }else{
-            return Math.floor(mius/(1000*60*60*24*30*12))+'年前';
-        }
-    }
-    //下拉菜单
-    onSelect = (opt) => {
-        this.setState({
-            visible: false,
-            selected: opt.props.value,
-        });
-    };
-    //收藏/取消收藏
-    onCollect = (id,event) =>{
-        var users = this.state.users;
-        if(users.find(it => it.articleId === id).collect === false){
-            fetch("http://47.98.163.228:3004/collectAdd?userId="+this.props.id+"&articleId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-                users.find(it => it.articleId === id).collect = true;
-                users.find(it => it.articleId === id).save += 1;
-                this.setState({
-                    users:users
-                })
-            })
-        }else{
-            fetch("http://47.98.163.228:3004/collectDelete?userId="+this.props.id+"&articleId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-                users.find(it => it.articleId === id).collect = false;
-                users.find(it => it.articleId === id).save -= 1;
-                this.setState({
-                    users:users
-                })
-            })
-        }
-    }
-    //关注/取消关注
-    onCare = (id,event) =>{
-        var users = this.state.users;
-        if(users.find(it => it.userId === id).follow === false){
-            fetch("http://47.98.163.228:3004/careAdd?userId="+this.props.id+"&careId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-                users.find(it => it.userId === id).follow = true;
-                this.setState({
-                    users:users
-                })
-            })
-        }else{
-            fetch("http://47.98.163.228:3004/careDelete?userId="+this.props.id+"&careId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-                users.find(it => it.userId === id).follow = false;
-                this.setState({
-                    users:users
-                })
-            })
-        }
-    }
-    //点赞/取消点赞
-    onAgree = (id,event) =>{
-        var users = this.state.users;
-        if(users.find(it => it.articleId === id).like === false){
-            fetch("http://47.98.163.228:3004/agreeAdd?userId="+this.props.id+"&articleId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-                users.find(it => it.articleId === id).like = true;
-                users.find(it => it.articleId === id).agree += 1;
-                this.setState({
-                    users:users
-                })
-            })
-        }else{
-            fetch("http://47.98.163.228:3004/agreeDelete?userId="+this.props.id+"&articleId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-                users.find(it => it.articleId === id).like = false;
-                users.find(it => it.articleId === id).agree -= 1;
-                this.setState({
-                    users:users
-                })
-            })
-        }
     }
     render() {
         return (
@@ -212,15 +42,9 @@ export default class Community extends Component {
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 rightContent={<Link to={"/articleadd/"+this.props.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >社区</NavBar>
-                {/* <div style={{borderBottom:'5px dotted #bbb'}}>
-                    <WhiteSpace size="lg" />
-                    <WingBlank size="lg">
-                        <span style={{fontSize:'16px'}}>官方消息</span>
-                        <div className="official">温馨提示：{this.state.office.offContent}</div>
-                    </WingBlank>
-                    <WhiteSpace size="lg" />
-                </div> */}
-                <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
+                <Link to={"/search/article&"+this.props.id}>
+                    <SearchBar placeholder="搜索" style={{backgroundColor:'#ccc'}} disabled/>
+                </Link>
                 <div className="office">
                     <div className="msg">
                         <span>官方消息</span>
@@ -237,56 +61,11 @@ export default class Community extends Component {
                             </div>
                         ))
                     }
-                    {/* <div className="message">
-                        <img src={photo}/>
-                        <div>
-                            <p className="title">衣舍联名推出智能衣柜</p>
-                            <p>衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物</p>
-                        </div>
-                    </div>
-                    <div className="message">
-                        <img src={photo}/>
-                        <div>
-                            <p className="title">衣舍联名推出智能衣柜</p>
-                            <p>衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物</p>
-                        </div>
-                    </div> */}
                 </div>
                 {
-                    this.state.users.map((item)=>(<div className="article" key={item.articleId}>
-                        <div className='artUser'>
-                            <img className='userImg' src={item.userPic} alt=""/>
-                            <span className='userName'>{item.userName}</span>
-                            <Popover mask
-                                visible={this.state.visible}
-                                overlay={[
-                                    (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
-                                        <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
-                                        <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
-                                    </Item>),
-                                    (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
-                                        <div onClick={this.onCare.bind(this,item.userId)}>
-                                            <img src={item.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
-                                            <span style={{padding:'0 20px',fontSize:'18px'}}>{item.follow?"已关注":"关注"}</span>
-                                        </div>
-                                    </Item>)
-                                ]}
-                                onSelect={this.onSelect}
-                            ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
-                            </Popover>
-                        </div>
-                        <div className="artDetail">
-                            <Paragraph ellipsis={{rows:5}}>{item.content}</Paragraph>
-                            <Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}>阅读全文>></Link>
-                            <Gongge cimg={item.cimg}/>
-                        </div>
-                        <ul className="artState">
-                            <li><span>{this.standardTime(item.time)}</span></li>
-                            <li><Link to={"/shequarticle/"+item.articleId+"&"+this.props.id}><img src={`${pinglun}`} alt=''/><span style={{color:"#444"}}>{item.review || "评论"}</span></Link></li>
-                            <li onClick={this.onCollect.bind(this,item.articleId)}><img src={item.collect?`${yishoucang}`:`${shoucang}`} alt=''/><span>{item.save || "收藏"}</span></li>
-                            <li onClick={this.onAgree.bind(this,item.articleId)}><img src={item.like?`${yidianzan}`:`${dianzan}`} alt=''/><span>{item.agree || "点赞"}</span></li>
-                        </ul>
-                    </div>))
+                    this.state.users.map((item)=>(
+                        <ArticleModule articleId={item.articleId} userId={this.props.id} place="community"/>
+                    ))
                 }
             </div>
         );

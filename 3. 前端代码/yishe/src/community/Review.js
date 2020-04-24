@@ -292,7 +292,7 @@ export default class Review extends Component {
                   />
                 }
                 content={
-                  <Form.Item>
+                  <Form.Item  className="reviewInput">
                     <TextArea rows={1} onChange={this.handleChange} value={this.state.value} />
                     <Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit} type="primary">回复</Button>
                   </Form.Item>

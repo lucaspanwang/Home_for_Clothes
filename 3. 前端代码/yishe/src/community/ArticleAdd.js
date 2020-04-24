@@ -28,6 +28,21 @@ export default class ArticleAdd extends Component {
         }if(this.state.value !== '' && this.state.cimg == ''){
             var today = new Date();
             var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+            var data = {
+                'userId': this.props.match.params.id,
+                'content': this.state.value,time:date,
+                'cimg': [],
+                'cimgName': []
+            }
+            var body = JSON.stringify(data);
+            console.log(data);
+            // console.log(JSON.stringify(data));
+            // let formData = new FormData();
+            // formData.append("userId",this.props.match.params.id);
+            // formData.append("content",this.state.value);
+            // formData.append("time",date);
+            // formData.append("cimg",[]);
+            // formData.append("cimgName",[]);
             fetch('http://47.98.163.228:3004/articleAdd',{
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
@@ -35,8 +50,9 @@ export default class ArticleAdd extends Component {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
+                    // 'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:[],cimgName:[]}) 
+                body: body
             });
             this.onToastSuccess();
         }else{
@@ -56,6 +72,14 @@ export default class ArticleAdd extends Component {
                 }
             }).then((value)=>{
                 console.log(value);
+                var data = {
+                    'userId': this.props.match.params.id,
+                    'content': this.state.value,time:date,
+                    'cimg': value.cimg,
+                    'cimgName': value.cimgName
+                }
+                var body = JSON.stringify(data);
+                console.log(data);
                 fetch('http://47.98.163.228:3004/articleAdd',{
                     method: 'post', 
                     "Access-Control-Allow-Origin" : "*",
@@ -63,8 +87,9 @@ export default class ArticleAdd extends Component {
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
+                        // "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                    body: body
                 });
                 this.onToastSuccess();
             })
