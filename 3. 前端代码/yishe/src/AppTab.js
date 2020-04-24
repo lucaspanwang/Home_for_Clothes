@@ -1,34 +1,53 @@
 import React from "react";
 import { TabBar } from "antd-mobile";
 
-import shequ from './images/社区.png'
-import shequ1 from './images/社区 (1).png'
-import chuanda from './images/试衣间.png'
-import chuanda1 from './images/试衣间 (1).png'
-import zhenglixiang from './images/整理箱.png'
-import zhenglixiang1 from './images/整理箱 (1).png'
-import geren from './images/个人.png'
-import geren1 from './images/个人 (1).png'
-import xiaoxi from './images/message.png'
-import xiaoxi1 from './images/message(1).png'
 import Wear from './wear/Wear'
 import Community from "./community/Community";
 import Me from "./me/Me";
 import Message from './message/MIndex'
 import AppBox from "./store/AppBox";
 
+import shequ from './images/shequ.png'
+import shequ1 from './images/shequ_1.png'
+import chuanda from './images/chuanda.png'
+import chuanda1 from './images/chuanda_1.png'
+import zhenglixiang from './images/zhenglixiang.png'
+import zhenglixiang1 from './images/zhenglixiang_1.png'
+import geren from './images/geren.png'
+import geren1 from './images/geren_1.png'
+import xiaoxi from './images/message.png'
+import xiaoxi1 from './images/message_1.png'
+
 export default class AppTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "chuandaTab",
-      url:""
+      selectedTab: "wear",
+      url:"",
+      userId:''
     };
   }
   componentDidMount(){
-    console.log(window.location.href.split('#')[0]);
+    var url = window.location.href;
+    var tab = url.split('#')[1].split('&')[1];
+    if(tab){
+      this.setState({
+        selectedTab:tab
+      })
+    }
+    // if(this.props.location.query.tab){
+    //   this.setState({
+    //     selectedTab:this.props.location.query.tab
+    //   })
+    // }
+    // if(this.props.location.query.userId){
+    //   this.setState({
+    //     userId:this.props.location.query.userId
+    //   })
+    // }
     this.setState({
-      url:window.location.href.split('#')[0]
+      url:url.split('#')[0],
+      userId:this.props.match.params.id.split('&')[0]
     })
   }
   render() {
@@ -56,17 +75,18 @@ export default class AppTab extends React.Component {
                 chuanda1
             }}
             title="穿搭"
-            key="chuanda"
-            selected={this.state.selectedTab === "chuandaTab"}
+            key="wear"
+            selected={this.state.selectedTab === "wear"}
             onPress={() => {
-              window.location.href = this.state.url+'#/apptab/'+this.props.match.params.id;
-              console.log(window.location.href);
               this.setState({
-                selectedTab: "chuandaTab"
+                selectedTab: "wear"
+              },function(){
+                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                console.log(window.location.href);
               });
             }}
           >
-          <Wear id={this.props.match.params.id}/>
+          <Wear id={this.state.userId}/>
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -91,16 +111,17 @@ export default class AppTab extends React.Component {
             }
             title="整理箱"
             key="zhenglixiang"
-            selected={this.state.selectedTab === "zhengliTab"}
+            selected={this.state.selectedTab === "store"}
             onPress={() => {
-              window.location.href = this.state.url+'#/zhenglitab/'+this.props.match.params.id;
-              console.log(window.location.href);
               this.setState({
-                selectedTab: "zhengliTab"
+                selectedTab: "store"
+              },function(){
+                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                console.log(window.location.href);
               });
             }}
           >
-          <AppBox id={this.props.match.params.id}/>
+          <AppBox id={this.state.userId}/>
           </TabBar.Item>
           <TabBar.Item
             title="社区"
@@ -125,16 +146,17 @@ export default class AppTab extends React.Component {
                 }}
               />
             }
-            selected={this.state.selectedTab === "shequTab"}
+            selected={this.state.selectedTab === "community"}
             onPress={() => {
-              window.location.href = this.state.url+'#/shequtab/'+this.props.match.params.id;
-              console.log(window.location.href);
               this.setState({
-                selectedTab: "shequTab"
+                selectedTab: "community"
+              },function(){
+                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                console.log(window.location.href);
               });
             }}
           >
-            <Community id={this.props.match.params.id}/>
+            <Community id={this.state.userId}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -146,16 +168,17 @@ export default class AppTab extends React.Component {
             }}
             title="消息"
             key="xiaoxi"
-            selected={this.state.selectedTab === "xiaoxiTab"}
+            selected={this.state.selectedTab === "message"}
             onPress={() => {
-              window.location.href = this.state.url+'#/xiaoxitab/'+this.props.match.params.id;
-              console.log(window.location.href);
               this.setState({
-                selectedTab: "xiaoxiTab"
+                selectedTab: "message"
+              },function(){
+                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                console.log(window.location.href);
               });
             }}
           >
-            <Message id={this.props.match.params.id}/>
+            <Message id={this.state.userId}/>
           </TabBar.Item>
           <TabBar.Item
             icon={{
@@ -167,16 +190,17 @@ export default class AppTab extends React.Component {
             }}
             title="个人"
             key="geren"
-            selected={this.state.selectedTab === "gerenTab"}
+            selected={this.state.selectedTab === "me"}
             onPress={() => {
-              window.location.href = this.state.url+'#/gerentab/'+this.props.match.params.id;
-              console.log(window.location.href);
               this.setState({
-                selectedTab: "gerenTab"
+                selectedTab: "me"
+              },function(){
+                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                console.log(window.location.href);
               });
             }}
           >
-            <Me id={this.props.match.params.id}/>
+            <Me id={this.state.userId}/>
           </TabBar.Item>
         </TabBar>
       </div>

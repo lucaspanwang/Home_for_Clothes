@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Tabs, WhiteSpace, Badge,NavBar} from 'antd-mobile';
 import {Link} from 'react-router-dom';
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 import AlphaPicker from 'react-color'
 import './wear.css';
 //图片导入

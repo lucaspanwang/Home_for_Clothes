@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { NavBar,SearchBar } from 'antd-mobile';
 import { Link } from 'react-router-dom';
-
-import fanhui from '../images/返回 (1).png';
-import nodata from '../images/nodata.png';
 import ArticleModule from './common/ArticleModule';
+
+import fanhui from '../images/fanhui_1.png';
+import nodata from '../images/nodata.png';
 
 export default class Search extends Component {
     constructor(){
@@ -12,15 +12,14 @@ export default class Search extends Component {
         this.state={
             search:'',
             userId:'',
-            article:[],
-            data:(<img src={nodata} style={{width:'50px'}}/>)
+            article:[]
         }
     }
     //搜索框
     componentDidMount(){
         this.setState({
-            search:this.props.match.params.id.split('&')[0],
-            userId:this.props.match.params.id.split('&')[1],
+            search:this.props.match.params.id.split('&')[1],
+            userId:this.props.match.params.id.split('&')[0],
         })
     }
     onSubmit = (value) => {
@@ -35,13 +34,13 @@ export default class Search extends Component {
         let message;
         if(this.state.article.length) {
             message = this.state.article.map((item)=>(
-                <ArticleModule articleId={item.articleId} userId={this.props.id} key={item.articleId} place="community"/>
+                <ArticleModule articleId={item.articleId} userId={this.state.userId} key={item.articleId} place="community"/>
             ))
         }else {
             message = 
             (<div style={{width:"100%",height:"400px",display:"flex",justifyContent:"center",alignItems:"center",flexDirection:'column'}}>
                 <img src={nodata} style={{width:'60px'}}/>
-                <span style={{fontSize:"16px",color:'#bfbfbf'}}>没有搜索到的数据</span>
+                <span style={{fontSize:"16px",color:'#bfbfbf'}}>没有搜索到数据</span>
             </div>)
         }
         return (
@@ -49,7 +48,7 @@ export default class Search extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/shequtab/"+this.state.userId}><img src={fanhui} style={{width:'30px'}} key="searchfan"/></Link>
+                  <Link to={"/apptab/"+this.state.userId+'&community'}><img src={fanhui} style={{width:'30px'}} key="searchfan"/></Link>
                 ]}
                 >搜索</NavBar>
                 <SearchBar placeholder="请输入你要查找的内容" maxLength={15} style={{backgroundColor:'#ccc'}} onSubmit={(value)=>this.onSubmit(value)}/>

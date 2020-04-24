@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { NavBar ,ImagePicker,Toast  } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import fanhui from '../images/返回 (1).png';
+import fanhui from '../images/fanhui_1.png';
 import lrz from 'lrz';
 import { Input } from 'antd';
 const { TextArea } = Input;
@@ -28,31 +28,15 @@ export default class ArticleAdd extends Component {
         }if(this.state.value !== '' && this.state.cimg == ''){
             var today = new Date();
             var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-            var data = {
-                'userId': this.props.match.params.id,
-                'content': this.state.value,time:date,
-                'cimg': [],
-                'cimgName': []
-            }
-            var body = JSON.stringify(data);
-            console.log(data);
-            // console.log(JSON.stringify(data));
-            // let formData = new FormData();
-            // formData.append("userId",this.props.match.params.id);
-            // formData.append("content",this.state.value);
-            // formData.append("time",date);
-            // formData.append("cimg",[]);
-            // formData.append("cimgName",[]);
             fetch('http://47.98.163.228:3004/articleAdd',{
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Credentials" : true,
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                    // 'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data;charset=utf-8'
                 },
-                body: body
+                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:[]})
             });
             this.onToastSuccess();
         }else{
@@ -71,25 +55,15 @@ export default class ArticleAdd extends Component {
                     });
                 }
             }).then((value)=>{
-                console.log(value);
-                var data = {
-                    'userId': this.props.match.params.id,
-                    'content': this.state.value,time:date,
-                    'cimg': value.cimg,
-                    'cimgName': value.cimgName
-                }
-                var body = JSON.stringify(data);
-                console.log(data);
                 fetch('http://47.98.163.228:3004/articleAdd',{
                     method: 'post', 
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : true,
                     credentials: 'include',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                        // "Content-Type": "application/json"
+                        'Content-Type': 'multipart/form-data;charset=utf-8'
                     },
-                    body: body
+                    body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
                 });
                 this.onToastSuccess();
             })
@@ -110,11 +84,10 @@ export default class ArticleAdd extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/shequtab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&community'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
                     <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</span>
-                    // <Link to={this.state.url} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</Link>
                 ]}
                 >社区发布文章</NavBar>
 

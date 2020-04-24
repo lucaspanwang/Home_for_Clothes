@@ -3,8 +3,8 @@ import { NavBar,List} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import {Tooltip} from 'antd';
 
-import fanhui from '../images/返回 (1).png';
-import xiaoren from '../images/小人.png';
+import fanhui from '../images/fanhui_1.png';
+import xiaoren from '../images/xiaoren.png';
 
 const Item = List.Item;
 const text = <span>你看我是不是很漂亮？<br/>٩(๑❛ᴗ❛๑)۶我也觉得人家<br/>很漂亮呢(＾▽＾)</span>;
@@ -94,7 +94,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={()=>{localStorage.setItem('comee',1);}}/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={()=>{localStorage.setItem('comee',1);}}/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">

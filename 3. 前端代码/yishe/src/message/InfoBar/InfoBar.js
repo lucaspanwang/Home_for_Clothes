@@ -2,7 +2,7 @@ import React from 'react';
 
 // import onlineIcon from '../../icons/onlineIcon.png';
 // import closeIcon from '../../icons/closeIcon.png';
-import fanhui from '../../images/返回 (1).png';
+import fanhui from '../../images/fanhui_1.png';
 import { NavBar } from 'antd-mobile';
 
 import './InfoBar.css';

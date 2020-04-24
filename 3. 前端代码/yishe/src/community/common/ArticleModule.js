@@ -8,15 +8,15 @@ import Gongge from './Gongge';
 import '../community.css';
 import {standardTime} from './standardTime';
 
-import xiala from '../../images/下拉.png';
-import fenxiang from '../../images/分享(1).png';
-import shoucang from '../../images/收藏.png';
-import yishoucang from '../../images/收藏(1).png';
-import guanzhu from '../../images/关注.png';
-import yiguanzhu from '../../images/关注(1).png';
-import pinglun from '../../images/评论.png';
-import dianzan from '../../images/点赞.png';
-import yidianzan from '../../images/点赞(1).png';
+import xiala from '../../images/xiala.png';
+import fenxiang from '../../images/fenxiang_1.png';
+import shoucang from '../../images/shoucang.png';
+import yishoucang from '../../images/shoucang_1.png';
+import guanzhu from '../../images/guanzhu.png';
+import yiguanzhu from '../../images/guanzhu_1.png';
+import pinglun from '../../images/pinglun.png';
+import dianzan from '../../images/dianzan.png';
+import yidianzan from '../../images/dianzan_1.png';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;

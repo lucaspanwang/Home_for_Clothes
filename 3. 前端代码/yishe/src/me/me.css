@@ -19,4 +19,20 @@
 .avatar-uploader > .ant-upload {
     width: 50px;
     height: 50px;
-  }
+}
+
+/*我的发帖  抽屉部分*/
+.my-drawer {
+    position: relative;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.my-drawer .am-drawer-sidebar {
+    background-color: #fff;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.my-drawer .am-drawer-sidebar .am-list {
+    width: 300px;
+    padding: 0;
+}

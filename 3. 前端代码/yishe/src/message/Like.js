@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import fanhui from '../images/返回 (1).png';
+import fanhui from '../images/fanhui_1.png';
 import {NavBar, Flex, InputItem, Button} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import remark from '../images/message/remark.png';
@@ -20,7 +20,7 @@ export default class ResetPwd extends Component{
         <NavBar 
             style={{backgroundColor:'#fc9d9a',color:'white'}}
             leftContent={[
-                <Link to={"/xiaoxitab/"+this.props.match.params.id}><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
+                <Link to={"/apptab/"+this.props.match.params.id+'&message'}><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
             ]}
             >赞
                 </NavBar>

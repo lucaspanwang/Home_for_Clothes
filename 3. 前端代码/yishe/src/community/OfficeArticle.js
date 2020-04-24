@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { NavBar,Popover } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { Comment, Avatar, Form, Button, List, Input,} from 'antd';
-import Gongge from './Gongge';
-import moment from 'moment';
 import { Consumer } from '../context';
 import './community.css';
 
-import fanhui from '../images/返回 (1).png';
-import fenxiang from '../images/分享(1).png';
-import dianzan from '../images/点赞.png';
-import yidianzan from '../images/点赞(1).png';
+import fanhui from '../images/fanhui_1.png';
+import fenxiang from '../images/fenxiang.png';
+import dianzan from '../images/dianzan.png';
+import yidianzan from '../images/dianzan_1.png';
 
 const Item = Popover.Item;
 const { TextArea } = Input;

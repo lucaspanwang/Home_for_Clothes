@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { NavBar} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 import './store.css';
 let value='';
 export default class Add extends Component {
@@ -43,7 +43,7 @@ export default class Add extends Component {
             <div>
                 <NavBar
                     leftContent={
-                        <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+                        <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                     style={{ backgroundColor: 'rgb(252, 157, 154)' }}>添加
                 </NavBar>

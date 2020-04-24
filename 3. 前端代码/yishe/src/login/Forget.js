@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import fanhui from '../images/返回 (1).png'
+import fanhui from '../images/fanhui_1.png'
 import {NavBar, Flex, InputItem, Button} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import './login.css';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { NavBar,Grid } from 'antd-mobile';
 import { Link,Route, HashRouter as Router } from 'react-router-dom';
-import fanhui from '../../images/返回 (1).png';
-import del from '../../images/垃圾桶.png';
+import fanhui from '../../images/fanhui_1.png';
+import del from '../../images/lajitong.png';
 import empty from '../../images/empty.png';
 
 var diarys = []; 

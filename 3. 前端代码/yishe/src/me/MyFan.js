@@ -3,15 +3,16 @@ import { Collapse } from 'antd';
 import {Link} from 'react-router-dom';
 import { NavBar,SearchBar } from 'antd-mobile';
 
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 import yonghu from '../images/yonghu.png';
 import chengshi from '../images/chengshi.png';
 import xingbie from '../images/xingbie.png';
 import jianjie from '../images/jianjie.png';
-import shoucang from '../images/收藏.png';
-import pinglun from '../images/评论.png';
-import dianzan from '../images/点赞.png';
-import Gongge from '../community/Gongge';
+import shoucang from '../images/shoucang.png';
+import pinglun from '../images/pinglun.png';
+import dianzan from '../images/dianzan.png';
+import Gongge from '../community/common/Gongge';
+
 
 const { Panel } = Collapse;
 export default class MyFan extends Component {
@@ -81,7 +82,7 @@ export default class MyFan extends Component {
             <div>
                 <NavBar
                     leftContent={
-                        <Link to={"/gerentab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+                        <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>粉丝</NavBar>
                 <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>

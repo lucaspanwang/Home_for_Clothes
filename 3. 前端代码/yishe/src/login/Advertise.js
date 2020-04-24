@@ -7,9 +7,9 @@ import ad from '../images/ad1.jpg';
 import ad2 from '../images/ad2.jpg';
 import ad3 from '../images/ad3.jpg';
 
-const myHolder = ({ className = '', ...restProps }) => (
-    <div className={`${className} placeholder`} {...restProps}>Block</div>
-  );
+// const myHolder = ({ className = '', ...restProps }) => (
+//     <div className={`${className} placeholder`} {...restProps}>Block</div>
+//   );
 export default class Advertise extends Component {
     state = {
         data: ['1', '2', '3'],

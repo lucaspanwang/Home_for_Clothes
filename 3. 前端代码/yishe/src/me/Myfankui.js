@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { NavBar ,ImagePicker,Toast} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import fanhui from '../images/返回 (1).png';
+import fanhui from '../images/fanhui_1.png';
 import { Input } from 'antd';
 import lrz from 'lrz';
 const { TextArea } = Input;
@@ -122,7 +122,7 @@ export default class DiaryAdd extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
                     <p style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'20px'}} onClick={this.onPost}>完成</p>

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { NavBar,Popover,Grid } from 'antd-mobile';
-import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import { Comment, Avatar, Form, Button, List, Input,Row, Col } from 'antd';
-import Gongge from './Gongge';
-import moment from 'moment';
+import { NavBar,Popover } from 'antd-mobile';
+import { Link } from 'react-router-dom';
+import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import { Consumer } from '../context';
+import ArticleModule from './common/ArticleModule';
 import './community.css';
 
-import fanhui from '../images/返回 (1).png';
-import dianzan from '../images/点赞.png';
-import ArticleModule from './common/ArticleModule';
+import fanhui from '../images/fanhui_1.png';
+import dianzan from '../images/dianzan.png';
+import yidianzan from '../images/dianzan_1.png';
 
 const Item = Popover.Item;
 const { TextArea } = Input;
@@ -111,7 +110,7 @@ export default class Article extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/shequtab/"+this.props.match.params.id.split("&")[1]}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>
+                  <Link to={"/apptab/"+this.props.match.params.id.split("&")[1]+'&community'}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>
                 ]}
                 >阅读全文</NavBar>
               <ArticleModule 

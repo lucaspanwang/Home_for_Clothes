@@ -4,9 +4,9 @@ import { Link,Route, HashRouter as Router } from 'react-router-dom';
 import { Timeline,Icon } from 'antd';
 import './diary.css';
 
-import del from '../../images/垃圾桶.png';
+import del from '../../images/lajitong.png';
 import diaryadd from '../../images/diaryadd.png';
-import fanhui from '../../images/返回 (1).png';
+import fanhui from '../../images/fanhui_1.png';
 import date from '../../images/date.png';
 
 var diaryIds = []; 
@@ -116,7 +116,7 @@ export default class Diary extends Component {
             <div style={{width:'100%'}}>
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >穿搭日记</NavBar>
                 <div style={{width:'100%',height:'120px'}}>

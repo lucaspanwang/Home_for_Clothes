@@ -2,17 +2,7 @@ import React, { Component } from 'react';
 import { NavBar, SearchBar } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import './community.css';
-import fanhui from '../images/返回 (1).png';
-import photo from '../images/lunbo02.jpg';
-
-const data = [
-    {id:'Off999999',photo:photo,title:'衣舍联名推出智能衣柜',content:'衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物',time:'2020/04/14'},
-    {id:'Off999999',photo:photo,title:'衣舍联名推出智能衣柜',content:'衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物',time:'2020/04/14'},
-    {id:'Off999999',photo:photo,title:'衣舍联名推出智能衣柜',content:'衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物',time:'2020/04/14'},
-    {id:'Off999999',photo:photo,title:'衣舍联名推出智能衣柜',content:'衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物',time:'2020/04/14'},
-    {id:'Off999999',photo:photo,title:'衣舍联名推出智能衣柜',content:'衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物',time:'2020/04/14'},
-    {id:'Off999999',photo:photo,title:'衣舍联名推出智能衣柜',content:'衣舍联名推出智能扫描仪和智能衣柜，帮助用户更加智能的存储衣物',time:'2020/04/14'},
-]
+import fanhui from '../images/fanhui_1.png';
 
 export default class Office extends Component {
     constructor(){
@@ -57,7 +47,7 @@ export default class Office extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/shequtab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="offfan"/></Link>
+                  <Link to={"/apptab/"+this.props.match.params.id+'&community'}><img src={fanhui} style={{width:'30px'}} key="offfan"/></Link>
                 ]}
                 >官方消息</NavBar>
                 <Link to={"/search/"+this.props.id}>
@@ -76,7 +66,7 @@ export default class Office extends Component {
                             </div>
                             <div style={{width:'100%',display:'flex',justifyContent:'space-between',fontSize:'12px',color:'#888'}}>
                                 <span>发布于{item.offTime}</span>
-                                <Link to={"/officearticle/"+item.offId+"&"+this.props.match.params.id}><span>查看详情</span></Link>
+                                <Link to={"/officearticle/"+item.offId+"&"+this.props.match.params.id.split('&')[0]}><span>查看详情</span></Link>
                             </div>
                         </div>
                         ))

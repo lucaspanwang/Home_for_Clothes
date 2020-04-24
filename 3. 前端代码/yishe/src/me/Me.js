@@ -3,13 +3,13 @@ import { NavBar,List } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
-import xiangqing from '../images/详情.png';
-import shoucang from '../images/收藏（1）.png';
-import xiangce from '../images/相册.png';
+import xiangqing from '../images/xiangqing.png';
+import shoucang from '../images/shoucang_2.png';
+import xiangce from '../images/xiangce.png';
 import diary from '../images/diary.png';
 import fankui from '../images/fankui.png';
-import shezhi from '../images/设置.png';
-import renwu from '../images/小人.png';
+import shezhi from '../images/shezhi.png';
+import renwu from '../images/xiaoren.png';
 
 const Item = List.Item;
 const Brief = Item.Brief;

@@ -4,19 +4,12 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography,Menu, Dropdown, Icon } from 'antd';
 import './me.css';
 
-import tianjia from '../images/添加.png';
-import fanhui from '../images/返回 (1).png';
-import xiala from '../images/下拉.png';
-import fenxiang from '../images/分享(1).png';
-import shoucang from '../images/收藏.png';
-import yishoucang from '../images/收藏(1).png';
-import pingbi from '../images/屏蔽.png';
-import guanzhu from '../images/关注.png';
-import yiguanzhu from '../images/关注(1).png';
-import pinglun from '../images/评论.png';
-import dianzan from '../images/点赞.png';
-import yidianzan from '../images/点赞(1).png';
-import Gongge from '../community/Gongge';
+import tianjia from '../images/tianjia.png';
+import fanhui from '../images/fanhui_1.png';
+import shoucang from '../images/shoucang.png';
+import pinglun from '../images/pinglun.png';
+import dianzan from '../images/dianzan.png';
+import Gongge from '../community/common/Gongge';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
@@ -79,7 +72,7 @@ export default class MyCollect extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                  <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={<Link to={"/articleadd/"+this.props.match.params.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >收藏</NavBar>

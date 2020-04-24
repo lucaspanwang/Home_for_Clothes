@@ -3,7 +3,7 @@ import { NavBar,List,Switch,WhiteSpace } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { createForm } from 'rc-form';
 
-import fanhui from '../images/返回 (1).png'
+import fanhui from '../images/fanhui_1.png'
 
 export default class Setup extends Component {
     constructor(props) {
@@ -17,19 +17,13 @@ export default class Setup extends Component {
           checked1_2: true,
         };
       }
-      // hrefChange(str){
-      //   var h=window.location.href;
-      //   var index = h.lastIndexOf("\/");  
-      //   window.location.href = h.substring(0, index+1)+str;
-      // }
-
     render() {
         return (
             <div>
                 {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/gerentab/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 >设置</NavBar>
                 {/* 选择 */}

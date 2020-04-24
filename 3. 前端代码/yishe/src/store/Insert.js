@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { NavBar, Picker, List, WhiteSpace,ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 import { createForm } from 'rc-form';
 import './store.css';
-import { thisTypeAnnotation } from '@babel/types';
+// import { thisTypeAnnotation } from '@babel/types';
 const sex='女';
 //图片选择器
 const data = [];
@@ -364,7 +364,7 @@ class Insert extends Component {
         {/* ----导航栏 */}
         <NavBar
           leftContent={
-            <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+            <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
                 </NavBar>

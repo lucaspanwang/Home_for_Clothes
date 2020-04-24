@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ArticleModule from './common/ArticleModule';
 import './community.css';
 
-import tianjia from '../images/添加.png';
+import tianjia from '../images/tianjia.png';
 
 export default class Community extends Component {
     constructor(){
@@ -42,7 +42,7 @@ export default class Community extends Component {
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 rightContent={<Link to={"/articleadd/"+this.props.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >社区</NavBar>
-                <Link to={"/search/article&"+this.props.id}>
+                <Link to={"/search/"+this.props.id+"&article"}>
                     <SearchBar placeholder="搜索" style={{backgroundColor:'#ccc'}} disabled/>
                 </Link>
                 <div className="office">
