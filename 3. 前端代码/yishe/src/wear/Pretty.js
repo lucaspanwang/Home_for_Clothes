@@ -61,7 +61,6 @@ export default class Pretty extends Component {
     }
     lalala=()=>{//换发色的点击事件
         document.getElementById('imgpick').style.display='block';
-        console.log(this)
         this.state.count++;//判断点击几次
         var a = setTimeout(()=>{
           if(this.state.count>1){//双击
@@ -76,6 +75,7 @@ export default class Pretty extends Component {
         this.setState({
           color:document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value
         })
+        console.log(this.state.color)
         document.getElementById('change_hair_color').style.display='block';
         document.getElementById('change_hair_style').style.display='block';
         console.log(document.getElementById('imgpick').childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].value)
@@ -83,6 +83,7 @@ export default class Pretty extends Component {
         document.getElementById('change_hair_color').style.opacity=0.9
     }
     handlePost =()=> {  
+      console.log(this.state)
       fetch('http://47.98.163.228:3001/update_mote_style',{
           method: 'post', 
           "Access-Control-Allow-Origin" : "*",
@@ -90,7 +91,7 @@ export default class Pretty extends Component {
           headers: {
             'Content-Type': 'application/json'
           },
-          body:JSON.stringify({id:this.props.match.params.id,index:1,index2:-1,index3:-1,color:this.state.color}) 
+          body:JSON.stringify({id:this.props.match.params.id,index:this.state.index,index2:this.state.index2,index3:this.state.index3,color:this.state.color}) 
       })
   }
     render() {
@@ -99,10 +100,12 @@ export default class Pretty extends Component {
             {/* 头 */}
                 <NavBar
                     leftContent={
-                        <Link to={"/apptab/"+this.props.match.params.id} onClick={this.handlePost}>
+                        <Link to={"/apptab/"+this.props.match.params.id}>
                             <img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>穿搭</NavBar>
+              {/* 保存 */}
+              <button onClick={this.handlePost} className="baocun">保存</button>
               {/* 模特脸 */}
               <div className="m1" onClick={this.lalala}>
                   {/* 依次是：模特本身、发型、瞳色、眼镜 */}

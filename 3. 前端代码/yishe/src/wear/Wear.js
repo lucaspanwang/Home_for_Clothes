@@ -108,7 +108,7 @@ export default class Wear extends Component {
                 // 'Content-Type': 'application/x-www-form-urlencoded'
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({userId:window.location.href.split('#')[1].split('/')[2]})  
+            body: JSON.stringify({userId:this.props.id})  
         })
         .then(res=>res.json())
         .then(res=>{
@@ -404,6 +404,7 @@ export default class Wear extends Component {
     }
     //美妆部分
     updata_image(){
+      console.log(this.props.id)
       fetch('http://47.98.163.228:3001/get_mote_style',{
         method: 'post', 
             "Access-Control-Allow-Origin" : "*",
@@ -411,11 +412,11 @@ export default class Wear extends Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({userId:window.location.href.split('#')[1].split('/')[2]})  
+            body: JSON.stringify({userId:this.props.id})  
       })
       .then(res=>res.json())
       .then(res=>{
-        console.log(res);
+        console.log('get_mote_style:'+res);
         this.setState({
           index1:res[0].index1,
           index2:res[0].index2,
