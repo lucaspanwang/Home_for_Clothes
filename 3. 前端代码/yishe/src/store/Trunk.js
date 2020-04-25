@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
-import Back from '../images/fanhui_1.png';
+import Back from '../images/返回 (1).png';
 
 export default class Trunk extends Component {
     constructor(){
@@ -76,7 +76,7 @@ export default class Trunk extends Component {
             <div>
                 <NavBar
                     leftContent={
-                        <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+                        <Link to={"/zhenglitab/"+this.props.match.params.id}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>行李箱</NavBar>
                 <div>
