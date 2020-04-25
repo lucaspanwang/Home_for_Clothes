@@ -7,6 +7,7 @@ import ArticleModule from './common/ArticleModule';
 import './community.css';
 
 import fanhui from '../images/fanhui_1.png';
+import pinglun from '../images/pinglun.png';
 import dianzan from '../images/dianzan.png';
 import yidianzan from '../images/dianzan_1.png';
 
@@ -18,7 +19,6 @@ export default class Article extends Component {
       super();
       this.state = {
         user:{},
-        article:{},
         articleId:'',
         userId:'',
         review:[],
@@ -30,7 +30,7 @@ export default class Article extends Component {
         articleId:this.props.match.params.id.split("&")[0],
         userId:this.props.match.params.id.split("&")[1]
       });
-      fetch("http://47.98.163.228:3004/review?articleId="+this.props.match.params.id.split("&")[0])
+      fetch("http://47.98.163.228:3004/review?articleId="+this.props.match.params.id.split("&")[0]+'&state=0')
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
@@ -74,16 +74,24 @@ export default class Article extends Component {
       });
       setTimeout(() => {
         var date = new Date();
-        fetch("http://47.98.163.228:3004/reviewAdd?userId="+this.state.user.userId+"&articleId="+this.state.article.articleId+"&reviewContent="+this.state.value+"&reviewTime="+date.toLocaleString())
-        .then(res=>res.json())
+        fetch('http://47.98.163.228:3004/reviewAdd',{
+          method: 'post', 
+          "Access-Control-Allow-Origin" : "*",
+          "Access-Control-Allow-Credentials" : true,
+          headers: {
+            'Content-Type':'application/json',
+          },
+          body: JSON.stringify({userId:this.state.user.userId,articleId:this.state.articleId,reviewContent:this.state.value,reviewTime:date.toLocaleString()})
+        })
         .then(res=>{
+          console.log(res);
           var comments = this.state.review;
           comments = [
             {
               userName : this.state.user.userName,
               userPic : this.state.user.userPic,
               userId : this.state.user.userId,
-              articleId :this.state.article.articleId,
+              articleId :this.state.articleId,
               reviewContent : this.state.value,
               reviewTime : date.toLocaleString()
             },
@@ -108,11 +116,12 @@ export default class Article extends Component {
             {
               (data) => <div onLoad={(data)=>this.setState({userId:data})}>
               <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                   <Link to={"/apptab/"+this.props.match.params.id.split("&")[1]+'&community'}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>
                 ]}
                 >阅读全文</NavBar>
+                <NavBar style={{width:'100%',backgroundColor:'#fc9d9a'}}></NavBar>
               <ArticleModule 
                 articleId={this.props.match.params.id.split("&")[0]} 
                 userId={this.props.match.params.id.split("&")[1]}
@@ -143,16 +152,22 @@ export default class Article extends Component {
                       avatar={item.userPic}
                       content={item.reviewContent}
                       actions={[<div>
-                        <Link to={"/review/"+this.props.match.params.id}>
-                          <div style={{width:'100%',height:'30px',margin:'5px 0',lineHeight:'30px',fontSize:'12px',borderRadius:'5px',backgroundColor:'#ddd'}}>共3条回复</div>
-                        </Link>
+                        {
+                          item.number
+                          ?(<Link to={"/review/"+item.articleId+'&'+item.reviewId+'&'+item.userId}>
+                            <div style={{width:'100%',height:'30px',margin:'5px 0',lineHeight:'30px',fontSize:'12px',borderRadius:'5px',backgroundColor:'#ddd'}}>共{item.number}条回复</div>
+                          </Link>)
+                          :''
+                        }
                         <div style={{width:'100%',fontSize:'10px',color:'#888',display:'flex',justifyContent:'space-between'}}>
                           <span>发布于{item.reviewTime}</span>
-                          <div><img style={{width:'18px',height:'18px',marginRight:'3px'}} src={dianzan} alt=''/><span>{this.state.article.agree || 0}</span></div>
+                          <div>
+                            <Link to={"/review/"+item.articleId+'&'+item.reviewId+'&'+item.userId}>
+                            <img style={{width:'18px',height:'18px',marginRight:'3px'}} src={pinglun} alt=''/>{item.number}
+                            </Link></div>
                         </div>
                       </div>]}
                     />
-                    
                   </li>
                 )}
               />

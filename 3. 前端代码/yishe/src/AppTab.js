@@ -1,5 +1,5 @@
 import React from "react";
-import { TabBar } from "antd-mobile";
+import { TabBar,NavBar } from "antd-mobile";
 
 import Wear from './wear/Wear'
 import Community from "./community/Community";
@@ -23,8 +23,9 @@ export default class AppTab extends React.Component {
     super(props);
     this.state = {
       selectedTab: "wear",
+      navbar:'穿搭',
       url:"",
-      userId:''
+      userId:this.props.match.params.id.split('&')[0]
     };
   }
   componentDidMount(){
@@ -35,174 +36,168 @@ export default class AppTab extends React.Component {
         selectedTab:tab
       })
     }
-    // if(this.props.location.query.tab){
-    //   this.setState({
-    //     selectedTab:this.props.location.query.tab
-    //   })
-    // }
-    // if(this.props.location.query.userId){
-    //   this.setState({
-    //     userId:this.props.location.query.userId
-    //   })
-    // }
     this.setState({
-      url:url.split('#')[0],
-      userId:this.props.match.params.id.split('&')[0]
+      url:url.split('#')[0]
     })
   }
   render() {
     return (
-      <div
-        style={{
-          position: "fixed",
-          height: "100%",
-          width: "100%",
-          top: 0
-        }}
-      >
-        <TabBar
-          unselectedTintColor="#949494"
-          tintColor="#fc9d9a"
-          barTintColor="white"
+      <div>
+        <NavBar 
+          style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
+        >{this.state.navbar}</NavBar>
+        <div
+          style={{
+            position: "fixed",
+            height: "100%",
+            width: "100%",
+            top: 0
+          }}
         >
-          
-          <TabBar.Item
-            icon={{
-              uri:chuanda
-            }}
-            selectedIcon={{
-              uri:
-                chuanda1
-            }}
-            title="穿搭"
-            key="wear"
-            selected={this.state.selectedTab === "wear"}
-            onPress={() => {
-              this.setState({
-                selectedTab: "wear"
-              },function(){
-                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
-                console.log(window.location.href);
-              });
-            }}
+          <TabBar
+            unselectedTintColor="#949494"
+            tintColor="#fc9d9a"
+            barTintColor="white"
           >
-          <Wear id={this.state.userId}/>
-          </TabBar.Item>
-          <TabBar.Item
-            icon={
-              <div
-                style={{
-                  width: "22px",
-                  height: "22px",
-                  background:
-                    "url("+zhenglixiang+") center center /  21px 21px no-repeat"
-                }}
-              />
-            }
-            selectedIcon={
-              <div
-                style={{
-                  width: "22px",
-                  height: "22px",
-                  background:
-                    "url("+zhenglixiang1+") center center /  21px 21px no-repeat"
-                }}
-              />
-            }
-            title="整理箱"
-            key="zhenglixiang"
-            selected={this.state.selectedTab === "store"}
-            onPress={() => {
-              this.setState({
-                selectedTab: "store"
-              },function(){
-                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
-                console.log(window.location.href);
-              });
-            }}
-          >
-          <AppBox id={this.state.userId}/>
-          </TabBar.Item>
-          <TabBar.Item
-            title="社区"
-            key="shequ"
-            icon={
-              <div
-                style={{
-                  width: "22px",
-                  height: "22px",
-                  background:
-                    "url("+shequ+") center center /  21px 21px no-repeat"
-                }}
-              />
-            }
-            selectedIcon={
-              <div
-                style={{
-                  width: "22px",
-                  height: "22px",
-                  background:
-                    "url("+shequ1+") center center /  21px 21px no-repeat"
-                }}
-              />
-            }
-            selected={this.state.selectedTab === "community"}
-            onPress={() => {
-              this.setState({
-                selectedTab: "community"
-              },function(){
-                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
-                console.log(window.location.href);
-              });
-            }}
-          >
-            <Community id={this.state.userId}/>
-          </TabBar.Item>
-          <TabBar.Item
-            icon={{
-              uri:xiaoxi
-            }}
-            selectedIcon={{
-              uri:
-                xiaoxi1
-            }}
-            title="消息"
-            key="xiaoxi"
-            selected={this.state.selectedTab === "message"}
-            onPress={() => {
-              this.setState({
-                selectedTab: "message"
-              },function(){
-                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
-                console.log(window.location.href);
-              });
-            }}
-          >
-            <Message id={this.state.userId}/>
-          </TabBar.Item>
-          <TabBar.Item
-            icon={{
-              uri:geren
-            }}
-            selectedIcon={{
-              uri:
-                geren1
-            }}
-            title="个人"
-            key="geren"
-            selected={this.state.selectedTab === "me"}
-            onPress={() => {
-              this.setState({
-                selectedTab: "me"
-              },function(){
-                window.location.href = this.state.url+'#/apptab/'+this.state.userId;
-                console.log(window.location.href);
-              });
-            }}
-          >
-            <Me id={this.state.userId}/>
-          </TabBar.Item>
-        </TabBar>
+            <TabBar.Item
+              icon={{
+                uri:chuanda
+              }}
+              selectedIcon={{
+                uri:
+                  chuanda1
+              }}
+              title="穿搭"
+              key="wear"
+              selected={this.state.selectedTab === "wear"}
+              onPress={() => {
+                this.setState({
+                  selectedTab: "wear",
+                  navbar:'穿搭'
+                },function(){
+                  window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                  console.log(this.state.userId);
+                });
+              }}
+            >
+            <Wear id={this.state.userId}/>
+            </TabBar.Item>
+            <TabBar.Item
+              icon={
+                <div
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    background:
+                      "url("+zhenglixiang+") center center /  21px 21px no-repeat"
+                  }}
+                />
+              }
+              selectedIcon={
+                <div
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    background:
+                      "url("+zhenglixiang1+") center center /  21px 21px no-repeat"
+                  }}
+                />
+              }
+              title="整理箱"
+              key="zhenglixiang"
+              selected={this.state.selectedTab === "store"}
+              onPress={() => {
+                this.setState({
+                  selectedTab: "store",
+                  navbar:'整理箱'
+                },function(){
+                  window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                });
+              }}
+            >
+            <AppBox id={this.state.userId}/>
+            </TabBar.Item>
+            <TabBar.Item
+              title="社区"
+              key="shequ"
+              icon={
+                <div
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    background:
+                      "url("+shequ+") center center /  21px 21px no-repeat"
+                  }}
+                />
+              }
+              selectedIcon={
+                <div
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    background:
+                      "url("+shequ1+") center center /  21px 21px no-repeat"
+                  }}
+                />
+              }
+              selected={this.state.selectedTab === "community"}
+              onPress={() => {
+                this.setState({
+                  selectedTab: "community",
+                  navbar:'社区'
+                },function(){
+                  window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                });
+              }}
+            >
+              <Community id={this.state.userId}/>
+            </TabBar.Item>
+            <TabBar.Item
+              icon={{
+                uri:xiaoxi
+              }}
+              selectedIcon={{
+                uri:
+                  xiaoxi1
+              }}
+              title="消息"
+              key="xiaoxi"
+              selected={this.state.selectedTab === "message"}
+              onPress={() => {
+                this.setState({
+                  selectedTab: "message",
+                  navbar:'消息'
+                },function(){
+                  window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                });
+              }}
+            >
+              <Message id={this.state.userId}/>
+            </TabBar.Item>
+            <TabBar.Item
+              icon={{
+                uri:geren
+              }}
+              selectedIcon={{
+                uri:
+                  geren1
+              }}
+              title="个人"
+              key="geren"
+              selected={this.state.selectedTab === "me"}
+              onPress={() => {
+                this.setState({
+                  selectedTab: "me",
+                  navbar:'个人'
+                },function(){
+                  window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                });
+              }}
+            >
+              <Me id={this.state.userId}/>
+            </TabBar.Item>
+          </TabBar>
+        </div>
       </div>
     );
   }

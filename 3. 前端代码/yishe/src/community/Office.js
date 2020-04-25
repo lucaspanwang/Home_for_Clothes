@@ -50,9 +50,9 @@ export default class Office extends Component {
                   <Link to={"/apptab/"+this.props.match.params.id+'&community'}><img src={fanhui} style={{width:'30px'}} key="offfan"/></Link>
                 ]}
                 >官方消息</NavBar>
-                <Link to={"/search/"+this.props.id}>
+                {/* <Link to={"/search/"+this.props.id}> */}
                     <SearchBar placeholder="搜索" style={{backgroundColor:'#ccc'}} disabled/>
-                </Link>
+                {/* </Link> */}
                 <div className="office" style={{border:"none"}}>
                     {
                         this.state.office.map((item)=>(

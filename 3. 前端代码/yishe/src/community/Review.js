@@ -20,7 +20,7 @@ export default class Review extends Component {
         visible: false,
         selected: '',
         user:{},
-        article:{},
+        toReview:{},
         cimg:[],
         review:[],
         submitting: false,
@@ -29,65 +29,20 @@ export default class Review extends Component {
     }
     componentDidMount(){
       var articleId=this.props.match.params.id.split("&")[0];
-      var userId=this.props.match.params.id.split("&")[1];
-      fetch("http://47.98.163.228:3004/article?articleId="+articleId)
+      var reviewId=this.props.match.params.id.split("&")[1];
+      var userId=this.props.match.params.id.split("&")[2];
+      fetch("http://47.98.163.228:3004/review?reviewId="+reviewId)
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
             var j = res[i].userPic.indexOf('/');
             res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
-            for(var j=0;j<res[i].cimg.length;j++){
-                res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
-            }
           }
-          res[0].time = this.standardTime(res[0].time)
           this.setState({
-            article:res[0],
+            toReview:res[0]
           })
       });
-      fetch("http://47.98.163.228:3004/collect?userId="+userId)
-      .then(res=>res.json())
-      .then(res=>{
-          var article=this.state.article;
-          article.collect = false;
-          for(var i=0;i<res.length;i++){
-              if(res[i].articleId === article.articleId){
-                article.collect = true;
-              }
-          }
-          this.setState({
-              article:article
-          })
-      })
-      fetch("http://47.98.163.228:3004/agree?userId="+userId)
-      .then(res=>res.json())
-      .then(res=>{
-          var article=this.state.article;
-          article.like = false;
-          for(var i=0;i<res.length;i++){
-            if(article.articleId == res[i].articleId){
-              article.like = true;
-            }
-          }
-          this.setState({
-              article:article
-          })
-      })
-      fetch("http://47.98.163.228:3004/care?userId="+userId)
-      .then(res=>res.json())
-      .then(res=>{
-        var article=this.state.article;
-        article.follow = false;
-        for(var i=0;i<res.length;i++){
-          if(article.userId == res[i].careId){
-            article.follow = true;
-          }
-        }
-        this.setState({
-            article:article
-        })
-      })
-      fetch("http://47.98.163.228:3004/review?articleId="+articleId)
+      fetch("http://47.98.163.228:3004/review?articleId="+articleId+'&toReview='+reviewId)
       .then(res=>res.json())
       .then(res=>{
           for(var i=0;i<res.length;i++){
@@ -147,16 +102,24 @@ export default class Review extends Component {
       });
       setTimeout(() => {
         var date = new Date();
-        fetch("http://47.98.163.228:3004/reviewAdd?userId="+this.state.user.userId+"&articleId="+this.state.article.articleId+"&reviewContent="+this.state.value+"&reviewTime="+date.toLocaleString())
-        .then(res=>res.json())
+        fetch('http://47.98.163.228:3004/reviewAdd',{
+          method: 'post', 
+          "Access-Control-Allow-Origin" : "*",
+          "Access-Control-Allow-Credentials" : true,
+          headers: {
+            'Content-Type':'application/json',
+          },
+          body: JSON.stringify({userId:this.state.user.userId,articleId:this.props.match.params.id.split("&")[0],reviewContent:this.state.value,reviewTime:date.toLocaleString(),toReview:this.state.toReview.reviewId})
+        })
         .then(res=>{
+          console.log(res);
           var comments = this.state.review;
           comments = [
             {
               userName : this.state.user.userName,
               userPic : this.state.user.userPic,
               userId : this.state.user.userId,
-              articleId :this.state.article.articleId,
+              articleId :this.props.match.params.id.split("&")[0],
               reviewContent : this.state.value,
               reviewTime : date.toLocaleString()
             },
@@ -175,79 +138,6 @@ export default class Review extends Component {
         value: e.target.value,
       });
     };
-    //收藏/取消收藏
-    onCollect = (id,event) =>{
-      var article=this.state.article;
-      if(article.collect === false){
-          fetch("http://47.98.163.228:3004/collectAdd?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
-          .then(res=>res.json())
-          .then(res=>{
-              article.collect = true;
-              article.save += 1;
-              this.setState({
-                  article:article
-              })
-          })
-      }else{
-          fetch("http://47.98.163.228:3004/collectDelete?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
-          .then(res=>res.json())
-          .then(res=>{
-              article.collect = false;
-              article.save -= 1;
-              this.setState({
-                  article:article
-              })
-          })
-      }
-    }
-    //关注/取消关注
-    onCare = (id,event) =>{
-      var article=this.state.article;
-      if(article.follow === false){
-          fetch("http://47.98.163.228:3004/careAdd?userId="+this.props.match.params.id.split("&")[1]+"&careId="+id)
-          .then(res=>res.json())
-          .then(res=>{
-            article.follow = true;
-            this.setState({
-              article:article 
-            })
-          })
-      }else{
-          fetch("http://47.98.163.228:3004/careDelete?userId="+this.props.match.params.id.split("&")[1]+"&careId="+id)
-          .then(res=>res.json())
-          .then(res=>{
-            article.follow = false;
-            this.setState({
-              article:article
-            })
-          })
-      }
-    }
-    //点赞/取消点赞
-    onAgree = (id,event) =>{
-      var article=this.state.article;
-      if(article.like === false){
-          fetch("http://47.98.163.228:3004/agreeAdd?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
-          .then(res=>res.json())
-          .then(res=>{
-              article.like = true;
-              article.agree += 1;
-              this.setState({
-                  article:article
-              })
-          })
-        }else{
-            fetch("http://47.98.163.228:3004/agreeDelete?userId="+this.props.match.params.id.split("&")[1]+"&articleId="+id)
-            .then(res=>res.json())
-            .then(res=>{
-              article.like = false;
-              article.agree -= 1;
-              this.setState({
-                  article:article
-              })
-            })
-        }
-    }
     render() {
         return (
           <Consumer>
@@ -256,23 +146,23 @@ export default class Review extends Component {
               <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                  <Link to={"/shequarticle/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="revfan"/></Link>
+                  <Link to={"/shequarticle/"+this.props.match.params.id.split("&")[0]+'&'+this.props.match.params.id.split("&")[2]}><img src={fanhui} style={{width:'30px'}} key="revfan"/></Link>
                 ]}
                 >{this.state.review.length}条回复</NavBar>
                 <div className="secReview">
                   <div className="left">
-                      <img className='userImg' src={this.state.article.userPic} alt=""/>
+                      <img className='userImg' src={this.state.toReview.userPic} alt=""/>
                   </div>
                   <div className="right">
-                      <span className='userName'>{this.state.article.userName}</span>
-                      <p>{this.state.article.content}</p>
+                      <span className='userName'>{this.state.toReview.userName}</span>
+                      <p>{this.state.toReview.reviewContent}</p>
                   </div>
                   <div className="revState">
-                    <span>发布于{this.state.article.time}</span>
-                    <div onClick={this.onAgree.bind(this,this.state.article.articleId)}>
-                        <img src={this.state.article.like?`${yidianzan}`:`${dianzan}`} alt=''/>
-                        <span>{this.state.article.agree || "点赞"}</span>
-                    </div>
+                    <span>发布于{this.state.toReview.reviewTime}</span>
+                    {/* <div onClick={this.onAgree.bind(this,this.state.toReview.articleId)}>
+                        <img src={this.state.toReview.like?`${yidianzan}`:`${dianzan}`} alt=''/>
+                        <span>{this.state.toReview.agree || "点赞"}</span>
+                    </div> */}
                   </div>
               </div>
               <Comment

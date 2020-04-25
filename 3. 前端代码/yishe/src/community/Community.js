@@ -18,6 +18,7 @@ export default class Community extends Component {
         }
     }    
     componentDidMount(){
+        console.log(this.props.id);
         fetch("http://47.98.163.228:3004/office?limit=2")
         .then(res=>res.json())
         .then(res=>{
