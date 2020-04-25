@@ -6,8 +6,8 @@ import './wear.css';
 import didian from '../images/didian.png'
 import qing from '../images/yang.png'
 import mote from '../images/mote.png'
-import mote2 from '../images/mote2.png'
-import fenxiang from '../images/fenxiang.png'
+import mote2 from '../images/motewu.png'
+import fenxiang from '../images/fenxiang(1).png'
 import pengyouquan from '../images/pengyouquan.png'
 import weixin from '../images/weixin (2).png'
 import weibo from '../images/weibo (2).png'
@@ -16,7 +16,7 @@ import kongjian from '../images/qqkongjian.png'
 import shequ from '../images/shequ.png'
 import chuandariji from '../images/tupian.png'
 import fuzhilianjie from '../images/fuzhilianjie.png'
-import buganxingqu from '../images/buganxingqu.png'
+import buganxingqu from '../images/buganxingqu_44.png'
 import jubao from '../images/jubao.png'
 import xiaoren0 from '../images/xiaoren.png'
 import beijing from '../images/yu.gif'
@@ -24,6 +24,29 @@ import beijing2 from '../images/qing.jpg'
 import yun from '../images/yun.png'
 import xiayu from '../images/xiayu.png'
 import {Link} from 'react-router-dom'
+//美妆部分图片
+//图片导入
+import t0 from '../images/t0.png'
+import t1 from '../images/t1.png'
+import t2 from '../images/t2.png'
+import t3 from '../images/t3.png'
+import t4 from '../images/t4.png'
+import t5 from '../images/t5.png'
+import t6 from '../images/t6.png'
+import y1 from '../images/y1.png'
+import y2 from '../images/y2.png'
+import y3 from '../images/y3.png'
+import y4 from '../images/y4.png'
+import e1 from '../images/e1.png'
+//变色
+import t1_bai from '../images/pre/t1_bai.png'
+import t1_hair from '../images/pre/t1_hair.png'
+//美妆部分
+const hair = [t0,t1,t2,t3,t4,t5,t6]
+const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t1_bai,t1_bai]
+const hair_hair = [t1_hair,t1_hair,t1_hair,t1_hair,t1_hair,t1_hair]
+const glasses = [y1,y2,y3,y4]
+const eye = [e1]
 
 const src =[beijing2,beijing];
 //分享按钮
@@ -55,11 +78,14 @@ export default class Wear extends Component {
         ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],//小图标
         count:0,
         href:'#/apptab',
-        userId:'122',
+        userId:window.location.href.split('#')[1].split('/')[2],
         ress:[],
         linshi:0,
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
         color:'',//发色
+        index1:0,//发型
+        index2:-1,//瞳色
+        index3:-1,//眼镜
         color2:'',
         cc:[],
         num:0,
@@ -68,6 +94,10 @@ export default class Wear extends Component {
     }
   }    
   componentDidMount(){
+    console.log(this.props);
+    console.log(window.location.href.split('#')[1].split('/')[2])
+    // console.log()
+        this.updata_image();
         //获取图片信息
         var small=[],big=[];
         fetch('http://47.98.163.228:3001/react',{
@@ -78,10 +108,11 @@ export default class Wear extends Component {
                 // 'Content-Type': 'application/x-www-form-urlencoded'
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({userId:this.props.id})  
+            body: JSON.stringify({userId:window.location.href.split('#')[1].split('/')[2]})  
         })
         .then(res=>res.json())
         .then(res=>{
+          console.log(res)
             //把读取的图片放进来
             if(res[0].cloSmallPic){     
             for(var i=0;i<res.length;i++){//循环res的图
@@ -182,6 +213,8 @@ export default class Wear extends Component {
         temperature2:res.data[0].tem1,
         dressing_advice:res.data[0].index[3].desc,
         weather:res.data[0].wea,
+      },function(){
+        this.weather_icon();
       })
     })
   }
@@ -369,6 +402,32 @@ export default class Wear extends Component {
       }
       return color;
     }
+    //美妆部分
+    updata_image(){
+      fetch('http://47.98.163.228:3001/get_mote_style',{
+        method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userId:window.location.href.split('#')[1].split('/')[2]})  
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        console.log(res);
+        this.setState({
+          index1:res[0].index1,
+          index2:res[0].index2,
+          index3:res[0].index3,
+          color:res[0].color,
+        })
+        document.getElementById('change_hair_color').style.display='block';
+        document.getElementById('change_hair_style').style.display='block';
+        document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
+        document.getElementById('change_hair_color').style.opacity=0.9
+      })
+    }
     //渲染组件
     render() {
         return (
@@ -389,16 +448,23 @@ export default class Wear extends Component {
                   {this.state.dressing_advice}
               </p>
                 {/* 模特 */}
-                <Link to={"/pretty/"+this.props.id}>
                 <img src={mote2} id="mote"/>
-                </Link>
                 <img src={mote2} id="mote_2"/>
-               <div class="icon" id="mote22"><img  class='icon3'  id="mote_4" /></div>
+               <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
                 <img  id='mote2' />
                 <img  id='mote3' />
                 <img  id='mote4' />               
-                <div class="icon" id="mote22"><img  class='icon4'  id="mote_5" /></div>
+                <div className="icon" id="mote22"><img  className='icon4'  id="mote_5" /></div>
                 <img  id='mote6' />
+                {/* 模特的美妆部分 */}
+                <Link to={"/pretty/"+this.props.id}>
+                  <img src={eye[this.state.index2]} id="t22"/>
+                  <img src={glasses[this.state.index3]} id="t33"/>
+                  <img src={hair[this.state.index1]} className="t00"/>
+                  {/* 改变发色 */}
+                  <img src={hair_bai[this.state.index]} className="t00" style={{left:'-120px',display:"none"}} id="change_hair_color"/>
+                  <img src={hair_hair[this.state.index]} style={{display:"none"}} className="t00" id="change_hair_style"/>
+                  </Link>
                 {/* 衣物栏 */}
                 <div id="yiwu">
                   <WhiteSpace />
