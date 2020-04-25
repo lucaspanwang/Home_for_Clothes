@@ -144,11 +144,12 @@ export default class Review extends Component {
             {
               (data) => <div onLoad={(data)=>this.setState({userId:data})}>
               <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                   <Link to={"/shequarticle/"+this.props.match.params.id.split("&")[0]+'&'+this.props.match.params.id.split("&")[2]}><img src={fanhui} style={{width:'30px'}} key="revfan"/></Link>
                 ]}
                 >{this.state.review.length}条回复</NavBar>
+                <NavBar></NavBar>
                 <div className="secReview">
                   <div className="left">
                       <img className='userImg' src={this.state.toReview.userPic} alt=""/>

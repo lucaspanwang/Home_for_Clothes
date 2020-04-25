@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Popover, NavBar, Drawer, List, SearchBar } from 'antd-mobile';
+import { Popover, NavBar, Toast, SearchBar } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography,Menu, Dropdown, Icon } from 'antd';
 import './me.css';
-import Gongge from '../community/Gongge';
+import Gongge from '../community/common/Gongge';
 
 import tianjia from '../images/tianjia.png';
 import fanhui from '../images/fanhui_1.png';
@@ -39,27 +39,35 @@ export default class Community extends Component {
                 users:res
             })
         });
-        this.forceUpdate();
+    }
+    loadingToast=()=> {
+        Toast.loading('正在删除...', 1, () => {
+            fetch("http://47.98.163.228:3004/article?userId="+this.props.match.params.id)
+            .then(res=>res.json())
+            .then(res=>{
+                for(var i=0;i<res.length;i++){
+                    var j = res[i].userPic.indexOf('/');
+                    res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
+                    for(var j=0;j<res[i].cimg.length;j++){
+                        res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
+                    }
+                }
+                this.setState({
+                    users:res
+                })
+            })
+            this.onToastSuccess();
+        });
+      }
+    onToastSuccess=()=>{
+        Toast.success('成功删除文章！',0.8);
     }
     deleteArticle=(id)=>{
         console.log(id);
         fetch("http://47.98.163.228:3004/articleDelete?articleId="+id)
-          .then(res=>res.json())
-          .then(res=>{
-              fetch("http://47.98.163.228:3004/article?userId="+this.props.match.params.id)
-                .then(res=>res.json())
-                .then(res=>{
-                    for(var i=0;i<res.length;i++){
-                        var j = res[i].userPic.indexOf('/');
-                        res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
-                        for(var j=0;j<res[i].cimg.length;j++){
-                            res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
-                        }
-                    }
-                    this.setState({
-                        users:res
-                    })
-            })
+        .then(res=>res.json())
+        .then(res=>{
+            this.loadingToast();
         });
     }
     //修改时间
@@ -83,12 +91,11 @@ export default class Community extends Component {
         return (
             <div style={{width:'100%'}}>
                 <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
-                leftContent={[
-                  <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
-                ]}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
+                leftContent={<Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>}
                 rightContent={<Link to={"/articleadd/"+this.props.match.params.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >发帖</NavBar>
+                <NavBar></NavBar>
                 <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 {
                     this.state.users.map((item)=>(<div className="article" key={item.articleId}>

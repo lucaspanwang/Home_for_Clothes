@@ -40,8 +40,8 @@ export default class Community extends Component {
         return (
             <div style={{width:'100%'}}>
                 <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
-                rightContent={<Link to={"/articleadd/"+this.props.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
+                    style={{backgroundColor:'#fc9d9a',color:'white'}}
+                    rightContent={<Link to={"/articleadd/"+this.props.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >社区</NavBar>
                 <Link to={"/search/"+this.props.id+"&article"}>
                     <SearchBar placeholder="搜索" style={{backgroundColor:'#ccc'}} disabled/>

@@ -109,10 +109,12 @@ export default class MyCare extends Component {
         return (
             <div>
                 <NavBar
+                    style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                     leftContent={
                         <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
-                style={{backgroundColor:'rgb(252, 157, 154)'}}>关注</NavBar>
+                >关注</NavBar>
+                <NavBar></NavBar>
                 <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 <Collapse bordered={true} accordion>
                 {

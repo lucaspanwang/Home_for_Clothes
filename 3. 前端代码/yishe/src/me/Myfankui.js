@@ -120,7 +120,7 @@ export default class DiaryAdd extends Component {
         return (
             <div>
                 <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                     <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
@@ -128,7 +128,8 @@ export default class DiaryAdd extends Component {
                     <p style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'20px'}} onClick={this.onPost}>完成</p>
                 ]}
                 >反馈意见</NavBar>
-
+                <NavBar></NavBar>
+                
                 <span style={{marginLeft:'12px'}}>电话：</span><input style={{marginTop:'5%',marginBottom:'3%',width:'70%',height:'30px',backgroundColor:'white',border:'1px solid #008cff',borderRadius:'5px'}} type='tel' onChange={(e)=>this.inputChange(e)}/>
                 <br/>
                 <span style={{marginLeft:'12px',marginTop:'5%'}}>反馈意见：</span>
