@@ -50,7 +50,7 @@ export default class AppBox extends Component {
 
     }
     componentDidMount(){
-        console.log('本地存储'+localStorage.getItem('添加'))
+        // console.log('本地存储'+localStorage.getItem('添加'))
         fetch('http://47.98.163.228:8084/change')
         .then(res=>res.json())
         .then(res=>{

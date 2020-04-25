@@ -122,23 +122,21 @@ export default class OfficeArticle extends Component {
             {
               (data) => <div onLoad={(data)=>this.setState({userId:data})}>
               <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                   <Link to={"/office/"+this.props.match.params.id.split("&")[1]}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>
                 ]}
-                rightContent={[
-                    <img src={`${fenxiang}`} alt="" style={{margin:'10px',width:'20px'}}/>
-                    // <Link to={"/shequtab/"+this.props.match.params.id.split("&")[1]}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>
-                  ]}
-                >阅读全文</NavBar>
-                <div className="offArt">
-                    <span className='offTitle'>{this.state.office.offTitle}</span>
-                    <div className="offDetail">
-                        <p>{this.state.office.offContent}</p>
-                        <img src={this.state.office.offImg}/>
-                        <p>发布于{this.state.office.offTime}</p>
-                    </div>
-                </div>
+                rightContent={[<img src={`${fenxiang}`} alt="" style={{margin:'10px',width:'20px'}}/>]}
+              >阅读全文</NavBar>
+              <NavBar></NavBar>
+              <div className="offArt">
+                  <span className='offTitle'>{this.state.office.offTitle}</span>
+                  <div className="offDetail">
+                      <p>{this.state.office.offContent}</p>
+                      <img src={this.state.office.offImg}/>
+                      <p>发布于{this.state.office.offTime}</p>
+                  </div>
+              </div>
               <Comment
                 avatar={
                   <Avatar

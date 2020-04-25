@@ -46,11 +46,12 @@ export default class Search extends Component {
         return (
             <div>
                 <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                   <Link to={"/apptab/"+this.state.userId+'&community'}><img src={fanhui} style={{width:'30px'}} key="searchfan"/></Link>
                 ]}
                 >搜索</NavBar>
+                <NavBar></NavBar>
                 <SearchBar placeholder="请输入你要查找的内容" maxLength={15} style={{backgroundColor:'#ccc'}} onSubmit={(value)=>this.onSubmit(value)}/>
                 {/* 显示搜索内容 */}
                 {message}

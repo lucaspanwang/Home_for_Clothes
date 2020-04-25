@@ -70,12 +70,13 @@ export default class MyCollect extends Component {
         return (
             <div style={{width:'100%'}}>
                 <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                   <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={<Link to={"/articleadd/"+this.props.match.params.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >收藏</NavBar>
+                <NavBar></NavBar>
                 <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 {
                     this.state.collect.map((item)=>(<div className="article" key={item.articleId}>

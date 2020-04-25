@@ -45,11 +45,12 @@ export default class Office extends Component {
         return (
             <div style={{width:'100%'}}>
                 <NavBar 
-                style={{backgroundColor:'#fc9d9a',color:'white'}}
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
                   <Link to={"/apptab/"+this.props.match.params.id+'&community'}><img src={fanhui} style={{width:'30px'}} key="offfan"/></Link>
                 ]}
                 >官方消息</NavBar>
+                <NavBar></NavBar>
                 {/* <Link to={"/search/"+this.props.id}> */}
                     <SearchBar placeholder="搜索" style={{backgroundColor:'#ccc'}} disabled/>
                 {/* </Link> */}

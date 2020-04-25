@@ -32,9 +32,37 @@ export default class AppTab extends React.Component {
     var url = window.location.href;
     var tab = url.split('#')[1].split('&')[1];
     if(tab){
-      this.setState({
-        selectedTab:tab
-      })
+      switch (tab) {
+        case 'store':
+          this.setState({
+            selectedTab:tab,
+            navbar:'整理箱'
+          });
+          break;
+        case 'community':
+          this.setState({
+            selectedTab:tab,
+            navbar:'社区'
+          });
+          break;
+        case 'message':
+          this.setState({
+            selectedTab:tab,
+            navbar:'消息'
+          });
+          break;
+        case 'me':
+          this.setState({
+            selectedTab:tab,
+            navbar:'个人'
+          });
+          break;
+        default:
+          this.setState({
+            selectedTab:tab
+          });
+          break;
+      }
     }
     this.setState({
       url:url.split('#')[0]
