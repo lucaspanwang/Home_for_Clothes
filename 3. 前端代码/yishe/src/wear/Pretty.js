@@ -22,15 +22,20 @@ import e1 from '../images/e1.png'
 //变色
 import t1_bai from '../images/pre/t1_bai.png'
 import t1_hair from '../images/pre/t1_hair.png'
-
+import t4_bai from '../images/pre/t4_bai.png'
+import t4_hair from '../images/pre/t4_hair.png'
+import t5_bai from '../images/pre/t5_bai.png'
+import t5_hair from '../images/pre/t5_hair.png'
+import t6_bai from '../images/pre/t6_bai.png'
+import t6_hair from '../images/pre/t6_hair.png'
 const tabs = [
     { title: <Badge>发型</Badge> },
     { title: <Badge>瞳色</Badge> },
     { title: <Badge>眼镜</Badge> },
 ];
 const hair = [t0,t1,t2,t3,t4,t5,t6]
-const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t1_bai,t1_bai]
-const hair_hair = [t1_hair,t1_hair,t1_hair,t1_hair,t1_hair,t1_hair]
+const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t4_bai,t5_bai,t6_bai]
+const hair_hair = [t1_bai,t1_hair,t1_hair,t1_hair,t4_hair,t5_hair,t6_hair]
 const glasses = [y1,y2,y3,y4]
 const eye = [e1]
 export default class Pretty extends Component {
@@ -47,6 +52,8 @@ export default class Pretty extends Component {
     num=(idx)=>{
         this.setState({
             index:idx
+        },function(){
+          console.log(this.state.index)
         })
     }
     num2=(idx)=>{
@@ -100,12 +107,12 @@ export default class Pretty extends Component {
             {/* 头 */}
                 <NavBar
                     leftContent={
-                        <Link to={"/apptab/"+this.props.match.params.id}>
+                        <Link to={"/apptab/"+this.props.match.params.id}onClick={this.handlePost}>
                             <img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>穿搭</NavBar>
               {/* 保存 */}
-              <button onClick={this.handlePost} className="baocun">保存</button>
+              {/* <button onClick={this.handlePost} className="baocun">保存</button> */}
               {/* 模特脸 */}
               <div className="m1" onClick={this.lalala}>
                   {/* 依次是：模特本身、发型、瞳色、眼镜 */}

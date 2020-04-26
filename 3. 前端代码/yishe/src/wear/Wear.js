@@ -41,10 +41,16 @@ import e1 from '../images/e1.png'
 //变色
 import t1_bai from '../images/pre/t1_bai.png'
 import t1_hair from '../images/pre/t1_hair.png'
+import t4_bai from '../images/pre/t4_bai.png'
+import t4_hair from '../images/pre/t4_hair.png'
+import t5_bai from '../images/pre/t5_bai.png'
+import t5_hair from '../images/pre/t5_hair.png'
+import t6_bai from '../images/pre/t6_bai.png'
+import t6_hair from '../images/pre/t6_hair.png'
 //美妆部分
 const hair = [t0,t1,t2,t3,t4,t5,t6]
-const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t1_bai,t1_bai]
-const hair_hair = [t1_hair,t1_hair,t1_hair,t1_hair,t1_hair,t1_hair]
+const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t4_bai,t5_bai,t6_bai]
+const hair_hair = [t1_bai,t1_hair,t1_hair,t1_hair,t4_hair,t5_hair,t6_hair]
 const glasses = [y1,y2,y3,y4]
 const eye = [e1]
 
@@ -416,13 +422,16 @@ export default class Wear extends Component {
       })
       .then(res=>res.json())
       .then(res=>{
-        console.log('get_mote_style:'+res);
+        console.log('get_mote_style:'+JSON.stringify(res));
+        var arr = JSON.stringify(res);
+        console.log(JSON.parse(arr)[0].userId)
         this.setState({
-          index1:res[0].index1,
-          index2:res[0].index2,
-          index3:res[0].index3,
-          color:res[0].color,
+          index1:JSON.parse(arr)[0].index1,
+          index2:JSON.parse(arr)[0].index2,
+          index3:JSON.parse(arr)[0].index3,
+          color:JSON.parse(arr)[0].color,
         })
+        console.log(this.state)
         document.getElementById('change_hair_color').style.display='block';
         document.getElementById('change_hair_style').style.display='block';
         document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
@@ -463,8 +472,8 @@ export default class Wear extends Component {
                   <img src={glasses[this.state.index3]} id="t33"/>
                   <img src={hair[this.state.index1]} className="t00"/>
                   {/* 改变发色 */}
-                  <img src={hair_bai[this.state.index]} className="t00" style={{left:'-120px',display:"none"}} id="change_hair_color"/>
-                  <img src={hair_hair[this.state.index]} style={{display:"none"}} className="t00" id="change_hair_style"/>
+                  <img src={hair_bai[this.state.index1]} className="t00" style={{left:'-120px',display:"none"}} id="change_hair_color"/>
+                  <img src={hair_hair[this.state.index1]} style={{display:"none"}} className="t00" id="change_hair_style"/>
                   </Link>
                 {/* 衣物栏 */}
                 <div id="yiwu">
