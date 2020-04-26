@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { NavBar} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 import './store.css';
 let value='';
 export default class Add extends Component {
@@ -24,18 +24,18 @@ export default class Add extends Component {
         })
     }
     handle=()=>{
-        console.log(this.state.value)
+        // console.log(this.state.value)
         localStorage.setItem('添加',this.state.value);
-        fetch("http://47.98.163.228:8084/value", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body:JSON.stringify({value:this.state.value}) 
-      })
+    //     fetch("http://47.98.163.228:8084/value", {
+    //     method: 'post', 
+    //     "Access-Control-Allow-Origin" : "*",
+    //     "Access-Control-Allow-Credentials" : true,
+    //     credentials: 'include',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body:JSON.stringify({value:this.state.value}) 
+    //   })
         // console.log(value);
         // console.log(this.state.value);
     }

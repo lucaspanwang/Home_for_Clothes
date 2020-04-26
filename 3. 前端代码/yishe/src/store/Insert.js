@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { NavBar, Picker, List, WhiteSpace,ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 import { createForm } from 'rc-form';
 import './store.css';
 import { thisTypeAnnotation } from '@babel/types';
@@ -29,6 +29,7 @@ const colorStyle = {
   height: '16px',
   marginRight: '10px',
 };
+// 衣服分类
 let kind;
 sex=='女'?kind=[
   {
@@ -173,7 +174,7 @@ sex=='女'?kind=[
 ]
 
 
-
+// 位置data
 const where=[
   {
     label:(<span>家</span>),
@@ -190,7 +191,7 @@ const where=[
   
 ]
 
-
+// 颜色data
 const colors = [
   {
     label:
@@ -325,7 +326,7 @@ class Insert extends Component {
   todata=()=>{
     if(this.state.mingzi==''|
     this.state.zhonglei==''|
-    this.state.colorValue==''|this.state.where==''){
+    this.state.colorValue==''|this.state.where==''|this.state.filesType==undefined){
       alert('不能为空');
     }else{
       console.log(this.state.mingzi)
@@ -352,6 +353,7 @@ class Insert extends Component {
     }
     
   componentDidMount(){
+    console.log('导入传来得id'+this.props.match.params.id)
     
   }
   

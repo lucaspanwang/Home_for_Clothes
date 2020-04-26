@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
-import Back from '../images/返回 (1).png';
+import Back from '../images/fanhui_1.png';
 
 export default class Trunk extends Component {
     constructor(){

@@ -51,15 +51,24 @@ export default class AppBox extends Component {
 
     }
     componentDidMount(){
-        // console.log('本地存储'+localStorage.getItem('添加'))
-        fetch('http://47.98.163.228:8084/change')
-        .then(res=>res.json())
-        .then(res=>{
+        if(localStorage.getItem('添加')==''){
             this.setState({
-                value:res
+                value:'添加'
             })
-            console.log('后台传来：',res);
-        });
+        }else{
+            this.setState({
+                value:localStorage.getItem('添加')
+            })
+        }
+        // console.log('本地存储'+localStorage.getItem('添加'))
+        // fetch('http://47.98.163.228:8084/change')
+        // .then(res=>res.json())
+        // .then(res=>{
+        //     this.setState({
+        //         value:res
+        //     })
+        //     console.log('后台传来：',res);
+        // });
         // 通过id判断性别
     //     fetch("http://47.98.163.228:8087/sex", {
     //     method: 'post', 
