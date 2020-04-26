@@ -9,7 +9,9 @@ import xiangce from '../images/xiangce.png';
 import diary from '../images/diary.png';
 import fankui from '../images/fankui.png';
 import shezhi from '../images/shezhi.png';
-import renwu from '../images/xiaoren.png';
+// import xiaoren from '../images/xiaoren.png';
+import xiaoren1 from '../images/timg03.gif';
+import xiaoren2 from '../images/timg01.gif';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -48,7 +50,7 @@ export default class Me extends Component {
     }
     render() {
         return (
-            <div style={{width:'100%',height:"100%",background:"url("+renwu+") bottom center no-repeat"}}>
+            <div style={{width:'100%',height:"100%"}}>
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 >个人</NavBar>
@@ -110,6 +112,19 @@ export default class Me extends Component {
                     arrow="horizontal"
                     >设置</Item></Link>
                 </List>
+                {
+                    this.state.user.userSex==='女'?(
+                        <div>
+                            <img src={xiaoren1} alt='' onClick={() => {}}  style={{width:'72%',marginLeft:'13%'}}/>
+                        </div>
+                    ):
+                    (
+                        <div>
+                            <img src={xiaoren2} alt='' onClick={() => {}}  style={{width:'90%',height:'30%',marginLeft:'5%'}}/>
+                        </div> 
+                    )
+                   
+                }
             </div>
         );
     }
