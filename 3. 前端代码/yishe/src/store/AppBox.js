@@ -15,7 +15,7 @@ export default class AppBox extends Component {
     constructor(props){
         super(props);
         this.state={
-            value:'添加',
+            value:'',
             where:'家'
         }
     }   
@@ -51,7 +51,8 @@ export default class AppBox extends Component {
 
     }
     componentDidMount(){
-        if(localStorage.getItem('添加')==''){
+        
+        if(localStorage.getItem('添加')==undefined){
             this.setState({
                 value:'添加'
             })
