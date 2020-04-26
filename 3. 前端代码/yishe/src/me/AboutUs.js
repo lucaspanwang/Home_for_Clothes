@@ -22,7 +22,7 @@ export default class AboutUs extends Component {
               {/* 头 */}
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/setup/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/setup/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fanuuu"/></Link>
                 ]}
                 >关于我们</NavBar>
                 <div className="about" style={{textAlign:'center'}}>

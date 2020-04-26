@@ -116,7 +116,7 @@ export default class DiaryAdd extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/diary/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/diary/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan0009"/></Link>
                 ]}
                 rightContent={[
                     <Link style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>

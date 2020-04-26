@@ -29,12 +29,12 @@ export default class Me extends Component {
             window.location.reload();
             localStorage.removeItem('comee')
         }
-        fetch("http://47.98.163.228:3004/users?userId="+this.props.id)
+        fetch("http://47.98.163.228:3000/users?userId="+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
+                res[i].userPic = "http://47.98.163.228:3000"+res[i].userPic.substr(j);
             }
             this.setState({
                 user:res[0]
@@ -115,12 +115,12 @@ export default class Me extends Component {
                 {
                     this.state.user.userSex==='女'?(
                         <div>
-                            <img src={xiaoren1} alt='' onClick={() => {}}  style={{width:'72%',marginLeft:'13%'}}/>
+                            <img src={xiaoren1} alt='' onClick={() => {}}  style={{width:'100%',marginTop:'10px'}}/>
                         </div>
                     ):
                     (
                         <div>
-                            <img src={xiaoren2} alt='' onClick={() => {}}  style={{width:'90%',height:'30%',marginLeft:'5%'}}/>
+                            <img src={xiaoren2} alt='' onClick={() => {}}  style={{width:'100%',marginTop:'10px'}}/>
                         </div> 
                     )
                    

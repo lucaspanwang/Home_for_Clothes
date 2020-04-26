@@ -102,23 +102,37 @@ export default class Diary extends Component {
     }
     getInputValue(){
         var date = this.state.date;
-        this.props.history.push({
-            pathname: "/diarysearch/"+this.props.match.params.id+'/'+date,
-            state: {
-                date: date
+        if(date){
+            this.props.history.push({
+                pathname: "/diarysearch/"+this.props.match.params.id+'/'+date,
+                state: {
+                    date: date
+                }
+            })
+        }else{
+            var now = new Date();
+            var month= now.getMonth() + 1;
+            if(month<10){
+                month='0'+month;
             }
-        })
+            date = now.getFullYear() + '-' + month;
+            this.setState({
+                date:date
+            })
+            
+        }
         this.props.history.push("/diarysearch/"+this.props.match.params.id+'/'+date)
     }
     
     render() {
         return (
             <div style={{width:'100%'}}>
-                <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
+                <NavBar style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
-                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan6356"/></Link>
                 ]}
                 >穿搭日记</NavBar>
+                <NavBar></NavBar>
                 <div style={{width:'100%',height:'120px'}}>
                     <Link to={"/diaryadd/"+this.props.match.params.id}>
                         <div style={{width:'100px',height:'120px',marginTop:'10px',float:'left',marginLeft:'10px',marginRight:'20px'}}>
@@ -151,14 +165,12 @@ export default class Diary extends Component {
                         <Timeline.Item dot={<Icon type="heart" theme="filled" style={{ fontSize: '16px' }} key={idx}/>} color="red" key={idx}>
                             <div style={{width:'95%',padding:'10px',border:'2px solid #ccc',borderRadius:'10px'}}>
                                 <p style={{color:'#000',marginBottom:'8px'}}>{item.diaryContent}</p>
-                                <Grid data={item.dimg}
-                                    columnNum={3}
-                                    renderItem={dataItem => (
-                                        <img src={dataItem} onClick={()=>{window.location.href=dataItem}} alt="" style={{width:'100%'}}/>
-                                    )}
-                                    style={{border:'none'}}
-                                />
-                                <span style={{color:'#888'}}>{this.formatUTC(item.diaryTime)} <img src={del} alt='' style={{width:'7%',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
+                                {
+                                    item.dimg.map((i,d)=>
+                                      <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%',marginBottom:'5px'}}/>
+                                    )
+                                }
+                                <p style={{color:'#888'}}>{this.formatUTC(item.diaryTime)} <img src={del} alt='' style={{width:'15px',float:'right'}} onClick={()=>this.deleteItem(idx)}/></p>
                             </div>    
                         </Timeline.Item>
                     )

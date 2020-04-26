@@ -94,7 +94,7 @@ export default class AboutMe extends Component {
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan" onClick={()=>{localStorage.setItem('comee',1);}}/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fankk" onClick={()=>{localStorage.setItem('comee',1);}}/></Link>
                 ]}
                 >个人中心</NavBar>
                 <List className="my-list">

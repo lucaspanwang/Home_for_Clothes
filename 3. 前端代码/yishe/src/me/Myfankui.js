@@ -42,7 +42,7 @@ export default class DiaryAdd extends Component {
     }
     onToast=()=>{
         Toast.loading('反馈上传中...',2, () => {
-            window.location.href=window.location.href.split('#')[0]+"#/gerentab/"+this.props.match.params.id
+            window.location.href=window.location.href.split('#')[0]+"#/apptab/"+this.props.match.params.id+'&me'
         });
     }
     onFail=()=>{
@@ -122,10 +122,10 @@ export default class DiaryAdd extends Component {
                 <NavBar 
                 style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
-                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan6"/></Link>
                 ]}
                 rightContent={[
-                    <p style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px',marginTop:'20px'}} onClick={this.onPost}>完成</p>
+                    <Link to={"/fankuicont/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}}>我的反馈</Link>
                 ]}
                 >反馈意见</NavBar>
                 <NavBar></NavBar>
@@ -139,11 +139,7 @@ export default class DiaryAdd extends Component {
                     placeholder="请描述您遇到的问题，我们会尽快为您解决。"
                     autoSize={{ minRows: 3, maxRows: 5 }}
                     />
-                <ImagePicker
-                    files={this.state.files}
-                    onChange={this.onChange}
-                    accept="image/gif,image/jpeg,image/jpg,image/png"
-                />
+                <button style={{width:'45%',height:'40px',border:'none',backgroundColor:'#008cff',fontSize:'18px',color:'white',marginLeft:'25%',borderRadius:'8px',marginTop:'20px'}} onClick={this.onPost}>提交</button>
             </div>
         )
     }

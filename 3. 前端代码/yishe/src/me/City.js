@@ -25,7 +25,7 @@ export default class City extends Component {
                     <NavBar
                     style={{backgroundColor:'#fc9d9a',color:'white',marginBottom:'10px'}}
                     leftContent={[
-                        <Link to={"/aboutme/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                        <Link to={"/aboutme/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan852"/></Link>
                     ]}
                     rightContent={[
                         <Link to={"/aboutme/"+this.props.match.params.id} style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={()=>this.handlePost(data)}>完成</Link>

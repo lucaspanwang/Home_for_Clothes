@@ -18,7 +18,7 @@ export default class DiarySearch extends Component {
         fetch('http://47.98.163.228:3000/diary/'+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
-            {    
+            {   
                 for(var i=0;i<res.length;i++){
                     var j = res[i].userPic.indexOf('/');
                     res[i].userPic = "http://47.98.163.228:3000"+res[i].userPic.substr(j);  
@@ -54,6 +54,12 @@ export default class DiarySearch extends Component {
                 console.log(this.state.content)
             }
         }) 
+    }
+    componentWillUnmount(){
+        diarys=[];
+        this.setState({
+            content: [],
+        })
     }
     formatUTC=(utc_datetime) =>{
         // 转为正常的时间格式 年-月-日 时:分:秒
@@ -100,11 +106,12 @@ export default class DiarySearch extends Component {
     render() {
         return (
             <div>
-                <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
+                <NavBar style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
-                    <Link to={"/diary/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/diary/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan99999"/></Link>
                 ]}
                 >日记搜索结果</NavBar>
+                <NavBar></NavBar>
                 {
                    this.state.content.length!==0?(
                     this.state.content.map((item,idx)=>
@@ -112,18 +119,16 @@ export default class DiarySearch extends Component {
                             <div style={{width:'100%',height:'50px'}}>
                                 <img src={this.state.content[0].userPic} alt='' style={{width:'12%',borderRadius:'50%',float:'left'}} />
                                 <div style={{paddingTop:'20px'}}>
-                                    <span style={{color:'#888'}}>&nbsp;&nbsp;&nbsp;&nbsp;{item.diaryTime} <img src={del} alt='' style={{width:'6%',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
+                                    <span style={{color:'#888'}}>&nbsp;&nbsp;&nbsp;&nbsp;{item.diaryTime} <img src={del} alt='' style={{width:'15px',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
                                 </div>    
                             </div>
                             <div style={{width:'100%'}}>
                                 <p style={{color:'#000',marginBottom:'8px'}}>{item.diaryContent}</p>
-                                <Grid data={item.dimg}
-                                    columnNum={3}
-                                    renderItem={dataItem => (
-                                        <img src={dataItem} onClick={()=>{window.location.href=dataItem}} alt="" style={{width:'100%'}}/>
-                                    )}
-                                    style={{border:'none',height:'30px'}}
-                                />
+                                {
+                                    item.dimg.map((i,d)=>
+                                      <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%'}}/>
+                                    )
+                                }
                             </div>
                         </div>    
                     )

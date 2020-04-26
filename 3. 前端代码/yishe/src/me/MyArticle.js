@@ -92,7 +92,7 @@ export default class Community extends Component {
             <div style={{width:'100%'}}>
                 <NavBar 
                 style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
-                leftContent={<Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>}
+                leftContent={<Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fantttt"/></Link>}
                 rightContent={<Link to={"/articleadd/"+this.props.match.params.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
                 >发帖</NavBar>
                 <NavBar></NavBar>

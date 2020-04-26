@@ -22,3 +22,6 @@ textarea.ant-input {
 .ant-timeline-item-tail{
     border-left: 2px solid #f14f60 !important;
 }
+.am-grid.am-grid-line:not(.am-grid-carousel){
+    border: none !important;
+}
