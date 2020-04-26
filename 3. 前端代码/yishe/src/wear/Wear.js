@@ -47,6 +47,7 @@ import t5_bai from '../images/pre/t5_bai.png'
 import t5_hair from '../images/pre/t5_hair.png'
 import t6_bai from '../images/pre/t6_bai.png'
 import t6_hair from '../images/pre/t6_hair.png'
+
 //美妆部分
 const hair = [t0,t1,t2,t3,t4,t5,t6]
 const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t4_bai,t5_bai,t6_bai]
@@ -220,7 +221,7 @@ export default class Wear extends Component {
         temperature2:res.data[0].tem1,
         dressing_advice:res.data[0].index[3].desc,
         weather:res.data[0].wea,
-        speak_suggest:res.data[0].index[0].desc+res.data[0].index[1].desc+res.data[0].index[2].desc+res.data[0].index[3].desc+res.data[0].index[4].desc+res.data[0].index[5].desc
+        speak_suggest:res.data[0].index[1].desc
       },function(){
         this.weather_icon();
       })
@@ -228,8 +229,6 @@ export default class Wear extends Component {
   }
   //根据天气显示背景和图标
   weather_icon(){
-    const msg = new SpeechSynthesisUtterance(this.state.speak_suggest);
-    window.speechSynthesis.speak(msg);
     switch(this.state.weather){
       case '多云':
         this.idx = 0;
@@ -435,12 +434,18 @@ export default class Wear extends Component {
           index3:JSON.parse(arr)[0].index3,
           color:JSON.parse(arr)[0].color,
         })
-        console.log(this.state)
-        document.getElementById('change_hair_color').style.display='block';
-        document.getElementById('change_hair_style').style.display='block';
-        document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
-        document.getElementById('change_hair_color').style.opacity=0.9
+        console.log(this.state.color)
+        if(this.state.color !== ''){
+          document.getElementById('change_hair_color').style.display='block';
+          document.getElementById('change_hair_style').style.display='block';
+          document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
+          document.getElementById('change_hair_color').style.opacity=0.9
+        }
       })
+    }
+    speak=()=>{
+      const msg = new SpeechSynthesisUtterance(this.state.speak_suggest);
+      window.speechSynthesis.speak(msg);
     }
     //渲染组件
     render() {
@@ -450,7 +455,7 @@ export default class Wear extends Component {
                 <NavBar style={{backgroundColor:'#fc9d9a',color:'white'}}
                 >穿搭</NavBar>
               {/* 天气 */}
-              <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }} id="lalala">
+              <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }} id="lalala" onClick={this.speak.bind(this)}>
                     <img src={didian} style={{width:'30px',float:'left',position:'relative',top:'-5px',marginTop:'7px'}} key="fan1"/>
                     <span id="shi" style={{float:'left'}}>{this.state.city}</span>
                     <span style={{float:'left'}}>今日天气:</span>
