@@ -5,6 +5,7 @@ import remark from '../images/message/remark.png';
 import thumb from '../images/message/thumb.png';
 import user123 from '../images/message/123.jpg';
 import user122 from '../images/message/122.jpg';
+import group1 from '../images/group1.jpg';
 
 // import './login.css';
 
@@ -37,9 +38,9 @@ export default class ResetPwd extends Component{
                         </div>
                     </li></Link>
                     <Link to={"/chat?name="+this.props.id+"&room=test"}><li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
-                        <img src={user123} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
+                        <img src={group1} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
                         <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%'}}>
-                            123
+                            衣舍内测用户体验群1群
                             <p style={{fontSize:'15px', color:'#a8a8a8', float:'right', marginTop:'0', marginRight:'2%'}}>4-19</p>
                             <p style={{color:'#666666', margin:'0', fontSize:'16px'}}>嗯嗯，好滴~</p>
                         </div>
