@@ -97,6 +97,7 @@ export default class Wear extends Component {
         num:0,
         num2:0,
         feng:'',
+        speak_suggest:'',
     }
   }    
   componentDidMount(){
@@ -219,6 +220,7 @@ export default class Wear extends Component {
         temperature2:res.data[0].tem1,
         dressing_advice:res.data[0].index[3].desc,
         weather:res.data[0].wea,
+        speak_suggest:res.data[0].index[0].desc+res.data[0].index[1].desc+res.data[0].index[2].desc+res.data[0].index[3].desc+res.data[0].index[4].desc+res.data[0].index[5].desc
       },function(){
         this.weather_icon();
       })
@@ -226,6 +228,8 @@ export default class Wear extends Component {
   }
   //根据天气显示背景和图标
   weather_icon(){
+    const msg = new SpeechSynthesisUtterance(this.state.speak_suggest);
+    window.speechSynthesis.speak(msg);
     switch(this.state.weather){
       case '多云':
         this.idx = 0;
