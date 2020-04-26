@@ -17,7 +17,7 @@ const InfoBar = ({name, room}) => (
       </Link>
         //<a href='/apptab'><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
     ]}
-    >123
+    >衣舍内测用户体验群1群
   </NavBar>//{room}
 
 );
