@@ -78,7 +78,7 @@ export default class App extends Component {
                     <Route path="/review/:id" component={Review} />
                     <Route path='/articleadd/:id' component={ArticleAdd} />
                     {/* 消息部分 */}
-                    <Route path='/chat/:id' component={Chat} />
+                    <Route path='/chat' component={Chat} />
                     <Route path="/remark/:id" component={Remark} />
                     <Route path="/like/:id" component={Like} />
                     {/* 个人部分 */}

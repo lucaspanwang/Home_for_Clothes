@@ -4,18 +4,21 @@ import React from 'react';
 // import closeIcon from '../../icons/closeIcon.png';
 import fanhui from '../../images/fanhui_1.png';
 import { NavBar } from 'antd-mobile';
+import { Link, Route, HashRouter as Router } from 'react-router-dom';
 
 import './InfoBar.css';
 
-const InfoBar = ({room}) => (
+const InfoBar = ({name, room}) => (
   <NavBar 
     style={{backgroundColor:'#fc9d9a',color:'white'}}
     leftContent={[
-        // <Link to="/"><img src={fanhui} style={{width:'25%'}} key="fan"/></Link>
-        <a href='/'><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
+      <Link to={`/apptab/${name}&message`}>
+        <img src={fanhui} style={{width:'25%'}} key="fan"/>
+      </Link>
+        //<a href='/apptab'><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
     ]}
-    >{room}
-  </NavBar>
+    >张三
+  </NavBar>//{room}
 
 );
 
