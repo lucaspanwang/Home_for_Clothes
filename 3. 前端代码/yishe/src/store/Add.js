@@ -50,7 +50,9 @@ export default class Add extends Component {
                 </NavBar>
                 <h2 style={{margin:'5%',fontWeight:"lighter"}}>请输入你想要添加的空间名称:</h2>
                 <input type="type" style={{marginLeft:'5%',height:'30px'}} onChange={this.change}/>
-                <a href={"/#/zhenglitab/"+this.props.match.params.id}><input type="submit" style={{height:'30px',width:'50px'}} onClick={this.handle}/></a>
+                <Link to={"/apptab/"+this.props.match.params.id+'&store'}>
+                <input type="submit" style={{height:'30px',width:'50px'}} onClick={this.handle}/>
+                </Link>
             </div>
         )
     }

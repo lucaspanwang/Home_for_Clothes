@@ -41,11 +41,12 @@ export default class AppBox extends Component {
                 if(this.state.value!='添加'){
                     window.location.href = 'http://localhost:3000/#/customize/' + this.props.id
                 }
-                count = 0;
+                // count = 0;
             } else if (count == 2) {
                 window.location.href = 'http://localhost:3000/#/add/' + this.props.id
-                count = 0;
+                // count = 0;
             }
+            count=0;
         }, 200)
 
     }
@@ -58,7 +59,18 @@ export default class AppBox extends Component {
                 value:res
             })
             console.log('后台传来：',res);
-        })
+        });
+        // 通过id判断性别
+    //     fetch("http://47.98.163.228:8087/sex", {
+    //     method: 'post', 
+    //     "Access-Control-Allow-Origin" : "*",
+    //     "Access-Control-Allow-Credentials" : true,
+    //     credentials: 'include',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body:JSON.stringify({userId:this.props.match.params.id}) 
+    //   });
     }
 
     
@@ -84,7 +96,7 @@ export default class AppBox extends Component {
                         <div id="fiveBut">
                             <li id="oneBut">
                                 <button onClick={this.double}>{this.state.value}</button>
-                                <Link to={"/add/"+this.props.id}><button>添加</button></Link>
+                                <button>添加</button>
                             </li>
                             <li id='twoBut'>
                                 <Link to={"/home/"+this.props.id}><button>家</button></Link>
