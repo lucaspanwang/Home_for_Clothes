@@ -48,10 +48,6 @@ import t5_hair from '../images/pre/t5_hair.png'
 import t6_bai from '../images/pre/t6_bai.png'
 import t6_hair from '../images/pre/t6_hair.png'
 
-//男女模特
-import Girl from './Girl'
-import Boy from './Boy'
-import mote_boy from '../images/boy/mote_boy.png'
 //美妆部分
 const hair = [t0,t1,t2,t3,t4,t5,t6]
 const hair_bai = [t1_bai,t1_bai,t1_bai,t1_bai,t4_bai,t5_bai,t6_bai]
@@ -91,7 +87,7 @@ export default class Wear extends Component {
         href:'#/apptab',
         userId:window.location.href.split('#')[1].split('/')[2],
         ress:[],
-        linshi:0,//推荐跳转整理箱的idx
+        linshi:0,
         tiaosrc : ['/diaryAdd/','/articleadd/',''],
         color:'',//发色
         index1:0,//发型
@@ -103,10 +99,13 @@ export default class Wear extends Component {
         num2:0,
         feng:'',
         speak_suggest:'',
-        sex:'',
     }
   }    
   componentDidMount(){
+    console.log(this.props);
+    console.log(window.location.href.split('#')[1].split('/')[2])
+    // console.log()
+        this.updata_image();
         //获取图片信息
         var small=[],big=[];
         fetch('http://47.98.163.228:3001/react',{
@@ -126,24 +125,19 @@ export default class Wear extends Component {
             if(res[0].cloSmallPic){     
             for(var i=0;i<res.length;i++){//循环res的图
               var j = res[i].cloSmallPic.indexOf('/');
-              if(res[0].userSex=='女'){
-                res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
-                big[i] = res[i].cloSmallPic;
-              }else{
-                res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
-                big[i] =  "ht"+res[i].cloSmallPic.substr(j).split('.png')[0]+'_boy.png'
-              }
+              res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
+              big[i] = res[i].cloSmallPic;
               var name = res[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
               small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png'
               console.log(big[i])//大图地址
               console.log(small[i])//小图地址
+              console.log(res[0].userCity)
               this.setState({
                 city:res[0].userCity,
                 ress:res,//意义不大
                 arr:big,
                 arr_s:small,
-                sex:res[0].userSex,
              },function(){
               this.weather();
              })
@@ -190,11 +184,7 @@ export default class Wear extends Component {
           }else{//最低温度大于0
             for(var i = 0;i<=this.state.ress.length-1;i++){
               var j = this.state.ress[i].cloSmallPic.indexOf('/');
-              if(this.state.sex=='女'){
-                big[i] = "http:"+this.state.ress[i].cloSmallPic.substr(j);
-              }else{
-                big[i] =  "http:"+this.state.ress[i].cloSmallPic.substr(j).split('.png')[0]+'_boy.png'
-              }
+              big[i]  = "http:"+this.state.ress[i].cloSmallPic.substr(j);
               var name = this.state.ress[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
               small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png'
@@ -211,7 +201,6 @@ export default class Wear extends Component {
           }
         }
       })
-      this.updata_image();
   }
   //获取用户天气
   weather(){
@@ -364,19 +353,17 @@ export default class Wear extends Component {
       var place='';
       //找到它的存储地点
       var nnn = weizhi[idx].split('/')[4].split('.')[0];
-      for(var i = 0;i<this.state.ress.length;i++){
+      for(var i = 0;i<this.state.ress.length-1;i++){
         if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
             place = this.state.ress[i].cloPlace
             break;
         }
       }
       //判断存储位置的第几个
-      for(var i = 0;i<this.state.ress.length;i++){
+      for(var i = 0;i<this.state.ress.length-2;i++){
         if(this.state.ress[i].cloPlace===place){
           this.setState({
             linshi:this.state.linshi+1
-          },function(){
-              console.log(this.state)
           })
         if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
           break;
@@ -388,18 +375,16 @@ export default class Wear extends Component {
     //向整理箱发送衣物编号（从1开始）
     fasong=(idx,place)=>{
       localStorage.setItem('count',0);
-      localStorage.setItem('zlx_num',idx);
-      this.tiaozhuan(place)
-    //   fetch("http://47.98.163.228:3001/pp", {
-    //     method: 'post', 
-    //     "Access-Control-Allow-Origin" : "*",
-    //     "Access-Control-Allow-Credentials" : true,
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({msg:idx}) 
-    //   })
-    //   .then(this.tiaozhuan(place))
+      fetch("http://47.98.163.228:3001/pp", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify({msg:idx}) 
+      })
+      .then(this.tiaozhuan(place))
     }
     //跳转整理箱url
     tiaozhuan=(place)=>{
@@ -450,9 +435,7 @@ export default class Wear extends Component {
           color:JSON.parse(arr)[0].color,
         })
         console.log(this.state.color)
-        console.log(this.state.sex)
-        if(this.state.color !== '' && this.state.sex=='女'){
-            console.log('???????')
+        if(this.state.color !== ''){
           document.getElementById('change_hair_color').style.display='block';
           document.getElementById('change_hair_style').style.display='block';
           document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
@@ -479,50 +462,32 @@ export default class Wear extends Component {
                     <img src={w_t[this.state.idx]} style={{width:'25px',float:'left',marginLeft:'5px',marginRight:'5px',marginTop:'3px'}} key="fan2"/>
                     <span style={{marginLeft:'5px',marginRight:'5px'}}>{this.state.weather}</span>
                     <span>{this.state.temperature}~{this.state.temperature2}</span>
-                    <span>{this.state.dressing_advice}</span>
-                    <span>{this.state.speak}</span>
               </NoticeBar>
-              {/* <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px',color:'white'}}>
+              <p style={{fontWeight:'800',marginTop:'15px',marginLeft:'15px',fontSize:'20px',height:'20px',color:'white'}}>
                   {this.state.dressing_advice}
-              </p> */}
+              </p>
                 {/* 模特 */}
-                {
-                    this.state.sex=='女'?
-                    <div>
-                        <img src={mote2} id="mote"/>
-                        <img src={mote2} id="mote_2"/>
-                         <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
-                        <img  id='mote2' />
-                        <img  id='mote3' />
-                        <img  id='mote4' />               
-                        <div className="icon" id="mote22"><img  className='icon4'  id="mote_5" /></div>
-                        <img  id='mote6' />
-                        {/* 美妆部分 */}
-                        <Link to={"/pretty/"+this.props.id}>
-                        <img src={eye[this.state.index2]} id="t22"/>
-                        <img src={glasses[this.state.index3]} id="t33"/>
-                        <img src={hair[this.state.index1]} className="t00"/>
-                        {/* 改变发色 */}
-                        <img src={hair_bai[this.state.index1]} className="t00" style={{left:'-120px',display:"none"}} id="change_hair_color"/>
-                        <img src={hair_hair[this.state.index1]} style={{display:"none"}} className="t00" id="change_hair_style"/>
-                        </Link>
-                    </div>
-                    :<div>
-                        <img src={mote_boy} id="mote"/>
-                        <img src={mote_boy} id="mote_2"/>
-                         <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
-                        <img  id='mote2' />
-                        <img  id='mote3' />
-                        <img  id='mote4' />               
-                        <div className="icon" id="mote22"><img  className='icon4'  id="mote_5" /></div>
-                        <img  id='mote6' />
-                    </div>
-                }
+                <img src={mote2} id="mote"/>
+                <img src={mote2} id="mote_2"/>
+               <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
+                <img  id='mote2' />
+                <img  id='mote3' />
+                <img  id='mote4' />               
+                <div className="icon" id="mote22"><img  className='icon4'  id="mote_5" /></div>
+                <img  id='mote6' />
+                {/* 模特的美妆部分 */}
+                <Link to={"/pretty/"+this.props.id}>
+                  <img src={eye[this.state.index2]} id="t22"/>
+                  <img src={glasses[this.state.index3]} id="t33"/>
+                  <img src={hair[this.state.index1]} className="t00"/>
+                  {/* 改变发色 */}
+                  <img src={hair_bai[this.state.index1]} className="t00" style={{left:'-120px',display:"none"}} id="change_hair_color"/>
+                  <img src={hair_hair[this.state.index1]} style={{display:"none"}} className="t00" id="change_hair_style"/>
+                  </Link>
                 {/* 衣物栏 */}
                 <div id="yiwu">
                   <WhiteSpace />
-                  <Tabs
-                    tabs={this.state.sex=='女'?tabs:tabs2}
+                  <Tabs tabs={tabs}
                     initialPage={0}
                     tabBarPosition="left"
                     tabDirection="vertical"
@@ -609,7 +574,7 @@ export default class Wear extends Component {
                     <img src={fenxiang} style={{width:'30px',float:'right',position:'relative',bottom:'-170px',right:'10px'}} key="fanxiang"/>
                 </a>
                 {/* 小人 */}
-                {/* <img src={xiaoren0} id="xiaoren"/> */}
+                <img src={xiaoren0} id="xiaoren"/>
                 {/* 分享栏 */}
                   <div id="fenxiang">
                     <p style={{textAlign:'center'}}>分享至</p>
@@ -652,11 +617,3 @@ const tabs = [
   { title: '裤子'},
   { title: '连衣裙'},
 ];
-const tabs2 = [
-    { title: '为你推荐'},
-    { title: '外套' },
-    { title: '上衣'},
-    { title: '裤子'},
-    { title: '鞋'},
-  ];
-  
