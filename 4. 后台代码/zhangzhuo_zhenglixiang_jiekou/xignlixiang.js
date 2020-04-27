@@ -10,15 +10,50 @@ con=mysql.createConnection({
 con.connect();
 let server=http.createServer();
 let user='';
+let sex='';
 server.on('request',(req,res)=>{
     if(req.url==='/userid'){
+        console.log('传入成功')
         res.setHeader('Access-Control-Allow-Origin','*');
         req.on("data",function(data){
             console.log('接收：'+data);
             user=JSON.parse(data).userId;
-        })
-        
+        }) 
     }
+
+    var sexid='';
+    if(req.url==='/insertSex'){
+        console.log('塑料袋放进')
+        res.setHeader('Access-Control-Allow-Origin','*');
+        req.on("data",function(data){
+            console.log('接收sex：'+data);
+            console.log('sldfkj'+JSON.parse(data).userId);
+            sexid=JSON.parse(data).userId;
+        })
+        req.on("end", function () {  //接收完成后的操作
+            let promises = new Promise(resolve => {
+                con.query(`select*from users where userId=${sexid}`, (err, result) => {
+                    resolve(result);
+                    console.log(result);
+                })
+            })
+            .then(value => {
+                // if(req.url==='/usersex'){
+                //     console.log(value[0].userSex)
+                // }
+                sex=value[0].userSex
+                
+            })
+            res.end();
+        })
+        if(req.url==='usersex'){
+            console.log("lsdkfj")
+        }
+    }
+    // console.log('id'+sexid)
+    //     
+    
+    
     let promise = new Promise(resolve=>{
         con.query(`select*from clothing where cloPlace='行李箱' and userId=${user}`,(err,result)=>{
             resolve(result);

@@ -106,6 +106,8 @@ server.on('request',(req,res)=>{
                     var yanse = JSON.stringify(JSON.parse(obj).yanse[0]);
                     var cloSmallPic;
                     var cloPic=JSON.stringify('我的/images/'+cloId1+filesType);
+                    var mingzi=JSON.stringify(JSON.parse(obj).mingzi);
+                    console.log('名字：'+JSON.stringify(JSON.parse(obj).mingzi));
                     console.log(yanse=='"黑色"')
                     if(zhonglei=='"裤子运动裤"'){
                         cloSmallPic=JSON.stringify('我的/images/yundongku.png');
@@ -113,39 +115,35 @@ server.on('request',(req,res)=>{
                         cloSmallPic=JSON.stringify('我的/images/kuku.png');
                     }else if(zhonglei=='"裤子短裤"'){
                         cloSmallPic=JSON.stringify('我的/images/duanku1.png');
+                    }else if(zhonglei=='"裤子西装裤"'){
+                        cloSmallPic=JSON.stringify('我的/images/kuku.png');
+                    }else if(zhonglei=='"裤子直筒裤"'){
+                        cloSmallPic=JSON.stringify('我的/images/kuku.png');
                     }else if(zhonglei=='"裙子短裙"'){
                         cloSmallPic=JSON.stringify('我的/images/duanqun.png')
-                    }else if(zhonglei=='"裙子长裙"'){
+                    }else if(zhonglei=='"裙子半身长裙"'){
                         cloSmallPic=JSON.stringify('我的/images/changqun.png')
                     }else if(zhonglei=='"裙子吊带裙"'){
                         cloSmallPic=JSON.stringify('我的/images/heiqun.png')
-                    }else if(zhonglei=='"裙子保守裙"'){
-                        if(yanse=='"红色"'){
-                            cloSmallPic=JSON.stringify('我的/images/hongqun.png')
-                        }else if(yanse=='"黑色"'){
-                            cloSmallPic=JSON.stringify('我的/images/qunqun.png"')
-                        }else{
-                            cloSmallPic=JSON.stringify('我的/images/qun.png')
-                        }
                     }else if(zhonglei=='"上衣毛衣"'){
                         cloSmallPic=JSON.stringify('我的/images/maoyi.png')
-                    }else if(zhonglei=='"上衣运动衣"'){
-                        if(yanse=='"蓝色"'){
-                            cloSmallPic=JSON.stringify('我的/images/yundongyi.png')
-                        }else if(yanse=='"红色"'){
-                            cloSmallPic=JSON.stringify('我的/images/bangqiuyi.png')
-                        }else{
-                            cloSmallPic=JSON.stringify('我的/images/chenshanyi.png')
-                        }
+                    }else if(zhonglei=='"上衣打底衫"'){
+                        cloSmallPic=JSON.stringify('我的/images/yundongyi.png')
                     }else if(zhonglei=='"上衣卫衣"'){
                         cloSmallPic=JSON.stringify('我的/images/changshangyi.png')
-                    }else if(zhonglei=='"外套薄外套"'){
+                    }else if(zhonglei=='"上衣短袖"'){
+                        cloSmallPic=JSON.stringify('我的/images/duanxiuyi.png')
+                    }else if(zhonglei=='"外套牛仔外套"'){
                         cloSmallPic=JSON.stringify('我的/images/chenshantao.png')
-                    }else if(zhonglei=='"外套厚外套"'){
+                    }else if(zhonglei=='"外套毛呢大衣"'){
+                        cloSmallPic=JSON.stringify('我的/images/waitao.png')
+                    }else if(zhonglei=='"外套风衣"'){
+                        cloSmallPic=JSON.stringify('我的/images/waitao.png')
+                    }else if(zhonglei=='"外套衬衫"'){
                         cloSmallPic=JSON.stringify('我的/images/waitao.png')
                     }
 
-                    con.query(`insert into clothing values(${cloId},${userid},${zhonglei},${weizhi},${yanse},${cloPic},${cloSmallPic})`);
+                    con.query(`insert into clothing values(${cloId},${userid},${zhonglei},${weizhi},${yanse},${cloPic},${cloSmallPic},${mingzi})`);
 
                     var path='../我的/images/'+cloId1+filesType;
                     console.log(path);
