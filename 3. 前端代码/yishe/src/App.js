@@ -37,6 +37,7 @@ import MyCare from './me/MyCare';
 import MyFan from './me/MyFan';
 import MyCollect from './me/MyCollect';
 import Myfankui from './me/Myfankui';
+import Fankui from './me/Fankuicont';
 //个人设置部分
 import AboutMe from './me/AboutMe';
 import Name from './me/Name.js';
@@ -89,6 +90,7 @@ export default class App extends Component {
                     <Route path='/mycare/:id' component={MyCare} />
                     <Route path='/myfan/:id' component={MyFan} />
                     <Route path='/myfankui/:id' component={Myfankui} />
+                    <Route path='/fankuicont/:id' component={Fankui} />
                     <Route path='/mycollect/:id' component={MyCollect} />
                     {/* 个人设置部分 */}
                     <Route path="/aboutme/:id" component={AboutMe} />
