@@ -13,7 +13,7 @@ var style = {
 }
 // 页面加载完前运行的函数
 window.onpageshow=function(){
-    
+   
             
 }
 export default class AppBox extends Component {
@@ -28,11 +28,11 @@ export default class AppBox extends Component {
     fondWhere=(value)=>{
         console.log(value);
         if(this.state.where=='家'){
-            window.location.href='http://localhost:3000/#/home/'+this.props.id
+            window.location.href=window.location.href.split('#')[0]+'#/home/'+this.props.id
         }else if(this.state.where=='柜子'){
-            window.location.href='http://localhost:3000/#/robe/'+this.props.id
+            window.location.href=window.location.href.split('#')[0]+'#/robe/'+this.props.id
         }else if(this.state.where=='行李箱'){
-            window.location.href='http://localhost:3000/#/trunk/'+this.props.id
+            window.location.href=window.location.href.split('#')[0]+'#/trunk/'+this.props.id
         }else{
             
         }
@@ -44,11 +44,11 @@ export default class AppBox extends Component {
             console.log(count)
             if (count == 1) {
                 if(this.state.value!='添加'){
-                    window.location.href = 'http://localhost:3000/#/customize/' + this.props.id
+                    window.location.href = window.location.href.split('#')[0]+'#/customize/' + this.props.id
                 }
                 // count = 0;
             } else if (count == 2) {
-                window.location.href = 'http://localhost:3000/#/add/' + this.props.id
+                window.location.href = window.location.href.split('#')[0]+'#/add/' + this.props.id
                 // count = 0;
             }
             count=0;
