@@ -352,9 +352,33 @@ class Insert extends Component {
     
     }
     
+  componentWillMount(){
+    console.log(this.props.match.params.id)
+    fetch("http://47.98.163.228:8089/insertSex", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+            // 'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          userId:this.props.match.params.id
+        })
+      });
+  }
   componentDidMount(){
-    console.log('导入传来得id'+this.props.match.params.id)
     
+    fetch('http://47.98.163.228:8089/usersex')
+        .then(res=>res.json())
+        .then(res=>{
+            // console.log(res.length)
+            // this.setState({
+            //     picture:res
+            // })
+            // console.log(this.state.picture)
+        });
   }
   
   render() {

@@ -11,6 +11,11 @@ var style = {
     height: "400px",
     backgroundImg: `url(${BoxBack})`
 }
+// 页面加载完前运行的函数
+window.onpageshow=function(){
+    
+            
+}
 export default class AppBox extends Component {
     constructor(props){
         super(props);
@@ -50,6 +55,7 @@ export default class AppBox extends Component {
         }, 200)
 
     }
+    
     componentDidMount(){
         
         if(localStorage.getItem('添加')==undefined){
@@ -71,16 +77,19 @@ export default class AppBox extends Component {
         //     console.log('后台传来：',res);
         // });
         // 通过id判断性别
-    //     fetch("http://47.98.163.228:8087/sex", {
-    //     method: 'post', 
-    //     "Access-Control-Allow-Origin" : "*",
-    //     "Access-Control-Allow-Credentials" : true,
-    //     credentials: 'include',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     body:JSON.stringify({userId:this.props.match.params.id}) 
-    //   });
+        // fetch("http://47.98.163.228:8089/insertSex", {
+        //     method: 'post', 
+        //     "Access-Control-Allow-Origin" : "*",
+        //     "Access-Control-Allow-Credentials" : true,
+        //     credentials: 'include',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //         // 'Content-Type': 'application/json'
+        //     },
+        //     body:JSON.stringify({
+        //       userId:this.props.id
+        //     })
+        //   });
     }
 
     
@@ -96,13 +105,13 @@ export default class AppBox extends Component {
                     </Link>
                     <div id="nameCha" >
                         <SearchBar placeholder="请输入你要查找的名字" maxLength={4} 
-                        style={{width:'280px',position:'absolute',top:'7.5%',
-                        left:'120%',backgroundColor: 'rgba(252,157,154,0.7)',borderRadius:'5px'}}
+                        style={{width:'280px',position:'relative',top:'-55px',left:'21%',
+                    backgroundColor: 'rgba(252,157,154,0.7)',borderRadius:'5px'}}
                         onSubmit={this.fondWhere.bind(this.value)}
                         />
                     </div>
                     <div id="store">
-                        <img src={Box} style={{width: '85%', height: '80%', margin: '60% 6%'}} />
+                        <img src={Box} style={{width: '85%', height: '80%', margin: '45% 6%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
                                 <button onClick={this.double}>{this.state.value}</button>

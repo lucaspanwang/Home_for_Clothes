@@ -66,25 +66,43 @@ export default class Home extends Component {
             })
             console.log(this.state.picture)
         });
+
+        var n=localStorage.getItem('count');
+        localStorage.setItem('count',n+1);
+        console.log('第几个'+n)
+        var nn=localStorage.getItem('count');
+        if(nn==1){
+            this.setState({
+                num:localStorage.getItem('zlx_num')-1
+            },function(){
+                localStorage.setItem('zlx_num',-1)
+            })
+            console.log('获取的num'+this.state.num)
+        }else{
+            this.setState({
+                num:-1
+            })
+        }
         
-      fetch('http://47.98.163.228:8083/pp2')
-        .then(res=>res.json())
-        .then(res=>{
-            console.log(res);
-            console.log('????'+res.msg)
-            var n = localStorage.getItem('count')
-            localStorage.setItem('count', n+1)
-            var nn = localStorage.getItem('count')
-            if(nn==1){
-                this.setState({
-                    num:res.msg-1
-                })
-            }else{
-                this.setState({
-                    num:-1
-                })
-            }
-        });
+        
+    //   fetch('http://47.98.163.228:3001/pp2')
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         console.log(res);
+    //         console.log('????'+res.msg)
+    //         var n = localStorage.getItem('count')
+    //         localStorage.setItem('count', n+1)
+    //         var nn = localStorage.getItem('count')
+    //         if(nn==1){
+    //             this.setState({
+    //                 num:res.msg-1
+    //             })
+    //         }else{
+    //             this.setState({
+    //                 num:-1
+    //             })
+    //         }
+        // });
     }
     render() {
         return (
