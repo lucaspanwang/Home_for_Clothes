@@ -56,26 +56,36 @@ export default class Fankuicont extends Component {
                 ]}
                 >我的反馈</NavBar>
                 {
-                    !this.state.content.huifu?(
-                        this.state.content.map((item,idx)=>
-                            <div style={{width:'100%',padding:'10px',borderBottom:'2px solid #ccc'}} key={idx}>
-                                <span>问题：</span>
-                                <span style={{color:'#000'}}>{item.fbContent}</span>
-                                <p style={{float:'right'}}>{item.fbTime}</p>
-                            </div>    
-                        )
-                   )
-                   :(
-                        this.state.content.map((item,idx)=>
-                            <div style={{width:'100%',padding:'10px',borderBottom:'2px solid #ccc'}} key={idx}>
-                                <span>问题：</span>
-                                <span style={{color:'#000'}}>{item.fbContent}</span>
-                                <p style={{float:'right'}}>{item.fbTime}</p>
-                                <p></p>
-                                <span>{item.huifu}</span>
-                            </div>    
-                        )
-                   )   
+                //     !this.state.content.huifu?(
+                //         this.state.content.map((item,idx)=>
+                //             <div style={{width:'100%',padding:'10px',borderBottom:'2px solid #ccc'}} key={idx}>
+                //                 <span>问题：</span>
+                //                 <span style={{color:'#000'}}>{item.fbContent}</span>
+                //                 <p style={{float:'right'}}>{item.fbTime}</p>
+                //             </div>    
+                //         )
+                //    )
+                //    :(
+                //         this.state.content.map((item,idx)=>
+                //             <div style={{width:'100%',padding:'10px',borderBottom:'2px solid #ccc'}} key={idx}>
+                //                 <span>问题：</span>
+                //                 <span style={{color:'#000'}}>{item.fbContent}</span>
+                //                 <p style={{float:'right'}}>{item.fbTime}</p>
+                //                 <p></p>
+                //                 <span>{item.huifu}</span>
+                //             </div>    
+                //         )
+                //    ) 
+                   this.state.content.map((item,idx)=>
+                        <div style={{width:'100%',padding:'10px',borderBottom:'2px solid #ccc'}} key={idx}>
+                            <span>问题：</span>
+                            <span style={{color:'#000'}}>{item.fbContent}</span>
+                            <p style={{float:'right'}}>{item.fbTime}</p>
+                            <p></p>
+                            <span>{item.huifu}</span>
+                        </div>    
+                    )
+                   
                 }
                 
             </div>
