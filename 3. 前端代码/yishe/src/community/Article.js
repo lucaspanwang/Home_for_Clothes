@@ -26,10 +26,10 @@ export default class Article extends Component {
       }
     }
     componentDidMount(){
-      this.setState({
-        articleId:this.props.match.params.id.split("&")[0],
-        userId:this.props.match.params.id.split("&")[1]
-      });
+      // this.setState({
+      //   articleId:this.props.match.params.id.split("&")[0],
+      //   userId:this.props.match.params.id.split("&")[1]
+      // });
       fetch("http://47.98.163.228:3004/review?articleId="+this.props.match.params.id.split("&")[0]+'&state=0')
       .then(res=>res.json())
       .then(res=>{
@@ -154,7 +154,7 @@ export default class Article extends Component {
                       actions={[<div>
                         {
                           item.number
-                          ?(<Link to={"/review/"+item.articleId+'&'+item.reviewId+'&'+item.userId}>
+                          ?(<Link to={"/review/"+item.articleId+'&'+item.reviewId+'&'+this.state.user.userId}>
                             <div style={{width:'100%',height:'30px',margin:'5px 0',lineHeight:'30px',fontSize:'12px',borderRadius:'5px',backgroundColor:'#ddd'}}>共{item.number}条回复</div>
                           </Link>)
                           :''
@@ -162,7 +162,7 @@ export default class Article extends Component {
                         <div style={{width:'100%',fontSize:'10px',color:'#888',display:'flex',justifyContent:'space-between'}}>
                           <span>发布于{item.reviewTime}</span>
                           <div>
-                            <Link to={"/review/"+item.articleId+'&'+item.reviewId+'&'+item.userId}>
+                            <Link to={"/review/"+item.articleId+'&'+item.reviewId+'&'+this.state.user.userId}>
                             <img style={{width:'18px',height:'18px',marginRight:'3px'}} src={pinglun} alt=''/>{item.number}
                             </Link></div>
                         </div>

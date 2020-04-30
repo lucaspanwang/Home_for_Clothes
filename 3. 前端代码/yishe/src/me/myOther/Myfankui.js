@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { NavBar ,ImagePicker,Toast} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import fanhui from '../images/fanhui_1.png';
+import fanhui from '../../images/fanhui_1.png';
 import { Input } from 'antd';
 import lrz from 'lrz';
 const { TextArea } = Input;

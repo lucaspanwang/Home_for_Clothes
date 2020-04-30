@@ -1,48 +1,21 @@
 import React, { Component } from 'react'
-import { Collapse,List } from 'antd';
+import { Collapse } from 'antd';
 import {Link} from 'react-router-dom';
 import { NavBar,SearchBar } from 'antd-mobile';
 
-import Back from '../images/fanhui_1.png';
-import yonghu from '../images/yonghu.png';
-import chengshi from '../images/chengshi.png';
-import xingbie from '../images/xingbie.png';
-import jianjie from '../images/jianjie.png';
-import shoucang from '../images/shoucang.png';
-import pinglun from '../images/pinglun.png';
-import dianzan from '../images/dianzan.png';
-import Gongge from '../community/common/Gongge';
+import Back from '../../images/fanhui_1.png';
+import yonghu from '../../images/yonghu.png';
+import chengshi from '../../images/chengshi.png';
+import xingbie from '../../images/xingbie.png';
+import jianjie from '../../images/jianjie.png';
+import shoucang from '../../images/shoucang.png';
+import pinglun from '../../images/pinglun.png';
+import dianzan from '../../images/dianzan.png';
+import Gongge from '../../community/common/Gongge';
 
-const Item = List.Item;
+
 const { Panel } = Collapse;
-
-const data = [
-    {
-      photo:yonghu,
-      title:'用户'
-    },
-    {
-      photo:xingbie,
-      title:'性别'
-    },
-    {
-      photo:chengshi,
-      title:'城市'
-    },
-    {
-      photo:jianjie,
-      title:'简介'
-    },
-  ];
-const customPanelStyle = {
-  background: '#f7f7f7',
-  borderRadius: 4,
-  marginBottom: 24,
-  border: 0,
-  overflow: 'hidden',
-};
-
-export default class MyCare extends Component {
+export default class MyFan extends Component {
     constructor(){
         super();
         this.state={
@@ -51,12 +24,12 @@ export default class MyCare extends Component {
         }
     }
     componentWillMount(){
-        fetch("http://47.98.163.228:3004/care?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:3004/care?careId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             var result = [];
             for(var k=0;k<res.length;k++){
-                fetch("http://47.98.163.228:3004/users?userId="+res[k].careId)
+                fetch("http://47.98.163.228:3004/users?userId="+res[k].userId)
                 .then(value=>value.json())
                 .then(value=>{
                     for(var i=0;i<value.length;i++){
@@ -70,6 +43,22 @@ export default class MyCare extends Component {
                 });
             }
         })
+    }
+    standardTime = (timestamp)=>{
+        var mius=Math.round(new Date())-Math.round(new Date(timestamp));
+        if(mius<(1000*60)){
+            return Math.floor(mius/1000)+'秒前';
+        }else if(mius<(1000*60*60)){
+            return Math.floor(mius/(1000*60))+'分钟前';
+        }else if(mius<(1000*60*60*24)){
+            return Math.floor(mius/(1000*60*60))+'小时前';
+        }else if(mius<(1000*60*60*24*30)){
+            return Math.floor(mius/(1000*60*60*24))+'天前';
+        }else if(mius<(1000*60*60*24*30*12)){
+            return Math.floor(mius/(1000*60*60*24*30))+'个月前';
+        }else{
+            return Math.floor(mius/(1000*60*60*24*30*12))+'年前';
+        }
     }
     myCareArticle = (id,event)=>{
         fetch("http://47.98.163.228:3004/article?userId="+id)
@@ -88,32 +77,13 @@ export default class MyCare extends Component {
             this.forceUpdate();
         });
     }
-    //修改时间
-    standardTime = (timestamp)=>{
-        var mius=Math.round(new Date())-Math.round(new Date(timestamp));
-        if(mius<(1000*60)){
-            return Math.floor(mius/1000)+'秒前';
-        }else if(mius<(1000*60*60)){
-            return Math.floor(mius/(1000*60))+'分钟前';
-        }else if(mius<(1000*60*60*24)){
-            return Math.floor(mius/(1000*60*60))+'小时前';
-        }else if(mius<(1000*60*60*24*30)){
-            return Math.floor(mius/(1000*60*60*24))+'天前';
-        }else if(mius<(1000*60*60*24*30*12)){
-            return Math.floor(mius/(1000*60*60*24*30))+'个月前';
-        }else{
-            return Math.floor(mius/(1000*60*60*24*30*12))+'年前';
-        }
-      }
     render() {
         return (
             <div>
                 <NavBar
-                    style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
-                    leftContent={
-                        <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
-                    }
-                >关注</NavBar>
+                style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
+                leftContent={<Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>}
+                >粉丝</NavBar>
                 <NavBar></NavBar>
                 <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 <Collapse bordered={true} accordion>
@@ -141,7 +111,7 @@ export default class MyCare extends Component {
                                         </div>
                                         <div className="artDetail">
                                             {it.content}
-                                            <Gongge cimg={it.cimg} />
+                                            <Gongge cimg={it.cimg}/>
                                         </div>
                                         <ul className="artState">
                                             <li><span>{this.standardTime(it.time)}</span></li>

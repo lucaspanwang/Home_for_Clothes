@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { NavBar, SearchBar } from 'antd-mobile';
 import { Popover, Button } from 'antd';
-import Back from '../images/fanhui_1.png';
+import Back from '../../images/fanhui_1.png';
 
 export default class MyClothing extends Component {
     constructor(){

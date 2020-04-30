@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavBar,Grid } from 'antd-mobile';
 import { Link,Route, HashRouter as Router } from 'react-router-dom';
-import fanhui from '../images/fanhui_1.png';
+import fanhui from '../../images/fanhui_1.png';
 
 var fankuis = []; 
 export default class Fankuicont extends Component {

@@ -1,74 +1,53 @@
 import React, { Component } from 'react';
-import { Popover, NavBar, Toast, SearchBar } from 'antd-mobile';
+import { Popover, NavBar, SearchBar } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import { Typography,Menu, Dropdown, Icon } from 'antd';
-import './me.css';
-import Gongge from '../community/common/Gongge';
+import '../me.css';
 
-import tianjia from '../images/tianjia.png';
-import fanhui from '../images/fanhui_1.png';
-import shoucang from '../images/shoucang.png';
-import pinglun from '../images/pinglun.png';
-import dianzan from '../images/dianzan.png';
+import tianjia from '../../images/tianjia.png';
+import fanhui from '../../images/fanhui_1.png';
+import shoucang from '../../images/shoucang.png';
+import pinglun from '../../images/pinglun.png';
+import dianzan from '../../images/dianzan.png';
+import Gongge from '../../community/common/Gongge';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
 
-export default class Community extends Component {
+export default class MyCollect extends Component {
     constructor(){
         super();
         this.state = {
             visible: false,
             selected: '',
-            users:[],
-            open: false,
+            collect:[]
         }
-    }   
+    }    
     componentDidMount(){
-        fetch("http://47.98.163.228:3004/article?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:3004/collect?userId="+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
-            for(var i=0;i<res.length;i++){
-                var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
-                for(var j=0;j<res[i].cimg.length;j++){
-                    res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
-                }
-            }
-            this.setState({
-                users:res
-            })
-        });
-    }
-    loadingToast=()=> {
-        Toast.loading('正在删除...', 1, () => {
-            fetch("http://47.98.163.228:3004/article?userId="+this.props.match.params.id)
-            .then(res=>res.json())
-            .then(res=>{
-                for(var i=0;i<res.length;i++){
-                    var j = res[i].userPic.indexOf('/');
-                    res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
-                    for(var j=0;j<res[i].cimg.length;j++){
-                        res[i].cimg[j] = "http://47.98.163.228:3004"+res[i].cimg[j];
+            var result = [];
+            for(var k=0;k<res.length;k++){
+                fetch("http://47.98.163.228:3004/article?articleId="+res[k].articleId)
+                .then(value=>value.json())
+                .then(value=>{
+                    for(var i=0;i<value.length;i++){
+                        var j = value[i].userPic.indexOf('/');
+                        value[i].userPic = "http://47.98.163.228:3004"+value[i].userPic.substr(j);
+                        for(var j=0;j<value[i].cimg.length;j++){
+                            value[i].cimg[j] = "http://47.98.163.228:3004"+value[i].cimg[j];
+                            console.log(value[i].cimg[j]);
+                        }
                     }
-                }
-                this.setState({
-                    users:res
-                })
-            })
-            this.onToastSuccess();
-        });
-      }
-    onToastSuccess=()=>{
-        Toast.success('成功删除文章！',0.8);
-    }
-    deleteArticle=(id)=>{
-        console.log(id);
-        fetch("http://47.98.163.228:3004/articleDelete?articleId="+id)
-        .then(res=>res.json())
-        .then(res=>{
-            this.loadingToast();
-        });
+                    result.push(...value);
+                    this.setState({
+                        collect:result
+                    })
+                });
+            }
+        })
+        this.forceUpdate();
     }
     //修改时间
     standardTime = (timestamp)=>{
@@ -92,17 +71,18 @@ export default class Community extends Component {
             <div style={{width:'100%'}}>
                 <NavBar 
                 style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
-                leftContent={<Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fantttt"/></Link>}
+                leftContent={[
+                  <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                ]}
                 rightContent={<Link to={"/articleadd/"+this.props.match.params.id}><img src={tianjia} style={{width:"20px"}}/></Link>}
-                >发帖</NavBar>
+                >收藏</NavBar>
                 <NavBar></NavBar>
                 <SearchBar placeholder="请输入你要查找的名字" maxLength={4} style={{backgroundColor:'#ccc'}}/>
                 {
-                    this.state.users.map((item)=>(<div className="article" key={item.articleId}>
+                    this.state.collect.map((item)=>(<div className="article" key={item.articleId}>
                         <div className='artUser'>
                             <img className='userImg' src={item.userPic} alt=""/>
                             <span className='userName'>{item.userName}</span>
-                            <button style={{float:"right",fontSize:"16px",color:"#fff",padding:"8px 15px",border:"2px solid #85c7fd",borderRadius:"6px",backgroundColor:"#97cdf9"}} onClick={()=>this.deleteArticle(item.articleId)}>删除文章</button>
                         </div>
                         <div className="artDetail">
                             {item.content}
@@ -116,7 +96,6 @@ export default class Community extends Component {
                         </ul>
                     </div>))
                 }
-                {/* </Drawer> */}
             </div>
         );
     }

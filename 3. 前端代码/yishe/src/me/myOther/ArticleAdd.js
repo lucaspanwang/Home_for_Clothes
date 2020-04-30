@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { NavBar ,ImagePicker,Toast  } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
-import fanhui from '../images/fanhui_1.png';
+import fanhui from '../../images/fanhui_1.png';
 import lrz from 'lrz';
 import { Input } from 'antd';
 const { TextArea } = Input;
@@ -16,7 +16,7 @@ export default class ArticleAdd extends Component {
     }
     onToastSuccess=()=>{
         Toast.loading('文章上传中...',2, () => {
-            window.location.href=window.location.href.split('#')[0]+"#/apptab/"+this.props.match.params.id+'&community'
+            window.location.href=window.location.href.split('#')[0]+"#/myarticle/"+this.props.match.params.id
         });
     }
     onToastFail=()=>{
@@ -84,13 +84,13 @@ export default class ArticleAdd extends Component {
                 <NavBar 
                 style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
-                    <Link to={"/apptab/"+this.props.match.params.id+'&community'}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/myarticle/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
                 ]}
                 rightContent={[
                     <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</span>
                 ]}
                 >社区发布文章</NavBar>
-
+                <NavBar></NavBar>
                 <TextArea style={{marginTop:'5%',marginLeft:'3%',width:'94%',backgroundColor:'rgb(252,251,251)'}}
                     value={this.state.value}
                     onChange={this.onChange1}

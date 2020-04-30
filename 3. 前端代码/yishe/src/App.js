@@ -21,7 +21,6 @@ import Customize from './store/Customize'
 import Office from './community/Office';
 import OfficeArticle from './community/OfficeArticle';
 import Search from './community/Search';
-import ArticleAdd from './community/ArticleAdd';
 import ShequArticle from './community/Article';
 import Review from './community/Review';
 //消息部分
@@ -31,19 +30,21 @@ import Like from './message/Like';
 //个人部分
 import Setup from './me/Setup';
 import AboutUs from './me/AboutUs';
-import MyArticle from './me/MyArticle';
-import MyClothing from './me/MyClothing';
-import MyCare from './me/MyCare';
-import MyFan from './me/MyFan';
-import MyCollect from './me/MyCollect';
-import Myfankui from './me/Myfankui';
-import Fankui from './me/Fankuicont';
+//个人其他数据部分
+import MyArticle from './me/myOther/MyArticle';
+import ArticleAdd from './me/myOther/ArticleAdd';
+import MyClothing from './me/myOther/MyClothing';
+import MyCare from './me/myOther/MyCare';
+import MyFan from './me/myOther/MyFan';
+import MyCollect from './me/myOther/MyCollect';
+import Myfankui from './me/myOther/Myfankui';
+import Fankui from './me/myOther/Fankuicont';
 //个人设置部分
 import AboutMe from './me/AboutMe';
-import Name from './me/Name.js';
-import City from './me/City.js';
-import Info from './me/Info.js';
-import Sex from './me/Sex';
+import Name from './me/modifyData/Name.js';
+import City from './me/modifyData/City.js';
+import Info from './me/modifyData/Info.js';
+import Sex from './me/modifyData/Sex';
 //日记部分
 import DiaryAdd from './me/diary/DiaryAdd';
 import DiarySearch from './me/diary/DiarySearch';
