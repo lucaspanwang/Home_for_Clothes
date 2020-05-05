@@ -1,12 +1,15 @@
 .form {
-    display: flex;
-    border-top: 2px solid #D3D3D3;
+    width:100%;
+    position: fixed;
+    bottom:0;
+    
   }
   
   .input {
     border: none;
     border-radius: 0;
-    padding: 5%;
+    border-top:solid 2px rgba(129, 129, 129, 0.3);
+    padding: 4%;
     width: 80%;
     font-size: 1.2em;
   }

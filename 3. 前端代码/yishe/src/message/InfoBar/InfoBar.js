@@ -10,7 +10,7 @@ import './InfoBar.css';
 
 const InfoBar = ({name, room}) => (
   <NavBar 
-    style={{backgroundColor:'#fc9d9a',color:'white'}}
+    style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
     leftContent={[
       <Link to={`/apptab/${name}&message`}>
         <img src={fanhui} style={{width:'25%'}} key="fan"/>
