@@ -5,7 +5,7 @@ import Back from '../images/fanhui_1.png';
 import { createForm } from 'rc-form';
 import './store.css';
 import { thisTypeAnnotation } from '@babel/types';
-const sex='女';
+let sex='男';
 //图片选择器
 const data = [];
 //图片选择器
@@ -354,31 +354,27 @@ class Insert extends Component {
     
   componentWillMount(){
     console.log(this.props.match.params.id)
-    fetch("http://47.98.163.228:8089/insertSex", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-            // 'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          userId:this.props.match.params.id
-        })
-      });
+    fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
+    .then(res=>res.json())
+    .then(res=>{
+      console.log('男女：',res)
+      sex=res
+    })
+           
+    
   }
   componentDidMount(){
     
-    fetch('http://47.98.163.228:8089/usersex')
-        .then(res=>res.json())
-        .then(res=>{
+    
+    // fetch('http://47.98.163.228:8089/usersex')
+    //     .then(res=>res.json())
+    //     .then(res=>{
             // console.log(res.length)
             // this.setState({
             //     picture:res
             // })
             // console.log(this.state.picture)
-        });
+        // });
   }
   
   render() {
