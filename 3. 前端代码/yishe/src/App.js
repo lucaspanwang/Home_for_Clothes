@@ -23,6 +23,7 @@ import OfficeArticle from './community/OfficeArticle';
 import Search from './community/Search';
 import ShequArticle from './community/Article';
 import Review from './community/Review';
+import Others from './community/Others';
 //消息部分
 import Chat from './message/Chat/Chat';
 import Remark from './message/Remark';
@@ -78,7 +79,8 @@ export default class App extends Component {
                     <Route path="/office/:id" component={Office} />
                     <Route path="/officearticle/:id" component={OfficeArticle} />
                     <Route path="/review/:id" component={Review} />
-                    <Route path='/articleadd/:id' component={ArticleAdd} />
+                    <Route path='/articleadd/:id' component={ArticleAdd}/>
+                    <Route path='/others/:id' component={Others}/>
                     {/* 消息部分 */}
                     <Route path='/chat' component={Chat} />
                     <Route path="/remark/:id" component={Remark} />

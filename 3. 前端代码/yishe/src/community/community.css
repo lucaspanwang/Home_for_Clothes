@@ -81,18 +81,19 @@ body{
     width:100%;
     height:45px;
 }
-.article>.artUser>.userImg{
+.article>.artUser .userImg{
     width:45px;
     height:45px;
     border-radius:10px;
     float: left;
 }
-.article>.artUser>.userName{
+.article>.artUser .userName{
     padding:0 10px;
     height:auto;
     line-height:45px;
     font-size:18px;
     float: left;
+    color:#444;
 }
 .article>.artDetail{
     line-height:18px;
@@ -157,6 +158,57 @@ body{
 .secReview>.revState div span{
     line-height:28px;
     float: left;
+}
+
+/* 其他个人信息 */
+.theOthers{
+    width:100%;
+    height:180px;
+    position: relative;
+}
+.theOthers>.userMessage{
+    width:100%;
+    padding:20px 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.theOthers>.userMessage>img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+}
+.theOthers>.userMessage>span{
+    margin:5px;
+    font-size: 18px;
+    color: #eee;
+}
+.theOthers>.userMessage>span>img{
+    width:22px;
+    margin-left: 10px;
+}
+.theOthers>.userDetail{
+    width:90%;
+    height:80px;
+    margin:0 5%;
+    position: absolute;
+    top:140px;
+    left:0;
+    z-index:10;
+    border-radius:8px;
+    background-color: #fff;
+}
+.theOthers>.userDetail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.theOthers>.userDetail .gutter-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 /*评论区部分*/

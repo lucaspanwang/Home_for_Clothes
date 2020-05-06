@@ -17,6 +17,7 @@ import yiguanzhu from '../../images/guanzhu_1.png';
 import pinglun from '../../images/pinglun.png';
 import dianzan from '../../images/dianzan.png';
 import yidianzan from '../../images/dianzan_1.png';
+import message from '../../images/message.png';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
@@ -151,20 +152,26 @@ export default class ArticleModule extends Component {
         return (
             <div className="article" key={this.state.article.articleId}>
                 <div className='artUser'>
-                    <img className='userImg' src={this.state.article.userPic} alt=""/>
-                    <span className='userName'>{this.state.article.userName}</span>
+                    <Link to={'/others/'+this.state.article.userId+'&'+this.props.userId}>
+                        <img className='userImg' src={this.state.article.userPic} alt=""/>
+                        <span className='userName'>{this.state.article.userName}</span>
+                    </Link>
                     <Popover mask
                         visible={this.state.visible}
                         overlay={[
-                            (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
-                                <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
-                                <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
-                            </Item>),
                             (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
                                 <div onClick={this.onCare.bind(this,this.state.article.userId)}>
                                     <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
                                     <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
                                 </div>
+                            </Item>),
+                            (<Item key={1} value="私信" style={{padding:'10px 25px'}}>
+                                <div><img src={message} alt='' style={{width:'25px'}}/>
+                                <span style={{padding:'0 20px',fontSize:'18px'}}>私信</span></div>
+                            </Item>),
+                            (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
+                                <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
+                                <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
                             </Item>)
                         ]}
                         onSelect={this.onSelect}
