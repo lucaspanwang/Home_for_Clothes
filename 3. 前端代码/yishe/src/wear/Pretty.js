@@ -103,7 +103,7 @@ export default class Pretty extends Component {
   }
     render() {
         return (
-            <div>
+            <div style={{ width: '100%', height: "100%" }}>
             {/* 头 */}
                 <NavBar
                     leftContent={
@@ -111,8 +111,6 @@ export default class Pretty extends Component {
                             <img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                 style={{backgroundColor:'rgb(252, 157, 154)'}}>穿搭</NavBar>
-              {/* 保存 */}
-              {/* <button onClick={this.handlePost} className="baocun">保存</button> */}
               {/* 模特脸 */}
               <div className="m1" onClick={this.lalala}>
                   {/* 依次是：模特本身、发型、瞳色、眼镜 */}

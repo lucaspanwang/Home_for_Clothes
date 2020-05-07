@@ -49,8 +49,6 @@ import t6_bai from '../images/pre/t6_bai.png'
 import t6_hair from '../images/pre/t6_hair.png'
 
 //男女模特
-import Girl from './Girl'
-import Boy from './Boy'
 import mote_boy from '../images/boy/mote_boy.png'
 //美妆部分
 const hair = [t0,t1,t2,t3,t4,t5,t6]
@@ -102,26 +100,24 @@ export default class Wear extends Component {
         num:0,
         num2:0,
         feng:'',
-        speak_suggest:'',
-        sex:'',
+        speak_suggest:'',//语音播报建议
+        sex:'女',
     }
   }    
   componentDidMount(){
-        //获取图片信息
+        //获取用户所有的基本信息
         var small=[],big=[];
         fetch('http://47.98.163.228:3001/react',{
             method: 'post', 
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Credentials" : true,
             headers: {
-                // 'Content-Type': 'application/x-www-form-urlencoded'
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({userId:this.props.id})  
         })
         .then(res=>res.json())
         .then(res=>{
-          console.log(res)
             //把读取的图片放进来
             if(res[0].cloSmallPic){     
             for(var i=0;i<res.length;i++){//循环res的图
@@ -136,15 +132,14 @@ export default class Wear extends Component {
               var name = res[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
               small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png'
-              console.log(big[i])//大图地址
-              console.log(small[i])//小图地址
               this.setState({
-                city:res[0].userCity,
+                city:res[0].userCity,//城市
                 ress:res,//意义不大
-                arr:big,
-                arr_s:small,
-                sex:res[0].userSex,
+                arr:big,//大图地址
+                arr_s:small,//小图地址
+                sex:res[0].userSex,//性别
              },function(){
+              /* 显示天气预报  */  
               this.weather();
              })
             }
@@ -181,29 +176,29 @@ export default class Wear extends Component {
           })
           //实现推荐
           var tuitui=[],tuitui_s=[];
-          var diwen = this.state.temperature.charAt(0);
-          if(diwen<0){
+          if(this.state.temperature<0){//最低温度小于零（冬天）
             this.setState({
               tuijian:this.state.yi,
               tuijian_s:this.state.yi_s
             })
-          }else{//最低温度大于0
-            for(var i = 0;i<=this.state.ress.length-1;i++){
-              var j = this.state.ress[i].cloSmallPic.indexOf('/');
-              if(this.state.sex=='女'){
-                big[i] = "http:"+this.state.ress[i].cloSmallPic.substr(j);
-              }else{
-                big[i] =  "http:"+this.state.ress[i].cloSmallPic.substr(j).split('.png')[0]+'_boy.png'
+          }
+          if(this.state.temperature2>25){//最高温度大于25（夏天）
+            this.setState({
+              tuijian:this.state.qun,
+              tuijian_s:this.state.qun_s
+            })
+          }
+          else{
+            if(this.state.tao[0]){//判断是否存了外套
+              for(var i=0;i<this.state.ku.length;i++){
+                tuitui.push(this.state.tao[i])
+                tuitui_s.push(this.state.tao_s[i])
               }
-              var name = this.state.ress[i].cloSmallPic.substr(j).split('/')[4];
-              var n = name.split('.')[0];
-              small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png'
-              if(n.indexOf('duan')==-1){//如果是短裙
-                tuitui.push(big[i]);
-                tuitui_s.push(small[i])    
-                //长裙变色......
-              }
-            }  
+            }
+            for(var i=0;i<this.state.ku.length;i++){
+              tuitui.push(this.state.ku[i])
+              tuitui_s.push(this.state.ku_s[i])
+            }
             this.setState({
               tuijian:tuitui,
               tuijian_s:tuitui_s,
@@ -211,7 +206,7 @@ export default class Wear extends Component {
           }
         }
       })
-      this.updata_image();
+      this.updata_image();//美妆
   }
   //获取用户天气
   weather(){
@@ -226,7 +221,6 @@ export default class Wear extends Component {
     })
     .then(res=>res.json())
     .then(res=>{
-      console.log(res);
       this.setState({
         temperature:res.data[0].tem2,
         temperature2:res.data[0].tem1,
@@ -249,13 +243,13 @@ export default class Wear extends Component {
         break;
     }
   }
-    aaa=(idx)=>{
+  aaa=(idx)=>{
       if(idx==1){
         window.location.href =window.location.href.split('#')[0]+'#/articleadd/'+this.props.id
       }else{
         window.location.href =window.location.href.split('#')[0]+'#'+ this.state.tiaosrc[idx]+this.props.id
       }
-    }
+  }
     //分享
     click_share=()=>{
       var div = document.getElementById('fenxiang');
@@ -310,7 +304,8 @@ export default class Wear extends Component {
           if(this.state.count>1){//双击
             var place = this.zhao(idx,this.state.tuijian)
             this.fasong(this.state.linshi,place)
-          }else{
+          }else{//单击穿衣
+            console.log(this.state.tuijian)
             document.getElementById('mote').style.display = 'none';
             document.getElementById('mote_2').style.display = 'block';
             if(this.state.tuijian[idx].indexOf('ku')!==-1){ //裤子2
@@ -390,16 +385,6 @@ export default class Wear extends Component {
       localStorage.setItem('count',0);
       localStorage.setItem('zlx_num',idx);
       this.tiaozhuan(place)
-    //   fetch("http://47.98.163.228:3001/pp", {
-    //     method: 'post', 
-    //     "Access-Control-Allow-Origin" : "*",
-    //     "Access-Control-Allow-Credentials" : true,
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({msg:idx}) 
-    //   })
-    //   .then(this.tiaozhuan(place))
     }
     //跳转整理箱url
     tiaozhuan=(place)=>{
@@ -428,7 +413,6 @@ export default class Wear extends Component {
     }
     //美妆部分
     updata_image(){
-      console.log(this.props.id)
       fetch('http://47.98.163.228:3001/get_mote_style',{
         method: 'post', 
             "Access-Control-Allow-Origin" : "*",
@@ -440,19 +424,14 @@ export default class Wear extends Component {
       })
       .then(res=>res.json())
       .then(res=>{
-        console.log('get_mote_style:'+JSON.stringify(res));
         var arr = JSON.stringify(res);
-        console.log(JSON.parse(arr)[0].userId)
         this.setState({
           index1:JSON.parse(arr)[0].index1,
           index2:JSON.parse(arr)[0].index2,
           index3:JSON.parse(arr)[0].index3,
           color:JSON.parse(arr)[0].color,
         })
-        console.log(this.state.color)
-        console.log(this.state.sex)
         if(this.state.color !== '' && this.state.sex=='女'){
-            console.log('???????')
           document.getElementById('change_hair_color').style.display='block';
           document.getElementById('change_hair_style').style.display='block';
           document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
@@ -489,7 +468,9 @@ export default class Wear extends Component {
                 {
                     this.state.sex=='女'?
                     <div>
+                         {/* 模特本身 */}
                         <img src={mote2} id="mote"/>
+                         {/* 把src替换成裙子或裤子 */}
                         <img src={mote2} id="mote_2"/>
                          <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
                         <img  id='mote2' />
@@ -606,7 +587,7 @@ export default class Wear extends Component {
                   <WhiteSpace />
                 </div>
                 <a onClick={this.click_share} id="zhenglitab">
-                    <img src={fenxiang} style={{width:'30px',float:'right',position:'relative',bottom:'-170px',right:'10px'}} key="fanxiang"/>
+                    <img src={fenxiang} style={{width:'30px',float:'right',position:'absolute',bottom:'10px',right:'10px'}} key="fanxiang"/>
                 </a>
                 {/* 小人 */}
                 {/* <img src={xiaoren0} id="xiaoren"/> */}
