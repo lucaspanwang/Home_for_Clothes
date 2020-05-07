@@ -359,7 +359,6 @@ class Insert extends Component {
       console.log('post成功')
       window.location.reload()
     }
-    
     }
     
   componentWillMount(){
@@ -381,6 +380,7 @@ class Insert extends Component {
   componentDidMount(){
     // console.log(this.props.match.params.id)
     // console.log(kindGirl)
+    // 根据性别判读分类
     fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
     .then(res=>res.json())
     .then(res=>{

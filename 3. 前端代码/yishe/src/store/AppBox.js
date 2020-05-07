@@ -24,18 +24,27 @@ export default class AppBox extends Component {
             where:'家'
         }
     }   
-    
+    // 根据名字查找位置（回车事件）
     fondWhere=(value)=>{
         console.log(value);
-        if(this.state.where=='家'){
-            window.location.href=window.location.href.split('#')[0]+'#/home/'+this.props.id
-        }else if(this.state.where=='柜子'){
-            window.location.href=window.location.href.split('#')[0]+'#/robe/'+this.props.id
-        }else if(this.state.where=='行李箱'){
-            window.location.href=window.location.href.split('#')[0]+'#/trunk/'+this.props.id
-        }else{
-            
-        }
+        fetch(`http://47.98.163.228:3003/seek/${value}`)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+            if(res=='不存在'){
+                alert('不存在')
+            } else {
+                var where = res;
+                if (where == '家') {
+                    window.location.href = window.location.href.split('#')[0] + '#/home/' + this.props.id
+                } else if (this.state.where == '柜子') {
+                    window.location.href = window.location.href.split('#')[0] + '#/robe/' + this.props.id
+                } else if (this.state.where == '行李箱') {
+                    window.location.href = window.location.href.split('#')[0] + '#/trunk/' + this.props.id
+                }
+            }
+        })
+        
     } 
     
     double = () => {
