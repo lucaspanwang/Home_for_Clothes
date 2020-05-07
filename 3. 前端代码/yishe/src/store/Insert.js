@@ -5,7 +5,7 @@ import Back from '../images/fanhui_1.png';
 import { createForm } from 'rc-form';
 import './store.css';
 import { thisTypeAnnotation } from '@babel/types';
-let sex='男';
+// let sex;
 //图片选择器
 const data = [];
 //图片选择器
@@ -30,8 +30,7 @@ const colorStyle = {
   marginRight: '10px',
 };
 // 衣服分类
-let kind;
-sex=='女'?kind=[
+let kindGirl=[
   {
     label:(<span>裤子</span>),
     value:'裤子',
@@ -128,7 +127,8 @@ sex=='女'?kind=[
       },
     ]
   },
-]:kind=[
+]
+let kindBoy=[
   {
     label:(<span>裤子</span>),
     value:'裤子',
@@ -265,12 +265,22 @@ const colors = [
     value: '紫色',
   },
 ];
-
-
+//页面加载完之前运行的函数
+// window.onpageshow=function(){
+//   var length=window.location.href.split('/').length;
+//   var id=window.location.href.split('/')[length-1];
+//   fetch('http://47.98.163.228:3003/insertSex/'+id)
+//     .then(res=>res.json())
+//     .then(res=>{
+//       console.log('男女：',res)
+//       sex=res
+      // localStorage.setItem('sex',res)
+//     })
+// }
 const picName='';
 class Insert extends Component {
   state = {
-    kinds:kind,
+    kinds:kindBoy,
     picName:'',
     change:'',
     files: data,
@@ -353,28 +363,47 @@ class Insert extends Component {
     }
     
   componentWillMount(){
-    console.log(this.props.match.params.id)
-    fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
-    .then(res=>res.json())
-    .then(res=>{
-      console.log('男女：',res)
-      sex=res
-    })
+    // console.log(this.props.match.params.id)
+    // fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
+    // .then(res=>res.json())
+    // .then(res=>{
+    //   console.log('男女：',res)
+    //   if(res=='女'){
+    //     this.setState({
+    //       kind:kindGirl
+    //     })
+    //   }
+    //   // sex=res
+    // })
            
     
   }
   componentDidMount(){
-    
+    // console.log(this.props.match.params.id)
+    // console.log(kindGirl)
+    fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
+    .then(res=>res.json())
+    .then(res=>{
+      // console.log('男女：',res)
+      // console.log(res=='女')
+      if(res=='女'){
+        this.setState({
+          kinds:kindGirl
+        })
+        // console.log(this.state.kinds)
+      }
+      // sex=res
+    })
     
     // fetch('http://47.98.163.228:8089/usersex')
     //     .then(res=>res.json())
     //     .then(res=>{
-            // console.log(res.length)
-            // this.setState({
-            //     picture:res
-            // })
-            // console.log(this.state.picture)
-        // });
+    //         console.log(res.length)
+    //         this.setState({
+    //             picture:res
+    //         })
+    //         console.log(this.state.picture)
+    //     });
   }
   
   render() {
