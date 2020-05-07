@@ -8,7 +8,7 @@ const http = require('http');
 var con = mysql.createConnection(dbconfig);// 创建连接
 con.connect();//链接
 
-//导入页面根据获取性别来分类
+//导入页面---根据获取性别来分类
 router.get('/insertSex/:id',function(req,res){
   var userid=req.params.id
   con.query(`select userSex from users where userId=${userid}`,function(err,result){
@@ -16,6 +16,22 @@ router.get('/insertSex/:id',function(req,res){
       // console.log(result[0].userSex)
       res.json(result[0].userSex)
 })
+})
+
+//储物箱--根据名字来跳转家或者各个页面
+router.get('/seek/:value',function(req,res){
+  var value=JSON.stringify(req.params.value);
+  console.log('前端传来得value',value);
+  con.query(`select cloPlace from clothing where cloName=${value}`,function(err,result){
+    // console.log(Boolean(result[0]))
+      if(!result[0]){
+        res.json("不存在")
+      }else{
+        res.json(result[0].cloPlace)
+      
+      console.log('查找得到的',result)
+      }
+  })
 })
 // 导入
 // router.get('/insert', function (req, res) {
