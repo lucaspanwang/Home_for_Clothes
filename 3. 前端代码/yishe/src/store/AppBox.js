@@ -35,11 +35,11 @@ export default class AppBox extends Component {
                 alert('不存在')
             } else {
                 var where = res;
-                if (where == '家') {
+                if (where == '1') {
                     window.location.href = window.location.href.split('#')[0] + '#/home/' + this.props.id
-                } else if (this.state.where == '柜子') {
+                } else if (this.state.where == '2') {
                     window.location.href = window.location.href.split('#')[0] + '#/robe/' + this.props.id
-                } else if (this.state.where == '行李箱') {
+                } else if (this.state.where == '3') {
                     window.location.href = window.location.href.split('#')[0] + '#/trunk/' + this.props.id
                 }
             }
