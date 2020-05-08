@@ -59,18 +59,18 @@
 }
 .icon > .icon2 {
     position: relative;
-    top:-0px;
+    top:-55px;
     left:-150px;
     /* filter: drop-shadow(150px 0 pink); */
 }
 .icon > .icon3{
   position: relative;
-  top:0px;
+  top:-55px;
   left:-150px;
 }
 .icon > .icon4{
 position: relative;
-top:0px;
+top:-55px;
 left:-150px;
 }
 #imgpick{
