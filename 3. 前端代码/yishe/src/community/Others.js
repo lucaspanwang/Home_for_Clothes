@@ -12,6 +12,8 @@ import user from '../images/user_1.png';
 import city from '../images/city_1.png';
 import intro from '../images/intro_1.png';
 import article from '../images/article_1.png';
+import guanzhu from '../images/guanzhu_2.png';
+import sixin from '../images/sixin.png';
 
 const Item = List.Item;
 const { Paragraph } = Typography;
@@ -77,7 +79,7 @@ export default class Others extends Component {
                     </div>
                 </div>
 
-                <List style={{margin:'70px 10px'}}>
+                <List style={{margin:'70px 10px 0 10px',borderBottom:'8px solid #eee'}}>
                     <Item
                     style={{borderBottom:"1px solid #ddd",margin:'8px 0'}}
                     thumb={user}
@@ -92,10 +94,21 @@ export default class Others extends Component {
                     ><Paragraph ellipsis={{rows:1}} style={{margin:0,color:'#000'}}>简介：{this.state.user.userIntro}</Paragraph></Item>
                     <Link to={"/otherArticle/"+this.props.match.params.id}>
                     <Item
+                    style={{margin:'8px 0'}}
                     thumb={article}
                     onClick={() => {}}
                     arrow="horizontal"
                     >发帖</Item></Link>
+                </List>
+                <List style={{margin:'10px'}}>
+                    <Item
+                    style={{borderBottom:"1px solid #ddd",margin:'8px 0'}}
+                    thumb={guanzhu}
+                    >关注用户</Item>
+                    <Item
+                    style={{margin:'8px 0'}}
+                    thumb={sixin}
+                    >与他私信</Item>
                 </List>
             </div>)
     }
