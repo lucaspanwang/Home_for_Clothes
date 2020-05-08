@@ -24,8 +24,8 @@ export default function Gongge(props) {
         <div>
           <Row>
             {
-              img.map((item)=>(
-                <Col span={num}><img src={item} onClick={()=>{window.location.href=item}} style={{width:width,height:height,objectFit:'cover'}}/></Col>
+              img.map((item,index)=>(
+                <Col span={num} key={index}><img src={item} onClick={()=>{window.location.href=item}} style={{width:width,height:height,objectFit:'cover'}}/></Col>
               ))
             }
           </Row>

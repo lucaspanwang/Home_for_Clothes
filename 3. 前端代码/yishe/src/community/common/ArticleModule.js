@@ -1,6 +1,6 @@
 //文章模块，根据判断决定是显示在社区页的样式还是文章详情的样式
 import React, { Component } from 'react';
-import { Popover } from 'antd-mobile';
+import { Toast,Popover } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
 
@@ -148,6 +148,7 @@ export default class ArticleModule extends Component {
             })
         }
     }
+    
     render() {
         return (
             <div className="article" key={this.state.article.articleId}>
@@ -156,31 +157,36 @@ export default class ArticleModule extends Component {
                         <img className='userImg' src={this.state.article.userPic} alt=""/>
                         <span className='userName'>{this.state.article.userName}</span>
                     </Link>
-                    <Popover mask
-                        visible={this.state.visible}
-                        overlay={[
-                            (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
-                                <div onClick={this.onCare.bind(this,this.state.article.userId)}>
-                                    <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
-                                    <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
-                                </div>
-                            </Item>),
-                            (<Item key={1} value="私信" style={{padding:'10px 25px'}}>
-                                <div><img src={message} alt='' style={{width:'25px'}}/>
-                                <span style={{padding:'0 20px',fontSize:'18px'}}>私信</span></div>
-                            </Item>),
-                            (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
-                                <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
-                                <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
-                            </Item>)
-                        ]}
-                        onSelect={this.onSelect}
-                    ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
-                    </Popover>
+                    {/* 是否是个人的发帖文章页 */}
+                    {
+                        this.props.operation == "delete"
+                        ?(<button style={{float:"right",fontSize:"16px",color:"#fff",padding:"8px 15px",border:"2px solid #85c7fd",borderRadius:"6px",backgroundColor:"#97cdf9"}} onClick={()=>this.props.deleteItem(this.state.article.articleId)}>删除文章</button>)
+                        :(<Popover mask
+                            visible={this.state.visible}
+                            overlay={[
+                                (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
+                                    <div onClick={this.onCare.bind(this,this.state.article.userId)}>
+                                        <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
+                                        <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
+                                    </div>
+                                </Item>),
+                                (<Item key={1} value="私信" style={{padding:'10px 25px'}}>
+                                    <div><img src={message} alt='' style={{width:'25px'}}/>
+                                    <span style={{padding:'0 20px',fontSize:'18px'}}>私信</span></div>
+                                </Item>),
+                                (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
+                                    <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
+                                    <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
+                                </Item>)
+                            ]}
+                            onSelect={this.onSelect}
+                        ><img src={`${xiala}`} alt="" style={{margin:'10px',width:'20px',float:'right'}}/>
+                        </Popover>)
+                    }
                 </div>
                 {/* 判断是在社区首页显示，还是在文章详情页显示 */}
                 {
-                    this.props.place == "community"
+                    this.props.place == "index"
                     ?(<div className="artDetail">
                         <Paragraph ellipsis={{rows:5}}>{this.state.article.content}</Paragraph>
                         <Link to={"/shequarticle/"+this.props.articleId+"&"+this.props.userId}>阅读全文>></Link>
@@ -193,7 +199,7 @@ export default class ArticleModule extends Component {
                     </div>)
                 }
                 <ul className="artState">
-                    {this.props.place=="community"?(<li><span>{this.state.article.time}</span></li>):""}
+                    {this.props.place=="index"?(<li><span>{this.state.article.time}</span></li>):""}
                     <li>
                         <img src={`${pinglun}`} alt=''/>
                         <span style={{color:"#444"}}>{this.state.article.review || "评论"}</span>

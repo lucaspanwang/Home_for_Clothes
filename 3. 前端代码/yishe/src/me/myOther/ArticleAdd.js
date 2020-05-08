@@ -32,7 +32,6 @@ export default class ArticleAdd extends Component {
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Credentials" : true,
-                credentials: 'include',
                 headers: {
                     'Content-Type': 'multipart/form-data;charset=utf-8'
                 },
@@ -84,7 +83,7 @@ export default class ArticleAdd extends Component {
                 <NavBar 
                 style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
-                    <Link to={"/myarticle/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan"/></Link>
+                    <Link to={"/myarticle/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fanadd"/></Link>
                 ]}
                 rightContent={[
                     <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</span>

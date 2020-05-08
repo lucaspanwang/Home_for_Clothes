@@ -25,9 +25,6 @@ export default class Others extends Component {
       }
     }
     componentDidMount(){
-        console.log(this.props.match.params.id.split("&")[0]);
-        console.log(this.props.match.params.id.split("&")[1]);
-
         fetch("http://47.98.163.228:3004/users?userId="+this.props.match.params.id.split("&")[0])
         .then(res=>res.json())
         .then(res=>{
@@ -37,8 +34,6 @@ export default class Others extends Component {
             }
             this.setState({
                 user:res[0]
-            },function(){
-                console.log(this.state.user);
             })
         });
         fetch("http://47.98.163.228:3004/detail?userId="+this.props.match.params.id.split("&")[0])
@@ -86,23 +81,21 @@ export default class Others extends Component {
                     <Item
                     style={{borderBottom:"1px solid #ddd",margin:'8px 0'}}
                     thumb={user}
-                    onClick={() => {}}
                     >账号：{this.state.user.userId}</Item>
                     <Item
                     style={{borderBottom:"1px solid #ddd",margin:'8px 0'}}
                     thumb={city}
-                    onClick={() => {}}
                     >城市：{this.state.user.userCity}</Item>
                     <Item
                     style={{borderBottom:"1px solid #ddd",margin:'8px 0'}}
                     thumb={intro}
-                    onClick={() => {}}
                     ><Paragraph ellipsis={{rows:1}} style={{margin:0,color:'#000'}}>简介：{this.state.user.userIntro}</Paragraph></Item>
+                    <Link to={"/otherArticle/"+this.props.match.params.id}>
                     <Item
                     thumb={article}
                     onClick={() => {}}
                     arrow="horizontal"
-                    >发帖</Item>
+                    >发帖</Item></Link>
                 </List>
             </div>)
     }

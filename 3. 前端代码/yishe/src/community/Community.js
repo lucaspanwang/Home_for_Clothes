@@ -62,7 +62,7 @@ export default class Community extends Component {
                     </div>
                     {
                         this.state.users.map((item)=>(
-                            <ArticleModule articleId={item.articleId} userId={this.props.id} place="community"/>
+                            <ArticleModule articleId={item.articleId} userId={this.props.id} place="index"/>
                         ))
                     }
                 </div>
