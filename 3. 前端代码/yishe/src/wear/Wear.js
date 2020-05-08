@@ -148,7 +148,7 @@ export default class Wear extends Component {
               //判断裙子类别
               if(n.indexOf('qun')!=-1){
                 qunqun.push(big[i]);
-                qunqun_s.push(small[i]);
+                qunqun_s.push(this.change_color_small(small[i],res[i].cloColor))
                 qun_c.push(res[i].cloColor)
               }
               //判断上衣
@@ -228,7 +228,7 @@ export default class Wear extends Component {
         temperature2:res.data[0].tem1,
         dressing_advice:res.data[0].index[3].desc,
         weather:res.data[0].wea,
-        speak_suggest:res.data[0].index[1].desc
+        speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.data[0].index[1].desc
       },function(){
         this.weather_icon();
       })
@@ -301,6 +301,23 @@ export default class Wear extends Component {
       document.getElementById('mote4').src=this.state.tao[idx];
       document.getElementById('mote4').style.display = 'block';
     }
+ //变色（小图）
+    change_color_small(it,col){
+      var now  = it.split('.')
+      var color_s='';
+      switch(col){
+        case '白色':color_s='_bai';break;
+        case '黑色':color_s='_hei';break;
+        case '红色':color_s='_hong';break;
+        case '绿色':color_s='_lv';break;
+        case '蓝色':color_s='_lan';break;
+        case '黄色':color_s='_huang';break;
+        case '紫色':color_s='_zi';break;
+        default:color_s='';break;
+      }
+      var now_src = now[0]+'.'+now[1]+'.'+now[2]+'.'+now[3]+color_s+'.png'
+      return now_src;
+    }   
 //变色
     change_color(it,col){
       var now  = it.split('.')
@@ -453,8 +470,7 @@ export default class Wear extends Component {
       })
     }
     speak=()=>{
-      const msg = new SpeechSynthesisUtterance(this.state.speak_suggest);
-      window.speechSynthesis.speak(msg);
+      this.audio.play();
     }
     //渲染组件
     render() {
@@ -465,6 +481,7 @@ export default class Wear extends Component {
                 >穿搭</NavBar>
               {/* 天气 */}
               <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }} id="lalala" onClick={this.speak.bind(this)}>
+                <audio ref={e => this.audio = e} src={this.state.speak_suggest} />
                     <img src={didian} style={{width:'30px',float:'left',position:'relative',top:'-5px',marginTop:'7px'}} key="fan1"/>
                     <span id="shi" style={{float:'left'}}>{this.state.city}</span>
                     <span style={{float:'left'}}>今日天气:</span>
