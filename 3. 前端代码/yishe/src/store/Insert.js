@@ -181,12 +181,12 @@ const where=[
     value:'家'
   },
   {
-    label:(<span>行李箱</span>),
-    value:'行李箱'
-  },
-  {
     label:(<span>柜子</span>),
     value:'柜子'
+  },
+  {
+    label:(<span>行李箱</span>),
+    value:'行李箱'
   },
   
 ]
@@ -333,30 +333,45 @@ class Insert extends Component {
       mingzi:e.target.value
     })
   }
-  todata=()=>{
-    if(this.state.mingzi==''|
-    this.state.zhonglei==''|
-    this.state.colorValue==''|this.state.where==''|this.state.filesType==undefined){
-      alert('不能为空');
-    }else{
-      console.log(this.state.mingzi)
-      fetch("http://47.98.163.228:8087/insert", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
+  todata = () => {
+    if (this.state.mingzi == '' |
+      this.state.zhonglei == '' |
+      this.state.colorValue == '' | 
+      this.state.where == '' | 
+      this.state.filesType == undefined) 
+      {
+        alert('不能为空');
+    } else {
+      // 判断在位置中占第几个用来查找
+      var whereId;
+      console.log(this.state.whereValue)
+      for(var i in where){
+        if(where[i].value==this.state.whereValue){
+          // console.log('位置：',parseInt(i)+1)
+          whereId=parseInt(i)+1;
+        };
+      }
+      console.log(whereId);
+      fetch('http://47.98.163.228:3003/insert', {
+        method: 'post',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-            // 'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
-        body:JSON.stringify({filesType:this.state.filesType,
-          userid:this.props.match.params.id,base64:this.state.files,
-          zhonglei:this.state.zhonglei,
-          weizhi:this.state.whereValue,
-          yanse:this.state.colorValue,
-          mingzi:this.state.mingzi}) 
-      });
-      console.log('post成功')
+        body: JSON.stringify({
+          filesType: this.state.filesType,
+          userid: this.props.match.params.id, 
+          base64: this.state.files,
+          zhonglei: this.state.zhonglei,
+          weizhi: this.state.whereValue,
+          yanse: this.state.colorValue,
+          mingzi: this.state.mingzi,
+          whereId:whereId
+        })
+      });  
+       
+      console.log('导入前端post成功');
       window.location.reload()
     }
     }
@@ -378,6 +393,7 @@ class Insert extends Component {
     
   }
   componentDidMount(){
+    
     // console.log(this.props.match.params.id)
     // console.log(kindGirl)
     // 根据性别判读分类
@@ -395,15 +411,7 @@ class Insert extends Component {
       // sex=res
     })
     
-    // fetch('http://47.98.163.228:8089/usersex')
-    //     .then(res=>res.json())
-    //     .then(res=>{
-    //         console.log(res.length)
-    //         this.setState({
-    //             picture:res
-    //         })
-    //         console.log(this.state.picture)
-    //     });
+    
   }
   
   render() {
