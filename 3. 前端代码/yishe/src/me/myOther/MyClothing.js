@@ -21,6 +21,8 @@ export default class MyClothing extends Component {
             }
             this.setState({
                 picture:res
+            },function(){
+                console.log(this.state.picture)
             })
         });
     }
@@ -37,7 +39,7 @@ export default class MyClothing extends Component {
                     {
                         this.state.picture.map((item)=>(
                             <Popover content={<p style={{fontSize:"20px"}}>{item.cloPlace}</p>} placement="bottom" title={<p style={{fontSize:"16px"}}>衣服所存位置</p>} trigger="hover">
-                                <img src={item.cloPic} key={item.cloId} style={{width:'120px',height:'120px',margin:'2px',border:'1px solid #ddd'}}/>
+                                <img src={item.cloPic} key={item.cloId} style={{width:'32vw',heihgt:'32vw',margin:'0.5vw',border:'1px solid #ddd'}}/>
                             </Popover>
                         ))
                     }

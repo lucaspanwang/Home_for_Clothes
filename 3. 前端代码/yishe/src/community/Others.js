@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavBar,Popover,List } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { Col,Typography} from 'antd';
-import ArticleModule from './common/ArticleModule';
 import './community.css';
 
 import fanhui from '../images/fanhui_1.png';
@@ -23,7 +22,8 @@ export default class Others extends Component {
       super();
       this.state = {
         user:{},
-        detail:[]
+        detail:[],
+        follow:false
       }
     }
     componentDidMount(){
@@ -38,6 +38,38 @@ export default class Others extends Component {
                 user:res[0]
             })
         });
+        fetch("http://47.98.163.228:3004/detail?userId="+this.props.match.params.id.split("&")[0])
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                detail:res
+            })
+        });
+        fetch("http://47.98.163.228:3004/care?userId="+this.props.match.params.id.split("&")[1]+"&careId="+this.props.match.params.id.split("&")[0])
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                follow:Boolean(res.length)
+            })
+        })
+    }
+    //关注/取消关注
+    onCare = () =>{
+        if(this.state.follow){
+            fetch("http://47.98.163.228:3004/careDelete?userId="+this.props.match.params.id.split("&")[1]+"&careId="+this.props.match.params.id.split("&")[0])
+            .then(res=>{
+                this.setState({
+                    follow:false
+                })
+            })
+        }else{
+            fetch("http://47.98.163.228:3004/careAdd?userId="+this.props.match.params.id.split("&")[1]+"&careId="+this.props.match.params.id.split("&")[0])
+            .then(res=>{
+                this.setState({
+                    follow:true
+                })
+            })
+        }
         fetch("http://47.98.163.228:3004/detail?userId="+this.props.match.params.id.split("&")[0])
         .then(res=>res.json())
         .then(res=>{
@@ -104,7 +136,8 @@ export default class Others extends Component {
                     <Item
                     style={{borderBottom:"1px solid #ddd",margin:'8px 0'}}
                     thumb={guanzhu}
-                    >关注用户</Item>
+                    onClick={this.onCare}
+                    >{this.state.follow?'取消关注':'关注用户'}</Item>
                     <Item
                     style={{margin:'8px 0'}}
                     thumb={sixin}
