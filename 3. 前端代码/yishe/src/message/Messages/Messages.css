@@ -1,5 +1,10 @@
 .messages {
-    padding: 15% 0 20% 0;
+    position:fixed;
+    top:8%;
+    bottom:7%;
+    left:0;
+    right:0;
     overflow: auto;
     flex: auto;
+    background-color: rgb(236, 236, 236);
   }

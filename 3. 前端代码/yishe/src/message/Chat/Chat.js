@@ -5,8 +5,9 @@ import TextContainer from '../TextContainer/TextContainer';
 import Messages from '../Messages/Messages';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
+import styles from"./Chat.css";
 
-import './Chat.css';
+// import './Chat.css';
 
 let socket;
 
@@ -52,14 +53,13 @@ const Chat = ({ location }) => {
   }
 
   return (
-    <div className="outerContainer">
-      <div src={{position:'relative'}} className="container">
+      <div className="container">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
           <InfoBar name={name} room={room} />
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      <TextContainer users={users}/>
-    </div>
+      // <TextContainer users={users}/>
   );
 }
 

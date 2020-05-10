@@ -1,17 +1,46 @@
 .form {
     width:100%;
     position: fixed;
+    padding-bottom:18%;
+    padding-top:3%;
+    background-color:rgb(251,251,251);
     bottom:0;
-    
+  }
+
+  #voice {
+    position:absolute;
+    top:1em;
+    left:2%;
+    width:8%;
+  }
+
+  #add {
+    position:absolute;
+    top:1em;
+    right:3%;
+    width:7%;
+  }
+
+  #emoji {
+    position:absolute;
+    top:1.2em;
+    right:16%;
+    width:6%;
+    opacity: 0.7;
   }
   
-  .input {
+  #input {
+    position:absolute;
+    left:12.5%;
     border: none;
-    border-radius: 0;
-    border-top:solid 2px rgba(129, 129, 129, 0.3);
-    padding: 4%;
-    width: 80%;
+    border-radius: 20px;
+    padding-left: 4%;
+    padding-right:12%;
+    width: 75%;
+    height:2em;
     font-size: 1.2em;
+    background-color:rgb(238,238,238);
+    color:black;
   }
   
   input:focus, textarea:focus, select:focus{
