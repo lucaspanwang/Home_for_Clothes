@@ -472,6 +472,17 @@ export default class Wear extends Component {
     speak=()=>{
       this.audio.play();
     }
+    //截屏
+    takeScreenshot() {
+      console.log('testakeScreenshot');
+        html2canvas(document.getElementById('view'), {
+            onrendered: function(canvas) {
+                document.body.appendChild(canvas);
+            },
+          // width: 300,
+          // height: 300
+        });
+    }
     //渲染组件
     render() {
         return (
@@ -671,4 +682,14 @@ const tabs2 = [
     { title: '裤子'},
     { title: '鞋'},
   ];
-  
+      //截屏
+      takeScreenshot() {
+        console.log('testakeScreenshot');
+          html2canvas(document.getElementById('view'), {
+              onrendered: function(canvas) {
+                  document.body.appendChild(canvas);
+              },
+            // width: 300,
+            // height: 300
+          });
+      }
