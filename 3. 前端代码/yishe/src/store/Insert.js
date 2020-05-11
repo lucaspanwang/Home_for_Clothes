@@ -5,7 +5,7 @@ import Back from '../images/fanhui_1.png';
 import { createForm } from 'rc-form';
 import './store.css';
 import { thisTypeAnnotation } from '@babel/types';
-// let sex;
+let sex;
 //图片选择器
 const data = [];
 //图片选择器
@@ -351,6 +351,7 @@ class Insert extends Component {
           whereId=parseInt(i)+1;
         };
       }
+      console.log(sex);
       console.log(whereId);
       fetch('http://47.98.163.228:3003/insert', {
         method: 'post',
@@ -367,12 +368,17 @@ class Insert extends Component {
           weizhi: this.state.whereValue,
           yanse: this.state.colorValue,
           mingzi: this.state.mingzi,
-          whereId:whereId
+          whereId:whereId,
+          sex:sex
         })
-      });  
+      })
+      // .then(res=>res.json())
+      // .then((res)=>{
+      //   console.log('insert',res)
+      // });  
        
-      console.log('导入前端post成功');
-      window.location.reload()
+      // console.log('导入前端post成功');
+      // window.location.reload()
     }
     }
     
@@ -400,6 +406,7 @@ class Insert extends Component {
     fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
     .then(res=>res.json())
     .then(res=>{
+      sex=res;
       // console.log('男女：',res)
       // console.log(res=='女')
       if(res=='女'){
