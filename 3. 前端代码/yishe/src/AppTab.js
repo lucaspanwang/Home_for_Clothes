@@ -174,7 +174,7 @@ export default class AppTab extends React.Component {
                   selectedTab: "community",
                   navbar:'社区'
                 },function(){
-                  window.location.href = this.state.url+'#/apptab/'+this.state.userId;
+                  window.location.href = this.state.url+'#/apptab/'+this.state.userId+'&community';
                 });
               }}
             >

@@ -40,7 +40,7 @@ export default class MyFan extends Component {
                 <div style={{margin:'10px'}}>
                     {
                         this.state.care.map((item,index)=>(
-                            <UserModule userId={item.userId} key={index}/>
+                            <Link to={"/others/"+item.userId+"&"+this.props.match.params.id}><UserModule userId={item.userId} key={index}/></Link>
                         ))
                     }
                 </div>

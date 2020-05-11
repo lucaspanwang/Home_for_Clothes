@@ -34,7 +34,7 @@ export default class MyCare extends Component {
                 <div style={{margin:'10px'}}>
                     {
                         this.state.care.map((item,index)=>(
-                            <UserModule userId={item.careId} key={index}/>
+                            <Link to={"/others/"+item.careId+"&"+this.props.match.params.id}><UserModule userId={item.careId} key={index}/></Link>
                         ))
                     }
                 </div>
