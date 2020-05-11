@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import shanchu from './删 除 .png'
-import tianjia from './添加.png'
+import shanchu from './images/删 除 .png'
+import tianjia from './images/添加.png'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
 export default class Table2 extends Component {
     constructor(){

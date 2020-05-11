@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from './logo_bai.png'
+import logo from './images/logo_bai.png'
 import { message } from 'antd';
 
 export default class Login extends Component {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { ImagePicker, WingBlank, SegmentedControl } from 'antd-mobile';
-import mote from './模特.png'
-import mote2 from './模特.png'
-import xiaoren from './小人.png'
+import mote from './images/模特.png'
+import mote2 from './images/模特.png'
+import xiaoren from './images/小人.png'
 const data = [{
   url: mote,
   id: '2121',
