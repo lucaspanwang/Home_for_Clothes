@@ -81,7 +81,7 @@ export default class Article extends Component {
           headers: {
             'Content-Type':'application/json',
           },
-          body: JSON.stringify({userId:this.state.user.userId,articleId:this.state.articleId,reviewContent:this.state.value,reviewTime:date.toLocaleString()})
+          body: JSON.stringify({userId:this.state.user.userId,articleId:this.props.match.params.id.split("&")[0],reviewContent:this.state.value,reviewTime:date.toLocaleString()})
         })
         .then(res=>{
           console.log(res);

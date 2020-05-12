@@ -20,6 +20,7 @@ const { Paragraph } = Typography;
 export default class Others extends Component {
     constructor(){
       super();
+      this.onback = this.onback.bind(this);
       this.state = {
         user:{},
         detail:[],
@@ -78,12 +79,16 @@ export default class Others extends Component {
             })
         });
     }
+    onback=()=>{
+        // console.log(this.props.history.location);
+        this.props.history.go(-1);
+    }
     render() {
         return (
             <div>
                 <NavBar 
                     style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
-                    leftContent={<Link to={"/apptab/"+this.props.match.params.id.split("&")[1]+'&community'}><img src={fanhui} style={{width:'30px'}} key="artfan"/></Link>}
+                    leftContent={<img src={fanhui} style={{width:'30px'}} key="artfan" onClick={this.onback} />}
                 ></NavBar>
                 <NavBar style={{width:'100%',backgroundColor:'#fc9d9a'}}></NavBar>
 

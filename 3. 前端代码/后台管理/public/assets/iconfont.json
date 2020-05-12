@@ -1,0 +1,72 @@
+{
+  "id": "1812132",
+  "name": "衣舍-后台",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3596664",
+      "name": "提醒",
+      "font_class": "tixing",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "12612007",
+      "name": "用户",
+      "font_class": "yonghu-copy",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "319737",
+      "name": "文章",
+      "font_class": "wenzhang",
+      "unicode": "e7c4",
+      "unicode_decimal": 59332
+    },
+    {
+      "icon_id": "6188168",
+      "name": "反馈",
+      "font_class": "fankui",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "7778489",
+      "name": "官方消息",
+      "font_class": "guanfangxiaoxi",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "9025564",
+      "name": "首页-选中",
+      "font_class": "yemian-copy-copy-copy",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "9435731",
+      "name": "模型 ",
+      "font_class": "moxing",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "9949133",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "13892043",
+      "name": "管理员",
+      "font_class": "guanliyuan",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    }
+  ]
+}

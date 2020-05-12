@@ -35,7 +35,7 @@ export default class UserModule extends Component {
                     <img src={this.state.user.userSex=='男'?male:female} style={{position:'absolute',right:'0',bottom:'0',width:'18px',borderRadius:'50%'}} />
                 </div>
                 <div style={{width:'calc(100% - 65px)',height:'50px',float:'left'}}>
-                    <p style={{font:'bold 18px YouYuan',margin:'0',lineHeight:'25px'}}>{this.state.user.userName}</p>
+                    <p style={{color:'#666',font:'bold 18px YouYuan',margin:'0',lineHeight:'25px'}}>{this.state.user.userName}</p>
                     <Paragraph ellipsis={{rows:1}} style={{color:'#888',margin:'0',lineHeight:'25px'}}>简介：{this.state.user.userIntro}</Paragraph>
                 </div>
             </div>
