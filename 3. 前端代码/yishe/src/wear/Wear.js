@@ -682,14 +682,3 @@ const tabs2 = [
     { title: '裤子'},
     { title: '鞋'},
   ];
-      //截屏
-      takeScreenshot() {
-        console.log('testakeScreenshot');
-          html2canvas(document.getElementById('view'), {
-              onrendered: function(canvas) {
-                  document.body.appendChild(canvas);
-              },
-            // width: 300,
-            // height: 300
-          });
-      }
