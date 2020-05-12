@@ -108,10 +108,14 @@ export default class Home extends Component {
         return (
             <div>
                 <NavBar
+                // style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
+                    style={{backgroundColor:'rgb(252, 157, 154)'}}
                     leftContent={
                         <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
-                style={{backgroundColor:'rgb(252, 157, 154)'}}>家</NavBar>
+                    >
+                    {localStorage.getItem('jia')?localStorage.getItem('jia'):'家'}
+                    </NavBar>
                 <div style={{position:'relative'}}>
                     {
                     this.state.picture.map((item,i)=>{

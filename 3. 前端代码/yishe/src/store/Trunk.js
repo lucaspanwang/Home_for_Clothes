@@ -75,10 +75,14 @@ export default class Trunk extends Component {
         return (
             <div>
                 <NavBar
+                // style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                     leftContent={
                         <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
-                style={{backgroundColor:'rgb(252, 157, 154)'}}>行李箱</NavBar>
+                style={{backgroundColor:'rgb(252, 157, 154)'}}
+                >
+                    {localStorage.getItem('xinglixiang')?localStorage.getItem('xinglixiang'):'行李箱'}
+                    </NavBar>
                 <div>
                 {
                     this.state.picture.map((item,i)=>{
