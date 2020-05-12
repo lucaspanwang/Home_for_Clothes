@@ -177,18 +177,21 @@ let kindBoy=[
 // 位置data
 const where=[
   {
-    label:(<span>家</span>),
-    value:'家'
+    label:(<span>{localStorage.getItem("家")?localStorage.getItem('家'):'家'}</span>),
+      value:localStorage.getItem("家")?localStorage.getItem:'家'
   },
   {
-    label:(<span>柜子</span>),
-    value:'柜子'
+    label:(<span>{localStorage.getItem("行李箱")?localStorage.getItem('行李箱'):'行李箱'}</span>),
+      value:localStorage.getItem("行李箱")?localStorage.getItem:'行李箱'
   },
   {
-    label:(<span>行李箱</span>),
-    value:'行李箱'
+    label:(<span>{localStorage.getItem("柜子")?localStorage.getItem('柜子'):'柜子'}</span>),
+      value:localStorage.getItem("柜子")?localStorage.getItem:'柜子'
   },
-  
+  {
+  label:(<span>{localStorage.getItem("添加")?localStorage.getItem('添加'):''}</span>),
+    value:localStorage.getItem("添加")?localStorage.getItem:''
+  }
 ]
 
 // 颜色data
@@ -399,7 +402,7 @@ class Insert extends Component {
     
   }
   componentDidMount(){
-    
+    console.log(localStorage.getItem('添加')?localStorage.getItem('添加'):'')
     // console.log(this.props.match.params.id)
     // console.log(kindGirl)
     // 根据性别判读分类
@@ -433,7 +436,8 @@ class Insert extends Component {
             <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
-                </NavBar>
+        </NavBar>
+        
         {/* ------列表 */}
         <WhiteSpace size="lg" />
         <List style={{ backgroundColor: 'white' }} className="picker-list">
