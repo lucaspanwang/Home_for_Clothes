@@ -5,7 +5,7 @@ import Back from '../images/fanhui_1.png';
 import { createForm } from 'rc-form';
 import './store.css';
 import { thisTypeAnnotation } from '@babel/types';
-let sex;
+const sex='女';
 //图片选择器
 const data = [];
 //图片选择器
@@ -30,7 +30,8 @@ const colorStyle = {
   marginRight: '10px',
 };
 // 衣服分类
-let kindGirl=[
+let kind;
+sex=='女'?kind=[
   {
     label:(<span>裤子</span>),
     value:'裤子',
@@ -127,8 +128,7 @@ let kindGirl=[
       },
     ]
   },
-]
-let kindBoy=[
+]:kind=[
   {
     label:(<span>裤子</span>),
     value:'裤子',
@@ -177,21 +177,18 @@ let kindBoy=[
 // 位置data
 const where=[
   {
-    label:(<span>{localStorage.getItem("家")?localStorage.getItem('家'):'家'}</span>),
-      value:localStorage.getItem("家")?localStorage.getItem:'家'
+    label:(<span>家</span>),
+    value:'家'
   },
   {
-    label:(<span>{localStorage.getItem("行李箱")?localStorage.getItem('行李箱'):'行李箱'}</span>),
-      value:localStorage.getItem("行李箱")?localStorage.getItem:'行李箱'
+    label:(<span>行李箱</span>),
+    value:'行李箱'
   },
   {
-    label:(<span>{localStorage.getItem("柜子")?localStorage.getItem('柜子'):'柜子'}</span>),
-      value:localStorage.getItem("柜子")?localStorage.getItem:'柜子'
+    label:(<span>柜子</span>),
+    value:'柜子'
   },
-  {
-  label:(<span>{localStorage.getItem("添加")?localStorage.getItem('添加'):''}</span>),
-    value:localStorage.getItem("添加")?localStorage.getItem:''
-  }
+  
 ]
 
 // 颜色data
@@ -268,22 +265,12 @@ const colors = [
     value: '紫色',
   },
 ];
-//页面加载完之前运行的函数
-// window.onpageshow=function(){
-//   var length=window.location.href.split('/').length;
-//   var id=window.location.href.split('/')[length-1];
-//   fetch('http://47.98.163.228:3003/insertSex/'+id)
-//     .then(res=>res.json())
-//     .then(res=>{
-//       console.log('男女：',res)
-//       sex=res
-      // localStorage.setItem('sex',res)
-//     })
-// }
+
+
 const picName='';
 class Insert extends Component {
   state = {
-    kinds:kindBoy,
+    kinds:kind,
     picName:'',
     change:'',
     files: data,
@@ -336,92 +323,62 @@ class Insert extends Component {
       mingzi:e.target.value
     })
   }
-  todata = () => {
-    if (this.state.mingzi == '' |
-      this.state.zhonglei == '' |
-      this.state.colorValue == '' | 
-      this.state.where == '' | 
-      this.state.filesType == undefined) 
-      {
-        alert('不能为空');
-    } else {
-      // 判断在位置中占第几个用来查找
-      var whereId;
-      console.log(this.state.whereValue)
-      for(var i in where){
-        if(where[i].value==this.state.whereValue){
-          // console.log('位置：',parseInt(i)+1)
-          whereId=parseInt(i)+1;
-        };
-      }
-      console.log(sex);
-      console.log(whereId);
-      fetch('http://47.98.163.228:3003/insert', {
-        method: 'post',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true,
+  todata=()=>{
+    if(this.state.mingzi==''|
+    this.state.zhonglei==''|
+    this.state.colorValue==''|this.state.where==''|this.state.filesType==undefined){
+      alert('不能为空');
+    }else{
+      console.log(this.state.mingzi)
+      fetch("http://47.98.163.228:8087/insert", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded'
+            // 'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          filesType: this.state.filesType,
-          userid: this.props.match.params.id, 
-          base64: this.state.files,
-          zhonglei: this.state.zhonglei,
-          weizhi: this.state.whereValue,
-          yanse: this.state.colorValue,
-          mingzi: this.state.mingzi,
-          whereId:whereId,
-          sex:sex
-        })
-      })
-      // .then(res=>res.json())
-      // .then((res)=>{
-      //   console.log('insert',res)
-      // });  
-       
-      // console.log('导入前端post成功');
-      // window.location.reload()
+        body:JSON.stringify({filesType:this.state.filesType,
+          userid:this.props.match.params.id,base64:this.state.files,
+          zhonglei:this.state.zhonglei,
+          weizhi:this.state.whereValue,
+          yanse:this.state.colorValue,
+          mingzi:this.state.mingzi}) 
+      });
+      console.log('post成功')
+      window.location.reload()
     }
+    
     }
     
   componentWillMount(){
-    // console.log(this.props.match.params.id)
-    // fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
-    // .then(res=>res.json())
-    // .then(res=>{
-    //   console.log('男女：',res)
-    //   if(res=='女'){
-    //     this.setState({
-    //       kind:kindGirl
-    //     })
-    //   }
-    //   // sex=res
-    // })
-           
-    
+    console.log(this.props.match.params.id)
+    fetch("http://47.98.163.228:8089/insertSex", {
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+            // 'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          userId:this.props.match.params.id
+        })
+      });
   }
   componentDidMount(){
-    console.log(localStorage.getItem('添加')?localStorage.getItem('添加'):'')
-    // console.log(this.props.match.params.id)
-    // console.log(kindGirl)
-    // 根据性别判读分类
-    fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
-    .then(res=>res.json())
-    .then(res=>{
-      sex=res;
-      // console.log('男女：',res)
-      // console.log(res=='女')
-      if(res=='女'){
-        this.setState({
-          kinds:kindGirl
-        })
-        // console.log(this.state.kinds)
-      }
-      // sex=res
-    })
     
-    
+    fetch('http://47.98.163.228:8089/usersex')
+        .then(res=>res.json())
+        .then(res=>{
+            // console.log(res.length)
+            // this.setState({
+            //     picture:res
+            // })
+            // console.log(this.state.picture)
+        });
   }
   
   render() {
@@ -436,8 +393,7 @@ class Insert extends Component {
             <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
           }
           style={{ backgroundColor: 'rgb(252, 157, 154)' }}>导入
-        </NavBar>
-        
+                </NavBar>
         {/* ------列表 */}
         <WhiteSpace size="lg" />
         <List style={{ backgroundColor: 'white' }} className="picker-list">
