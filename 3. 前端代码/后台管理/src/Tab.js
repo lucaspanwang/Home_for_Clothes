@@ -32,7 +32,19 @@ export default class Tab extends Component {
         super();
         this.state={
             collapsed: false,
+            id: sessionStorage.getItem('manager'),
+            manager: {}
         }
+    }
+    componentDidMount(){
+        fetch('http://47.98.163.228:3004/manager?id='+this.state.id)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    manager:res[0]
+                })
+            })
     }
     onCollapse = collapsed => {
         console.log(collapsed);
@@ -40,6 +52,7 @@ export default class Tab extends Component {
     };
     render() {
         return (
+            // 最后在设置一下必须登陆才能显示这一页
             <Layout style={{minHeight:'100vh'}}>
                 <Layout style={{minHeight:'5vh',padding:'0 25px',background:"#001529"}}>
                     <Content style={{display:'flex',alignItems:'center'}}>
@@ -48,7 +61,7 @@ export default class Tab extends Component {
                     <Sider style={{margin:'auto 10px'}}>
                         <i className="iconfont header-icon icon-yonghu-copy"></i>
                         <i className="iconfont header-icon icon-tixing"></i>
-                        <i className="header-icon" style={{marginRight:15}}>你好，admin</i>
+                        <i className="header-icon" style={{marginRight:15}}>你好，{this.state.manager.ming}</i>
                     </Sider>
                 </Layout>
                 <Layout className="site-layout">

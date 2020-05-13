@@ -7,7 +7,8 @@ export default class Login extends Component {
         super();
         this.state={
             id:'',
-            pwd:''
+            pwd:'',
+            flag:0  //0表示不能登陆，1表示验证通过可以登陆
         }
     }
     handleChange1(e){
@@ -21,13 +22,30 @@ export default class Login extends Component {
         })
     }
     error = () => {
-        message.error('输入账号或密码错误！！！',2);
+        message.error('输入账号或密码错误！！！',1.5);
     };
-    login=()=>{
-        if(this.state.id==='admin' && this.state.pwd==='admin'){
-            window.location.href='/tab';
+    noNull = () => {
+        message.error('输入账号或密码不能为空！！！',1.5);
+    }
+    login = () => {//改成post请求
+        if(this.state.id && this.state.pwd){
+            fetch('http://47.98.163.228:3004/manager?id='+this.state.id+'&pwd='+this.state.pwd)
+            .then(res => res.json())
+            .then(res => {
+                if(res.length){
+                    this.setState({
+                        flag:1
+                    });
+                    window.location.href = '/tab';
+                    // localStorage.setItem('manager',this.state.id);
+                    sessionStorage.setItem('manager',this.state.id);//会话存储，必须登陆,一台电脑只能登陆一个人
+                }else{
+                    this.error();
+                }
+                console.log(res);
+            })
         }else{
-            this.error();
+            this.noNull();
         }
     }
   render() {
@@ -48,8 +66,6 @@ export default class Login extends Component {
                         <label style={{fontSize:'18px',color:'white'}}>密码：</label>
                         <input type='password' style={{background:'#001529',opacity:'0.80',width:'50%',border:'none',borderBottom:'1px solid white',color:'white'}} onChange={(e)=>this.handleChange2(e)}/>
                     </div>
-                    {/* <span style={{marginLeft:'20%',fontSize:'16px',color:'white'}}>账号：</span><input type='text' style={{background:'#001529',opacity:'0.80',width:'50%',height:'30px',border:'none',borderBottom:'1px solid white',color:'white'}} onChange={(e)=>this.handleChange1(e)}/><br/>
-                    <span style={{marginLeft:'20%',marginTop:'30px',fontSize:'16px',color:'white'}}>密码：</span><input type='password' style={{background:'#001529',opacity:'0.80',marginTop:'30px',width:'50%',height:'30px',border:'none',borderBottom:'1px solid white',color:'white'}} onChange={(e)=>this.handleChange2(e)}/> */}
                     <button style={{marginLeft:'20%',marginTop:'50px',fontSize:'22px',color:'white',width:'60%',height:'50px',background:'#0b9ad6',border:'none',borderRadius:'10px'}} onClick={this.login}>登录</button>
                 </div>
             </div>
