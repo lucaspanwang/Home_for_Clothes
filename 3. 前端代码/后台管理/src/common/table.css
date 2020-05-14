@@ -1,0 +1,19 @@
+.table-module{
+    width:100%;
+    border-radius:5px;
+    overflow: hidden;
+}
+.table-module tr,.table-module tr th,.table-module tr td{
+    border:1px solid rgba(128, 141, 255, 0.3);
+    text-align: center;
+    padding:5px;
+}
+.table-module tr:first-child{
+    background: rgba(0, 15, 56, 0.4) !important;
+}
+.table-module tr:nth-child(odd){
+    background: rgba(128, 141, 255, 0.3);
+}
+.table-module tr:nth-child(even){
+    background: rgba(255, 255, 255, 0.3);
+}

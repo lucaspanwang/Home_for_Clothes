@@ -40,7 +40,6 @@ export default class Tab extends Component {
         fetch('http://47.98.163.228:3004/manager?id='+this.state.id)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 this.setState({
                     manager:res[0]
                 })
@@ -94,11 +93,11 @@ export default class Tab extends Component {
                         </Menu>
                     </Sider>
                     <Layout className="site-layout" style={{height:'90vh',margin:'2vh 2vw',overflowY:'scroll',zIndex:99,background:'rgba(255,255,255,0.4)',borderRadius:'5px'}}>
-                        <Content style={{}}>
+                        <Content>
                             <div className="site-layout-background" style={{padding:'10px 15px', minHeight:480}}>
                                 {/* 首页 */}
                                 <Route exact path='/tab' component={Index} />
-                                <Route path='/tab/index' component={Index} />
+                                {/* <Route path='/tab/index' component={Index} /> */}
                                 {/* 管理员 */}
                                 <Route path='/tab/manager' component={Manager} />
                                 {/* 用户 */}

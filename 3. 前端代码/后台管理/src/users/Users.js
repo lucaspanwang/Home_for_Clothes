@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import Table from '../common/Table';
 
 import shanchu from '../images/shanchu.png'
 import tianjia from '../images/tianjia.png'
@@ -8,18 +9,24 @@ export default class Users extends Component {
     constructor(){
         super();
         this.state=({
-            ress:[],
+            thead:['用户ID','头像','昵称','性别','手机号','所在城市','简介','操作'],
+            keys:['userId','userPic','userName','userSex','userPho','userCity','userIntro',''],
+            tbody:[],
             str:'',
         })
     }
     componentDidMount(){
-        fetch('http://47.98.163.228:8088/users')
+        fetch('http://47.98.163.228:3004/users')
         .then(res=>res.json())
-        .then(res=>{      
+        .then(res=>{   
+            for(var i=0;i<res.length;i++){
+                var j = res[i].userPic.indexOf('/');
+                res[i].userPic = (<img src={"http://47.98.163.228:3004"+res[i].userPic.substr(j)} style={{width:40,height:40,borderRadius:'50%'}} />)
+            }
             this.setState({
-                ress:res
+                tbody:res
             },function(){
-                console.log(this.state.ress)
+                console.log(this.state.tbody)
             })
         })
     }
@@ -27,7 +34,9 @@ export default class Users extends Component {
     render() {
         return (
             <div>
-                <div id="page-wrapper">
+                <span style={{fontSize:'25px',fontFamily:'Lisu'}}>用户信息管理</span>
+                <Table thead={this.state.thead} keys={this.state.keys} tbody={this.state.tbody} twidth={[10,10,15,5,10,10,25,15]} />
+                {/* <div id="page-wrapper">
                 <div id="page-inner">
                     <div class="row">
                         <div class="col-md-12">
@@ -71,7 +80,7 @@ export default class Users extends Component {
                 </div>
                 </div>
                 </div>
-            </div>
+            </div> */}
             </div>
         )
     }
