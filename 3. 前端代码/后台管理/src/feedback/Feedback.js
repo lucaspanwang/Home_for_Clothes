@@ -1,22 +1,33 @@
 import React, { Component } from 'react'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import Table from '../common/Table';
 
 export default class Feedback extends Component {
     constructor(){
         super();
         this.state=({
-            ress:[],
+            thead:['反馈ID','用户名','内容','联系方式','反馈时间','是否回复'],
+            keys:['fbId','userName','fbContent','fbtel','fbTime','huifu'],
+            tbody:[],
             str:'',
         })
     }
     componentDidMount(){
         fetch('http://47.98.163.228:3000/fankuiall')
         .then(res=>res.json())
-        .then(res=>{      
+        .then(res=>{    
+            for(var i=0;i<res.length;i++){
+                res[i].fbTime = this.formatUTC(res[i].fbTime);
+                if(res[i].huifu){
+                    res[i].huifu = '已回复';
+                }else{
+                    res[i].huifu = (<Link to={'/tab/huifu/'+res[i].fbId} style={{color:'red'}}>待回复</Link>);
+                }
+            }  
             this.setState({
-                ress:res
+                tbody:res
             },function(){
-                console.log(this.state.ress)
+                console.log(this.state.tbody)
             })
         })
     }
@@ -42,10 +53,24 @@ export default class Feedback extends Component {
         var tt = time.split('/')[0]+'-'+time.split('/')[1]+'-'+time.split('/')[2];
         return tt;
     } 
+    //删除操作 从子组件获取到的id
+    deleteHandle = (id) =>{
+        console.log(id);
+    }
     render() {
         return (
             <div>
-                <div id="page-wrapper">
+                <span style={{fontSize:'25px',fontFamily:'Lisu'}}>反馈信息管理</span>
+                <Table 
+                    thead={this.state.thead} 
+                    keys={this.state.keys} 
+                    tbody={this.state.tbody} 
+                    twidth={[20,15,35,10,10,10]} 
+                    operate={['check','delete']} 
+                    checkItem={'/fankuixiangqing'}//查看操作跳转的链接
+                    deleteItem={this.deleteHandle}
+                />
+                {/* <div id="page-wrapper">
                 <div id="page-inner">
                     <div class="row">
                         <div class="col-md-12">
@@ -100,7 +125,7 @@ export default class Feedback extends Component {
                 </div>
                 </div>
                 </div>
-            </div>
+            </div> */}
             </div>
         )
     }

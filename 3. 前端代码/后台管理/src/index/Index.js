@@ -27,7 +27,7 @@ export default class Index extends Component {
     render() {
         return (
             <div>
-                <div id="page-wrapper">
+                {/* <div id="page-wrapper">
                 <div id="page-inner">
                     <div class="row">
                         <div class="col-md-12">
@@ -62,7 +62,7 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             </div>
         )
     }

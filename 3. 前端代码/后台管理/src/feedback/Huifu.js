@@ -92,7 +92,7 @@ export default class Huifu extends Component {
                 <div id="page-wrapper">
                 <div style={{backgroundColor:'white',padding:'30px'}}>
                     <div style={{height:'50px'}}>
-                        <Link to='/tab/table5'  style={{color:'black'}}>&#60; &nbsp;用户反馈</Link>
+                        <Link to='/tab/feedback'  style={{color:'black'}}>&#60; &nbsp;用户反馈</Link>
                     </div>
                     {
                         this.state.ress.map((item,idx)=>

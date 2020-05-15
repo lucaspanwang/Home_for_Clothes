@@ -9,16 +9,22 @@ import logo from './images/logo_bai.png'
 import Index from './index/Index';
 //管理员
 import Manager from './manager/Manager';
+import Medit from './manager/Medit';
 //用户
 import Users from './users/Users';
+import Ucheck from './users/Ucheck';
 //模型
 import Model from './model/Model';
 //文章管理
 import Article from './article/Article';
 import AddArticle from './article/Add';
+import Aedit from './article/Aedit';
+import Acheck from './article/Acheck';
 //官方消息
 import Official from './official/Official';
 import AddOfficial from './official/AddOfficial';
+import Oedit from './official/Oedit';
+import Ocheck from './official/Ocheck';
 //反馈
 import Feedback from './feedback/Feedback';
 import Huifu from './feedback/Huifu';
@@ -97,19 +103,25 @@ export default class Tab extends Component {
                             <div className="site-layout-background" style={{padding:'10px 15px', minHeight:480}}>
                                 {/* 首页 */}
                                 <Route exact path='/tab' component={Index} />
-                                {/* <Route path='/tab/index' component={Index} /> */}
+                                <Route path='/tab/index' component={Index} />
                                 {/* 管理员 */}
                                 <Route path='/tab/manager' component={Manager} />
+                                <Route path='/tab/medit/:id' component={Medit} />
                                 {/* 用户 */}
                                 <Route path='/tab/users' component={Users} />
+                                <Route path='/tab/ucheck/:id' component={Ucheck} />
                                 {/* 模型 */}
                                 <Route path='/tab/model' component={Model} />
                                 {/* 文章 */}
                                 <Route path='/tab/article' component={Article} />
                                 <Route path='/tab/addarticle' component={AddArticle} />
+                                <Route path='/tab/aedit/:id' component={Aedit} />
+                                <Route path='/tab/acheck/:id' component={Acheck} />
                                 {/* 官方消息 */}
                                 <Route path='/tab/official' component={Official} />
                                 <Route path='/tab/addofficial' component={AddOfficial} />
+                                <Route path='/tab/oedit/:id' component={Oedit} />
+                                <Route path='/tab/ocheck/:id' component={Ocheck} />
                                 {/* 反馈 */}
                                 <Route path='/tab/feedback' component={Feedback} />
                                 <Route path='/tab/huifu/:id' component={Huifu} />

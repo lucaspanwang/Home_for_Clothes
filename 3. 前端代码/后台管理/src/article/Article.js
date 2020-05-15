@@ -12,8 +12,8 @@ export default class Article extends Component {
     constructor(){
         super();
         this.state=({
-            thead:['文章ID','发布内容','点赞数','收藏数','评论数','上传人','上传时间','操作'],
-            keys:['articleId','content','agree','save','review','userName','time',''],
+            thead:['文章ID','发布内容','点赞数','收藏数','评论数','上传人','上传时间'],
+            keys:['articleId','content','agree','save','review','userName','time'],
             tbody:[],
             str:'',
         })
@@ -32,6 +32,10 @@ export default class Article extends Component {
             })
         })
     }
+    //删除操作 从子组件获取到的id  添加一个判断是否删除
+    deleteHandle = (id) =>{
+        console.log(id);
+    }
     // shanchu=(idx)=>{
     //     fetch("http://47.98.163.228:3004/articleDelete?articleId="+idx);
     //     fetch('http://47.98.163.228:3004/article')
@@ -48,60 +52,19 @@ export default class Article extends Component {
         return (
             <div>
                 <span style={{fontSize:'25px',fontFamily:'Lisu'}}>社区文章管理</span>
-                <Table thead={this.state.thead} keys={this.state.keys} tbody={this.state.tbody} twidth={[10,34,7,7,7,10,10,15]} />
-                {/* <div id="page-wrapper">
-                <div id="page-inner">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="page-header">
-                                文章
-                            </h1>
-                            <Link to='/tab/addarticle'>
-                                <img src={tianjia} style={{width:'2%'}}/>添加文章
-                            </Link>
-                        </div>
-                    </div>	
-                    <div class="row">
-                    <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    
-                                    <thead>
-                                        <tr>
-                                            <th style={{textAlign:'center'}}>文章ID</th>
-                                            <th style={{textAlign:'center'}}>作者</th>
-                                            <th style={{textAlign:'center'}}>内容</th>
-                                            <th style={{textAlign:'center'}}>点赞数</th>
-                                            <th style={{textAlign:'center'}}>收藏数</th>
-                                            <th style={{textAlign:'center'}}>发表时间</th>
-                                            <th style={{textAlign:'center'}}>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            this.state.ress.map((item,idx)=>(
-                                                <tr id="lalala">
-                                                    <td>{item.articleId}</td>
-                                                    <td>{item.userName}</td>
-                                                    <td style={{width:'500px', textAlign:'left'}}>{item.content}</td>
-                                                    <td>{item.agree}</td>
-                                                    <td class="center">{item.save}</td>
-                                                    <td class="center">{item.time}</td>
-                                                    <td class="center" onClick={()=>this.shanchu(item.articleId)}><img src={shanchu} style={{width:'10%'}}/></td>
-                                                </tr>
-                                            ))
-                                            }
-                                    </tbody>
-                                </table>
-                            </div>                       
-                        </div>
-                    </div>
-                </div>
-                </div>
-                </div>
-            </div> */}
+                <Link to='/tab/addarticle' style={{fontSize:'16px',color:'#444',float:'right'}}>
+                    <img src={tianjia} style={{width:'18px'}}/>添加文章
+                </Link>
+                <Table 
+                    thead={this.state.thead} 
+                    keys={this.state.keys} 
+                    tbody={this.state.tbody} 
+                    twidth={[10,46,8,8,8,10,10]} 
+                    operate={['edit','check','delete']} 
+                    editItem={'/aedit'}//编辑操作跳转的链接
+                    checkItem={'/acheck'}//查看操作跳转的链接
+                    deleteItem={this.deleteHandle}
+                />
             </div>
         )
     }

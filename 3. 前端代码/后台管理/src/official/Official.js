@@ -12,8 +12,8 @@ export default class Official extends Component {
     constructor(){
         super();
         this.state=({
-            thead:['消息ID','标题','发布内容','发布时间','操作'],
-            keys:['offId','offTitle','offContent','offTime',''],
+            thead:['消息ID','标题','发布内容','发布时间'],
+            keys:['offId','offTitle','offContent','offTime'],
             tbody:[],
             str:'',
         })
@@ -32,6 +32,10 @@ export default class Official extends Component {
             })
         })
     }
+    //删除操作 从子组件获取到的id  添加一个判断是否删除
+    deleteHandle = (id) =>{
+        console.log(id);
+    }
     // shanchu=(idx)=>{
     //     fetch("http://47.98.163.228:3004/officeDelete?offId="+idx);
     //     fetch('http://47.98.163.228:3004/office')
@@ -48,55 +52,16 @@ export default class Official extends Component {
         return (
             <div>
                 <span style={{fontSize:'25px',fontFamily:'Lisu'}}>官方消息管理</span>
-                <Table thead={this.state.thead} keys={this.state.keys} tbody={this.state.tbody} twidth={[10,20,45,10,15]}/>
-                {/* <div id="page-wrapper">
-                <div id="page-inner">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="page-header">
-                                官方消息
-                            </h1>
-                            <Link to='/tab/addofficial'>
-                                <img src={tianjia} style={{width:'2%'}}/>添加官方消息
-                            </Link>
-                        </div>
-                    </div>	
-                    <div class="row">
-                    <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th style={{textAlign:'center'}}>消息ID</th>
-                                            <th style={{textAlign:'center'}}>内容</th>
-                                            <th style={{textAlign:'center'}}>发表时间</th>
-                                            <th style={{textAlign:'center'}}>城市</th>
-                                            <th style={{textAlign:'center'}}>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            this.state.ress.map((item,idx)=>(
-                                                <tr id="lalala">
-                                                    <td>{item.offId}</td>
-                                                    <td style={{width:'600px', textAlign:'left'}}>{item.offContent}</td>
-                                                    <td class="center">{item.offTime}</td>
-                                                    <td class="center">{item.city}</td>
-                                                    <td class="center" onClick={()=>this.shanchu(item.offId)}><img src={shanchu} style={{width:'10%'}}/></td>
-                                                </tr>
-                                            ))
-                                            }
-                                    </tbody>
-                                </table>
-                            </div>                       
-                        </div>
-                    </div>
-                </div>
-                </div>
-                </div>
-            </div> */}
+                <Table 
+                    thead={this.state.thead} 
+                    keys={this.state.keys} 
+                    tbody={this.state.tbody} 
+                    twidth={[10,20,55,15]} 
+                    operate={['edit','check','delete']}
+                    editItem={'/oedit'}//编辑操作跳转的链接
+                    checkItem={'/ocheck'}//查看操作跳转的链接
+                    deleteItem={this.deleteHandle}
+                />
             </div>
         )
     }
