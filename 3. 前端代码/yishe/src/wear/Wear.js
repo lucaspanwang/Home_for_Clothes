@@ -24,6 +24,7 @@ import beijing2 from '../images/qing.jpg'
 import yun from '../images/yun.png'
 import xiayu from '../images/xiayu.png'
 import {Link} from 'react-router-dom'
+import html2canvas from 'html2canvas';
 //美妆部分图片
 //图片导入
 import t0 from '../images/t0.png'
@@ -103,6 +104,7 @@ export default class Wear extends Component {
         feng:'',
         speak_suggest:'',//语音播报建议
         sex:'女',
+        imgUri:'',
     }
   }    
   componentDidMount(){
@@ -247,6 +249,7 @@ export default class Wear extends Component {
   }
   aaa=(idx)=>{
       if(idx==1){
+
         window.location.href =window.location.href.split('#')[0]+'#/articleadd/'+this.props.id
       }else{
         window.location.href =window.location.href.split('#')[0]+'#'+ this.state.tiaosrc[idx]+this.props.id
@@ -256,6 +259,7 @@ export default class Wear extends Component {
     click_share=()=>{
       var div = document.getElementById('fenxiang');
       div.style.display='block'
+      this. exportImage();
     }
     click_unShare=()=>{
       var div = document.getElementById('fenxiang');
@@ -472,16 +476,83 @@ export default class Wear extends Component {
     speak=()=>{
       this.audio.play();
     }
-    //截屏
-    takeScreenshot() {
-      console.log('testakeScreenshot');
-        html2canvas(document.getElementById('view'), {
-            onrendered: function(canvas) {
-                document.body.appendChild(canvas);
-            },
-          // width: 300,
-          // height: 300
+      //导出图片
+      exportImage = () => {
+        const newCanvas = document.createElement("canvas");
+        const element = document.querySelector('#view');
+        const dom_width = 170;
+        const dom_height =550;
+        // const dom_width = parseInt(window.getComputedStyle(element).width);
+        // const dom_height = parseInt(window.getComputedStyle(element).height);
+        // console.log(dom_width)
+        // console.log(dom_height)
+        //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
+        newCanvas.width = dom_width*5;
+        newCanvas.height = dom_height*5;
+        newCanvas.style.width = dom_width + "px";
+        newCanvas.style.height = dom_height + "px";
+        const context = newCanvas.getContext("2d");
+        context.scale(1.8, 1.8);
+
+        html2canvas(element, { canvas: newCanvas }).then((canvas) => {
+            const imgUri = canvas.toDataURL(); // 获取生成的图片的url
+            console.log(imgUri)
+            this.setState({
+              imgUri:imgUri
+            },function(){
+              fetch('http://47.98.163.228:3001/toshare',{
+                method: 'post', 
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials" : true,
+                headers: {
+                     'Content-Type': 'multipart/form-data;charset=utf-8'
+                },
+                body:JSON.stringify({pic:this.state.imgUri,userId:this.props.id}) 
+              })
+              console.log(this.state)
+            })
+            // const base64ToBlob = (code) => {
+            //     let parts = code.split(';base64,');
+            //     let contentType = parts[0].split(':')[1];
+            //     let raw = window.atob(parts[1]);
+            //     let rawLength = raw.length;
+         
+            //     let uInt8Array = new Uint8Array(rawLength);
+         
+            //     for (let i = 0; i < rawLength; ++i) {
+            //       uInt8Array[i] = raw.charCodeAt(i);
+            //     }
+            //     return new Blob([uInt8Array], {type: contentType});
+            // };
+            // const blob = base64ToBlob(imgUri);
+            // window.location.href = imgUri; // 下载图片
+            // 利用createObjectURL，模拟文件下载
+            // const fileName = '模特穿搭.png'
+            // if (window.navigator.msSaveOrOpenBlob) {
+            //     navigator.msSaveBlob(blob, fileName);
+            // } else {
+            //     const blobURL = window.URL.createObjectURL(blob)
+            //     const vlink = document.createElement('a');
+            //     vlink.style.display = 'none';
+            //     vlink.href = blobURL;
+            //     vlink.setAttribute('download', fileName);
+
+            //     if (typeof vlink.download === 'undefined') {
+            //         vlink.setAttribute('target', '_blank');
+            //     }
+
+            //     document.body.appendChild(vlink);
+
+            //     var evt = document.createEvent("MouseEvents");
+            //     evt.initEvent("click", false, false);
+            //     vlink.dispatchEvent(evt);
+
+            //     document.body.removeChild(vlink);
+            //     window.URL.revokeObjectURL(blobURL);
+            // }
+            console.log()
         });
+
     }
     //渲染组件
     render() {
@@ -508,7 +579,7 @@ export default class Wear extends Component {
                 {/* 模特 */}
                 {
                     this.state.sex=='女'?
-                    <div>
+                    <div id="view">
                          {/* 模特本身 */}
                         <img src={mote2} id="mote"/>
                          {/* 把src替换成裙子或裤子 */}
