@@ -6,6 +6,7 @@ import emoji from '../../images/message/emoji.png';
 import emoji2 from '../../images/message/emoji2.png';
 import voice from '../../images/message/voice.png';
 import add from '../../images/message/add.png';
+import ReactEmoji from 'react-emoji';
 
 const Input = ({ setMessage, sendMessage, message }) => {
   let [status, setStatus] = useState('0');
@@ -46,6 +47,7 @@ const Input = ({ setMessage, sendMessage, message }) => {
       <img id="add"
         src={add}
         />
+        <p className="messageText colorWhite">{ReactEmoji.emojify(':bus:')}</p>
     </form>
   );
 }
