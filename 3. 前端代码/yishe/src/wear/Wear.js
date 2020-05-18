@@ -248,8 +248,8 @@ export default class Wear extends Component {
     }
   }
   aaa=(idx)=>{
+    localStorage.setItem('flag_num',1);
       if(idx==1){
-
         window.location.href =window.location.href.split('#')[0]+'#/articleadd/'+this.props.id
       }else{
         window.location.href =window.location.href.split('#')[0]+'#'+ this.state.tiaosrc[idx]+this.props.id
