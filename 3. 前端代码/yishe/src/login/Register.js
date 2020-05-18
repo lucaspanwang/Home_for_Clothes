@@ -131,6 +131,12 @@ export default class Register extends Component{
                         </ul>
                             <Flex direction="column" justify="center" align="center">
                                 <Button onClick={()=>{
+                                    var date=new Date();
+                                    var year=date.getFullYear();
+                                    var month=date.getMonth()+1;
+                                    var day=date.getDate();
+                                    var time=''+year+month+day;
+                                    console.log(time);
                                     if(this.state.userPho.length!=13)
                                         document.getElementById('phoneError').style.display='block';
                                     else if(this.state.userPwd.length<6)
@@ -145,7 +151,10 @@ export default class Register extends Component{
                                     headers: {
                                         'Content-Type': 'application/x-www-form-urlencoded'
                                     },
-                                    body: JSON.stringify({userPho:this.state.userPho, userPwd:this.state.userPwd, userName:this.state.userName, userSex:this.state.userSex, userCity:this.state.userCity, picData:this.state.picData})
+                                    body: JSON.stringify({userPho:this.state.userPho, 
+                                        userPwd:this.state.userPwd, userName:this.state.userName,
+                                        userSex:this.state.userSex, userCity:this.state.userCity, 
+                                        picData:this.state.picData, userTime:time})
                                   })
                                     .then(res=>res.json())
                                     .then(res=>{
