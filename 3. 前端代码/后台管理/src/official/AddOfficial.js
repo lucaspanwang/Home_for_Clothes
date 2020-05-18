@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Input,message, Button } from 'antd';
-const { TextArea } = Input;
+import { message,Form,Input,Button,Upload,Rate } from 'antd';
+import { Link } from 'react-router-dom';
+import { UploadOutlined } from '@ant-design/icons';
+import '../tab.css';
 
 export default class AddOfficial extends Component {
     constructor(){
@@ -42,17 +44,49 @@ export default class AddOfficial extends Component {
             value: e.target.value
         })
     }
+    normFile = (e) => {
+        console.log('Upload event:', e);
+        // if (Array.isArray(e)) {
+        //     return e;
+        // }
+        // return e && e.fileList;
+    }
+    onFinish = (value) => {
+        console.log('数据提交成功',value);
+    }
+    onFinishFailed = (value) => {
+        console.log('数据提交失败',value);
+    }
     render() {
         return (
-            <div id="page-wrapper">
-                <div id="page-inner">
-                <form id="ayiya">
-                    内容:<br />
-                    <TextArea id="content" onChange={this.handleChange} style={{width:"90%",height:'300px',border:"1px solid #888",borderRadius:"15px"}}/>
-                    <br />
-                    <input type='button' value="submit" style={{width:'70px',marginLeft:'50px',border:"1px solid #888",borderRadius:"5px"}} onClick={this.onPost}/>
-                </form>
+            <div className="middle">
+                <div style={{height:'30px',borderBottom:'1px dashed #ddd',marginBottom:'25px'}}>
+                    <Link to='/tab/official' style={{color:'black'}}>&#60; &nbsp;官方消息</Link>
                 </div>
+                <Form layout={"horizontal"} labelCol={{span:2}} wrapperCol={{span:21}} onFinish={this.onFinish}onFinishFailed={this.onFinishFailed} >
+                    <Form.Item label="标题">
+                        <Input placeholder="请输入发布消息的标题" />
+                    </Form.Item>
+                    <Form.Item label="内容">
+                        <Input.TextArea placeholder="请输入发布消息的内容" />
+                    </Form.Item>
+                    <Form.Item label="图片" valuePropName="fileList" getValueFromEvent={this.normFile} >
+                        <Upload listType="picture">
+                            <Button><UploadOutlined />上传图片</Button>
+                        </Upload>
+                    </Form.Item>
+                    <Form.Item wrapperCol={{offset:2}}>
+                        <Button type="primary" htmlType="submit" onClick={this.onFinish}>发布</Button>
+                    </Form.Item>
+                </Form>
+                {/* <form action="" method="post" onsubmit="return mySubmit(this)">
+                    <label for="content">标题</label>
+                    <input type="text" />
+                    <label for="content">内容</label>
+                    <TextArea id="content" onChange={this.handleChange}/>
+                    <br />
+                    <input type='button' value="submit" onClick={this.onPost}/>
+                </form> */}
             </div>
         )
     }

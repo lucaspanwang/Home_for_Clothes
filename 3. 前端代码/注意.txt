@@ -5,4 +5,5 @@
   npm install antd --save  或者 yarn add antd
   npm i rc-form
   npm i react-router-dom
+  npm i html2canvas --save
   

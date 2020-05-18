@@ -52,6 +52,9 @@ export default class Official extends Component {
         return (
             <div>
                 <span style={{fontSize:'25px',fontFamily:'Lisu'}}>官方消息管理</span>
+                <Link to='/tab/addofficial' style={{fontSize:'16px',color:'#444',float:'right'}}>
+                    <img src={tianjia} style={{width:'18px'}}/>添加官方消息
+                </Link>
                 <Table 
                     thead={this.state.thead} 
                     keys={this.state.keys} 
