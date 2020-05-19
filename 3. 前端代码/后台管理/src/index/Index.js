@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactHighCharts from 'react-highcharts'
 
 export default class Index extends Component {
     constructor(){
@@ -25,8 +26,32 @@ export default class Index extends Component {
         })    
     }
     render() {
+        var config = {
+            title: {
+                text: '注册人数折线图'
+            },
+            yAxis: {
+                title: {
+                    text: '注册人数'
+                },
+            },
+            xAxis:{
+                categories:['2010','2011','2012','2013','2014','2015','2016','2017']
+            },
+            series: [{
+                name: '注册人数',
+                data: [4,3,2,6,6,7,3]
+            }],
+            chart:{
+                // borderColor:'red',
+                // borderWidth:1,
+                height:250,
+                width:400
+            }
+            };
         return (
             <div>
+                <ReactHighCharts config={config} />
                 {/* <div id="page-wrapper">
                 <div id="page-inner">
                     <div class="row">
