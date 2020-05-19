@@ -28,7 +28,7 @@ export default class Index extends Component {
     render() {
         var config = {
             title: {
-                text: '注册人数折线图'
+                text: '2020年注册人数折线图'
             },
             yAxis: {
                 title: {
