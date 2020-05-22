@@ -47,7 +47,19 @@ const Input = ({ setMessage, sendMessage, message }) => {
       <img id="add"
         src={add}
         />
-        <p className="messageText colorWhite">{ReactEmoji.emojify(':bus:')}</p>
+        <ul id="myEmoji">
+          <li>
+            <div className="emojiButton">{ReactEmoji.emojify(':)')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(':(')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(':D')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(';)')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(':O')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(':p')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(':smile:')}</div>
+            <div className="emojiButton">{ReactEmoji.emojify(':@')}</div>
+          </li>
+        </ul>
+        
     </form>
   );
 }

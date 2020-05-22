@@ -28,6 +28,16 @@
     width:6%;
     opacity: 0.7;
   }
+
+  #myEmoji{
+    position:absolute;
+    top:4.2em;
+  }
+
+  .emojiButton{
+    display:inline-block;
+    margin:0 0 0 1.6em;
+  }
   
   #input {
     position:absolute;
