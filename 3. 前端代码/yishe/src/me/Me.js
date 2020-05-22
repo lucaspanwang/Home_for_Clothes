@@ -302,7 +302,7 @@ export default class Me extends Component {
                                     <img src={weather[this.state.idx]} alt='' style={{width:'30px',float:'right'}}/>
                                 </div>
                                 <span style={{float:'left',color:'#d26c2e'}}>{this.state.wea}&nbsp; |&nbsp;{this.state.tem2}~{this.state.tem1} |&nbsp; 天气质量&nbsp;{this.state.air}</span>
-                                <p style={{fontSize:'13px'}}>{this.state.tips} <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
+                                <p style={{fontSize:'11px'}}>{this.state.tips} <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
                             </div>
                             {/* 穿衣指南 */}
                             <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>

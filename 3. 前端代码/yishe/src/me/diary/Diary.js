@@ -165,11 +165,28 @@ export default class Diary extends Component {
                         <Timeline.Item dot={<Icon type="heart" theme="filled" style={{ fontSize: '16px' }} key={idx}/>} color="red" key={idx}>
                             <div style={{width:'95%',padding:'10px',border:'2px solid #ccc',borderRadius:'10px'}}>
                                 <p style={{color:'#000',marginBottom:'8px'}}>{item.diaryContent}</p>
+                               
                                 {
-                                    item.dimg.map((i,d)=>
-                                      <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%',marginBottom:'5px'}}/>
+                                    item.dimg.length === 1?(
+                                        <div>
+                                        {
+                                            item.dimg.map((i,d)=>(
+                                                <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%',marginBottom:'5px'}}/>
+                                            ))
+                                        }
+                                        </div>
+                                       
+                                    ):(
+                                        <div>
+                                        {
+                                            item.dimg.map((i,d)=>(
+                                                <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%',marginBottom:'5px',height:'100px',objectFit:'contain'}}/>
+                                            ))
+                                        }
+                                        </div>
                                     )
                                 }
+                                    
                                 <p style={{color:'#888'}}>{this.formatUTC(item.diaryTime)} <img src={del} alt='' style={{width:'15px',float:'right'}} onClick={()=>this.deleteItem(idx)}/></p>
                             </div>    
                         </Timeline.Item>
