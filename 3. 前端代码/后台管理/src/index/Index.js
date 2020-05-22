@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import ReactHighCharts from 'react-highcharts'
-
+import ReactHighCharts from 'react-highcharts'
+import ECharts from 'echarts';
+import echarts from 'echarts';
+import 'echarts/map/js/china';
+import geoJson from 'echarts/map/json/china.json';
 export default class Index extends Component {
     constructor(){
         super();
