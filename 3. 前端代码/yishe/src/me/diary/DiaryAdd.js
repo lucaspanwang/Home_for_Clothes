@@ -43,9 +43,24 @@ export default class DiaryAdd extends Component {
         Toast.loading('日记上传中...',2, () => {
             window.location.href=window.location.href.split('#')[0]+"#/diary/"+this.props.match.params.id
         });
+        localStorage.removeItem('shareImg');
     }
     onFail=()=>{
         Toast.offline('日记不能为空',2);
+    }
+    componentDidMount(){
+        var shareImg = localStorage.getItem('shareImg');
+        console.log(shareImg)
+        if(localStorage.getItem('shareImg')){
+            this.setState({
+                files:[{url:'http://47.98.163.228:3000/image/111mote.jpg',id:'0'}]
+            })
+           
+        }else{
+            this.setState({
+                files:[]
+            })
+        }
     }
     onPost=()=> { 
         if(this.state.value == '' && this.state.files == ''){
@@ -64,33 +79,95 @@ export default class DiaryAdd extends Component {
             console.log(this.state.files);
             this.onToast();
         }else{
-            var filesType = [];
-            var files = [];
-            let promise = new Promise(resolve =>{
-                for(var i=0;i<this.state.files.length;i++){
-                    filesType.push('.'+this.state.files[i].file.name.split(".")[1]);
-                    lrz(this.state.files[i].url, {quality:0.1})
-                    .then((res)=>{
-                        files.push(res.base64);
-                        console.log(files);
-                        resolve({files:files,filesType:filesType});
-                    });
+            var shareImg = localStorage.getItem('shareImg');
+            if(localStorage.getItem('shareImg')){
+                var filesType = ['.jpg'];
+                // console.log(shareImg)
+                shareImg=shareImg.split('"')[1];
+                console.log(shareImg)
+                var files = [shareImg];
+                console.log(files)
+                if(this.state.files.length===1){
+                    let promise = new Promise(resolve =>{
+                       
+                        lrz(this.state.files[0].url, {quality:0.1})
+                        .then((res)=>{
+                            resolve({files:files,filesType:filesType});
+                        });
+                        
+                    }).then((value)=>{
+                        console.log(value);
+                        fetch('http://47.98.163.228:3000/diaryAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            // credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:value.filesType,files:value.files,diarytime:this.state.diarytime}) 
+                        })
+                        console.log(this.state.files);
+                        this.onToast();
+                    })
+
+                }else{
+                    let promise = new Promise(resolve =>{
+                        for(var i=1;i<this.state.files.length;i++){
+                            filesType.push('.'+this.state.files[i].file.name.split(".")[1]);
+                            lrz(this.state.files[i].url, {quality:0.1})
+                            .then((res)=>{
+                                files.push(res.base64);
+                                console.log(files);
+                                resolve({files:files,filesType:filesType});
+                            });
+                        }
+                    }).then((value)=>{
+                        console.log(value);
+                        fetch('http://47.98.163.228:3000/diaryAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            // credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:value.filesType,files:value.files,diarytime:this.state.diarytime}) 
+                        })
+                        console.log(this.state.files);
+                        this.onToast();
+                    })
                 }
-            }).then((value)=>{
-                console.log(value);
-                fetch('http://47.98.163.228:3000/diaryAdd',{
-                    method: 'post', 
-                    "Access-Control-Allow-Origin" : "*",
-                    "Access-Control-Allow-Credentials" : true,
-                    // credentials: 'include',
-                    headers: {
-                        'Content-Type': 'multipart/form-data;charset=utf-8'
-                    },
-                    body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:value.filesType,files:value.files,diarytime:this.state.diarytime}) 
+            }else{
+                var filesType = [];
+                var files = [];
+                let promise = new Promise(resolve =>{
+                    for(var i=0;i<this.state.files.length;i++){
+                        filesType.push('.'+this.state.files[i].file.name.split(".")[1]);
+                        lrz(this.state.files[i].url, {quality:0.1})
+                        .then((res)=>{
+                            files.push(res.base64);
+                            console.log(files);
+                            resolve({files:files,filesType:filesType});
+                        });
+                    }
+                }).then((value)=>{
+                    console.log(value);
+                    fetch('http://47.98.163.228:3000/diaryAdd',{
+                        method: 'post', 
+                        "Access-Control-Allow-Origin" : "*",
+                        "Access-Control-Allow-Credentials" : true,
+                        // credentials: 'include',
+                        headers: {
+                            'Content-Type': 'multipart/form-data;charset=utf-8'
+                        },
+                        body:JSON.stringify({diaryId:this.state.diaryId,userId:this.props.match.params.id,value:this.state.value,filesType:value.filesType,files:value.files,diarytime:this.state.diarytime}) 
+                    })
+                    console.log(this.state.files);
+                    this.onToast();
                 })
-                console.log(this.state.files);
-                this.onToast();
-            })
+            }
+            
         }
     }
     
@@ -101,11 +178,22 @@ export default class DiaryAdd extends Component {
         this.setState({
             files,
         });
-        var filesType = [];
-        for(var i=0;i<this.state.files.length;i++){
-            console.log(this.state.files[i].file.name.split(".")[1]);
-            filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+        console.log(this.state.files)
+        if(localStorage.getItem('shareImg')){
+            var filesType = ['.jpg'];
+            for(var i=1;i<this.state.files.length;i++){
+                console.log(this.state.files[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+            }
+        }else{
+            var filesType = [];
+            console.log(1)
+            for(var i=0;i<this.state.files.length;i++){
+                console.log(this.state.files[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.files[i].file.name.split(".")[1];
+            }
         }
+       
         this.setState({
             filesType:filesType
         })

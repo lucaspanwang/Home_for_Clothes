@@ -497,6 +497,13 @@ export default class Wear extends Component {
         html2canvas(element, { canvas: newCanvas }).then((canvas) => {
             const imgUri = canvas.toDataURL(); // 获取生成的图片的url
             console.log(imgUri)
+            try {
+                localStorage.setItem("shareImg", JSON.stringify(imgUri));
+            }
+            catch (e) {
+                console.log("Storage failed: " + e);                
+            }
+
             this.setState({
               imgUri:imgUri
             },function(){
