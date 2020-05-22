@@ -20,7 +20,8 @@ export default class CitySelector extends React.Component {
         super(props);
         this.state={
             pickerValue: [],
-            userCity:''
+            userCity:'',
+            userProvince:''
         };
         this.changeCity = this.changeCity.bind(this);
     }
@@ -33,12 +34,16 @@ export default class CitySelector extends React.Component {
             if(districtData[k].code==code0){
                 for(var m in districtData[k].cities){
                     if (districtData[k].cities[m].code==code1){
+                        var province=districtData[k].name;
                         var city = districtData[k].cities[m].name;
-                        this.setState({userCity:city});
+                        this.setState({userCity:city,userProvince:province});
                     }
                 }
                 }
             }
+        }
+        componentDidMount(){
+            console.log(this.state.userProvince,this.state.userCity)
         }
  
     render(){
@@ -81,7 +86,7 @@ export default class CitySelector extends React.Component {
                         value={this.state.pickerValue}
                         onChange={v => this.setState({ pickerValue: v })}
                         onOk={(v) => {this.setState({ pickerValue: v })}}
-                        onPickerChange={(v) => {this.setState({ pickerValue: v });this.changeCity();data.userCity=this.state.userCity;}}
+                        onPickerChange={(v) => {this.setState({ pickerValue: v });this.changeCity();data.userCity=this.state.userCity;data.userProvince=this.state.userProvince}}
                         onClick={()=>{console.log('xx')}}
                     >
                         <CustomChildren>请选择城市</CustomChildren>

@@ -27,8 +27,10 @@ export default class Register extends Component{
             userName:'',
             userSex:'女',
             userCity:'',
+            userProvince:'',
             userId:'',
             picData:''
+            
         }
     }
     
@@ -110,7 +112,8 @@ export default class Register extends Component{
                         </ul>
                             <Flex direction="column" justify="center" align="center">
                                 <Button onClick={()=>{
-                                    this.setState({userCity: data.userCity, picData:data.picData});
+                                    console.log('注册传来的data'+data.userProvince)
+                                    this.setState({userCity: data.userCity, picData:data.picData,userProvince:data.userProvince});
                                     if(this.state.userName=='' || data.userCity=='' || data.userCity=='请选择'){
                                         document.getElementById('inforError').style.display='block';
                                     }
@@ -153,7 +156,8 @@ export default class Register extends Component{
                                     },
                                     body: JSON.stringify({userPho:this.state.userPho, 
                                         userPwd:this.state.userPwd, userName:this.state.userName,
-                                        userSex:this.state.userSex, userCity:this.state.userCity, 
+                                        userSex:this.state.userSex, userCity:this.state.userCity,
+                                        userProvince:this.state.userProvince, 
                                         picData:this.state.picData, userTime:time})
                                   })
                                     .then(res=>res.json())
