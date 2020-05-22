@@ -22,6 +22,7 @@ export default class Official extends Component {
         fetch('http://47.98.163.228:3004/office')
         .then(res=>res.json())
         .then(res=>{     
+            // console.log(res);
             for(var i=0;i<res.length;i++){
                 res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
             }  

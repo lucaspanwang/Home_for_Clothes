@@ -11,10 +11,27 @@
     color:rgb(215, 239, 255);
     float:right;
 }
-/* divider 横线
-.ant-divider-horizontal.ant-divider-with-text::before, .ant-divider-horizontal.ant-divider-with-text::after{
-    border-top:1px solid #004b9177 !important;
-} */
+/* 含有滚动条的中间样式 */
+.overflow-y{
+    height:90vh;
+    margin:2vh 2vw;
+    background:rgba(255,255,255,0.4);
+    border-radius:2px;
+    overflow-y:scroll;
+    z-index:99;
+}
+.overflow-y::-webkit-scrollbar{
+    width: 8px;
+    height: 1px;
+}
+.overflow-y::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0, 15, 56, 0.3);
+}
+.overflow-y::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(128, 141, 255, 0.3);
+}
 /* 二级页面 */
 .middle{
     padding:30px;

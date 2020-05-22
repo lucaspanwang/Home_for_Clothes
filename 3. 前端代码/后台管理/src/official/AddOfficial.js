@@ -103,13 +103,13 @@ export default class AddOfficial extends Component {
                     <Link to='/tab/official' style={{color:'black'}}>&#60; &nbsp;官方消息</Link>
                 </div>
                 <Form layout={"horizontal"} labelCol={{span:2}} wrapperCol={{span:21}} onFinish={this.onFinish}>
-                    <Form.Item label="标题" name="title" rules={[{ required: true, whitespace: true, message: '标题是必须输入的内容' }]}>
+                    <Form.Item label="标题" name="title" rules={[{ required: true, whitespace: true, message: '标题是必须要输入的' }]}>
                         <Input placeholder="请输入发布消息的标题" />  
                     </Form.Item>
                     <Form.Item label="内容" name="content">
                         <Input.TextArea placeholder="请输入发布消息的内容" />
                     </Form.Item>
-                    <Form.Item label="封面" name="cover" rules={[{ required: true,message: '封面是必须的' }]}>
+                    <Form.Item label="封面" name="cover" rules={[{ required: true,message: '封面是必须要插入的' }]}>
                         <Upload 
                             name="avatar" 
                             listType="picture-card"  

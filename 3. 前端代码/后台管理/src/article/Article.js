@@ -52,9 +52,10 @@ export default class Article extends Component {
         return (
             <div>
                 <span style={{fontSize:'25px',fontFamily:'Lisu'}}>社区文章管理</span>
-                <Link to='/tab/addarticle' style={{fontSize:'16px',color:'#444',float:'right'}}>
+                {/* 添加文章可有可无吧 */}
+                {/* <Link to='/tab/addarticle' style={{fontSize:'16px',color:'#444',float:'right'}}>
                     <img src={tianjia} style={{width:'18px'}}/>添加文章
-                </Link>
+                </Link> */}
                 <Table 
                     thead={this.state.thead} 
                     keys={this.state.keys} 

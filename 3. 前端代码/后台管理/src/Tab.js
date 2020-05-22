@@ -98,7 +98,7 @@ export default class Tab extends Component {
                             </Menu.Item>
                         </Menu>
                     </Sider>
-                    <Layout className="site-layout" style={{height:'90vh',margin:'2vh 2vw',overflowY:'scroll',zIndex:99,background:'rgba(255,255,255,0.4)',borderRadius:'5px'}}>
+                    <Layout className="site-layout overflow-y">
                         <Content>
                             <div className="site-layout-background" style={{padding:'10px 15px', minHeight:480}}>
                                 {/* 首页 */}
