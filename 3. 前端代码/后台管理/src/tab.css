@@ -5,11 +5,11 @@
 }
 .iconfont{
     font-size:18px;
-    padding-right:30px;
+    padding-right:15px;
 }
 .header-icon{
     color:rgb(215, 239, 255);
-    float:right;
+    float:left;
 }
 /* 含有滚动条的中间样式 */
 .overflow-y{
@@ -32,6 +32,10 @@
     border-radius: 10px;
     background: rgba(128, 141, 255, 0.3);
 }
+/* divider 横线
+.ant-divider-horizontal.ant-divider-with-text::before, .ant-divider-horizontal.ant-divider-with-text::after{
+    border-top:1px solid #004b9177 !important;
+} */
 /* 二级页面 */
 .middle{
     padding:30px;

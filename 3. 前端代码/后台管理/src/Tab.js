@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
+import { Popover, NavBar, Icon } from 'antd-mobile';
 
 import './tab.css';
 import logo from './images/logo_bai.png'
@@ -29,9 +30,12 @@ import Ocheck from './official/Ocheck';
 import Feedback from './feedback/Feedback';
 import Huifu from './feedback/Huifu';
 import Fankuixiangqing from './feedback/Fankuixiangqing';
+import Pwchange from './manager/Pwchange';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+
+const Item = Popover.Item;
 
 export default class Tab extends Component {
     constructor(){
@@ -39,9 +43,30 @@ export default class Tab extends Component {
         this.state={
             collapsed: false,
             id: sessionStorage.getItem('manager'),
-            manager: {}
+            manager: {},
+            visible: false,
+            selected: '',
         }
+        
     }
+    onSelect = (opt) => {
+        this.setState({
+            visible: false,
+            selected: opt.props.value,
+        });
+        console.log(opt.props.value)
+        if(opt.props.value == 'myself'){
+            window.location.href='http://localhost:3000/tab/medit/'+this.state.id;
+        }
+        if(opt.props.value == 'sign out'){
+            window.location.href='http://localhost:3000/login';
+        }
+    };
+    handleVisibleChange = (visible) => {
+        this.setState({
+            visible,
+        });
+    };
     componentDidMount(){
         fetch('http://47.98.163.228:3004/manager?id='+this.state.id)
             .then(res => res.json())
@@ -63,10 +88,26 @@ export default class Tab extends Component {
                     <Content style={{display:'flex',alignItems:'center'}}>
                         <span className="yishe-title">衣舍后台管理系统</span>
                     </Content>
-                    <Sider style={{margin:'auto 10px'}}>
-                        <i className="iconfont header-icon icon-yonghu-copy"></i>
-                        <i className="iconfont header-icon icon-tixing"></i>
+                    <Sider style={{margin:'auto 10px',float:'right'}}>
                         <i className="header-icon" style={{marginRight:15}}>你好，{this.state.manager.ming}</i>
+                        <i className="iconfont header-icon icon-tixing"></i>
+                        <Popover mask
+                            overlayClassName="fortest"
+                            overlayStyle={{ color: 'currentColor' }}
+                            visible={this.state.visible}
+                            overlay={[
+                            (<Item key="4" value="myself" data-seed="logId">Myself</Item>),
+                            (<Item key="5" value="sign out" style={{ whiteSpace: 'nowrap' }}>Sign out</Item>)
+                            ]}
+                            align={{
+                                overflow: { adjustY: 0, adjustX: 0 },
+                                offset: [-10, 0],
+                            }}
+                            onVisibleChange={this.handleVisibleChange}
+                            onSelect={this.onSelect}
+                        >
+                            <i className="iconfont header-icon icon-yonghu-copy"></i>
+                        </Popover> 
                     </Sider>
                 </Layout>
                 <Layout className="site-layout">
@@ -98,7 +139,7 @@ export default class Tab extends Component {
                             </Menu.Item>
                         </Menu>
                     </Sider>
-                    <Layout className="site-layout overflow-y">
+                    <Layout className="site-layout" style={{height:'90vh',margin:'2vh 2vw',overflowY:'scroll',zIndex:99,background:'rgba(255,255,255,0.4)',borderRadius:'5px'}}>
                         <Content>
                             <div className="site-layout-background" style={{padding:'10px 15px', minHeight:480}}>
                                 {/* 首页 */}
@@ -107,6 +148,7 @@ export default class Tab extends Component {
                                 {/* 管理员 */}
                                 <Route path='/tab/manager' component={Manager} />
                                 <Route path='/tab/medit/:id' component={Medit} />
+                                <Route path='/tab/pwchange/:id' component={Pwchange} />
                                 {/* 用户 */}
                                 <Route path='/tab/users' component={Users} />
                                 <Route path='/tab/ucheck/:id' component={Ucheck} />

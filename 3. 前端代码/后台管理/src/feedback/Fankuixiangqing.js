@@ -22,7 +22,8 @@ export default class Fankuixiangqing extends Component {
                 }
                 console.log(res);
                 this.setState({
-                    ress:res
+                    ress:res,
+                    userName:res[0].userName
                 })  
                 console.log(this.state.ress[0].userPic) 
                 
@@ -59,7 +60,7 @@ export default class Fankuixiangqing extends Component {
                 <div id="page-wrapper">
                 <div style={{backgroundColor:'white',padding:'30px'}}>
                     <div style={{height:'50px'}}>
-                        <Link to='/tab/feedback'  style={{color:'black'}}>&#60; &nbsp;用户反馈</Link>
+                        <Link to='/tab/feedback'  style={{color:'#1890ff',fontSize:'20px'}}> 反馈信息管理</Link>&nbsp;/&nbsp;{this.state.userName}
                     </div>
                     {
                         this.state.ress.map((item,idx)=>
