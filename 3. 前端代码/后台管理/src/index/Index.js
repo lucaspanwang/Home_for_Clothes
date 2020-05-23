@@ -13,25 +13,73 @@ import { Flex } from 'antd-mobile';
 export default class Index extends Component {
     constructor(){
         super();
-        this.state=({})
+        this.state=({
+            xdata:[],
+            ydata:[]
+        })
     }
     
+    
+
 
     componentDidMount(){
+
+        //饼状图start
         var myChart = echarts.init(document.getElementById('main'));
-        myChart.setOption({
-            series : [
-                {
-                    name: '男女比例',
-                    type: 'pie',    // 设置图表类型为饼图
-                    radius: '70%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
-                    data:[          // 数据数组，name 为数据项名称，value 为数据项值
-                        {value:274, name:'女'},
-                        {value:235, name:'男'},
-                    ]
+        fetch("http://47.98.163.228:3003/radius")
+        .then(res=>res.json())
+        .then(res=>{
+            var girl=0;
+            var boy=0;
+            res.forEach(function(res){
+                if(res=='女'){
+                    girl++;
+                }else{
+                    boy++;
                 }
-            ]
+            })
+            myChart.setOption({
+                series : [
+                    {
+                        name: '男女比例',
+                        type: 'pie',    // 设置图表类型为饼图
+                        radius: '70%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                        data:[          // 数据数组，name 为数据项名称，value 为数据项值
+                            {value:girl, name:'女'},
+                            {value:boy, name:'男'},
+                        ]
+                    }
+                ]
+            })
+            // console.log('判断男女'+girl,boy)
         })
+        //饼状图end
+
+    //    折线图start
+        fetch('http://47.98.163.228:3003/number')
+        .then(res=>res.json())
+        .then(res => {
+            var obj = {};
+            var xdata=[];
+            var ydata=[]
+            for (var i = 0, l = res.length; i < l; i++) {
+                var item = res[i];
+                obj[item] = (obj[item] + 1) || 1;
+            }
+            for(i in obj){
+                var index=String(i)+'月'
+                xdata.push(index);
+                ydata.push(obj[i]);
+            }
+            this.setState({
+                xdata:xdata,
+                ydata:ydata
+            })
+        
+        })
+
+
+
 
         fetch('http://47.98.163.228:8086/article')
         .then(res=>res.json())
@@ -246,7 +294,7 @@ export default class Index extends Component {
         myChart.setOption(option, true);
     };
     render() {
-        //折线图的数据
+        // 折线图的数据
         var config = {
             title: {
                 useHTML:true,
@@ -279,7 +327,8 @@ export default class Index extends Component {
                 // }]
             },
             xAxis:{
-                categories:['2010','2011','2012','2013','2014','2015','2016','2017'],
+                // categories:['2010','2011','2012','2013','2014','2015','2016','2017'],
+                categories:this.state.xdata,
                 labels:{
                     style:{
                         color:'white'
@@ -288,7 +337,8 @@ export default class Index extends Component {
             },
             series: [{
                 name: '注册人数',
-                data: [4,3,2,6,6,7,3],
+                // data: [4,3,2,6,6,7,3],
+                data: this.state.ydata,
                 color:'rgba(111,15,153,0.7)',
             }],
             chart:{
