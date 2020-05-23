@@ -1,22 +1,18 @@
 import React, { Component } from 'react'
 import ReactHighCharts from 'react-highcharts'
 
+// import ReactHighCharts from 'react-highcharts'
 import ECharts from 'echarts';
 import 'echarts/map/js/china';
 export default class Index extends Component {
     constructor(){
         super();
-        this.state=({
-            num:0,
-            num2:0,
-            //用户省份
-            xizang:0,qinghai:0,ningxia:0,hainan:0,gansu:0,guizhou:0,xinjiang:0,yunnan:0,chongqing:0,jilin:0,
-            shanxi:0,tianjin:0,jiangxi:0,guangxi:0,shanxi2:0,heilongjiang:0,neimenggu:0,anhui:0,beijing:0,
-            fujian:0,shanghai:0,hubei:0,hunan:0,sichuan:0,liaoning:0,hebei:0,henan:0,zhejiang:0,shandong:0,
-            jiangsu:0,guangdong:0
-        })
+        this.state=({})
     }
+
+
     componentDidMount(){
+       
         fetch('http://47.98.163.228:8086/article')
         .then(res=>res.json())
         .then(res=>{      
@@ -230,68 +226,67 @@ export default class Index extends Component {
         myChart.setOption(option, true);
     };
     render() {
+        //折线图的数据
         var config = {
             title: {
-                text: '2020年注册人数折线图'
+                useHTML:true,
+                text: '2020年注册人数折线图',
+                style:{
+                    color:'white',
+                    fontSize:'25px'
+                }
             },
+            legend:{
+                itemStyle:{
+                    color:'rgba(111,15,153,0.7)'
+                }
+            },
+            
             yAxis: {
                 title: {
-                    text: '注册人数'
+                    text: '注册人数',
+                    style:{
+                        color:'white'
+                    },
                 },
+                labels:{
+                    style:{
+                        color:'white'
+                    }
+                },
+                // plotBands:[{
+                //     color:'red'
+                // }]
             },
             xAxis:{
-                categories:['2010','2011','2012','2013','2014','2015','2016','2017']
+                categories:['2010','2011','2012','2013','2014','2015','2016','2017'],
+                labels:{
+                    style:{
+                        color:'white'
+                    }
+                }
             },
             series: [{
                 name: '注册人数',
-                data: [4,3,2,6,6,7,3]
+                data: [4,3,2,6,6,7,3],
+                color:'rgba(111,15,153,0.7)',
             }],
             chart:{
+                backgroundColor:'rgba(18,21,54,0.9)',
+                plotBorderColor: "red",//图表的边框颜色
+                borderRadius: 7,
+                borderRaduis:30,
                 // borderColor:'red',
                 // borderWidth:1,
                 height:250,
-                width:400
-            }
+                width:500
+            },
             };
         return (
-            <div>
+            <div style={{paddingTop:30,paddingLeft:10}}>
+                {/* <div id="container" style={{"min-width":400,"height":400}}></div> */}
                 <ReactHighCharts config={config} />
-                {/* <div id="page-wrapper">
-                <div id="page-inner">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="page-header">
-                                衣舍
-                            </h1>
-                        </div>
-                    </div>			
-    
-                    <div class="row">
-                        <div class="col-md-3 col-sm-12 col-xs-12">
-                            <div class="panel panel-primary text-center no-boder bg-color-red">
-                                <div class="panel-left pull-left red">
-                                    <i class="fa fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="panel-right">
-                                    <h3>{this.state.num2}</h3>
-                                   <strong> 用户数量 </strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-12 col-xs-12">
-                            <div class="panel panel-primary text-center no-boder bg-color-brown">
-                                <div class="panel-left pull-left brown">
-                                    <i class="fa fa-users fa-5x"></i>
-                                </div>
-                                <div class="panel-right">
-                                    <h3>{this.state.num}</h3>
-                                 <strong>文章数量</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+                {/* <ReactHighCharts config={this.state.config}/> */}
             <div style={{marginLeft:'200px', width: '800px', height: '800px' }} ref={this.setMapElement} />
             </div>
         )
