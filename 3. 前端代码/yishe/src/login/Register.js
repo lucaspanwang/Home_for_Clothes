@@ -135,11 +135,11 @@ export default class Register extends Component{
                             <Flex direction="column" justify="center" align="center">
                                 <Button onClick={()=>{
                                     var date=new Date();
-                                    var year=date.getFullYear();
+                                    
                                     var month=date.getMonth()+1;
-                                    var day=date.getDate();
-                                    var time=''+year+month+day;
-                                    console.log(time);
+                                    // var day=date.getDate();
+                                    // var time=''+year+month+day;
+                                    // console.log(time);
                                     if(this.state.userPho.length!=13)
                                         document.getElementById('phoneError').style.display='block';
                                     else if(this.state.userPwd.length<6)
@@ -158,7 +158,7 @@ export default class Register extends Component{
                                         userPwd:this.state.userPwd, userName:this.state.userName,
                                         userSex:this.state.userSex, userCity:this.state.userCity,
                                         userProvince:this.state.userProvince, 
-                                        picData:this.state.picData, userTime:time})
+                                        picData:this.state.picData, userTime:month})
                                   })
                                     .then(res=>res.json())
                                     .then(res=>{
