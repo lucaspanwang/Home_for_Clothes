@@ -1,18 +1,38 @@
 import React, { Component } from 'react'
 import ReactHighCharts from 'react-highcharts'
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/markPoint'
 
-// import ReactHighCharts from 'react-highcharts'
 import ECharts from 'echarts';
 import 'echarts/map/js/china';
+import { Flex } from 'antd-mobile';
 export default class Index extends Component {
     constructor(){
         super();
         this.state=({})
     }
-
+    
 
     componentDidMount(){
-       
+        var myChart = echarts.init(document.getElementById('main'));
+        myChart.setOption({
+            series : [
+                {
+                    name: '男女比例',
+                    type: 'pie',    // 设置图表类型为饼图
+                    radius: '70%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                    data:[          // 数据数组，name 为数据项名称，value 为数据项值
+                        {value:274, name:'女'},
+                        {value:235, name:'男'},
+                    ]
+                }
+            ]
+        })
+
         fetch('http://47.98.163.228:8086/article')
         .then(res=>res.json())
         .then(res=>{      
@@ -283,11 +303,10 @@ export default class Index extends Component {
             },
             };
         return (
-            <div style={{paddingTop:30,paddingLeft:10}}>
-                {/* <div id="container" style={{"min-width":400,"height":400}}></div> */}
-                <ReactHighCharts config={config} />
-                {/* <ReactHighCharts config={this.state.config}/> */}
-            <div style={{marginLeft:'200px', width: '800px', height: '800px' }} ref={this.setMapElement} />
+            <div style={{marginTop:30}}>
+                <ReactHighCharts config={config}/>
+                <div id="main" style={{ width: 350, height: 350 ,float:'right',marginTop:-300}}></div>
+                <div style={{marginLeft:'100px', width: '800px', height: '800px'}} ref={this.setMapElement} />
             </div>
         )
     }
