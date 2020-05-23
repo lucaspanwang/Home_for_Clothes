@@ -14,6 +14,12 @@ router.get('/images/:photo', function(req, res) {
   optfile.readImg('../我的/images/'+photo, res);
 
 })
+//获取穿搭页分享图片
+router.get('/image/:photo', function(req, res) {
+  var photo = req.params.photo;
+  optfile.readImg('../我的/share/'+photo, res);
+
+})
 //获取用户信息
 router.get('/users', function(req, res) {
   var userId = req.query.userId;
@@ -301,6 +307,7 @@ router.get('/fankui/:userId', function(req, res) {
   })  
 })
 
+//后台管理
 //获取所有用户的反馈意见
 router.get('/fankuiall', function(req, res) {
   con.query(`select feedback.*,users.userName,users.userPic
@@ -362,6 +369,104 @@ router.post('/fankuiadd', function(req, res) {
       });
   })
   res.end(); 
+})
+//获取指定管理员信息
+router.get('/manager/:xuehao', function(req, res) {
+  var xuehao = req.params.xuehao;
+  con.query(`select *
+              from manager
+              where manager.xuehao = '${xuehao}';`, (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        console.log(result); 
+        res.send(result);
+      }    
+  })  
+})
+//修改管理员信息
+router.post('/managerchange', function(req, res) {
+  var obj="";
+  req.on('data',function(data){
+      obj+=data;
+  })
+  req.on('end',function(){
+      var user = JSON.parse(obj);
+      con.query('update manager set mokuai=? where xuehao=?',[user.mokuai,user.xuehao],(err, result) => {
+          if(err){
+            console.log(err);
+          }else{
+            result=[user.mokuai,user.xuehao];
+            console.log(result);
+            // res.send(result);
+          }
+      });
+  })
+  res.end(); 
+})
+//修改管理员密码
+router.post('/pwchange', function(req, res) {
+  var obj="";
+  req.on('data',function(data){
+      obj+=data;
+  })
+  req.on('end',function(){
+      var user = JSON.parse(obj);
+      con.query('update manager set password=? where xuehao=?',[user.password,user.xuehao],(err, result) => {
+          if(err){
+            console.log(err);
+          }else{
+            result=[user.password,user.xuehao];
+            console.log(result);
+            // res.send(result);
+          }
+      });
+  })
+  res.end(); 
+})
+//删除管理员信息
+router.post('/managerDel', function(req, res) {
+  var obj="";
+  var di='';
+  req.on('data',function(data){
+      obj+=data;
+  })
+  req.on('end',function(){//获取要删除的日记Id
+      var ma = JSON.parse(obj);
+      console.log(ma);
+      
+      con.query('delete from manager where xuehao = ?', [ma.xuehao], function(err, result){
+        if(err) {
+          console.error(err.message);
+          process.exit(1);
+        }
+        console.log(result);
+        // res.send(result);
+      });
+  })
+  res.end();
+})
+//删除反馈信息
+router.post('/fankuiDel', function(req, res) {
+  var obj="";
+  var di='';
+  req.on('data',function(data){
+      obj+=data;
+  })
+  req.on('end',function(){//获取要删除的日记Id
+      var fb = JSON.parse(obj);
+      console.log(fb);
+      
+      con.query('delete from feedback where fbId = ?', [fb.fbId], function(err, result){
+        if(err) {
+          console.error(err.message);
+          process.exit(1);
+        }
+        console.log(result);
+        // res.send(result);
+      });
+  })
+  res.end();
 })
 
 
