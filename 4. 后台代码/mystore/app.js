@@ -6,8 +6,19 @@ var logger = require('morgan');
 var cors=require("cors");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var bodyParser = require('body-parser');
 var app = express();
+
+
+app.use(bodyParser.json({limit: '50mb'}));    //最大上传大小不超过50mb
+
+app.use(bodyParser.urlencoded({
+
+    limit: '50mb',
+
+    extended:true
+
+}));
 
 // view engine setup
 // app.set('views')用来指明视图文件所在目录
@@ -16,6 +27,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(cors());
+// app.use(bodyParser.urlencoded({ "limit":"10000kb"}));
+// app.use(bodyParser.json({'limit':'10000kb'}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -17,7 +17,6 @@ router.get('/insertSex/:id',function(req,res){
       res.json(result[0].userSex)
 })
 })
-
 //储物箱--根据名字来跳转家或者各个页面
 router.get('/seek/:value',function(req,res){
   var value=JSON.stringify(req.params.value);
@@ -34,7 +33,6 @@ router.get('/seek/:value',function(req,res){
       }
   })
 })
-
 //导入页面导入图片
 router.post('/insert',function(req,res){
   // console.log('body',req.body);
@@ -142,6 +140,29 @@ router.post('/insert',function(req,res){
       }else{
           console.log('写入成功');
       }
+  })
+})
+
+//后台管理系统统计注册人数
+
+router.get('/number',function(req,res){
+  var time=[];
+  con.query('select userTime from users',function(err,result){
+    result.forEach(function(res){
+      time.push(res.userTime)
+    })
+    res.json(time)
+  })
+})
+//后台男女比例
+router.get('/radius',function(req,res){
+  var sex=[];
+  con.query('select userSex from users',function(err,result){
+    result.forEach(function(res){
+      sex.push(res.userSex);
+    })
+    console.log(sex)
+    res.json(sex)
   })
 })
 
