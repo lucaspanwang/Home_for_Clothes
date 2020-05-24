@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Typography, Layout, Menu, Dropdown } from 'antd';
 import { Popover, NavBar, Icon } from 'antd-mobile';
 
 import './tab.css';
+import {standardTime} from './common/standardTime.js';
+import fankui from './images/fankui.png'
 import logo from './images/logo_bai.png'
 
 //首页
@@ -34,7 +36,7 @@ import Pwchange from './manager/Pwchange';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
-
+const { Paragraph } = Typography;
 const Item = Popover.Item;
 
 export default class Tab extends Component {
@@ -44,37 +46,50 @@ export default class Tab extends Component {
             collapsed: false,
             id: sessionStorage.getItem('manager'),
             manager: {},
-            visible: false,
-            selected: '',
+            feedback: [],
+            // visible: false,
+            // selected: '',
         }
         
     }
-    onSelect = (opt) => {
-        this.setState({
-            visible: false,
-            selected: opt.props.value,
-        });
-        console.log(opt.props.value)
-        if(opt.props.value == 'myself'){
-            window.location.href='http://localhost:3000/tab/medit/'+this.state.id;
-        }
-        if(opt.props.value == 'sign out'){
-            window.location.href='http://localhost:3000/login';
-        }
-    };
-    handleVisibleChange = (visible) => {
-        this.setState({
-            visible,
-        });
-    };
+    // onSelect = (opt) => {
+    //     this.setState({
+    //         visible: false,
+    //         selected: opt.props.value,
+    //     });
+    //     console.log(opt.props.value)
+    //     if(opt.props.value == 'myself'){
+    //         window.location.href='http://localhost:3000/tab/medit/'+this.state.id;
+    //     }
+    //     if(opt.props.value == 'sign out'){
+    //         window.location.href='http://localhost:3000/login';
+    //     }
+    // };
+    // handleVisibleChange = (visible) => {
+    //     this.setState({
+    //         visible,
+    //     });
+    // };
     componentDidMount(){
         fetch('http://47.98.163.228:3004/manager?id='+this.state.id)
-            .then(res => res.json())
-            .then(res => {
-                this.setState({
-                    manager:res[0]
-                })
+        .then(res => res.json())
+        .then(res => {
+            this.setState({
+                manager:res[0]
             })
+        })
+        fetch('http://47.98.163.228:3004/feedback?check=1')
+        .then(res => res.json())
+        .then(res => {
+            for(var i=0;i<res.length;i++){
+                var j = res[i].userPic.indexOf('/');
+                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
+                res[i].fbTime = standardTime(res[i].fbTime)
+            }
+            this.setState({
+                feedback:res
+            })
+        })
     }
     onCollapse = collapsed => {
         console.log(collapsed);
@@ -90,8 +105,32 @@ export default class Tab extends Component {
                     </Content>
                     <Sider style={{margin:'auto 10px',float:'right'}}>
                         <i className="header-icon" style={{marginRight:15}}>你好，{this.state.manager.ming}</i>
-                        <i className="iconfont header-icon icon-tixing"></i>
-                        <Popover mask
+                        <Dropdown placement="bottomCenter" 
+                        overlay={
+                            this.state.feedback.length
+                            ?(<Menu>
+                                <Menu.Item style={{display:'flex',flexDirection:'row'}}><div style={{width:'6px',height:'6px',borderRadius:'50%',background:'red'}}></div>最新消息</Menu.Item>
+                                {this.state.feedback.map((item,index)=>(
+                                    <Menu.Item key={index} style={{width:'300px',padding:'5px'}}>
+                                        <Link to={'/tab/fankuixiangqing/'+item.fbId} style={{borderBottom:'1px solid #ddd',margin:'5px'}}>
+                                            <div style={{width:'100%',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                                               <div><img src={item.userPic} style={{width:'30px',heigth:'30px',borderRadius:'50%',marginRight:'8px'}} />
+                                                {item.userName}</div>
+                                                <span>{item.fbTime}</span> 
+                                            </div>
+                                            <Paragraph ellipsis={{rows:1}} style={{padding:'5px',color:'#444'}} >{item.fbContent}</Paragraph>
+                                        </Link>
+                                    </Menu.Item>
+                                ))}
+                            </Menu>)
+                            :(<span>没有最新消息</span>)
+                        } ><i className="iconfont header-icon icon-tixing"></i></Dropdown>
+                        <Dropdown placement="bottomCenter" 
+                        overlay={<Menu>
+                            <Menu.Item><Link to={'/tab/medit/'+this.state.manager.xuehao}>关于我</Link></Menu.Item>
+                            <Menu.Item><Link to={'/login'}>退出登录</Link></Menu.Item>
+                        </Menu>} ><i className="iconfont header-icon icon-yonghu-copy"></i></Dropdown>
+                        {/* <Popover mask
                             overlayClassName="fortest"
                             overlayStyle={{ color: 'currentColor' }}
                             visible={this.state.visible}
@@ -107,7 +146,7 @@ export default class Tab extends Component {
                             onSelect={this.onSelect}
                         >
                             <i className="iconfont header-icon icon-yonghu-copy"></i>
-                        </Popover> 
+                        </Popover>  */}
                     </Sider>
                 </Layout>
                 <Layout className="site-layout">
@@ -139,7 +178,7 @@ export default class Tab extends Component {
                             </Menu.Item>
                         </Menu>
                     </Sider>
-                    <Layout className="site-layout" style={{height:'90vh',margin:'2vh 2vw',overflowY:'scroll',zIndex:99,background:'rgba(255,255,255,0.4)',borderRadius:'5px'}}>
+                    <Layout className="site-layout overflow-y">
                         <Content>
                             <div className="site-layout-background" style={{padding:'10px 15px', minHeight:480}}>
                                 {/* 首页 */}

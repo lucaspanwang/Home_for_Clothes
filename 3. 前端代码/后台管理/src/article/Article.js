@@ -62,7 +62,6 @@ export default class Article extends Component {
                     tbody={this.state.tbody} 
                     twidth={[10,46,8,8,8,10,10]} 
                     operate={['check','delete']} 
-                    // editItem={'/aedit'}//编辑操作跳转的链接
                     checkItem={'/acheck'}//查看操作跳转的链接
                     deleteItem={this.deleteHandle}
                 />
