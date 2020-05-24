@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import './Message.css';
 
@@ -9,17 +9,31 @@ const Message = ({ message: { text, user }, name }) => {
 
   const trimmedName = name.trim().toLowerCase();
 
+  // let userPic='http://47.98.163.228/我的/images/123.jpg';
+
   if(user === trimmedName) {
     isSentByCurrentUser = true;
   }
+
+  // useEffect(() => {
+  //   fetch("http://47.98.163.228:3000/users?userId="+trimmedName)
+  //       .then(res=>res.json())
+  //       .then(res=>{
+  //           for(var i=0;i<res.length;i++){
+  //               var j = res[i].userPic.indexOf('/');
+  //               userPic = "http://47.98.163.228:3000"+res[i].userPic.substr(j);
+  //           }
+  //       });
+  // });
 
   return (
     isSentByCurrentUser
       ? (
         <div className="messageContainer justifyEnd">
-          <p className="sentText pr-10">{trimmedName}</p>
+          {/* <p className="sentText pr-10">{trimmedName}</p> */}
           <div className="messageBox backgroundBlue">
             <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
+            {/* <img src={userPic} alt="" style={{float:"left",width:"20%",borderRadius:"50%",marginRight:"3%"}}/> */}
           </div>
         </div>
         )

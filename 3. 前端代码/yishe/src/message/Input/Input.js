@@ -6,6 +6,8 @@ import emoji from '../../images/message/emoji.png';
 import emoji2 from '../../images/message/emoji2.png';
 import voice from '../../images/message/voice.png';
 import add from '../../images/message/add.png';
+import girl from '../../images/girl.gif';
+import boy from '../../images/boy.gif';
 import ReactEmoji from 'react-emoji';
 
 const Input = ({ setMessage, sendMessage, message, status, setStatus }) => {
