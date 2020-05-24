@@ -36,7 +36,7 @@ export default class Ocheck extends Component {
         return (
             <div className="middle">
                 <div style={{height:'30px',borderBottom:'1px dashed #ddd',marginBottom:'25px'}}>
-                    <Link to='/tab/official' style={{color:'black'}}>&#60; &nbsp;官方消息</Link>
+                    <Link to='/tab/official' style={{color:'#1890ff',fontSize:'20px'}}>官方消息管理</Link>
                 </div>
                 <Layout>
                     <Content style={{background:'#fff',borderRight:'1px dashed #ddd'}}>
