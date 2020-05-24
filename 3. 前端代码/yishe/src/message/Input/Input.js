@@ -23,7 +23,10 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
 
   let [bottom, setBottom] = useState('18%');
   let [iemoji,setIemoji] = useState(emoji);
+  let [justEnter, setJustEnter] = useState(0);
+
   const mySend = (event) =>{
+    setJustEnter(1);
     sendMessage(event);
     setStatus('0');
   }
@@ -44,81 +47,85 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
     }
 
     if(gender=='男'){
-      if(emotion==''){
-        document.getElementById('boy').style.display='block';
-        document.getElementById('boy_blush').style.display='none';
-        document.getElementById('boy_great').style.display='none';
-        document.getElementById('boy_joy').style.display='none';
-        document.getElementById('boy_sad').style.display='none';
-      }
-      else if(emotion=='blush'){
+      if(emotion=='blush'){
+        document.getElementById('boy_blush').src = document.getElementById('boy_blush').src;
         document.getElementById('boy').style.display='none';
         document.getElementById('boy_blush').style.display='block';
         document.getElementById('boy_great').style.display='none';
         document.getElementById('boy_joy').style.display='none';
         document.getElementById('boy_sad').style.display='none';
       }
-      else if(emotion=='great'){
+      if(emotion=='great'){
+        document.getElementById('boy_great').src = document.getElementById('boy_great').src;
         document.getElementById('boy').style.display='none';
         document.getElementById('boy_blush').style.display='none';
         document.getElementById('boy_great').style.display='block';
         document.getElementById('boy_joy').style.display='none';
         document.getElementById('boy_sad').style.display='none';
       }
-      else if(emotion=='joy'){
+      if(emotion=='joy'){
+        document.getElementById('boy_joy').src = document.getElementById('boy_joy').src;
         document.getElementById('boy').style.display='none';
         document.getElementById('boy_blush').style.display='none';
         document.getElementById('boy_great').style.display='none';
         document.getElementById('boy_joy').style.display='block';
         document.getElementById('boy_sad').style.display='none';
       }
-      else if(emotion=='sad'){
+      if(emotion=='sad'){
+        document.getElementById('boy_sad').src = document.getElementById('boy_sad').src;
         document.getElementById('boy').style.display='none';
         document.getElementById('boy_blush').style.display='none';
         document.getElementById('boy_great').style.display='none';
         document.getElementById('boy_joy').style.display='none';
         document.getElementById('boy_sad').style.display='block';
       }
+      if(emotion=='' || message!=''){
+        document.getElementById('boy').style.display='block';
+        document.getElementById('boy_blush').style.display='none';
+        document.getElementById('boy_great').style.display='none';
+        document.getElementById('boy_joy').style.display='none';
+        document.getElementById('boy_sad').style.display='none';
+      }
     }
     else if(gender=="女"){
-      if(emotion==''){
-        document.getElementById('girl').style.display='block';
-        document.getElementById('girl_blush').style.display='none';
-        document.getElementById('girl_great').style.display='none';
-        document.getElementById('girl_joy').style.display='none';
-        document.getElementById('girl_sad').style.display='none';
-      }
-      else if(emotion=='blush'){
-        // document.getElementById('girl_blush').src = document.getElementById('girl_blush').src;
+      if(emotion=='blush'){
+        document.getElementById('girl_blush').src = document.getElementById('girl_blush').src;
         document.getElementById('girl').style.display='none';
         document.getElementById('girl_blush').style.display='block';
         document.getElementById('girl_great').style.display='none';
         document.getElementById('girl_joy').style.display='none';
         document.getElementById('girl_sad').style.display='none';
       }
-      else if(emotion=='great'){
-        // document.getElementById('girl_great').src = document.getElementById('girl_great').src;
+      if(emotion=='great'){
+        document.getElementById('girl_great').src = document.getElementById('girl_great').src;
         document.getElementById('girl').style.display='none';
         document.getElementById('girl_blush').style.display='none';
         document.getElementById('girl_great').style.display='block';
         document.getElementById('girl_joy').style.display='none';
         document.getElementById('girl_sad').style.display='none';
       }
-      else if(emotion=='joy'){
-        // document.getElementById('girl_joy').src = document.getElementById('girl_joy').src;
+      if(emotion=='joy'){
+        document.getElementById('girl_joy').src = document.getElementById('girl_joy').src;
         document.getElementById('girl').style.display='none';
         document.getElementById('girl_blush').style.display='none';
         document.getElementById('girl_great').style.display='none';
         document.getElementById('girl_joy').style.display='block';
         document.getElementById('girl_sad').style.display='none';
       }
-      else if(emotion=='sad'){
-        // document.getElementById('girl_sad').src = document.getElementById('girl_sad').src;
+      if(emotion=='sad'){
+        document.getElementById('girl_sad').src = document.getElementById('girl_sad').src;
         document.getElementById('girl').style.display='none';
         document.getElementById('girl_blush').style.display='none';
         document.getElementById('girl_great').style.display='none';
         document.getElementById('girl_joy').style.display='none';
         document.getElementById('girl_sad').style.display='block';
+      }
+      if(emotion=='' || message!=''){
+        document.getElementById('girl').style.display='block';
+        document.getElementById('girl_blush').style.display='none';
+        document.getElementById('girl_great').style.display='none';
+        document.getElementById('girl_joy').style.display='none';
+        document.getElementById('girl_sad').style.display='none';
       }
     }
 });
@@ -145,13 +152,13 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
           type="text"
           value= {message}
           onChange={({ target: { value } }) => setMessage(value)}
-          onClick={()=>setStatus('0')}
+          // onClick={()=>setStatus('0')}
           onKeyPress={(event) => event.key === 'Enter' ? mySend(event): null}
         />
         <img
           id="emoji"
           src={iemoji}
-          onClick={()=>{setStatus(1^status);}}
+          onClick={()=>{setStatus(1^status);setEmotion('');}}
           />
         <img id="add"
           src={add}
