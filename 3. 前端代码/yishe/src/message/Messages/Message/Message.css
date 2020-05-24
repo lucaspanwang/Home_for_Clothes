@@ -1,7 +1,7 @@
 .messageBox {
     background: #F3F3F3;
     border-radius: 20px;
-    padding: 5px 20px;
+    padding: 8px 20px 0 20px;
     color: white;
     display: inline-block;
     max-width: 80%;
@@ -11,7 +11,7 @@
     width: 100%;
     letter-spacing: 0;
     float: left;
-    font-size: 1.1em;
+    font-size: 1em;
     word-wrap: break-word;
   }
   
@@ -23,7 +23,8 @@
     display: flex;
     justify-content: flex-end;
     padding: 0 5%;
-    margin-top: 3px;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
   }
   
   .sentText {
