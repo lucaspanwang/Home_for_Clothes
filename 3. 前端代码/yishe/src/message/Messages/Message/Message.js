@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import './Message.css';
 
+import { Link } from 'react-router-dom';
+
 import ReactEmoji from 'react-emoji';
 
 const Message = ({ message: { text, user }, name, emotion, setEmotion}) => {
@@ -41,12 +43,16 @@ const Message = ({ message: { text, user }, name, emotion, setEmotion}) => {
             <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
           </div>
           &nbsp;&nbsp;
-          <img src={userPic} alt="" style={{float:"left",width:"15%", height:'15%', borderRadius:"50%"}}/>
+          <Link to={'/others/'+user+'&'+trimmedName} style={{float:"left",width:"15%", height:'15%', borderRadius:"50%"}}>
+              <img src={userPic} alt="" style={{width:"100%", height:'100%', borderRadius:"50%"}}/>
+          </Link>
         </div>
         )
         : (
           <div className="messageContainer justifyStart">
-            <img src={userPic} alt="" style={{float:"left",width:"15%", height:'15%', borderRadius:"50%",marginRight:"3%"}}/>
+            <Link to={'/others/'+user+'&'+trimmedName} style={{float:"left",width:"15%", height:'15%', borderRadius:"50%",marginRight:"3%"}}>
+              <img src={userPic} alt="" style={{width:"100%", height:'100%', borderRadius:"50%"}}/>
+            </Link>
             <div className="messageBox backgroundLight">
               <p className="messageText colorDark">{ReactEmoji.emojify(text)}</p>
             </div>

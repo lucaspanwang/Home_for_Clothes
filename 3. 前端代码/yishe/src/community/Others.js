@@ -24,7 +24,7 @@ export default class Others extends Component {
       this.state = {
         user:{},
         detail:[],
-        follow:false
+        follow:false,
       }
     }
     componentDidMount(){
@@ -54,6 +54,14 @@ export default class Others extends Component {
             })
         })
     }
+    //生成私信聊天室
+    createRoom = () =>{
+        const user0 = parseInt(this.props.match.params.id.split("&")[0]);
+        const user1 = parseInt(this.props.match.params.id.split("&")[1]);
+        const room = user0<user1 ? user0.toString()+'&'+user1.toString() : user1.toString()+'?'+user0.toString();
+        return room;
+    }
+
     //关注/取消关注
     onCare = () =>{
         if(this.state.follow){
@@ -143,10 +151,11 @@ export default class Others extends Component {
                     thumb={guanzhu}
                     onClick={this.onCare}
                     >{this.state.follow?'取消关注':'关注用户'}</Item>
+                    <Link to={"/chat?name="+this.props.match.params.id.split("&")[1]+'&room='+this.createRoom()}>
                     <Item
                     style={{margin:'8px 0'}}
                     thumb={sixin}
-                    >与他私信</Item>
+                    >与他私信</Item></Link>
                 </List>
             </div>)
     }

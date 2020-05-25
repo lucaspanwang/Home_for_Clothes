@@ -37,7 +37,7 @@ export default class ResetPwd extends Component{
                             <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
                         </div>
                     </li></Link>
-                    <Link to={"/chat?name="+this.props.id+"&room=test"}><li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
+                    <Link to={"/chat?name="+this.props.id+"&room=group0"}><li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
                         <img src={group1} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
                         <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%'}}>
                             衣舍内测用户体验群1群

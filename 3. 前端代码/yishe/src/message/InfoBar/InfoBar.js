@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 // import onlineIcon from '../../icons/onlineIcon.png';
 // import closeIcon from '../../icons/closeIcon.png';
@@ -8,18 +8,40 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 
 import './InfoBar.css';
 
-const InfoBar = ({name, room}) => (
+const InfoBar = ({name, room}) => {
+
+  const [roomName, setRoomName] = useState('');
+
+  const onback=()=>{
+    // console.log(this.props.history.location);
+    window.history.go(-1);
+  }
+
+  useEffect(() => {
+    if(room.indexOf('group')!=-1){
+      setRoomName('衣舍内测用户体验群1群');
+    }else{
+      var userId;
+      var user1= room.split("?")[0];
+      var user2= room.split("?")[1];
+      if(user1==name) userId=user2;else userId=user1;
+      fetch("http://47.98.163.228:3000/users?userId="+userId)
+        .then(res=>res.json())
+        .then(res=>{
+            setRoomName(res[0].userName);
+        });
+    }
+  });
+  
+  return(
   <NavBar 
     style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
     leftContent={[
-      <Link to={`/apptab/${name}&message`}>
-        <img src={fanhui} style={{width:'25%'}} key="fan"/>
-      </Link>
+        <img src={fanhui} style={{width:'25%'}} key="fan" onClick={onback}/>
         //<a href='/apptab'><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
     ]}
-    >衣舍内测用户体验群1群
-  </NavBar>//{room}
-
-);
+    >{roomName}
+  </NavBar>
+  );}
 
 export default InfoBar;

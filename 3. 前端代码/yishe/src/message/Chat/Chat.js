@@ -21,7 +21,6 @@ const Chat = ({ location }) => {
   const [gender, setGender] = useState('');
   const [emotion, setEmotion] = useState('');
   const ENDPOINT = 'http://47.98.163.228:3006/';
-  
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);

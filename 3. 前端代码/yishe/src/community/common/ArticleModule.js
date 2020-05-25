@@ -148,6 +148,14 @@ export default class ArticleModule extends Component {
             })
         }
     }
+
+    //生成私信房间
+    createRoom = () =>{
+        const user0 = parseInt(this.props.userId);
+        const user1 = parseInt(this.state.article.userId);
+        const room = user0<user1 ? user0.toString()+'&'+user1.toString() : user1.toString()+'&'+user0.toString();
+        return room;
+    }
     
     render() {
         return (
