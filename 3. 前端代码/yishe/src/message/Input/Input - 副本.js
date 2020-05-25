@@ -16,8 +16,6 @@ import girl_joy from '../../images/emotion/girl_joy.gif';
 import boy_joy from '../../images/emotion/boy_joy.gif';
 import girl_sad from '../../images/emotion/girl_sad.gif';
 import boy_sad from '../../images/emotion/boy_sad.gif';
-import girl_click from '../../images/emotion/girl_click.gif';
-import boy_click from '../../images/emotion/boy_click.gif';
 
 import ReactEmoji from 'react-emoji';
 
@@ -25,17 +23,12 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
 
   let [bottom, setBottom] = useState('18%');
   let [iemoji,setIemoji] = useState(emoji);
-  let [avatar,setAvatar] = useState();
   let [justEnter, setJustEnter] = useState(0);
 
   const mySend = (event) =>{
     setJustEnter(1);
     sendMessage(event);
     setStatus('0');
-  }
-
-  const clickHappy = () =>{
-    setEmotion('click');
   }
 
   useEffect(() => {
@@ -55,42 +48,84 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
 
     if(gender=='男'){
       if(emotion=='blush'){
-        setAvatar(boy_blush);
+        document.getElementById('boy_blush').src = document.getElementById('boy_blush').src;
+        document.getElementById('boy').style.display='none';
+        document.getElementById('boy_blush').style.display='block';
+        document.getElementById('boy_great').style.display='none';
+        document.getElementById('boy_joy').style.display='none';
+        document.getElementById('boy_sad').style.display='none';
       }
       if(emotion=='great'){
-        setAvatar(boy_great);
+        document.getElementById('boy_great').src = document.getElementById('boy_great').src;
+        document.getElementById('boy').style.display='none';
+        document.getElementById('boy_blush').style.display='none';
+        document.getElementById('boy_great').style.display='block';
+        document.getElementById('boy_joy').style.display='none';
+        document.getElementById('boy_sad').style.display='none';
       }
       if(emotion=='joy'){
-        setAvatar(boy_joy);
+        document.getElementById('boy_joy').src = document.getElementById('boy_joy').src;
+        document.getElementById('boy').style.display='none';
+        document.getElementById('boy_blush').style.display='none';
+        document.getElementById('boy_great').style.display='none';
+        document.getElementById('boy_joy').style.display='block';
+        document.getElementById('boy_sad').style.display='none';
       }
       if(emotion=='sad'){
-        setAvatar(boy_sad);
+        document.getElementById('boy_sad').src = document.getElementById('boy_sad').src;
+        document.getElementById('boy').style.display='none';
+        document.getElementById('boy_blush').style.display='none';
+        document.getElementById('boy_great').style.display='none';
+        document.getElementById('boy_joy').style.display='none';
+        document.getElementById('boy_sad').style.display='block';
       }
-      if(emotion=='click'){
-        setAvatar(boy_click);
-      }
-      if(emotion==''){
-        setAvatar(boy);
+      if(emotion=='' || message!=''){
+        document.getElementById('boy').style.display='block';
+        document.getElementById('boy_blush').style.display='none';
+        document.getElementById('boy_great').style.display='none';
+        document.getElementById('boy_joy').style.display='none';
+        document.getElementById('boy_sad').style.display='none';
       }
     }
     else if(gender=="女"){
       if(emotion=='blush'){
-        setAvatar(girl_blush);
+        document.getElementById('girl_blush').src = document.getElementById('girl_blush').src;
+        document.getElementById('girl').style.display='none';
+        document.getElementById('girl_blush').style.display='block';
+        document.getElementById('girl_great').style.display='none';
+        document.getElementById('girl_joy').style.display='none';
+        document.getElementById('girl_sad').style.display='none';
       }
       if(emotion=='great'){
-        setAvatar(girl_great);
+        document.getElementById('girl_great').src = document.getElementById('girl_great').src;
+        document.getElementById('girl').style.display='none';
+        document.getElementById('girl_blush').style.display='none';
+        document.getElementById('girl_great').style.display='block';
+        document.getElementById('girl_joy').style.display='none';
+        document.getElementById('girl_sad').style.display='none';
       }
       if(emotion=='joy'){
-        setAvatar(girl_joy);
+        document.getElementById('girl_joy').src = document.getElementById('girl_joy').src;
+        document.getElementById('girl').style.display='none';
+        document.getElementById('girl_blush').style.display='none';
+        document.getElementById('girl_great').style.display='none';
+        document.getElementById('girl_joy').style.display='block';
+        document.getElementById('girl_sad').style.display='none';
       }
       if(emotion=='sad'){
-        setAvatar(girl_sad);
+        document.getElementById('girl_sad').src = document.getElementById('girl_sad').src;
+        document.getElementById('girl').style.display='none';
+        document.getElementById('girl_blush').style.display='none';
+        document.getElementById('girl_great').style.display='none';
+        document.getElementById('girl_joy').style.display='none';
+        document.getElementById('girl_sad').style.display='block';
       }
-      if(emotion=='click'){
-        setAvatar(girl_click);
-      }
-      if(emotion==''){
-        setAvatar(girl);
+      if(emotion=='' || message!=''){
+        document.getElementById('girl').style.display='block';
+        document.getElementById('girl_blush').style.display='none';
+        document.getElementById('girl_great').style.display='none';
+        document.getElementById('girl_joy').style.display='none';
+        document.getElementById('girl_sad').style.display='none';
       }
     }
 });
@@ -101,7 +136,16 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
         className="form"
         style={{paddingBottom:`${bottom}`}}
         >
-        <img class="kid" id="kid" onClick={clickHappy} src={avatar}/>
+        <img class="kid" id="girl" style={{display:'none'}} src={girl}/>
+        <img class="kid" id="boy" style={{display:'none'}} src={boy}/>
+        <img class="kid" id="girl_blush" style={{display:'none'}} src={girl_blush}/>
+        <img class="kid" id="boy_blush" style={{display:'none'}} src={boy_blush}/>
+        <img class="kid" id="girl_great" style={{display:'none'}} src={girl_great}/>
+        <img class="kid" id="boy_great" style={{display:'none'}} src={boy_great}/>
+        <img class="kid" id="girl_joy" style={{display:'none'}} src={girl_joy}/>
+        <img class="kid" id="boy_joy" style={{display:'none'}} src={boy_joy}/>
+        <img class="kid" id="girl_sad" style={{display:'none'}} src={girl_sad}/>
+        <img class="kid" id="boy_sad" style={{display:'none'}} src={boy_sad}/>
         <img id="voice" src={voice}/>
         <input
           id="input"
@@ -114,7 +158,7 @@ const Input = ({ setMessage, sendMessage, message, status, setStatus, gender, em
         <img
           id="emoji"
           src={iemoji}
-          onClick={()=>{setStatus(1^status);}}
+          onClick={()=>{setStatus(1^status);setEmotion('');}}
           />
         <img id="add"
           src={add}
