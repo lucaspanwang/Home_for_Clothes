@@ -24,12 +24,12 @@ const Message = ({ message: { text, user }, name, emotion, setEmotion}) => {
     else if(text.indexOf('哈哈')!=-1 || text.indexOf('啦啦')!=-1 || text.indexOf('开心')!=-1 || text.indexOf('快乐')!=-1 || text.indexOf('高兴')!=-1 || text.indexOf('hh')!=-1 || text.indexOf('233')!=-1 || text.indexOf('开心')!=-1 || text.indexOf(':)')!=-1 || text.indexOf(':D')!=-1 || text.indexOf('smile')!=-1 || text.indexOf(':p')!=-1){setEmotion('joy')}
     else if(text.indexOf('难过')!=-1 || text.indexOf('失望')!=-1 || text.indexOf('难受')!=-1 || text.indexOf('蓝瘦')!=-1 || text.indexOf('想哭')!=-1 || text.indexOf('555')!=-1 || text.indexOf('绝望')!=-1 || text.indexOf(":'(")!=-1 || text.indexOf(':[')!=-1 || text.indexOf(':(')!=-1 || text.indexOf('%)')!=-1){setEmotion('sad')}
     
-    fetch("http://47.98.163.228:3000/users?userId="+user)
+    fetch("http://47.98.163.228:3004/users?userId="+user)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
                 var j = res[i].userPic.indexOf('/');
-                setUserPic("http://47.98.163.228:3000"+res[i].userPic.substr(j));
+                setUserPic("http://47.98.163.228:3004"+res[i].userPic.substr(j));
             };
         });
   });
