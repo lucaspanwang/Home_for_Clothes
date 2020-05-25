@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
-import { Typography, Layout, Menu, Dropdown } from 'antd';
+import { Badge,Typography, Layout, Menu, Dropdown } from 'antd';
 import { Popover, NavBar, Icon } from 'antd-mobile';
 
 import './tab.css';
@@ -105,10 +105,10 @@ export default class Tab extends Component {
                     </Content>
                     <Sider style={{margin:'auto 10px',float:'right'}}>
                         <i className="header-icon" style={{marginRight:15}}>你好，{this.state.manager.ming}</i>
-                        <Dropdown placement="bottomCenter" 
-                        overlay={
-                            this.state.feedback.length
-                            ?(<Menu>
+                        {this.state.feedback.length
+                        ?(<Dropdown placement="bottomCenter" 
+                            overlay={
+                            <Menu>
                                 <Menu.Item style={{display:'flex',flexDirection:'row'}}><div style={{width:'6px',height:'6px',borderRadius:'50%',background:'red'}}></div>最新消息</Menu.Item>
                                 {this.state.feedback.map((item,index)=>(
                                     <Menu.Item key={index} style={{width:'300px',padding:'5px'}}>
@@ -122,9 +122,12 @@ export default class Tab extends Component {
                                         </Link>
                                     </Menu.Item>
                                 ))}
-                            </Menu>)
-                            :(<span>没有最新消息</span>)
-                        } ><i className="iconfont header-icon icon-tixing"></i></Dropdown>
+                            </Menu>
+                        } ><i className="iconfont header-icon icon-tixing"><Badge dot></Badge></i></Dropdown>)
+                        :(<Dropdown placement="bottomCenter" 
+                            overlay={<Menu><Menu.Item>没有最新消息</Menu.Item></Menu>}>
+                            <i className="iconfont header-icon icon-tixing"></i>
+                        </Dropdown>)}
                         <Dropdown placement="bottomCenter" 
                         overlay={<Menu>
                             <Menu.Item><Link to={'/tab/medit/'+this.state.manager.xuehao}>关于我</Link></Menu.Item>

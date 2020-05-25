@@ -12,12 +12,28 @@ export default class ArticleAdd extends Component {
         this.state = {
             value: '',
             cimg: [],
+            filesType:[]
         };
+    }
+    componentDidMount(){
+        var shareImg = localStorage.getItem('shareImg');
+        console.log(shareImg)
+        if(localStorage.getItem('shareImg')){
+            this.setState({
+                cimg:[{url:'http://47.98.163.228:3000/image/111mote.jpg',id:'0'}]
+            })
+           
+        }else{
+            this.setState({
+                cimg:[]
+            })
+        }
     }
     onToastSuccess=()=>{
         Toast.loading('文章上传中...',2, () => {
             window.location.href=window.location.href.split('#')[0]+"#/myarticle/"+this.props.match.params.id
         });
+        localStorage.removeItem('shareImg');
     }
     onToastFail=()=>{
         Toast.offline('文章不能为空!!!',2);
@@ -43,40 +59,122 @@ export default class ArticleAdd extends Component {
             var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
             var cimgName = [];
             var cimg = [];
-            let promise = new Promise(resolve =>{
-                for(var i=0;i<this.state.cimg.length;i++){
-                    cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
-                    lrz(this.state.cimg[i].url, {quality:0.1})
-                    .then((res)=>{
-                        cimg.push(res.base64);
-                        console.log(cimg);
-                        resolve({cimg:cimg,cimgName:cimgName});
-                    });
+            var shareImg = localStorage.getItem('shareImg');
+            if(localStorage.getItem('shareImg')){
+                cimgName = ['.jpg'];
+                // console.log(shareImg)
+                shareImg=shareImg.split('"')[1];
+                // console.log(shareImg)
+                var cimg = [shareImg];
+                // console.log(cimg)
+                if(this.state.cimg.length===1){
+                    let promise = new Promise(resolve =>{
+                        lrz(this.state.cimg[0].url, {quality:0.1})
+                        .then((res)=>{
+                            cimg.push(res.base64);
+                            resolve({cimg:cimg,cimgName:cimgName});
+                        });
+                    }).then((value)=>{
+                        fetch('http://47.98.163.228:3004/articleAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                        });
+                        this.onToastSuccess();
+                    })
+                }else{
+                    let promise = new Promise(resolve =>{
+                        lrz(this.state.cimg[0].url, {quality:0.1})
+                        .then((res)=>{
+                            cimg.push(res.base64);
+                        });
+                        for(var i=1;i<this.state.cimg.length;i++){
+                            cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
+                            lrz(this.state.cimg[i].url, {quality:0.1})
+                            .then((res)=>{
+                                cimg.push(res.base64);
+                                console.log(cimg);
+                                resolve({cimg:cimg,cimgName:cimgName});
+                            });
+                        }
+                    }).then((value)=>{
+                        fetch('http://47.98.163.228:3004/articleAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                        });
+                        this.onToastSuccess();
+                    })
                 }
-            }).then((value)=>{
-                fetch('http://47.98.163.228:3004/articleAdd',{
-                    method: 'post', 
-                    "Access-Control-Allow-Origin" : "*",
-                    "Access-Control-Allow-Credentials" : true,
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'multipart/form-data;charset=utf-8'
-                    },
-                    body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
-                });
-                this.onToastSuccess();
-            })
+            }else{
+                let promise = new Promise(resolve =>{
+                    for(var i=0;i<this.state.cimg.length;i++){
+                        cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
+                        lrz(this.state.cimg[i].url, {quality:0.1})
+                        .then((res)=>{
+                            cimg.push(res.base64);
+                            console.log(cimg);
+                            resolve({cimg:cimg,cimgName:cimgName});
+                        });
+                    }
+                }).then((value)=>{
+                    fetch('http://47.98.163.228:3004/articleAdd',{
+                        method: 'post', 
+                        "Access-Control-Allow-Origin" : "*",
+                        "Access-Control-Allow-Credentials" : true,
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'multipart/form-data;charset=utf-8'
+                        },
+                        body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                    });
+                    this.onToastSuccess();
+                })
+            }
         }
         localStorage.setItem('come',1);
     }
     onChange1 = ({ target: { value } }) => {
         this.setState({ value });
     };
-    onChange = (cimg, type, index) => {
+    onChange = (cimg) => {
         this.setState({
             cimg,
         });
+        console.log(this.state.cimg)
+        if(localStorage.getItem('shareImg')){
+            var filesType = ['.jpg'];
+            for(var i=1;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+        }else{
+            var filesType = [];
+            console.log(1)
+            for(var i=0;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+        }
+        this.setState({
+            filesType:filesType
+        })
     }
+    // onChange = (cimg, type, index) => {
+    //     this.setState({
+    //         cimg,
+    //     });
+    // }
     render() {
         return (
             <div>

@@ -36,6 +36,23 @@ export default class Official extends Component {
     //删除操作 从子组件获取到的id  添加一个判断是否删除
     deleteHandle = (id) =>{
         console.log(id);
+        fetch('http://47.98.163.228:3004/officeDelete?offId='+id)
+        .then(res => res.json())
+        .then(res => {
+            fetch('http://47.98.163.228:3004/office')
+            .then(res=>res.json())
+            .then(res=>{     
+                // console.log(res);
+                for(var i=0;i<res.length;i++){
+                    res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
+                }  
+                this.setState({
+                    tbody:res
+                },function(){
+                    console.log(this.state.tbody)
+                })
+            })
+        })
     }
     // shanchu=(idx)=>{
     //     fetch("http://47.98.163.228:3004/officeDelete?offId="+idx);
