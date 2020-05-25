@@ -79,9 +79,9 @@ export default class Wear extends Component {
         url0:'http://47.98.163.228:3001/react',
         url:'http://47.98.163.228:3001/weather',
         city:'南京',//用户城市
-        temperature:'2',//最低气温
-        temperature2:'13',//最高气温
-        dressing_advice:'',//穿衣建议
+        temperature:'12',//最低气温
+        temperature2:'23',//最高气温
+        dressing_advice:'适合穿短袖，建议出门涂防晒呦',//穿衣建议
         weather:'晴',//天气
         idx:0,//显示天气图标
         arr:[],arr_s:[],//大小图地址
@@ -102,7 +102,7 @@ export default class Wear extends Component {
         num:0,
         num2:0,
         feng:'',
-        speak_suggest:'',//语音播报建议
+        speak_suggest:'适合穿短袖，建议出门涂防晒呦',//语音播报建议
         sex:'女',
         imgUri:'',
     }
@@ -171,7 +171,7 @@ export default class Wear extends Component {
                 sex:res[0].userSex,//性别
              },function(){
               /* 显示天气预报  */  
-              this.weather();
+              // this.weather();
              })
             }
           this.setState({
@@ -213,29 +213,29 @@ export default class Wear extends Component {
       this.updata_image();//美妆
   }
   //获取用户天气
-  weather(){
-      fetch('http://47.98.163.228:3001/weather',{
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({userCity:this.state.city})  
-    })
-    .then(res=>res.json())
-    .then(res=>{
-      this.setState({
-        temperature:res.data[0].tem2,
-        temperature2:res.data[0].tem1,
-        dressing_advice:res.data[0].index[3].desc,
-        weather:res.data[0].wea,
-        speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.data[0].index[1].desc
-      },function(){
-        this.weather_icon();
-      })
-    })
-  }
+  // weather(){
+  //     fetch('http://47.98.163.228:3001/weather',{
+  //       method: 'post', 
+  //       "Access-Control-Allow-Origin" : "*",
+  //       "Access-Control-Allow-Credentials" : true,
+  //       headers: {
+  //           'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({userCity:this.state.city})  
+  //   })
+  //   .then(res=>res.json())
+  //   .then(res=>{
+  //     this.setState({
+  //       temperature:res.data[0].tem2,
+  //       temperature2:res.data[0].tem1,
+  //       dressing_advice:res.data[0].index[3].desc,
+  //       weather:res.data[0].wea,
+  //       speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.data[0].index[1].desc
+  //     },function(){
+  //       this.weather_icon();
+  //     })
+  //   })
+  // }
   //根据天气显示背景和图标
   weather_icon(){
     switch(this.state.weather){
