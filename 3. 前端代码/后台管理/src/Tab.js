@@ -47,6 +47,7 @@ export default class Tab extends Component {
             id: sessionStorage.getItem('manager'),
             manager: {},
             feedback: [],
+            report:[],
             // visible: false,
             // selected: '',
         }
@@ -90,6 +91,18 @@ export default class Tab extends Component {
                 feedback:res
             })
         })
+        fetch('http://47.98.163.228:3004/getReport?check=1')
+        .then(res => res.json())
+        .then(res => {
+            for(var i=0;i<res.length;i++){
+                var j = res[i].userPic.indexOf('/');
+                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
+                res[i].rptime = standardTime(res[i].rptime)
+            }
+            this.setState({
+                report:res
+            })
+        })
     }
     onCollapse = collapsed => {
         console.log(collapsed);
@@ -105,7 +118,7 @@ export default class Tab extends Component {
                     </Content>
                     <Sider style={{margin:'auto 10px',float:'right'}}>
                         <i className="header-icon" style={{marginRight:15}}>你好，{this.state.manager.ming}</i>
-                        {this.state.feedback.length
+                        {this.state.feedback.length || this.state.report.length
                         ?(<Dropdown placement="bottomCenter" 
                             overlay={
                             <Menu>
@@ -118,7 +131,19 @@ export default class Tab extends Component {
                                                 {item.userName}</div>
                                                 <span>{item.fbTime}</span> 
                                             </div>
-                                            <Paragraph ellipsis={{rows:1}} style={{padding:'5px',color:'#444'}} >{item.fbContent}</Paragraph>
+                                            <Paragraph ellipsis={{rows:1}} style={{padding:'5px',color:'#444'}} >反馈内容：{item.fbContent}</Paragraph>
+                                        </Link>
+                                    </Menu.Item>
+                                ))}
+                                {this.state.report.map((item,index)=>(
+                                    <Menu.Item key={index} style={{width:'300px',padding:'5px'}}>
+                                        <Link to={'/tab'} style={{borderBottom:'1px solid #ddd',margin:'5px'}}>
+                                            <div style={{width:'100%',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                                               <div><img src={item.userPic} style={{width:'30px',heigth:'30px',borderRadius:'50%',marginRight:'8px'}} />
+                                                {item.userName}</div>
+                                                <span>{item.rptime}</span> 
+                                            </div>
+                                            <Paragraph ellipsis={{rows:1}} style={{padding:'5px',color:'#444'}} >举报内容：{item.rptype}</Paragraph>
                                         </Link>
                                     </Menu.Item>
                                 ))}
