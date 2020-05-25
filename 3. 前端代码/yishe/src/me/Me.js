@@ -9,6 +9,7 @@ import xiangce from '../images/xiangce.png';
 import diary from '../images/diary.png';
 import fankui from '../images/fankui.png';
 import shezhi from '../images/shezhi.png';
+import qipao from '../images/qipao.png';
 // import xiaoren from '../images/xiaoren.png';
 import girl from '../images/girl.gif';
 import boy from '../images/boy.gif';
@@ -54,7 +55,6 @@ export default class Me extends Component {
             air:'',
             idx:0,
             desc:''
-
         }
     }  
     componentDidMount(){
@@ -82,15 +82,9 @@ export default class Me extends Component {
                 detail:res
             })
         });
+
        
     }
-    // onMouseOver =()=>{
-    //     this.setState({ display:'block' });
-    // }
-     
-    // onMouseOut =()=>{
-    //     this.setState({ display:'none' });
-    // }
     onClick3 = ()=>{
         if(num == 1){
             this.setState({ display:'block' });
@@ -175,6 +169,8 @@ export default class Me extends Component {
             })   
         });
     }
+  
+      
     render() {
         return (
             <div style={{width:'100%',height:"100%"}}>
@@ -238,10 +234,10 @@ export default class Me extends Component {
                     this.state.user.userSex==='女'?(
                         <div>
                             <img src={girl} alt='' onClick={this.onClick3}  style={{width:'30%',marginTop:'2px',marginLeft:'30px',float:'left'}}/>
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',display: this.state.display}}>
-                                <button style={{border:'none',borderRadius:'50%',width:'74px',height:'74px',backgroundColor:'#00c7ff',color:'white'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'40px',backgroundColor:'red',opacity:'0.6',color:'white'}}  onClick={this.getWeather}>今日天气</button>
-                                <button style={{border:'none',borderRadius:'10px',width:'110px',height:'40px',backgroundColor:'purple',opacity:'0.3',color:'white'}}  onClick={this.getWeather1}>穿衣指南</button>
+                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',height:'142px',display: this.state.display,backgroundImage:"url(" + require("../images/qipao.png") + ")",backgroundSize:' 100%'}}>
+                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'#00c7ff',color:'white',marginLeft:'40px',marginTop:'18px'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button><br/>
+                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'red',opacity:'0.6',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather}>今日天气</button>
+                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'pink',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather1}>穿衣指南</button>
                             </div>
                             {/* 常见问题 */}
                             <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'6px',height:'150px',border:'3px solid #00c7ff',borderRadius:'10px',display: this.state.wenti}}>
@@ -316,10 +312,10 @@ export default class Me extends Component {
                     (
                         <div>
                             <img src={boy} alt='' onClick={this.onClick3}  style={{width:'30%',marginTop:'2px',marginLeft:'30px',float:'left'}}/>
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',display: this.state.display}}>
-                                <button style={{border:'none',borderRadius:'50%',width:'74px',height:'74px',backgroundColor:'#00c7ff',color:'white'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'40px',backgroundColor:'red',opacity:'0.6',color:'white'}}  onClick={this.getWeather}>今日天气</button>
-                                <button style={{border:'none',borderRadius:'10px',width:'110px',height:'40px',backgroundColor:'purple',opacity:'0.3',color:'white'}}  onClick={this.getWeather1}>穿衣指南</button>
+                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',height:'142px',display: this.state.display,backgroundImage:"url(" + require("../images/qipao.png") + ")",backgroundSize:' 100%'}}>
+                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'#00c7ff',color:'white',marginLeft:'40px',marginTop:'18px'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button><br/>
+                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'red',opacity:'0.6',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather}>今日天气</button>
+                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'pink',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather1}>穿衣指南</button>
                             </div>
                             {/* 常见问题 */}
                             <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'6px',height:'150px',border:'3px solid #00c7ff',borderRadius:'10px',display: this.state.wenti}}>
@@ -392,6 +388,7 @@ export default class Me extends Component {
                     )
                    
                 }
+                {/* <SocialApp/> */}
             </div>
         );
     }
