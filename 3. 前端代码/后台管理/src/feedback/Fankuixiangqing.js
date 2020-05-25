@@ -9,6 +9,11 @@ export default class Fankuixiangqing extends Component {
         })
     }
     componentDidMount(){
+        fetch('http://47.98.163.228:3004/upfeedback?fbId='+this.props.match.params.id)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+        }) 
         fetch('http://47.98.163.228:3000/fankuiall/'+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
@@ -26,7 +31,6 @@ export default class Fankuixiangqing extends Component {
                     userName:res[0].userName
                 })  
                 console.log(this.state.ress[0].userPic) 
-                
             }
         }) 
     }

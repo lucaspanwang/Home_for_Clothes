@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { message,Form,Input,Button,Upload } from 'antd';
 import { Link } from 'react-router-dom';
+import lrz from 'lrz';
 import { UploadOutlined,LoadingOutlined,PlusOutlined } from '@ant-design/icons';
 import '../tab.css';
 
@@ -9,7 +10,8 @@ export default class AddOfficial extends Component {
         super();
         this.state=({
             loading: false,
-            imageUrl:''
+            imageUrl:'',
+            imageName:''
         })
     }
     success = () => {
@@ -57,6 +59,7 @@ export default class AddOfficial extends Component {
             this.getBase64(info.file.originFileObj, imageUrl =>
                 this.setState({
                     imageUrl,
+                    imageName:'.'+info.file.name.split(".")[1],
                     loading: false,
                 }),
             );
@@ -69,26 +72,47 @@ export default class AddOfficial extends Component {
         return e && e.fileList;
     }
     //提交消息
-    onFinish = (value) => {
-        console.log(value);
-        // if(this.state.value == ''){
-        //     this.error();
-        // }else{
-        //     console.log(this.state.value);
-        //     var today = new Date();
-        //     var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-        //     fetch('http://47.98.163.228:8086/officeAdd',{
-        //         method: 'post', 
-        //         "Access-Control-Allow-Origin" : "*",
-        //         "Access-Control-Allow-Credentials" : true,
-        //         credentials: 'include',
-        //         headers: {
-        //             'Content-Type': 'application/x-www-form-urlencoded'
-        //         },
-        //         body: JSON.stringify({content:this.state.value,time:date,city:'石家庄'}) 
-        //     });
-        //     this.success();
-        // }
+    onFinish = (data) => {
+        console.log(data);
+        var today = new Date();
+        var picture = '';
+        var picName = '';
+        var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+        let promise = new Promise(resolve =>{
+            for(var i=0;i<data.picture.length;i++){
+                console.log(data.picture[i]);
+                if(i === 0){
+                    picName += data.picture[i].name.split(".")[1];
+                    lrz(data.picture[i].thumbUrl, {quality:0.3})
+                    .then((res)=>{
+                        picture += res.base64;
+                    }).then(()=>{
+                        resolve({title:data.title,content:data.content,picture:picture,picName:picName});
+                    })
+                }else{
+                    picName += '-'+data.picture[i].name.split(".")[1];
+                    lrz(data.picture[i].thumbUrl, {quality:0.3})
+                    .then((res)=>{
+                        picture += '-'+res.base64;
+                    }).then(()=>{
+                        resolve({title:data.title,content:data.content,picture:picture,picName:picName});
+                    })
+                }
+            }
+        }).then((value)=>{
+            console.log(value);
+            var body = 'title='+value.title+'&cover='+this.state.imageUrl+'&coverName='+this.state.imageName+'&content='+value.content+'&time='+date+'&picture='+picture+'&picName='+picName;
+            fetch('http://47.98.163.228:3004/officeAdd',{
+                method: 'post', 
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials" : true,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body:body 
+            });
+            // this.success();
+        })
     }
     render() {
         const uploadButton = (
