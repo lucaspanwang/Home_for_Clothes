@@ -482,6 +482,11 @@ export default class Wear extends Component {
         const element = document.querySelector('#view');
         const dom_width = 170;
         const dom_height =550;
+        // const dom_width = parseInt(window.getComputedStyle(element).width);
+        // const dom_height = parseInt(window.getComputedStyle(element).height);
+        // console.log(dom_width)
+        // console.log(dom_height)
+        //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
         newCanvas.width = dom_width*5;
         newCanvas.height = dom_height*5;
         newCanvas.style.width = dom_width + "px";
@@ -489,15 +494,11 @@ export default class Wear extends Component {
         const context = newCanvas.getContext("2d");
         context.scale(1.8, 1.8);
 
-        html2canvas(element, { 
-          canvas: newCanvas,
-          // allowTaint: false,
-          useCORS: true,
-          // logging:true,
-          onrendered: function(canvas) {
-            const imgUri = canvas.toDataURL(); 
+        html2canvas(element, { canvas: newCanvas }).then((canvas) => {
+            const imgUri = canvas.toDataURL(); // 获取生成的图片的url
+            console.log(imgUri)
             this.setState({
-                imgUri:imgUri
+              imgUri:imgUri
             },function(){
               fetch('http://47.98.163.228:3001/toshare',{
                 method: 'post', 
@@ -508,8 +509,8 @@ export default class Wear extends Component {
                 },
                 body:JSON.stringify({pic:this.state.imgUri,userId:this.props.id}) 
               })
+              console.log(this.state)
             })
-        }
         });
     }
     //渲染组件
