@@ -30,7 +30,7 @@ const Chat = ({ location }) => {
     setRoom(room);
     setName(name);
 
-    fetch("http://47.98.163.228:3000/users?userId="+name)
+    fetch("http://47.98.163.228:3004/users?userId="+name)
         .then(res=>res.json())
         .then(res=>{
           setGender(res[0].userSex);

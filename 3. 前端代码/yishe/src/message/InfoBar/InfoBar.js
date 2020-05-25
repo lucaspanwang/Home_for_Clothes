@@ -25,7 +25,8 @@ const InfoBar = ({name, room}) => {
       var user1= room.split("?")[0];
       var user2= room.split("?")[1];
       if(user1==name) userId=user2;else userId=user1;
-      fetch("http://47.98.163.228:3000/users?userId="+userId)
+      console.log(userId);
+      fetch("http://47.98.163.228:3004/users?userId="+userId)
         .then(res=>res.json())
         .then(res=>{
             setRoomName(res[0].userName);
@@ -37,7 +38,9 @@ const InfoBar = ({name, room}) => {
   <NavBar 
     style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
     leftContent={[
-        <img src={fanhui} style={{width:'25%'}} key="fan" onClick={onback}/>
+      <Link to={`/apptab/${name}&message`}>
+        <img src={fanhui} style={{width:'25%'}} key="fan"/>
+      </Link>
         //<a href='/apptab'><img src={fanhui} style={{width:'25%'}} key="fan"/></a>
     ]}
     >{roomName}
