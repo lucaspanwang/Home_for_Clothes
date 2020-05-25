@@ -482,11 +482,6 @@ export default class Wear extends Component {
         const element = document.querySelector('#view');
         const dom_width = 170;
         const dom_height =550;
-        // const dom_width = parseInt(window.getComputedStyle(element).width);
-        // const dom_height = parseInt(window.getComputedStyle(element).height);
-        // console.log(dom_width)
-        // console.log(dom_height)
-        //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
         newCanvas.width = dom_width*5;
         newCanvas.height = dom_height*5;
         newCanvas.style.width = dom_width + "px";
@@ -494,18 +489,15 @@ export default class Wear extends Component {
         const context = newCanvas.getContext("2d");
         context.scale(1.8, 1.8);
 
-        html2canvas(element, { canvas: newCanvas }).then((canvas) => {
-            const imgUri = canvas.toDataURL(); // 获取生成的图片的url
-            console.log(imgUri)
-            try {
-                localStorage.setItem("shareImg", JSON.stringify(imgUri));
-            }
-            catch (e) {
-                console.log("Storage failed: " + e);                
-            }
-
+        html2canvas(element, { 
+          canvas: newCanvas,
+          // allowTaint: false,
+          useCORS: true,
+          // logging:true,
+          onrendered: function(canvas) {
+            const imgUri = canvas.toDataURL(); 
             this.setState({
-              imgUri:imgUri
+                imgUri:imgUri
             },function(){
               fetch('http://47.98.163.228:3001/toshare',{
                 method: 'post', 
@@ -516,50 +508,9 @@ export default class Wear extends Component {
                 },
                 body:JSON.stringify({pic:this.state.imgUri,userId:this.props.id}) 
               })
-              console.log(this.state)
             })
-            // const base64ToBlob = (code) => {
-            //     let parts = code.split(';base64,');
-            //     let contentType = parts[0].split(':')[1];
-            //     let raw = window.atob(parts[1]);
-            //     let rawLength = raw.length;
-         
-            //     let uInt8Array = new Uint8Array(rawLength);
-         
-            //     for (let i = 0; i < rawLength; ++i) {
-            //       uInt8Array[i] = raw.charCodeAt(i);
-            //     }
-            //     return new Blob([uInt8Array], {type: contentType});
-            // };
-            // const blob = base64ToBlob(imgUri);
-            // window.location.href = imgUri; // 下载图片
-            // 利用createObjectURL，模拟文件下载
-            // const fileName = '模特穿搭.png'
-            // if (window.navigator.msSaveOrOpenBlob) {
-            //     navigator.msSaveBlob(blob, fileName);
-            // } else {
-            //     const blobURL = window.URL.createObjectURL(blob)
-            //     const vlink = document.createElement('a');
-            //     vlink.style.display = 'none';
-            //     vlink.href = blobURL;
-            //     vlink.setAttribute('download', fileName);
-
-            //     if (typeof vlink.download === 'undefined') {
-            //         vlink.setAttribute('target', '_blank');
-            //     }
-
-            //     document.body.appendChild(vlink);
-
-            //     var evt = document.createEvent("MouseEvents");
-            //     evt.initEvent("click", false, false);
-            //     vlink.dispatchEvent(evt);
-
-            //     document.body.removeChild(vlink);
-            //     window.URL.revokeObjectURL(blobURL);
-            // }
-            console.log()
+        }
         });
-
     }
     //渲染组件
     render() {
