@@ -5,6 +5,15 @@ import { Popover, NavBar, Icon } from 'antd-mobile';
 
 import './tab.css';
 import {standardTime} from './common/standardTime.js';
+import shouye from './images/shouye.png';
+import yonghu from './images/yonghu.png';
+import guanli from './images/guanli.png';
+import wenzhang from './images/wenzhang.png';
+import guanfang from './images/guanfang.png';
+import jubao from './images/jubao.png';
+import tixing from './images/tixing.png';
+import yonghu_1 from './images/yonghu_1.png';
+import moxing from './images/moxing.png';
 import fankui from './images/fankui.png'
 import logo from './images/logo_bai.png'
 
@@ -13,6 +22,7 @@ import Index from './index/Index';
 //管理员
 import Manager from './manager/Manager';
 import Medit from './manager/Medit';
+import Pwchange from './manager/Pwchange';
 //用户
 import Users from './users/Users';
 import Ucheck from './users/Ucheck';
@@ -32,7 +42,9 @@ import Ocheck from './official/Ocheck';
 import Feedback from './feedback/Feedback';
 import Huifu from './feedback/Huifu';
 import Fankuixiangqing from './feedback/Fankuixiangqing';
-import Pwchange from './manager/Pwchange';
+//举报
+import Report from './report/Report';
+import Rcheck from './report/Rcheck';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -137,7 +149,7 @@ export default class Tab extends Component {
                                 ))}
                                 {this.state.report.map((item,index)=>(
                                     <Menu.Item key={index} style={{width:'300px',padding:'5px'}}>
-                                        <Link to={'/tab'} style={{borderBottom:'1px solid #ddd',margin:'5px'}}>
+                                        <Link to={'/tab/rcheck/'+item.Id} style={{borderBottom:'1px solid #ddd',margin:'5px'}}>
                                             <div style={{width:'100%',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                                                <div><img src={item.userPic} style={{width:'30px',heigth:'30px',borderRadius:'50%',marginRight:'8px'}} />
                                                 {item.userName}</div>
@@ -148,33 +160,23 @@ export default class Tab extends Component {
                                     </Menu.Item>
                                 ))}
                             </Menu>
-                        } ><i className="iconfont header-icon icon-tixing"><Badge dot></Badge></i></Dropdown>)
+                        } >
+                            {/* <i className="iconfont header-icon icon-tixing"> */}
+                            <Badge dot><img src={tixing} className="icon" /></Badge>
+                            {/* </i> */}
+                            </Dropdown>)
                         :(<Dropdown placement="bottomCenter" 
                             overlay={<Menu><Menu.Item>没有最新消息</Menu.Item></Menu>}>
-                            <i className="iconfont header-icon icon-tixing"></i>
+                            <img src={tixing} className="icon" />
                         </Dropdown>)}
                         <Dropdown placement="bottomCenter" 
                         overlay={<Menu>
                             <Menu.Item><Link to={'/tab/medit/'+this.state.manager.xuehao}>关于我</Link></Menu.Item>
                             <Menu.Item><Link to={'/login'}>退出登录</Link></Menu.Item>
-                        </Menu>} ><i className="iconfont header-icon icon-yonghu-copy"></i></Dropdown>
-                        {/* <Popover mask
-                            overlayClassName="fortest"
-                            overlayStyle={{ color: 'currentColor' }}
-                            visible={this.state.visible}
-                            overlay={[
-                            (<Item key="4" value="myself" data-seed="logId">Myself</Item>),
-                            (<Item key="5" value="sign out" style={{ whiteSpace: 'nowrap' }}>Sign out</Item>)
-                            ]}
-                            align={{
-                                overflow: { adjustY: 0, adjustX: 0 },
-                                offset: [-10, 0],
-                            }}
-                            onVisibleChange={this.handleVisibleChange}
-                            onSelect={this.onSelect}
-                        >
-                            <i className="iconfont header-icon icon-yonghu-copy"></i>
-                        </Popover>  */}
+                        </Menu>} >
+                            {/* <i className="iconfont header-icon icon-yonghu-copy"></i> */}
+                            <img src={yonghu_1} className="icon" />
+                        </Dropdown>
                     </Sider>
                 </Layout>
                 <Layout className="site-layout">
@@ -184,25 +186,28 @@ export default class Tab extends Component {
                         </div> 
                         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                             <Menu.Item key="1">
-                                <Link to="/tab/index"><i className="iconfont icon-yemian-copy-copy-copy"></i>首页</Link>
+                                <Link to="/tab/index"><img src={shouye} className="menu-icon" />首页</Link>
                             </Menu.Item>
                             <Menu.Item key="2">
-                                <Link to="/tab/manager"><i className="iconfont icon-guanliyuan"></i>管理员信息</Link>
+                                <Link to="/tab/manager"><img src={guanli} className="menu-icon" />管理员信息</Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Link to="/tab/users"><i className="iconfont icon-yonghu"></i>用户信息管理</Link>
+                                <Link to="/tab/users"><img src={yonghu} className="menu-icon" />用户信息管理</Link>
                             </Menu.Item>
                             <Menu.Item key="4">
-                                <Link to="/tab/model"><i className="iconfont icon-moxing"></i>人物模型管理</Link>
+                                <Link to="/tab/model"><img src={moxing} className="menu-icon" />人物模型管理</Link>
                             </Menu.Item>
                             <Menu.Item key="5">
-                                <Link to="/tab/official"><i className="iconfont icon-guanfangxiaoxi"></i>官方消息管理</Link>
+                                <Link to="/tab/official"><img src={guanfang} className="menu-icon" />官方消息管理</Link>
                             </Menu.Item>
                             <Menu.Item key="6">
-                                <Link to="/tab/article"><i className="iconfont icon-wenzhang"></i>社区文章管理</Link>
+                                <Link to="/tab/article"><img src={wenzhang} className="menu-icon" />社区文章管理</Link>
                             </Menu.Item>
                             <Menu.Item key="7">
-                                <Link to="/tab/feedback"><i className="iconfont icon-fankui"></i>反馈信息管理</Link>
+                                <Link to="/tab/feedback"><img src={fankui} className="menu-icon" />反馈信息管理</Link>
+                            </Menu.Item>
+                            <Menu.Item key="8">
+                                <Link to="/tab/report"><img src={jubao} className="menu-icon" />举报信息管理</Link>
                             </Menu.Item>
                         </Menu>
                     </Sider>
@@ -235,6 +240,9 @@ export default class Tab extends Component {
                                 <Route path='/tab/feedback' component={Feedback} />
                                 <Route path='/tab/huifu/:id' component={Huifu} />
                                 <Route path='/tab/fankuixiangqing/:id' component={Fankuixiangqing} />
+                                {/* 举报 */}
+                                <Route path='/tab/report' component={Report} />
+                                <Route path='/tab/rcheck/:id' component={Rcheck} />
                             </div>
                         </Content>
                         {/* <Footer style={{textAlign:'center',background:'rgba(0,0,0,0)'}}>yishe-houtai ©2020 Created by YiShe</Footer> */}

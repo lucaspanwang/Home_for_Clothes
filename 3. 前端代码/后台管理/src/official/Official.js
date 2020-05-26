@@ -39,20 +39,38 @@ export default class Official extends Component {
         fetch('http://47.98.163.228:3004/officeDelete?offId='+id)
         .then(res => res.json())
         .then(res => {
-            fetch('http://47.98.163.228:3004/office')
-            .then(res=>res.json())
-            .then(res=>{     
-                // console.log(res);
-                for(var i=0;i<res.length;i++){
-                    res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
-                }  
-                this.setState({
-                    tbody:res
-                },function(){
-                    console.log(this.state.tbody)
-                })
+            console.log('删除成功');
+        })
+        fetch('http://47.98.163.228:3004/office')
+        .then(res=>res.json())
+        .then(res=>{     
+            // console.log(res);
+            for(var i=0;i<res.length;i++){
+                res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
+            }  
+            this.setState({
+                tbody:res
+            },function(){
+                console.log(this.state.tbody)
             })
         })
+        // fetch('http://47.98.163.228:3004/officeDelete?offId='+id)
+        // .then(res => res.json())
+        // .then(res => {
+        //     fetch('http://47.98.163.228:3004/office')
+        //     .then(res=>res.json())
+        //     .then(res=>{     
+        //         // console.log(res);
+        //         for(var i=0;i<res.length;i++){
+        //             res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
+        //         }  
+        //         this.setState({
+        //             tbody:res
+        //         },function(){
+        //             console.log(this.state.tbody)
+        //         })
+        //     })
+        // })
     }
     // shanchu=(idx)=>{
     //     fetch("http://47.98.163.228:3004/officeDelete?offId="+idx);

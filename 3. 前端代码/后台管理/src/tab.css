@@ -18,6 +18,17 @@ ul,li{
     color:rgb(215, 239, 255);
     float:left;
 }
+/* 图标 */
+.icon{
+    width:18px;
+    height:18px;
+    margin-left:15px;
+}
+.menu-icon{
+    width:18px;
+    height:18px;
+    margin-right:30px;
+}
 /* 含有滚动条的中间样式 */
 .overflow-y{
     height:90vh;

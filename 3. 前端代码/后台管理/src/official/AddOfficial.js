@@ -15,7 +15,7 @@ export default class AddOfficial extends Component {
         })
     }
     success = () => {
-        message.success('消息提交中...',1,()=>{
+        message.success('消息提交中...',1.5,()=>{
             window.location.href="/tab/official"
         });
     };
@@ -111,7 +111,7 @@ export default class AddOfficial extends Component {
                 },
                 body:body 
             });
-            // this.success();
+            this.success();
         })
     }
     render() {
