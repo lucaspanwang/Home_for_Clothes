@@ -7,6 +7,102 @@ const fs = require('fs');
 const http = require('http');
 var con = mysql.createConnection(dbconfig);// 创建连接
 con.connect();//链接
+//文章月增减明示
+router.get('/article/:month',function(req,res){
+  var now=req.params.month;
+  // console.log(req.params.month)
+  con.query(`select* from community where time like '2020/${now}/%'`,function(err,result){
+    res.json(result.length);
+  })
+})
+router.get('/article1/:month',function(req,res){
+  var now=req.params.month;
+  // console.log(req.params.month)
+  con.query(`select* from community where time like '2020/${now}/%'`,function(err,result){
+    res.json(result.length);
+  })
+})
+
+
+//家图片显示
+var data;
+// router.post('/userid',function(req,res){
+//   var user=req.body.userId;
+//   var whereId = req.body.whereId;
+//   var p=[];
+  // console.log('home' + req.body.userId, req.body.whereId);
+  // con.query(`select cloPic from clothing where whereId=${whereId} and userId=${user}`, function (err, result) {
+  //   // if (result != undefined) {
+  //   //   for (var i = 0; i < result.length; i++) {
+  //       // console.log(value[i].cloPic)
+  //       // router.get('/jia'+i, function (req, res) {
+  //       //   res.json('wodi')
+  //         // console.log(req.url)
+  //         // console.log('图片位置'+result[i].cloPic)
+  //         // optfile.readImg('../'+result[i].cloPic,res);
+  //         // console.log('我是图片')
+  //       // })
+  //   //     p = [...p,'jia' + i];
+  //   //   }
+  //   // } else {
+  //   //   p = []
+  //   // }
+    
+  //     // router.get('/jia/:i', function (req, res) {
+  //     //   console.log(result[0])
+  //     //   // res.end('成功')
+  //     // })
+    
+    
+  //   // router.get('/home',function(req,res){
+  //   //   res.json(p);
+  //   // })
+  //   // // console.log(p)
+  //   // console.log('result'+result[0].cloPic);
+  // })
+  // con.query(`select*from cloPic where whereId=${whereId} and userId=${user}`, function (err, result) {
+  //   console.log(result);
+  // })
+  
+// })
+router.post('/userid',function(req,res,next){
+  var user=req.body.userId;
+  var whereId = req.body.whereId;
+  console.log('新的user'+user,whereId)
+  let promise = new Promise(resolve=>{
+    con.query(`select*from clothing where whereId=${whereId} and userId=${user}`,(err,result)=>{
+        resolve(result);
+        console.log('数据库'+result);
+    })
+})
+.then(value=>{
+    if(value!=undefined){
+        var p=[];
+        for(var i=0;i<value.length;i++){
+            console.log(value[i].cloPic)
+            router.get('/jia'+i,function(req,res){
+              console.log('请求成功')
+              optfile.readImg('../'+value[i].cloPic,res);
+                console.log('我是图片')
+            })
+                
+            p=[...p,'jia'+i];
+        }
+    }else{
+        p=[]
+    }
+
+        console.log(p);
+        
+       
+      router.get('/home',function(req,res){
+        res.end(JSON.stringify(p));   
+      })      
+                    
+        
+})
+})
+
 
 //导入页面---根据获取性别来分类
 router.get('/insertSex/:id',function(req,res){
