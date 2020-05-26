@@ -10,12 +10,18 @@ import 'echarts/lib/component/markPoint'
 import ECharts from 'echarts';
 import 'echarts/map/js/china';
 import { Flex } from 'antd-mobile';
+import In from '../images/in.png';
+import Out from '../images/out.png';
+var date=new Date()
 export default class Index extends Component {
     constructor(){
         super();
         this.state=({
             xdata:[],
-            ydata:[]
+            ydata:[],
+            month:date.getMonth()+1,
+            now:0,
+            before:0
         })
     }
     
@@ -23,6 +29,25 @@ export default class Index extends Component {
 
 
     componentDidMount(){
+        var month=date.getMonth()+1
+        var before=month-1;
+        //文章数量
+        fetch('http://47.98.163.228:3003/article/'+month)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                now:res
+            })
+            console.log('当月'+res)
+        })
+        fetch('http://47.98.163.228:3003/article1/'+before)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                before:res
+            })
+            console.log('上一个月'+res)
+        })
 
         //饼状图start
         var myChart = echarts.init(document.getElementById('main'));
@@ -354,6 +379,23 @@ export default class Index extends Component {
             };
         return (
             <div style={{marginTop:30}}>
+                <div style={{position:'relative',marginBottom:10, 
+                borderRadius:10,width:250,height:100,backgroundColor:'rgba(18,21,54,0.9)'}}>
+                    <div style={{
+                        height:85,width:85,
+                        position:'absolute',top:'5%',left:'10%',
+                        borderWidth:8,borderColor:'rgba(111,15,153,0.7)',borderStyle:'solid'
+                        ,borderRadius:'50%',paddingLeft:10,paddingTop:4}}>
+                            <p style={{
+                                color:'white',
+                                fontSize:12
+                            }}><span style={{paddingLeft:10}}>{this.state.month}月</span><br/>发表文章<br/>数量：{this.state.now}</p>
+                    </div>
+                    <div style={{position:'absolute',right:'10%',textAlign:'center'}}>
+                        <p style={{color:'white'}}>相比上一个月</p>
+                        <img src={this.state.now>this.state.before?Out:In} style={{width:50,height:50}}/>
+                    </div>
+                </div>
                 <ReactHighCharts config={config}/>
                 <div id="main" style={{ width: 350, height: 350 ,float:'right',marginTop:-300}}></div>
                 <div style={{marginLeft:'100px', width: '800px', height: '800px'}} ref={this.setMapElement} />
