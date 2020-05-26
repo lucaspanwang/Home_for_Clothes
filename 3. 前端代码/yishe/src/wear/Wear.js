@@ -102,7 +102,7 @@ export default class Wear extends Component {
         num:0,
         num2:0,
         feng:'',
-        speak_suggest:'适合穿短袖，建议出门涂防晒呦',//语音播报建议
+        speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=适合穿短袖，建议出门涂防晒呦',//语音播报建议
         sex:'女',
         imgUri:'',
     }
@@ -500,6 +500,7 @@ export default class Wear extends Component {
             this.setState({
               imgUri:imgUri
             },function(){
+              localStorage.setItem("shareImg", JSON.stringify(this.state.imgUri));
               fetch('http://47.98.163.228:3001/toshare',{
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
