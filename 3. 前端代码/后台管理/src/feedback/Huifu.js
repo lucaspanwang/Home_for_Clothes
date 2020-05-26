@@ -68,7 +68,7 @@ export default class Huifu extends Component {
     }
     onToast=()=>{
         Toast.loading('反馈上传中...',2, () => {
-            window.location.href = window.location.href.split('/')[0]+"/tab/table5";
+            window.location.href = window.location.href.split('/')[0]+"/tab/feedback";
         });
     }
     onPost=()=> { 
