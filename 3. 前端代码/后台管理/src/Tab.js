@@ -30,8 +30,6 @@ import Ucheck from './users/Ucheck';
 import Model from './model/Model';
 //文章管理
 import Article from './article/Article';
-import AddArticle from './article/Add';
-import Aedit from './article/Aedit';
 import Acheck from './article/Acheck';
 //官方消息
 import Official from './official/Official';
@@ -59,30 +57,9 @@ export default class Tab extends Component {
             id: sessionStorage.getItem('manager'),
             manager: {},
             feedback: [],
-            report:[],
-            // visible: false,
-            // selected: '',
+            report:[]
         }
-        
     }
-    // onSelect = (opt) => {
-    //     this.setState({
-    //         visible: false,
-    //         selected: opt.props.value,
-    //     });
-    //     console.log(opt.props.value)
-    //     if(opt.props.value == 'myself'){
-    //         window.location.href='http://localhost:3000/tab/medit/'+this.state.id;
-    //     }
-    //     if(opt.props.value == 'sign out'){
-    //         window.location.href='http://localhost:3000/login';
-    //     }
-    // };
-    // handleVisibleChange = (visible) => {
-    //     this.setState({
-    //         visible,
-    //     });
-    // };
     componentDidMount(){
         fetch('http://47.98.163.228:3004/manager?id='+this.state.id)
         .then(res => res.json())
@@ -160,23 +137,18 @@ export default class Tab extends Component {
                                     </Menu.Item>
                                 ))}
                             </Menu>
-                        } >
-                            {/* <i className="iconfont header-icon icon-tixing"> */}
-                            <Badge dot><img src={tixing} className="icon" /></Badge>
-                            {/* </i> */}
-                            </Dropdown>)
+                        } ><Badge dot><img src={tixing} className="icon" /></Badge></Dropdown>)
                         :(<Dropdown placement="bottomCenter" 
                             overlay={<Menu><Menu.Item>没有最新消息</Menu.Item></Menu>}>
                             <img src={tixing} className="icon" />
                         </Dropdown>)}
-                        <Dropdown placement="bottomCenter" 
-                        overlay={<Menu>
+                        <Dropdown 
+                        placement="bottomCenter" 
+                        overlay={
+                        <Menu>
                             <Menu.Item><Link to={'/tab/medit/'+this.state.manager.xuehao}>关于我</Link></Menu.Item>
                             <Menu.Item><Link to={'/login'}>退出登录</Link></Menu.Item>
-                        </Menu>} >
-                            {/* <i className="iconfont header-icon icon-yonghu-copy"></i> */}
-                            <img src={yonghu_1} className="icon" />
-                        </Dropdown>
+                        </Menu>}><img src={yonghu_1} className="icon" /></Dropdown>
                     </Sider>
                 </Layout>
                 <Layout className="site-layout">
@@ -228,8 +200,6 @@ export default class Tab extends Component {
                                 <Route path='/tab/model' component={Model} />
                                 {/* 文章 */}
                                 <Route path='/tab/article' component={Article} />
-                                <Route path='/tab/addarticle' component={AddArticle} />
-                                <Route path='/tab/aedit/:id' component={Aedit} />
                                 <Route path='/tab/acheck/:id' component={Acheck} />
                                 {/* 官方消息 */}
                                 <Route path='/tab/official' component={Official} />
@@ -245,7 +215,6 @@ export default class Tab extends Component {
                                 <Route path='/tab/rcheck/:id' component={Rcheck} />
                             </div>
                         </Content>
-                        {/* <Footer style={{textAlign:'center',background:'rgba(0,0,0,0)'}}>yishe-houtai ©2020 Created by YiShe</Footer> */}
                     </Layout>
                 </Layout>
             </Layout>

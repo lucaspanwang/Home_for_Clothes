@@ -37,7 +37,7 @@ export default class Official extends Component {
     deleteHandle = (id) =>{
         console.log(id);
         fetch('http://47.98.163.228:3004/officeDelete?offId='+id)
-        .then(res => res.json())
+        // .then(res => res.json())
         .then(res => {
             console.log('删除成功');
         })

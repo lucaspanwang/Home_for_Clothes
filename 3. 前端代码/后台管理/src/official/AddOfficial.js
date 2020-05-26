@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { message,Form,Input,Button,Upload } from 'antd';
+import { ImagePicker } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import lrz from 'lrz';
 import { UploadOutlined,LoadingOutlined,PlusOutlined } from '@ant-design/icons';
@@ -11,7 +12,8 @@ export default class AddOfficial extends Component {
         this.state=({
             loading: false,
             imageUrl:'',
-            imageName:''
+            imageName:'',
+            picture:[]
         })
     }
     success = () => {
@@ -57,61 +59,89 @@ export default class AddOfficial extends Component {
         }
         if (info.file.status === 'done') {
             this.getBase64(info.file.originFileObj, imageUrl =>
-                this.setState({
-                    imageUrl,
-                    imageName:'.'+info.file.name.split(".")[1],
-                    loading: false,
-                }),
+                lrz(imageUrl, {quality:0.3})
+                .then((res)=>{
+                    this.setState({
+                        imageUrl:res.base64,
+                        imageName:'.'+info.file.name.split(".")[1],
+                        loading: false,
+                    })
+                })
             );
         }
     };
     //消息插图
-    normFile = (e) => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {return e;}
-        return e && e.fileList;
+    // normFile = (e) => {
+    //     console.log('Upload event:', e);
+    //     if (Array.isArray(e)) {return e;}
+    //     return e && e.fileList;
+    // }
+    onChange = (picture) => {
+        this.setState({
+            picture,
+        });
     }
     //提交消息
     onFinish = (data) => {
         console.log(data);
         var today = new Date();
-        var picture = '';
-        var picName = '';
+        var picture = [];
+        var picName = [];
         var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
         let promise = new Promise(resolve =>{
-            for(var i=0;i<data.picture.length;i++){
-                console.log(data.picture[i]);
-                if(i === 0){
-                    picName += data.picture[i].name.split(".")[1];
-                    lrz(data.picture[i].thumbUrl, {quality:0.3})
-                    .then((res)=>{
-                        picture += res.base64;
-                    }).then(()=>{
-                        resolve({title:data.title,content:data.content,picture:picture,picName:picName});
-                    })
-                }else{
-                    picName += '-'+data.picture[i].name.split(".")[1];
-                    lrz(data.picture[i].thumbUrl, {quality:0.3})
-                    .then((res)=>{
-                        picture += '-'+res.base64;
-                    }).then(()=>{
-                        resolve({title:data.title,content:data.content,picture:picture,picName:picName});
-                    })
-                }
+            for(var i=0;i<this.state.picture.length;i++){
+                picName.push('.'+this.state.picture[i].file.name.split(".")[1]);
+                lrz(this.state.picture[i].url, {quality:0.3})
+                .then((res)=>{
+                    picture.push(res.base64);
+                    console.log(picture);
+                    resolve({title:data.title,content:data.content,picture:picture,picName:picName});
+                });
             }
+            // for(var i=0;i<this.state.picture.length;i++){
+            //     console.log(this.state.picture[i]);
+            //     if(i === 0){
+            //         picName += this.state.picture[i].file.name.split(".")[1];
+            //         lrz(this.state.picture[i].url, {quality:0.3})
+            //         .then((res)=>{
+            //             picture += res.base64;
+            //         })
+            //     }else{
+            //         picName += '-'+this.state.picture[i].file.name.split(".")[1];
+            //         lrz(this.state.picture[i].url, {quality:0.3})
+            //         .then((res)=>{
+            //             picture += '-'+res.base64;
+            //         })
+            //     }
+            // }
+            // resolve({title:data.title,content:data.content,picture:picture,picName:picName});
         }).then((value)=>{
-            console.log(value);
-            var body = 'title='+value.title+'&cover='+this.state.imageUrl+'&coverName='+this.state.imageName+'&content='+value.content+'&time='+date+'&picture='+picture+'&picName='+picName;
+            // var body = 'title='+value.title+'&cover='+this.state.imageUrl+'&coverName='+this.state.imageName+'&content='+value.content+'&time='+date+'&picture='+picture+'&picName='+picName;
+            var body = JSON.stringify({title:value.title,cover:this.state.imageUrl,coverName:this.state.imageName,content:value.content,time:date,picture:picture,picName:picName});
             fetch('http://47.98.163.228:3004/officeAdd',{
                 method: 'post', 
                 "Access-Control-Allow-Origin" : "*",
                 "Access-Control-Allow-Credentials" : true,
+                // mode:'no-cors',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    // 'Content-Type': 'multipart/form-data;charset=utf-8'
+                    'Content-Type': 'application/json'
                 },
-                body:body 
-            });
-            this.success();
+                body:body
+                // method: 'post', 
+                // "Access-Control-Allow-Origin" : "*",
+                // "Access-Control-Allow-Credentials" : true,
+                // credentials: 'include',
+                // headers: {
+                //     'Content-Type': 'multipart/form-data;charset=utf-8'
+                // },
+                // body:JSON.stringify({title:value.title,cover:this.state.imageUrl,coverName:this.state.imageName,content:value.content,time:date,picture:picture,picName:picName})
+            }).then(res=>{
+                console.log(body);
+                console.log('完成提交');
+            })
+            // this.success();
         })
     }
     render() {
@@ -145,9 +175,16 @@ export default class AddOfficial extends Component {
                         </Upload>
                     </Form.Item>
                     <Form.Item label="插图" name="picture" valuePropName="fileList" getValueFromEvent={this.normFile} >
-                        <Upload accept=".jpg, .jpeg, .png, .gif" listType='picture'>
+                        <ImagePicker
+                            files={this.state.picture}
+                            onChange={this.onChange}
+                            onImageClick={(index, fs) => console.log(index, fs)}
+                            selectable={this.state.picture.length < 7}
+                            accept="image/gif,image/jpeg,image/jpg,image/png"
+                        />
+                        {/* <Upload accept=".jpg, .jpeg, .png, .gif" listType='picture'>
                             <Button><UploadOutlined />上传图片</Button>
-                        </Upload>
+                        </Upload> */}
                     </Form.Item>
                     <Form.Item wrapperCol={{offset:2}}>
                         <Button type="primary" htmlType="submit">发布</Button>
