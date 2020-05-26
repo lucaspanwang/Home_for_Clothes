@@ -21,7 +21,9 @@ export default class Index extends Component {
             ydata:[],
             month:date.getMonth()+1,
             now:0,
-            before:0
+            before:0,
+            nowdiray:0,
+            beforediray:0
         })
     }
     
@@ -45,6 +47,23 @@ export default class Index extends Component {
         .then(res=>{
             this.setState({
                 before:res
+            })
+            console.log('上一个月'+res)
+        })
+        //日记数量
+        fetch('http://47.98.163.228:3003/diray/'+month)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                nowdiray:res
+            })
+            console.log('当月'+res)
+        })
+        fetch('http://47.98.163.228:3003/diray1/'+before)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                beforediray:res
             })
             console.log('上一个月'+res)
         })
@@ -379,7 +398,8 @@ export default class Index extends Component {
             };
         return (
             <div style={{marginTop:30}}>
-                <div style={{position:'relative',marginBottom:10, 
+                {/* 文章 */}
+                <div style={{position:'relative',marginBottom:10,float:'left',
                 borderRadius:10,width:250,height:100,backgroundColor:'rgba(18,21,54,0.9)'}}>
                     <div style={{
                         height:85,width:85,
@@ -396,6 +416,26 @@ export default class Index extends Component {
                         <img src={this.state.now>this.state.before?Out:In} style={{width:50,height:50}}/>
                     </div>
                 </div>
+                {/* 文章end */}
+                {/* 日记 */}
+                <div style={{position:'relative',marginBottom:10,float:'left',marginLeft:40,
+                borderRadius:10,width:250,height:100,backgroundColor:'rgba(18,21,54,0.9)'}}>
+                    <div style={{
+                        height:85,width:85,
+                        position:'absolute',top:'5%',left:'10%',
+                        borderWidth:8,borderColor:'rgba(111,15,153,0.7)',borderStyle:'solid'
+                        ,borderRadius:'50%',paddingLeft:10,paddingTop:4}}>
+                            <p style={{
+                                color:'white',
+                                fontSize:12
+                            }}><span style={{paddingLeft:10}}>{this.state.month}月</span><br/>发表日记<br/>数量：{this.state.nowdiray}</p>
+                    </div>
+                    <div style={{position:'absolute',right:'10%',textAlign:'center'}}>
+                        <p style={{color:'white'}}>相比上一个月</p>
+                        <img src={this.state.nowdiray>=this.state.beforediray?Out:In} style={{width:50,height:50}}/>
+                    </div>
+                </div>
+                {/* 日记end */}
                 <ReactHighCharts config={config}/>
                 <div id="main" style={{ width: 350, height: 350 ,float:'right',marginTop:-300}}></div>
                 <div style={{marginLeft:'100px', width: '800px', height: '800px'}} ref={this.setMapElement} />
