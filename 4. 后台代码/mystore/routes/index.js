@@ -22,6 +22,31 @@ router.get('/article1/:month',function(req,res){
     res.json(result.length);
   })
 })
+// /日记月增减明示
+router.get('/diray/:month',function(req,res){
+  var now=req.params.month;
+  // console.log(req.params.month)
+  con.query(`select* from community where diaryTime like '2020-0${now}%'`,function(err,result){
+    // console.log('我的日记'+result)
+    if(result==undefined){
+      res.json('0')
+    }else{
+      res.json(result.length);
+    }
+    
+  })
+})
+router.get('/diray1/:month',function(req,res){
+  var now=req.params.month;
+  // console.log(req.params.month)
+  con.query(`select* from diary where diaryTime like '2020-0${now}%'`,function(err,result){
+     if(result==undefined){
+      res.json('0')
+    }else{
+      res.json(result.length);
+    }
+  })
+})
 
 
 //家图片显示
