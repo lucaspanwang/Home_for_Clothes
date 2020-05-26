@@ -57,26 +57,30 @@ export default class Report extends Component {
     } 
     //删除操作 从子组件获取到的id
     deleteHandle = (id) =>{
-        // var content = [];
-        // for(var i = 0;i<this.state.tbody.length;i++){
-        //     if(id !== this.state.tbody[i].fbId){
-        //         content.push(this.state.tbody[i])
-        //     }
-        // }
-        // this.setState({
-        //     tbody:content
-        // })
-        // console.log(id);
-        // fetch('http://47.98.163.228:3000/fankuiDel',{
-        //     method: 'post', 
-        //     "Access-Control-Allow-Origin" : "*",
-        //     "Access-Control-Allow-Credentials" : true,
-        //     // credentials: 'include',
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data;charset=utf-8'
-        //     },
-        //     body:JSON.stringify({fbId:id}) 
-        // })
+        console.log(id);
+        fetch('http://47.98.163.228:3004/reportDelete?Id='+id)
+        .then(res => res.json())
+        .then(res => {
+            console.log('删除成功');
+        })
+        fetch('http://47.98.163.228:3004/getReport')
+        .then(res=>res.json())
+        .then(res=>{   
+            for(var i=0;i<res.length;i++){
+                res[i].rptime = this.formatUTC(res[i].rptime);
+                if(res[i].result != '待处理'){
+                   res[i].time = this.formatUTC(res[i].time); 
+                }else{
+                    res[i].time = '';
+                    res[i].result = (<Link to={'/tab/rcheck/'+res[i].Id} style={{color:'red'}}>{res[i].result}</Link>)
+                }
+            }   
+            this.setState({
+                tbody:res
+            },function(){
+                console.log(this.state.tbody)
+            })
+        })
     }
     render() {
         return (
