@@ -21,12 +21,11 @@ const InfoBar = ({name, room}) => {
     if(room.indexOf('group')!=-1){
       setRoomName('衣舍内测用户体验群1群');
     }else{
-      var userId;
+      var userId='';
       var user1= room.split("?")[0];
       var user2= room.split("?")[1];
       if(user1==name) userId=user2;else userId=user1;
-      console.log(userId);
-      fetch("http://47.98.163.228:3004/users?userId="+userId)
+      if(userId!=null) fetch("http://47.98.163.228:3004/users?userId="+userId)
         .then(res=>res.json())
         .then(res=>{
             setRoomName(res[0].userName);
