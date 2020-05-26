@@ -1,116 +1,122 @@
 import React, { Component} from 'react';
-import { NavBar ,ImagePicker,Toast ,Modal } from 'antd-mobile';
-
+import { NavBar ,ImagePicker,Toast  } from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import fanhui from '../../images/fanhui_1.png';
 import lrz from 'lrz';
 import { Input } from 'antd';
 const { TextArea } = Input;
 
-const alert = Modal.alert;
-
-const showAlert = () => {
-  const alertInstance = alert('警告', '你发表的文章被举报，现在禁止发帖！！！', [
-    { text: '确定', onPress: () => console.log('确定') },
-  ]);
-  setTimeout(() => {
-    // 可以调用close方法以在外部close
-    console.log('auto close');
-    alertInstance.close();
-  }, 500000);
-};
 export default class ArticleAdd extends Component {
     constructor(){
         super();
-       
         this.state = {
             value: '',
             cimg: [],
-            content:[],
-            isSend:true,
-           
-            
+            filesType:[]
         };
     }
-    componentDidMount() {
-        var today = new Date();
-        var hour = '';
-        var minutes = '';
-        var month = '';
-        if(today.getMonth()<10){
-            month = '0'+(today.getMonth()+1);
+    componentDidMount(){
+        var shareImg = localStorage.getItem('shareImg');
+        console.log(shareImg)
+        if(localStorage.getItem('shareImg')){
+            this.setState({
+                cimg:[{url:'http://47.98.163.228:3000/image/111mote.jpg',id:'0'}]
+            })
+           
         }else{
-            month = today.getMonth()+1;
+            this.setState({
+                cimg:[]
+            })
         }
-
-        var date = today.getFullYear() + '-' + month + '-' + today.getDate(); 
-        fetch('http://47.98.163.228:3000/report/'+this.props.match.params.id)
-        .then(res=>res.json())
-        .then(res=>{
-            {             
-                this.setState({
-                    content: res,
-                })
-                if(res.length!==0){
-                    var time = res[0].time.split('T')[0]
-                    var days = this.getDaysDiffBetweenDates(new Date(date), new Date(time))
-                    console.log(days)
-                    var day1=res[0].derp.split('帖')[1];
-                    var day2 = day1.split('天')[0];
-                    console.log(day2);
-                    if(days<=day2){
-                        this.setState({
-                            isSend: false,
-                        })
-                    }else{
-                        this.setState({
-                            isSend: false,
-                        })
-                    }
-                }
-                console.log(this.state.content)
-            }
-        }) 
     }
-    
-    getDaysDiffBetweenDates = (dateInitial, dateFinal) =>
-        (dateFinal - dateInitial) / (1000 * 3600 * 24);
-    
     onToastSuccess=()=>{
         Toast.loading('文章上传中...',2, () => {
             window.location.href=window.location.href.split('#')[0]+"#/myarticle/"+this.props.match.params.id
         });
-            
+        localStorage.removeItem('shareImg');
     }
     onToastFail=()=>{
         Toast.offline('文章不能为空!!!',2);
     }
     onPost=()=> { 
-        if(!this.state.isSend){
-            showAlert()
-            // Toast.offline('您发表的文章被举报，现禁止发帖！',5);
+        if(this.state.value == '' && this.state.cimg == ''){
+            this.onToastFail();
+        }if(this.state.value !== '' && this.state.cimg == ''){
+            var today = new Date();
+            var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+            fetch('http://47.98.163.228:3004/articleAdd',{
+                method: 'post', 
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials" : true,
+                headers: {
+                    'Content-Type': 'multipart/form-data;charset=utf-8'
+                },
+                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:[]})
+            });
+            this.onToastSuccess();
         }else{
-            if(this.state.value == '' && this.state.cimg == ''){
-                this.onToastFail();
-            }
-            if(this.state.value !== '' && this.state.cimg == ''){
-                var today = new Date();
-                var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-                fetch('http://47.98.163.228:3004/articleAdd',{
-                    method: 'post', 
-                    "Access-Control-Allow-Origin" : "*",
-                    "Access-Control-Allow-Credentials" : true,
-                    headers: {
-                        'Content-Type': 'multipart/form-data;charset=utf-8'
-                    },
-                    body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:[]})
-                });
-                this.onToastSuccess();
+            var today = new Date();
+            var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+            var cimgName = [];
+            var cimg = [];
+            var shareImg = localStorage.getItem('shareImg');
+            if(localStorage.getItem('shareImg')){
+                cimgName = ['.jpg'];
+                // console.log(shareImg)
+                shareImg=shareImg.split('"')[1];
+                // console.log(shareImg)
+                var cimg = [shareImg];
+                // console.log(cimg)
+                if(this.state.cimg.length===1){
+                    let promise = new Promise(resolve =>{
+                        lrz(this.state.cimg[0].url, {quality:0.1})
+                        .then((res)=>{
+                            cimg.push(res.base64);
+                            resolve({cimg:cimg,cimgName:cimgName});
+                        });
+                    }).then((value)=>{
+                        fetch('http://47.98.163.228:3004/articleAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                        });
+                        this.onToastSuccess();
+                    })
+                }else{
+                    let promise = new Promise(resolve =>{
+                        lrz(this.state.cimg[0].url, {quality:0.1})
+                        .then((res)=>{
+                            cimg.push(res.base64);
+                        });
+                        for(var i=1;i<this.state.cimg.length;i++){
+                            cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
+                            lrz(this.state.cimg[i].url, {quality:0.1})
+                            .then((res)=>{
+                                cimg.push(res.base64);
+                                console.log(cimg);
+                                resolve({cimg:cimg,cimgName:cimgName});
+                            });
+                        }
+                    }).then((value)=>{
+                        fetch('http://47.98.163.228:3004/articleAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                        });
+                        this.onToastSuccess();
+                    })
+                }
             }else{
-                var today = new Date();
-                var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-                var cimgName = [];
-                var cimg = [];
                 let promise = new Promise(resolve =>{
                     for(var i=0;i<this.state.cimg.length;i++){
                         cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
@@ -135,18 +141,40 @@ export default class ArticleAdd extends Component {
                     this.onToastSuccess();
                 })
             }
-            localStorage.setItem('come',1);
         }
-        
+        localStorage.setItem('come',1);
     }
     onChange1 = ({ target: { value } }) => {
         this.setState({ value });
     };
-    onChange = (cimg, type, index) => {
+    onChange = (cimg) => {
         this.setState({
             cimg,
         });
+        console.log(this.state.cimg)
+        if(localStorage.getItem('shareImg')){
+            var filesType = ['.jpg'];
+            for(var i=1;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+        }else{
+            var filesType = [];
+            console.log(1)
+            for(var i=0;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+        }
+        this.setState({
+            filesType:filesType
+        })
     }
+    // onChange = (cimg, type, index) => {
+    //     this.setState({
+    //         cimg,
+    //     });
+    // }
     render() {
         return (
             <div>
@@ -157,7 +185,6 @@ export default class ArticleAdd extends Component {
                 ]}
                 rightContent={[
                     <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>发布</span>
-                    
                 ]}
                 >社区发布文章</NavBar>
                 <NavBar></NavBar>

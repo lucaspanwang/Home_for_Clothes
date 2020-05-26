@@ -1,6 +1,6 @@
 //文章模块，根据判断决定是显示在社区页的样式还是文章详情的样式
 import React, { Component } from 'react';
-import { Toast,Popover } from 'antd-mobile';
+import { Toast,Popover,Modal,Checkbox, Button } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
 
@@ -10,6 +10,7 @@ import {standardTime} from './standardTime';
 
 import xiala from '../../images/xiala.png';
 import fenxiang from '../../images/fenxiang_1.png';
+import jubao from '../../images/jubao_1.png';
 import shoucang from '../../images/shoucang.png';
 import yishoucang from '../../images/shoucang_1.png';
 import guanzhu from '../../images/guanzhu.png';
@@ -21,13 +22,16 @@ import message from '../../images/message.png';
 
 const { Paragraph } = Typography;
 const Item = Popover.Item;
+const alert = Modal.alert;
+const CheckboxItem = Checkbox.CheckboxItem;
 
 export default class ArticleModule extends Component {
     constructor(){
         super();
         this.state={
             user:{},
-            article:{}
+            article:{},
+            jubao:[]
         }
     }
     componentDidMount(){
@@ -156,8 +160,45 @@ export default class ArticleModule extends Component {
         const room = user0<user1 ? user0.toString()+'&'+user1.toString() : user1.toString()+'&'+user0.toString();
         return room;
     }
+
+    //点击举报内容(选择/取消选择)
+    onChange = (val) => {
+        let jubao = this.state.jubao;
+        let index = this.state.jubao.indexOf(val);
+        if(index != -1){
+            jubao.splice(index,1);
+        }else{
+            jubao.push(val);
+        }
+        this.setState({
+            jubao:jubao
+        },function(){
+            console.log(this.state.jubao);
+        })
+    }
+    jubaoHandle = () => {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+        var type = this.state.jubao.toString();
+        // var body = 'rpId='+this.props.userId+'&rperId='+this.state.article.userId+'&articleId='+this.state.article.articleId+'&rptime='+date+'&rptype='+type;
+        // console.log(body);
+        fetch('http://47.98.163.228:3004/report?rpId='+this.props.userId+'&rperId='+this.state.article.userId+'&articleId='+this.state.article.articleId+'&rptime='+date+'&rptype='+type)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+        })
+    }
     
     render() {
+        const data = [
+            { value: 0, label: '垃圾广告信息' },
+            { value: 1, label: '有害信息' },
+            { value: 2, label: '虚假信息' },
+            { value: 3, label: '不友善行为' },
+            { value: 4, label: '涉嫌侵权' },
+            { value: 5, label: '涉嫌诈骗' },
+            { value: 6, label: '其他' }
+        ];
         return (
             <div className="article" key={this.state.article.articleId}>
                 <div className='artUser'>
@@ -172,19 +213,30 @@ export default class ArticleModule extends Component {
                         :(<Popover mask
                             visible={this.state.visible}
                             overlay={[
-                                (<Item key={2} value="关注" style={{padding:'10px 25px'}}>
+                                (<Item key={1} value="关注" style={{padding:'10px 25px'}}>
                                     <div onClick={this.onCare.bind(this,this.state.article.userId)}>
                                         <img src={this.state.article.follow?`${yiguanzhu}`:`${guanzhu}`} alt='' style={{width:'25px'}}/>
                                         <span style={{padding:'0 20px',fontSize:'18px'}}>{this.state.article.follow?"已关注":"关注"}</span>
                                     </div>
                                 </Item>),
-                                (<Item key={1} value="私信" style={{padding:'10px 25px'}}>
+                                (<Item key={2} value="私信" style={{padding:'10px 25px'}}>
                                     <div><img src={message} alt='' style={{width:'25px'}}/>
                                     <span style={{padding:'0 20px',fontSize:'18px'}}>私信</span></div>
                                 </Item>),
-                                (<Item key={1} value="分享" style={{padding:'10px 25px'}}>
+                                (<Item key={3} value="分享" style={{padding:'10px 25px'}}>
                                     <div><img src={fenxiang} alt='' style={{width:'25px'}}/>
                                     <span style={{padding:'0 20px',fontSize:'18px'}}>分享</span></div>
+                                </Item>),
+                                (<Item key={4} value="举报" style={{padding:'10px 25px'}}>
+                                    <div onClick={() => alert(
+                                        '举报内容', 
+                                        <div>{data.map(i => (<CheckboxItem key={i.value} onChange={() => this.onChange(i.label)}>{i.label}</CheckboxItem>))}</div>, 
+                                        [{ text: '取消', onPress: () => console.log('取消举报') },
+                                        { text: '确定', onPress: () => this.jubaoHandle() }])
+                                        }
+                                    ><img src={jubao} alt='' style={{width:'25px'}}/>
+                                        <span style={{padding:'0 20px',fontSize:'18px'}}>举报</span>
+                                    </div>
                                 </Item>)
                             ]}
                             onSelect={this.onSelect}
