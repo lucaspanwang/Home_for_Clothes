@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import './table.css';
 import { Link } from 'react-router-dom';
+import { Modal, Button, Space } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import './table.css';
+
+const { confirm } = Modal;
 
 export default class Table extends Component {
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state={
             thead:[],//表头
             tbody:[],//表格数据
@@ -13,6 +17,7 @@ export default class Table extends Component {
         }
     }
     componentWillReceiveProps(nextProps){//获取父组件传递过来的数据
+        console.log(nextProps);
         var twidth = [];
         if(nextProps.operate){
             for(var i=0;i<nextProps.twidth.length;i++){
@@ -32,6 +37,22 @@ export default class Table extends Component {
             console.log(this.state);
         })
     }
+    showDeleteConfirm = (id) => {
+        confirm({
+            title: '你确定要删除这条数据?',
+            icon: <ExclamationCircleOutlined />,
+            content: '数据删除之后不能回撤，你确定以及肯定要删除?',
+            okText: <button style={{background:'#00000000',border:'none'}} onClick={()=>this.props.deleteItem(id)}>确定</button>,
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+                console.log('OK');
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
     render() {
         return (
             <table border="1" className="table-module">
@@ -50,7 +71,7 @@ export default class Table extends Component {
                                 ?(<td>
                                     {this.props.operate.find((item)=>item=='edit')?(<Link to={'/tab'+this.props.editItem+'/'+items[this.state.keys[0]]}><button className="btn btn_1">编辑</button></Link>):''}    
                                     {this.props.operate.find((item)=>item=='check')?(<Link to={'/tab'+this.props.checkItem+'/'+items[this.state.keys[0]]}><button className="btn btn_2">查看</button></Link>):''}    
-                                    {this.props.operate.find((item)=>item=='delete')?(<button className="btn btn_3" onClick={()=>this.props.deleteItem(items[this.state.keys[0]])}>删除</button>):''}    
+                                    {this.props.operate.find((item)=>item=='delete')?(<button className="btn btn_3" onClick={()=>this.showDeleteConfirm(items[this.state.keys[0]])}>删除</button>):''}    
                                 </td>):''
                             }
                         </tr>
