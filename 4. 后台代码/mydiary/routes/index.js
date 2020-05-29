@@ -22,7 +22,19 @@ router.get('/image/:photo', function(req, res) {
 })
 //获取用户信息
 router.get('/users', function(req, res) {
-  var userId = req.query.userId;
+  con.query(`select * 
+            from users;`, (err, result) => {
+    if(err){
+      console.log(err);
+    }else{
+      console.log(result);
+      res.send(result);
+    }
+  })
+})
+//获取指定用户信息
+router.get('/users/:userId', function(req, res) {
+  var userId = req.params.userId;
   console.log(userId);
   con.query(`select * 
             from users 
@@ -250,7 +262,9 @@ router.post('/diaryDel', function(req, res) {
 router.post('/fankui', function(req, res) {
   var obj="";
   var fb='';
-  var huifu=null;
+  var huifu = null;
+  var huiTime = null;
+  var fbCheck = '1';
   req.on('data',function(data){
       obj+=data;
   })
@@ -274,12 +288,13 @@ router.post('/fankui', function(req, res) {
           })    
       }
       
-      con.query('insert into feedback values(?,?,?,?,?,?,?,?)',[fankui.fbId,fankui.userId,fankui.value,fb,fankui.fbtime,fankui.fbtel,huifu,huifu],(err, result) => {
+      con.query('insert into feedback values(?,?,?,?,?,?,?,?,?)',[fankui.fbId,fankui.userId,fankui.value,fb,fankui.fbtime,fankui.fbtel,huifu,huiTime,fbCheck],(err, result) => {
           if(err){
             console.log(err);
           }else{
-            result=[fankui.fbId,fankui.userId,fankui.value,fb,fankui.fbtime,fankui.fbtel,huifu,huifu];
+            result=[fankui.fbId,fankui.userId,fankui.value,fb,fankui.fbtime,fankui.fbtel,huifu,huifu,huiTime,fbCheck];
             console.log(result);
+            console.log('添加成功');
             // res.send(result);
           }
       })     
@@ -302,6 +317,36 @@ router.get('/fankui/:userId', function(req, res) {
           result[i].fbimg = fbimg;
         }
         console.log(result);  
+        res.send(result);
+      }    
+  })  
+})
+//获取被举报者的处理结果
+router.get('/report/:rperId', function(req, res) {
+  var rperId = req.params.rperId;
+  con.query(`select *
+              from report
+              where report.rperId = '${rperId}'
+              order by time desc;`, (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        console.log(result); 
+        res.send(result);
+      }    
+  })  
+})
+//获取举报者
+router.get('/reports/:rpId', function(req, res) {
+  var rpId = req.params.rpId;
+  con.query(`select *
+              from report
+              where report.rpId = '${rpId}'
+              order by rptime desc;`, (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        console.log(result); 
         res.send(result);
       }    
   })  
@@ -468,6 +513,7 @@ router.post('/fankuiDel', function(req, res) {
   })
   res.end();
 })
+
 
 
 module.exports = router;
