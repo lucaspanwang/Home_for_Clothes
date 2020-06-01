@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
 import Back from '../images/fanhui_1.png';
@@ -121,15 +121,15 @@ export default class Home extends Component {
                     this.state.picture.map((item,i)=>{
                         if(i==this.state.num){
                             return(
-                                <div key={i} style={{display:'inlinbe-block',position:'relative',width:'120px',height:"120px",margin:'2px',float:'left'}}>
-                                <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px',border:'1px solid red'}}/>
+                                <div key={i} style={{display:'inlinbe-block',position:'relative',width:'32%',height:"120px",margin:'2px',float:'left'}}>
+                                <img src={`http://47.98.163.228:8084/${item}`}style={{width:'100%',height:'120px',border:'1px solid red'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>
                                 )
                         }else{
                             return(
-                                <div key={i} style={{display:'inlinbe-block',position:'relative',width:'120px',height:"120px",margin:'2px',float:'left'}}>
-                                <img src={`http://47.98.163.228:8084/${item}`}style={{width:'120px',height:'120px'}}/>
+                                <div key={i} style={{display:'inlinbe-block',position:'relative',width:'32%',height:"120px",margin:'2px',float:'left'}}>
+                                <img src={`http://47.98.163.228:8084/${item}`}style={{width:'100%',height:'120px'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>
                             )}
