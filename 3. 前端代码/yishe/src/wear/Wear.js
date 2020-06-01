@@ -6,7 +6,7 @@ import './wear.css';
 import didian from '../images/didian.png'
 import qing from '../images/yang.png'
 import mote from '../images/mote.png'
-import mote2 from '../images/motewu.png'
+import mote2 from '../images/mote2.png'
 import fenxiang from '../images/fenxiang(1).png'
 import pengyouquan from '../images/pengyouquan.png'
 import weixin from '../images/weixin (2).png'
@@ -85,7 +85,7 @@ export default class Wear extends Component {
         weather:'晴',//天气
         idx:0,//显示天气图标
         arr:[],arr_s:[],//大小图地址
-        ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],//小图标
+        ku:[],ku_s:[],qun:[],qun_s:[],yi:[],yi_s:[],tao:[],tao_s:[],tuijian:[],tuijian_s:[],xie:[],xie_s:[],//小图标
         qun_color:[],ku_color:[],yi_color:[],tao_color:[],
         count:0,
         href:'#/apptab',
@@ -127,21 +127,24 @@ export default class Wear extends Component {
             var qunqun=[],qunqun_s=[];//裙子
             var yiyi=[],yiyi_s=[];//上衣
             var taotao=[],taotao_s=[];//外套
+            var xie=[],xie_s=[];
             var qun_c=[],ku_c=[],yi_c=[],tao_c=[];
-            if(res[0].cloSmallPic){     
+            if(res.length != 0){
             for(var i=0;i<res.length;i++){//循环res的图
               //大小图标地址
               var j = res[i].cloSmallPic.indexOf('/');
               if(res[0].userSex=='女'){
                 res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
                 big[i] = res[i].cloSmallPic;
+                console.log(big[i])
               }else{
                 res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
                 big[i] =  "ht"+res[i].cloSmallPic.substr(j).split('.png')[0]+'_boy.png'
               }
               var name = res[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
-              small[i] = "http://47.98.163.228:3001/images/"+n+'_s.png';
+              small[i] = "http://47.98.163.228:3001/aaa/"+n+'_s.png';
+              console.log(small[i])
               //判断裤子，把图存进去
               if(n.indexOf('ku')!=-1){
                 kuku.push(big[i]);
@@ -154,7 +157,7 @@ export default class Wear extends Component {
                 qun_c.push(res[i].cloColor)
               }
               //判断上衣
-              if(n.indexOf('yi')!=-1){
+              if(n.indexOf('yi')!=-1 || n.indexOf('shan')!=-1){
                 yiyi.push(big[i]);
                 yiyi_s.push(small[i])
               }
@@ -162,6 +165,10 @@ export default class Wear extends Component {
               if(n.indexOf('tao')!=-1){
                 taotao.push(big[i]);
                 taotao_s.push(small[i])
+              }
+              if(n.indexOf('xie')!=-1 || n.indexOf('xue')!=-1){
+                xie.push(big[i]);
+                xie_s.push(small[i])
               }
               this.setState({
                 city:res[0].userCity,//城市
@@ -177,6 +184,7 @@ export default class Wear extends Component {
           this.setState({
             qun:qunqun,qun_s:qunqun_s,yi:yiyi,yi_s:yiyi_s,tao:taotao,tao_s:taotao_s,ku:kuku,ku_s:kuku_s,
             qun_color:qun_c,ku_color:ku_c,yi_color:yi_c,tao_color:tao_c,
+            xie:xie,xie_s:xie_s
           })
           //实现推荐
           var tuitui=[],tuitui_s=[];
@@ -305,6 +313,12 @@ export default class Wear extends Component {
       document.getElementById('mote4').src=this.state.tao[idx];
       document.getElementById('mote4').style.display = 'block';
     }
+    xie=(idx)=>{
+      document.getElementById('mote').style.display = 'none';
+      document.getElementById('mote_2').style.display = 'block';
+      document.getElementById('mote5').src=this.state.xie[idx];
+      document.getElementById('mote5').style.display = 'block';
+    }
  //变色（小图）
     change_color_small(it,col){
       var now  = it.split('.')
@@ -319,8 +333,8 @@ export default class Wear extends Component {
         case '紫色':color_s='_zi';break;
         default:color_s='';break;
       }
-      var now_src = now[0]+'.'+now[1]+'.'+now[2]+'.'+now[3]+color_s+'.png'
-      return now_src;
+      var now_src = now[0]+'.'+now[1]+'.'+now[2]+'.'+now[3]+color_s+'.png';
+      return it;
     }   
 //变色
     change_color(it,col){
@@ -541,16 +555,18 @@ export default class Wear extends Component {
                     this.state.sex=='女'?
                     <div id="view">
                          {/* 模特本身 */}
-                        <img src={mote2} id="mote"/>
+                        <img src={mote} id="mote"/>
                          {/* 把src替换成裙子或裤子 */}
                         <img src={mote2} id="mote_2"/>
                          <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
                          {/* 裤子、裙子 */}
                         <img  id='mote2' />
                         <img  id='mote3' />
-                        <img  id='mote4' />               
+                        <img  id='mote4' />             
+                        <img  id='mote5' />  
                         <div className="icon" id="mote22"><img  className='icon4'  id="mote_5" /></div>
                         <img  id='mote6' />
+
                         {/* 美妆部分 */}
                         <Link to={"/pretty/"+this.props.id}>
                         <img src={eye[this.state.index2]} id="t22"/>
@@ -581,36 +597,6 @@ export default class Wear extends Component {
                     tabBarPosition="left"
                     tabDirection="vertical"
                   >
-                    <div style={{width:'100px', display: 'flex',
-                      height: '1000px', backgroundColor: '#fff' }}>
-                      <ul className="yifu" id='yifu1'>
-                      {
-                          this.state.tuijian_s.map((item,idx)=>(
-                            <li key={idx} style={{height:'100px'}}>
-                              <img style={{width:'85%'}} 
-                                src={item} 
-                                onClick={this.tuijian.bind(this,idx)}
-                                />
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    </div>
-                    <div style={{width:'100px', display: 'flex',
-                      height: '500px', backgroundColor: '#fff' }}>
-                      <ul className="yifu" id='yifu2'>
-                      {
-                          this.state.tao_s.map((item,idx)=>(
-                            <li  key={idx} style={{height:'100px'}}>
-                              <img style={{width:'85%'}} 
-                                src={item} 
-                                onClick={this.waitao.bind(this,idx)}
-                                />
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    </div>
                     <div style={{width:'100px', display: 'flex',
                       height: '500px', backgroundColor: '#fff' }}>
                       <ul className="yifu" id='yifu3'>
@@ -650,6 +636,36 @@ export default class Wear extends Component {
                               <img style={{width:'85%'}} 
                                 src={item} 
                                 onClick={this.qunzi.bind(this,idx)}
+                                />
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </div>
+                    <div style={{width:'100px', display: 'flex',
+                      height: '500px', backgroundColor: '#fff' }}>
+                      <ul className="yifu" id='yifu2'>
+                      {
+                          this.state.tao_s.map((item,idx)=>(
+                            <li  key={idx} style={{height:'100px'}}>
+                              <img style={{width:'85%'}} 
+                                src={item} 
+                                onClick={this.waitao.bind(this,idx)}
+                                />
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </div>
+                    <div style={{width:'100px', display: 'flex',
+                      height: '1000px', backgroundColor: '#fff' }}>
+                      <ul className="yifu" id='yifu1'>
+                      {
+                          this.state.xie_s.map((item,idx)=>(
+                            <li key={idx} style={{height:'100px'}}>
+                              <img style={{width:'85%'}} 
+                                src={item} 
+                                onClick={this.xie.bind(this,idx)}
                                 />
                             </li>
                           ))
@@ -700,11 +716,11 @@ export default class Wear extends Component {
 }
 
 const tabs = [
-  { title: '为你推荐'},
-  { title: '外套' },
   { title: '上衣'},
   { title: '裤子'},
   { title: '连衣裙'},
+  { title: '外套' },
+  { title: '鞋子'},
 ];
 const tabs2 = [
     { title: '为你推荐'},
