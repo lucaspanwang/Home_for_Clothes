@@ -4,11 +4,13 @@ import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import {Tooltip} from 'antd';
 
 import fanhui from '../images/fanhui_1.png';
-import xiaoren from '../images/xiaoren.png';
+import girl from '../images/girl.gif';
+import boy from '../images/boy.gif';
 
 const Item = List.Item;
-const text = <span>你看我是不是很漂亮？<br/>٩(๑❛ᴗ❛๑)۶我也觉得人家<br/>很漂亮呢(＾▽＾)</span>;
-
+const text = '你看我是不是很漂亮？٩(๑❛ᴗ❛๑)۶我也觉得人家很漂亮呢(＾▽＾)';
+const text1 = '人见人爱，花见花开，车见爆胎。哥一直在被追赶，但从未被超越过。';
+var num =1;
 export default class AboutMe extends Component {
     constructor(){
         super();
@@ -18,7 +20,8 @@ export default class AboutMe extends Component {
             sex:'', 
             name:'',
             info:'',
-            city:''
+            city:'',
+            display:'none'
         }
         this.handleUpload = this.handleUpload.bind(this);
     }
@@ -47,6 +50,15 @@ export default class AboutMe extends Component {
                 sex:res[0].userSex
             })
         })
+    }
+    onClick3 = ()=>{
+        if(num == 1){
+            this.setState({ display:'block' });
+            num = num+1;  
+        }else{
+            this.setState({ display:'none' });
+            num = num-1;
+        }
     }
     //头像
     handleUpload(e) {
@@ -125,9 +137,17 @@ export default class AboutMe extends Component {
                        <Link to={"/info/"+this.props.match.params.id}  style={{lineHeight:'100%',float:'right',color:'#888'}}>{this.state.info}</Link>
                     </Item>
                 </List>
-                <Tooltip placement="right" title={text}>
-                    <img src={xiaoren} alt='' style={{width:'30%',height:'40%',marginLeft:'10%',float:'left'}} onClick={() => {}}/>
-                </Tooltip>     
+                {/* <Tooltip placement="right" title={this.state.sex==='女'?text:text1}>
+                    
+                </Tooltip> */}
+                <div>
+                    <img src={this.state.sex==='女'?girl:boy} alt='' style={{width:'30%',height:'40%',marginLeft:'10%',float:'left'}} onClick={this.onClick3}/>
+                    <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',height:'120px',display: this.state.display,border:'3px solid #fc9d9a',borderRadius:'10px',padding:'10px'}}>
+                        <span >
+                            {this.state.sex==='女'?text:text1}
+                        </span>
+                    </div>
+                </div>     
             </div>
         );
     }
