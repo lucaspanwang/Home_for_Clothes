@@ -56,6 +56,7 @@ export default class Table extends Component {
     render() {
         return (
             <table border="1" className="table-module">
+                <tbody>
                 <tr>
                     <th style={{width:'5%'}}>序号</th>
                     {this.state.thead.map((item,index)=>(<th style={{width:this.state.twidth[index]}}>{item}</th>))}
@@ -77,6 +78,7 @@ export default class Table extends Component {
                         </tr>
                     ))
                 }
+                </tbody>
             </table>
         )
     }
