@@ -197,14 +197,20 @@ export default class DiaryAdd extends Component {
         this.setState({
             filesType:filesType
         })
-    }    
+    } 
+    onback = ()=>{
+        if(localStorage.getItem('shareImg')){
+            localStorage.removeItem('shareImg');
+        }
+        // window.location.href=window.location.href.split('#')[0]+"#/diary/"+this.props.match.params.id;
+    }   
     render() {
         return (
             <div>
                 <NavBar 
                 style={{backgroundColor:'#fc9d9a',color:'white'}}
                 leftContent={[
-                    <Link to={"/diary/"+this.props.match.params.id}><img src={fanhui} style={{width:'30px'}} key="fan0009"/></Link>
+                    <Link  to={'/diary/'+this.props.match.params.id} onClick={this.onback}><img src={fanhui} style={{width:'30px'}} key="fan0009"/></Link>
                 ]}
                 rightContent={[
                     <Link style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>

@@ -47,6 +47,8 @@ export default class Me extends Component {
             tianqi:'none',
             tuijian:'none',
             modal1: false,
+            modal2: false,
+            modal3: false,
             city:'',
             wea:'',
             tips:'',
@@ -133,11 +135,11 @@ export default class Me extends Component {
             this.setState({ 
                 display:'none',
                 tianqi:'block',
-                // wea:res.data[0].wea,
-                // tem1:res.data[0].tem1,
-                // tem2:res.data[0].tem2,
-                // tips:res.data[0].air_tips,
-                // air:res.data[0].air_level
+                wea:res.data[0].wea,
+                tem1:res.data[0].tem1,
+                tem2:res.data[0].tem2,
+                tips:res.data[0].air_tips,
+                air:res.data[0].air_level
             },function(){
                 if(this.state.wea.search(/晴/)!==-1){
                     this.setState({idx:0})
@@ -165,7 +167,7 @@ export default class Me extends Component {
             this.setState({ 
                 display:'none',
                 tuijian:'block',
-                // desc:res.data[0].index[3].desc
+                desc:res.data[0].index[3].desc
             })   
         });
     }
@@ -230,189 +232,91 @@ export default class Me extends Component {
                     >设置</Item></Link>
                 </List>
                 {/* 衣舍娃娃 */}
-                {
-                    this.state.user.userSex==='女'?(
-                        <div>
-                            <img src={girl} alt='' onClick={this.onClick3}  style={{width:'30%',marginTop:'2px',marginLeft:'30px',float:'left'}}/>
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',height:'142px',display: this.state.display,backgroundImage:"url(" + require("../images/qipao.png") + ")",backgroundSize:' 100%'}}>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'#00c7ff',color:'white',marginLeft:'40px',marginTop:'18px'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button><br/>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'red',opacity:'0.6',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather}>今日天气</button>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'pink',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather1}>穿衣指南</button>
+                <div>
+                    <img src={this.state.user.userSex==='女'?girl:boy} alt='' onClick={this.onClick3}  style={{width:'30%',marginTop:'2px',marginLeft:'30px',float:'left'}}/>
+                    <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',height:'142px',display: this.state.display,backgroundImage:"url(" + require("../images/qipao.png") + ")",backgroundSize:' 100%'}}>
+                        <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'#00c7ff',color:'white',marginLeft:'40px',marginTop:'18px'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button><br/>
+                        <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'red',opacity:'0.6',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather}>今日天气</button>
+                        <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'pink',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather1}>穿衣指南</button>
+                    </div>
+                    {/* 常见问题 */}
+                    <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'6px',height:'150px',border:'3px solid #00c7ff',borderRadius:'10px',display: this.state.wenti}}>
+                        <span style={{width:'100%',fontWeight:'bolder'}}>&nbsp;常见问题 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,wenti:'none'});num=1;}}>X</span></span>
+                        <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px',marginTop:'5px'}}>如何找到自己的衣服在哪</Button>
+                        <WhiteSpace />
+                        <Modal
+                            visible={this.state.modal1}
+                            transparent
+                            maskClosable={false}
+                            onClose={this.onClose('modal1')}
+                            title="如何找到自己的衣服在哪"
+                            footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
+                            wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                            >
+                            <div style={{ height: 100, overflow: 'scroll' }}>
+                                方法一:在“个人”->“衣服”中找到<br/>
+                                方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
                             </div>
-                            {/* 常见问题 */}
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'6px',height:'150px',border:'3px solid #00c7ff',borderRadius:'10px',display: this.state.wenti}}>
-                                <span style={{width:'100%',fontWeight:'bolder'}}>&nbsp;常见问题 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,wenti:'none'});num=1;}}>X</span></span>
-                                <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px',marginTop:'5px'}}>如何找到自己的衣服在哪</Button>
-                                <WhiteSpace />
-                                <Modal
-                                    visible={this.state.modal1}
-                                    transparent
-                                    maskClosable={false}
-                                    onClose={this.onClose('modal1')}
-                                    title="如何找到自己的衣服在哪"
-                                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                                    >
-                                    <div style={{ height: 100, overflow: 'scroll' }}>
-                                        方法一:在“个人”->“衣服”中找到<br/>
-                                        方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
-                                    </div>
-                                </Modal>
-                                <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px'}}>如何找到自己的衣服在哪</Button>
-                                <WhiteSpace />
-                                <Modal
-                                    visible={this.state.modal1}
-                                    transparent
-                                    maskClosable={false}
-                                    onClose={this.onClose('modal1')}
-                                    title="如何找到自己的衣服在哪"
-                                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                                    >
-                                    <div style={{ height: 100, overflow: 'scroll' }}>
-                                        方法一:在“个人”->“衣服”中找到<br/>
-                                        方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
-                                    </div>
-                                </Modal>
-                                <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px'}}>如何找到自己的衣服在哪</Button>
-                                <WhiteSpace />
-                                <Modal
-                                    visible={this.state.modal1}
-                                    transparent
-                                    maskClosable={false}
-                                    onClose={this.onClose('modal1')}
-                                    title="如何找到自己的衣服在哪"
-                                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                                    >
-                                    <div style={{ height: 100, overflow: 'scroll' }}>
-                                        方法一:在“个人”->“衣服”中找到<br/>
-                                        方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
-                                    </div>
-                                </Modal>
+                        </Modal>
+                        <Button onClick={this.showModal('modal2')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px'}}>如何给模特换衣服</Button>
+                        <WhiteSpace />
+                        <Modal
+                            visible={this.state.modal2}
+                            transparent
+                            maskClosable={false}
+                            onClose={this.onClose('modal2')}
+                            title="如何给模特换衣服"
+                            footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal2')(); } }]}
+                            wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                            >
+                            <div style={{ height: 100, overflow: 'scroll' }}>
+                                方法:在“穿搭”页面中点击心仪的衣服，就可以完成穿搭
                             </div>
-                            {/* 今日天气 */}
-                            {/* <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid red',borderRadius:'10px',display: this.state.tianqi}}>
-                                <div style={{width:'100%',height:'30px'}}>
-                                    <span style={{fontSize:'18px',float:'left'}}>{this.state.city}</span>
-                                    <img src={weather[this.state.idx]} alt='' style={{width:'30px',float:'right'}}/>
-                                </div>
-                                <span style={{float:'left',color:'#d26c2e'}}>{this.state.wea}&nbsp; |&nbsp;{this.state.tem2}~{this.state.tem1} |&nbsp; 天气质量&nbsp;{this.state.air}</span>
-                                <p style={{fontSize:'11px'}}>{this.state.tips} <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
-                            </div> */}
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid red',borderRadius:'10px',display: this.state.tianqi}}>
-                                <div style={{width:'100%',height:'30px'}}>
-                                    <span style={{fontSize:'18px',float:'left'}}>南京</span>
-                                    <img src={windy} alt='' style={{width:'30px',float:'right'}}/>
-                                </div>
-                                <span style={{float:'left',color:'#d26c2e'}}>多云&nbsp; |&nbsp;20℃~28℃ |&nbsp; 天气质量&nbsp;良</span>
-                                <p style={{fontSize:'11px'}}>天气较好，温度适宜，您可以尽情地享受大自然的风光。<span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
+                        </Modal>
+                        <Button onClick={this.showModal('modal3')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px'}}>为何不能发表文章</Button>
+                        <WhiteSpace />
+                        <Modal
+                            visible={this.state.modal3}
+                            transparent
+                            maskClosable={false}
+                            onClose={this.onClose('modal3')}
+                            title="为何不能发表文章"
+                            footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal3')(); } }]}
+                            wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                            >
+                            <div style={{ height: 100, overflow: 'scroll' }}>
+                                因为您发表的文章被举报，经核实确实存在问题，所以对您进行禁止发帖3天或者7天不等的处理，请您注意文明发帖。
                             </div>
-                            {/* 穿衣指南 */}
-                            {/* <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>
-                                <span style={{width:'100%',fontWeight:'bolder'}}>穿衣指南 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tuijian:'none'});num=1;}}>X</span></span>
-                                <p style={{fontSize:'14px',marginTop:'3px'}}>{this.state.desc} </p>
-                            </div> */}
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>
-                                <span style={{width:'100%',fontWeight:'bolder'}}>穿衣指南 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tuijian:'none'});num=1;}}>X</span></span>
-                                <p style={{fontSize:'14px',marginTop:'3px'}}>天气舒适，建议穿长袖T恤、衬衫加单裤等服装。 </p>
-                            </div>
-
+                        </Modal>
+                    </div>
+                    {/* 今日天气 */}
+                    <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid red',borderRadius:'10px',display: this.state.tianqi}}>
+                        <div style={{width:'100%',height:'30px'}}>
+                            <span style={{fontSize:'18px',float:'left'}}>{this.state.city}</span>
+                            <img src={weather[this.state.idx]} alt='' style={{width:'30px',float:'right'}}/>
                         </div>
+                        <span style={{float:'left',color:'#d26c2e'}}>{this.state.wea}&nbsp; |&nbsp;{this.state.tem2}~{this.state.tem1} |&nbsp; 天气质量&nbsp;{this.state.air}</span>
+                        <p style={{fontSize:'11px'}}>{this.state.tips} <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
+                    </div>
+                    {/* <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid red',borderRadius:'10px',display: this.state.tianqi}}>
+                        <div style={{width:'100%',height:'30px'}}>
+                            <span style={{fontSize:'18px',float:'left'}}>南京</span>
+                            <img src={windy} alt='' style={{width:'30px',float:'right'}}/>
+                        </div>
+                        <span style={{float:'left',color:'#d26c2e'}}>多云&nbsp; |&nbsp;20℃~28℃ |&nbsp; 天气质量&nbsp;良</span>
+                        <p style={{fontSize:'11px'}}>天气较好，温度适宜，您可以尽情地享受大自然的风光。<span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
+                    </div> */}
+                    {/* 穿衣指南 */}
+                    <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>
+                        <span style={{width:'100%',fontWeight:'bolder'}}>穿衣指南 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tuijian:'none'});num=1;}}>X</span></span>
+                        <p style={{fontSize:'14px',marginTop:'3px'}}>{this.state.desc} </p>
+                    </div>
+                    {/* <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>
+                        <span style={{width:'100%',fontWeight:'bolder'}}>穿衣指南 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tuijian:'none'});num=1;}}>X</span></span>
+                        <p style={{fontSize:'14px',marginTop:'3px'}}>天气舒适，建议穿长袖T恤、衬衫加单裤等服装。 </p>
+                    </div> */}
 
-                    ):
-                    (
-                        <div>
-                            <img src={boy} alt='' onClick={this.onClick3}  style={{width:'30%',marginTop:'2px',marginLeft:'30px',float:'left'}}/>
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',height:'142px',display: this.state.display,backgroundImage:"url(" + require("../images/qipao.png") + ")",backgroundSize:' 100%'}}>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'#00c7ff',color:'white',marginLeft:'40px',marginTop:'18px'}} onClick={()=>this.setState({ display:'none' ,wenti:'block'})}>常见问题</button><br/>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'red',opacity:'0.6',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather}>今日天气</button>
-                                <button style={{border:'none',borderRadius:'10px',width:'100px',height:'30px',backgroundColor:'pink',color:'white',marginLeft:'40px',marginTop:'5px'}}  onClick={this.getWeather1}>穿衣指南</button>
-                            </div>
-                            {/* 常见问题 */}
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'6px',height:'150px',border:'3px solid #00c7ff',borderRadius:'10px',display: this.state.wenti}}>
-                                <span style={{width:'100%',fontWeight:'bolder'}}>&nbsp;常见问题 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,wenti:'none'});num=1;}}>X</span></span>
-                                <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px',marginTop:'5px'}}>如何找到自己的衣服在哪</Button>
-                                <WhiteSpace />
-                                <Modal
-                                    visible={this.state.modal1}
-                                    transparent
-                                    maskClosable={false}
-                                    onClose={this.onClose('modal1')}
-                                    title="如何找到自己的衣服在哪"
-                                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                                    >
-                                    <div style={{ height: 100, overflow: 'scroll' }}>
-                                        方法一:在“个人”->“衣服”中找到<br/>
-                                        方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
-                                    </div>
-                                </Modal>
-                                <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px'}}>如何找到自己的衣服在哪</Button>
-                                <WhiteSpace />
-                                <Modal
-                                    visible={this.state.modal1}
-                                    transparent
-                                    maskClosable={false}
-                                    onClose={this.onClose('modal1')}
-                                    title="如何找到自己的衣服在哪"
-                                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                                    >
-                                    <div style={{ height: 100, overflow: 'scroll' }}>
-                                        方法一:在“个人”->“衣服”中找到<br/>
-                                        方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
-                                    </div>
-                                </Modal>
-                                <Button onClick={this.showModal('modal1')} style={{border:'1px solid #3c3a3ac9',fontSize:'12px',height:'30px',lineHeight:'30px'}}>如何找到自己的衣服在哪</Button>
-                                <WhiteSpace />
-                                <Modal
-                                    visible={this.state.modal1}
-                                    transparent
-                                    maskClosable={false}
-                                    onClose={this.onClose('modal1')}
-                                    title="如何找到自己的衣服在哪"
-                                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                                    >
-                                    <div style={{ height: 100, overflow: 'scroll' }}>
-                                        方法一:在“个人”->“衣服”中找到<br/>
-                                        方法二:在“整理箱”页面搜索框搜索想要找的衣物的关键词进行搜索
-                                    </div>
-                                </Modal>
-                            </div>
-                            {/* 今日天气 */}
-                            {/* <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid red',borderRadius:'10px',display: this.state.tianqi}}>
-                                <div style={{width:'100%',height:'30px'}}>
-                                    <span style={{fontSize:'18px',float:'left'}}>{this.state.city}</span>
-                                    <img src={weather[this.state.idx]} alt='' style={{width:'30px',float:'right'}}/>
-                                </div>
-                                <span style={{float:'left',color:'#d26c2e'}}>{this.state.wea}&nbsp; |&nbsp;{this.state.tem2}~{this.state.tem1} |&nbsp; 天气质量&nbsp;{this.state.air}</span>
-                                <p style={{fontSize:'13px'}}>{this.state.tips} <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
-                            </div> */}
-                             <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid red',borderRadius:'10px',display: this.state.tianqi}}>
-                                <div style={{width:'100%',height:'30px'}}>
-                                    <span style={{fontSize:'18px',float:'left'}}>南京</span>
-                                    <img src={windy} alt='' style={{width:'30px',float:'right'}}/>
-                                </div>
-                                <span style={{float:'left',color:'#d26c2e'}}>多云&nbsp; |&nbsp;20℃~28℃ |&nbsp; 天气质量&nbsp;良</span>
-                                <p style={{fontSize:'11px'}}>天气较好，温度适宜，您可以尽情地享受大自然的风光。<span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tianqi:'none'});num=1;}}>X</span></p>
-                            </div>
-
-                            {/* 穿衣指南 */}
-                            {/* <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>
-                                <span style={{width:'100%',fontWeight:'bolder'}}>穿衣指南 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tuijian:'none'});num=1;}}>X</span></span>
-                                <p style={{fontSize:'14px',marginTop:'3px'}}>{this.state.desc} </p>
-                            </div> */}
-                            <div style={{float:'left',width:'50%',marginTop:'30px',marginLeft:'20px',padding:'10px',height:'150px',border:'3px solid purple',borderRadius:'10px',display: this.state.tuijian}}>
-                                <span style={{width:'100%',fontWeight:'bolder'}}>穿衣指南 <span style={{float:'right'}} onClick={()=>{this.setState({ display:'none' ,tuijian:'none'});num=1;}}>X</span></span>
-                                <p style={{fontSize:'14px',marginTop:'3px'}}>天气舒适，建议穿长袖T恤、衬衫加单裤等服装。 </p>
-                            </div>
-                        </div> 
-                    )
-                   
-                }
-                {/* <SocialApp/> */}
+                </div>
             </div>
         );
     }

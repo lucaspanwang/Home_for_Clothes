@@ -125,10 +125,30 @@ export default class DiarySearch extends Component {
                             <div style={{width:'100%'}}>
                                 <p style={{color:'#000',marginBottom:'8px'}}>{item.diaryContent}</p>
                                 {
+                                    item.dimg.length === 1?(
+                                        <div>
+                                        {
+                                            item.dimg.map((i,d)=>(
+                                                <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%',marginBottom:'5px'}}/>
+                                            ))
+                                        }
+                                        </div>
+                                       
+                                    ):(
+                                        <div>
+                                        {
+                                            item.dimg.map((i,d)=>(
+                                                <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%',marginBottom:'5px',height:'100px',objectFit:'contain'}}/>
+                                            ))
+                                        }
+                                        </div>
+                                    )
+                                }
+                                {/* {
                                     item.dimg.map((i,d)=>
                                       <img src={i} alt='' key={d} onClick={()=>{window.location.href=i}} style={{width:'33%'}}/>
                                     )
-                                }
+                                } */}
                             </div>
                         </div>    
                     )
