@@ -178,7 +178,7 @@ export default class Wear extends Component {
                 sex:res[0].userSex,//性别
              },function(){
               /* 显示天气预报  */  
-              // this.weather();
+              this.weather();
              })
             }
           this.setState({
@@ -221,29 +221,30 @@ export default class Wear extends Component {
       this.updata_image();//美妆
   }
   //获取用户天气
-  // weather(){
-  //     fetch('http://47.98.163.228:3001/weather',{
-  //       method: 'post', 
-  //       "Access-Control-Allow-Origin" : "*",
-  //       "Access-Control-Allow-Credentials" : true,
-  //       headers: {
-  //           'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({userCity:this.state.city})  
-  //   })
-  //   .then(res=>res.json())
-  //   .then(res=>{
-  //     this.setState({
-  //       temperature:res.data[0].tem2,
-  //       temperature2:res.data[0].tem1,
-  //       dressing_advice:res.data[0].index[3].desc,
-  //       weather:res.data[0].wea,
-  //       speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.data[0].index[1].desc
-  //     },function(){
-  //       this.weather_icon();
-  //     })
-  //   })
-  // }
+  weather(){
+      fetch('http://47.98.163.228:3001/weather',{
+        method: 'post', 
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Credentials" : true,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({userCity:this.state.city})  
+    })
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res)
+      this.setState({
+        temperature:res.tem2,
+        temperature2:res.tem1,
+        dressing_advice:res.air_tips,
+        weather:res.wea,
+        speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.air_tips
+      },function(){
+        this.weather_icon();
+      })
+    })
+  }
   //根据天气显示背景和图标
   weather_icon(){
     switch(this.state.weather){
@@ -297,12 +298,16 @@ export default class Wear extends Component {
     }
     kuzi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
+      //脱连衣裙
+      document.getElementById('mote_4').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote2').src=this.state.ku[idx];
       document.getElementById('mote2').style.display = 'block';
     }
     shangyi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
+      document.getElementById('mote_4').style.display = 'none';
+      document.getElementById('mote2').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote3').src=this.state.yi[idx];
       document.getElementById('mote3').style.display = 'block';
@@ -558,12 +563,15 @@ export default class Wear extends Component {
                         <img src={mote} id="mote"/>
                          {/* 把src替换成裙子或裤子 */}
                         <img src={mote2} id="mote_2"/>
-                         <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
+
                          {/* 裤子、裙子 */}
+                        {/* mote5是鞋子的图层、连衣裙是2、_4变色 */}
+                        <img  id='mote5' />  
+                        <div className="icon" id="mote22"><img  className='icon3'  id="mote_4" /></div>
                         <img  id='mote2' />
                         <img  id='mote3' />
                         <img  id='mote4' />             
-                        <img  id='mote5' />  
+
                         <div className="icon" id="mote22"><img  className='icon4'  id="mote_5" /></div>
                         <img  id='mote6' />
 
