@@ -213,7 +213,7 @@ export default class DiaryAdd extends Component {
                     <Link  to={'/diary/'+this.props.match.params.id} onClick={this.onback}><img src={fanhui} style={{width:'30px'}} key="fan0009"/></Link>
                 ]}
                 rightContent={[
-                    <Link style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</Link>
+                    <span style={{backgroundColor:'#fc9d9a',color:'white',fontSize:'18px'}} onClick={this.onPost}>完成</span>
                 ]}
                 >发布穿搭日记</NavBar>
 
