@@ -105,6 +105,7 @@ export default class Wear extends Component {
         speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=适合穿短袖，建议出门涂防晒呦',//语音播报建议
         sex:'女',
         imgUri:'',
+        flag:false,
     }
   }    
   componentDidMount(){
@@ -289,7 +290,9 @@ export default class Wear extends Component {
       document.getElementById('mote2').src=this.state.qun[idx];
       document.getElementById('mote2').style.display = 'block';
       if(this.state.qun[idx].indexOf('duan')!=-1){
-
+        this.setState({
+          flag : true
+        })
       }else{
         document.getElementById('mote3').style.display = 'none';
         document.getElementById('mote4').style.display = 'none';
@@ -307,8 +310,10 @@ export default class Wear extends Component {
     }
     shangyi=(idx)=>{
       document.getElementById('mote').style.display = 'none';
-      document.getElementById('mote_4').style.display = 'none';
-      document.getElementById('mote2').style.display = 'none';
+      if(!this.state.flag){
+        document.getElementById('mote_4').style.display = 'none';
+        document.getElementById('mote2').style.display = 'none';
+      }
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote3').src=this.state.yi[idx];
       document.getElementById('mote3').style.display = 'block';
@@ -340,7 +345,7 @@ export default class Wear extends Component {
         default:color_s='';break;
       }
       var now_src = now[0]+'.'+now[1]+'.'+now[2]+'.'+now[3]+color_s+'.png';
-      return it;
+      return now_src;
     }   
 //变色
     change_color(it,col){
