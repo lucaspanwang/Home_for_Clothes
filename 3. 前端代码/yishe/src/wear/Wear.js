@@ -139,7 +139,8 @@ export default class Wear extends Component {
                 console.log(big[i])
               }else{
                 res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
-                big[i] =  "ht"+res[i].cloSmallPic.substr(j).split('.png')[0]+'_boy.png'
+                big[i] =  "ht"+res[i].cloSmallPic.substr(j).split('.png')[0]+'.png'
+                console.log(big[i])
               }
               var name = res[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
@@ -478,17 +479,19 @@ export default class Wear extends Component {
       .then(res=>res.json())
       .then(res=>{
         var arr = JSON.stringify(res);
-        this.setState({
-          index1:JSON.parse(arr)[0].index1,
-          index2:JSON.parse(arr)[0].index2,
-          index3:JSON.parse(arr)[0].index3,
-          color:JSON.parse(arr)[0].color,
-        })
-        if(this.state.color !== '' && this.state.sex=='女'){
-          document.getElementById('change_hair_color').style.display='block';
-          document.getElementById('change_hair_style').style.display='block';
-          document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
-          document.getElementById('change_hair_color').style.opacity=0.9
+        if(res.length != 0){
+          this.setState({
+            index1:JSON.parse(arr)[0].index1,
+            index2:JSON.parse(arr)[0].index2,
+            index3:JSON.parse(arr)[0].index3,
+            color:JSON.parse(arr)[0].color,
+          })
+          if(this.state.color !== '' && this.state.sex=='女'){
+            document.getElementById('change_hair_color').style.display='block';
+            document.getElementById('change_hair_style').style.display='block';
+            document.getElementById('change_hair_color').style.filter=`drop-shadow(150px 0 ${this.state.color})`;
+            document.getElementById('change_hair_color').style.opacity=0.9
+          }
         }
       })
     }
@@ -635,7 +638,8 @@ export default class Wear extends Component {
                         }
                       </ul>
                     </div>
-                    <div style={{width:'100px', display: 'flex',
+                   { this.state.sex=='女'?
+                      <div style={{width:'100px', display: 'flex',
                       height: '500px', backgroundColor: '#fff' }}>
                       <ul className="yifu" id='yifu5'>
                           {
@@ -649,7 +653,8 @@ export default class Wear extends Component {
                           ))
                         }
                       </ul>
-                    </div>
+                    </div> :<div></div>
+                    }
                     <div style={{width:'100px', display: 'flex',
                       height: '500px', backgroundColor: '#fff' }}>
                       <ul className="yifu" id='yifu2'>
@@ -731,9 +736,8 @@ const tabs = [
   { title: '鞋子'},
 ];
 const tabs2 = [
-    { title: '为你推荐'},
-    { title: '外套' },
     { title: '上衣'},
     { title: '裤子'},
-    { title: '鞋'},
+    { title: '外套' },
+    { title: '鞋子'},
   ];
