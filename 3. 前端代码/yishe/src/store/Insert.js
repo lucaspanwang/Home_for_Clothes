@@ -35,7 +35,10 @@ let kindGirl=[
     label:(<span>裤子</span>),
     value:'裤子',
     children:[
-      
+      {
+        label:(<span>背带裤</span>),
+        value:'背带裤'
+      },
       {
       label:(<span>牛仔裤</span>),
       value:'牛仔裤'
@@ -59,30 +62,16 @@ let kindGirl=[
       },
   ]
   },
-  {
-    label:(<span>裙子</span>),
-    value:'裙子',
-    children:[
-      {
-      label:(<span>半身长裙</span>),
-      value:'半身长裙'
-      },
-      {
-        label:(<span>短裙</span>),
-        value:'短裙'
-      },
-      {
-        label:(<span>吊带裙</span>),
-        value:'吊带裙'
-      },
-      
-    ]
-  },
+  
 
   {
     label:(<span>上衣</span>),
     value:'上衣',
     children:[
+      {
+        label:(<span>运动衣</span>),
+        value:'运动衣'
+      },
       {
       label:(<span>毛衣</span>),
       value:'毛衣'
@@ -99,6 +88,62 @@ let kindGirl=[
         label:(<span>短袖</span>),
         value:'短袖'
         },
+        {
+          label:(<span>衬衫</span>),
+          value:'衬衫'
+        },
+        {
+          label:(<span>格子衫</span>),
+          value:'格子衫'
+        },
+    ]
+  },
+  {
+    label:(<span>裙子</span>),
+    value:'裙子',
+    children:[
+      {
+      label:(<span>半身长裙</span>),
+      value:'半身长裙'
+      },
+      {
+        label:(<span>短裙</span>),
+        value:'短裙'
+      },
+      {
+        label:(<span>碎花短裙</span>),
+        value:'碎花短裙'
+      },
+      {
+        label:(<span>职业短裙</span>),
+        value:'职业短裙'
+      },
+      {
+        label:(<span>吊带裙</span>),
+        value:'吊带裙'
+      },
+      {
+        label:(<span>工作裙</span>),
+        value:'工作裙'
+      },
+      {
+        label:(<span>礼服裙</span>),
+        value:'礼服裙'
+      },
+      {
+        label:(<span>碎花长裙</span>),
+        value:'碎花长裙'
+      },
+      {
+        label:(<span>休闲裙</span>),
+        value:'休闲裙'
+      },
+      {
+        label:(<span>运动裙</span>),
+        value:'运动裙'
+      },
+      
+      
     ]
   },
   {
@@ -106,24 +151,66 @@ let kindGirl=[
     value:'外套',
     children:[
       {
-      label:(<span>牛仔外套</span>),
-      value:'牛仔外套'
-      },
-      {
         label:(<span>运动外套</span>),
         value:'运动外套'
       },
       {
-        label:(<span>风衣</span>),
-        value:'风衣'
+        label:(<span>大衣</span>),
+        value:'大衣'
       },
       {
-        label:(<span>衬衫</span>),
-        value:'衬衫'
+        label:(<span>毛线外套</span>),
+        value:'毛线外套'
       },
       {
-        label:(<span>毛呢大衣</span>),
-        value:'毛呢大衣'
+        label:(<span>棉服</span>),
+        value:'棉服'
+      },
+    ]
+  },
+  {
+    label:(<span>鞋子</span>),
+    value:'鞋子',
+    children:[
+      {
+      label:(<span>板鞋</span>),
+      value:'板鞋'
+      },
+      {
+        label:(<span>长靴</span>),
+        value:'长靴'
+      },
+      {
+        label:(<span>帆布鞋</span>),
+        value:'帆布鞋'
+      },
+      {
+        label:(<span>高跟鞋</span>),
+        value:'高跟鞋'
+      },
+      {
+        label:(<span>厚板鞋</span>),
+        value:'厚板鞋'
+      },
+      {
+        label:(<span>凉鞋</span>),
+        value:'凉鞋'
+      },
+      {
+        label:(<span>皮鞋</span>),
+        value:'皮鞋'
+      },
+      {
+        label:(<span>拖鞋</span>),
+        value:'拖鞋'
+      },
+      {
+        label:(<span>运动鞋</span>),
+        value:'运动鞋'
+      },
+      {
+        label:(<span>短靴</span>),
+        value:'短靴'
       },
     ]
   },
@@ -177,16 +264,16 @@ let kindBoy=[
 // 位置data
 const where=[
   {
-    label:(<span>{localStorage.getItem("家")?localStorage.getItem('家'):'家'}</span>),
-      value:localStorage.getItem("家")?localStorage.getItem:'家'
+    label:(<span>{localStorage.getItem("jia")?localStorage.getItem('jia'):'家'}</span>),
+      value:localStorage.getItem("jia")?localStorage.getItem('jia'):'家'
   },
   {
-    label:(<span>{localStorage.getItem("行李箱")?localStorage.getItem('行李箱'):'行李箱'}</span>),
-      value:localStorage.getItem("行李箱")?localStorage.getItem:'行李箱'
+    label:(<span>{localStorage.getItem("guizi")?localStorage.getItem('guizi'):'柜子'}</span>),
+      value:localStorage.getItem("guizi")?localStorage.getItem('guizi'):'柜子'
   },
   {
-    label:(<span>{localStorage.getItem("柜子")?localStorage.getItem('柜子'):'柜子'}</span>),
-      value:localStorage.getItem("柜子")?localStorage.getItem:'柜子'
+    label:(<span>{localStorage.getItem("xinglixiang")?localStorage.getItem('xinglixiang'):'行李箱'}</span>),
+      value:localStorage.getItem("xianglixiang")?localStorage.getItem('xinglixiang'):'行李箱'
   },
   {
   label:(<span>{localStorage.getItem("添加")?localStorage.getItem('添加'):''}</span>),
@@ -283,6 +370,7 @@ const colors = [
 const picName='';
 class Insert extends Component {
   state = {
+    where:where,
     kinds:kindBoy,
     picName:'',
     change:'',
@@ -420,8 +508,6 @@ class Insert extends Component {
       }
       // sex=res
     })
-    
-    
   }
   
   render() {
@@ -458,7 +544,7 @@ class Insert extends Component {
           {/* ------种类选择结束 */}
 
           {/* ----地方选择 */}
-          <Picker data={where}  value={this.state.whereValue} cols={1}
+          <Picker data={this.state.where}  value={this.state.whereValue} cols={1}
             onChange={this.onChangeWhere} 
              >
             <List.Item arrow="horizontal">地方</List.Item>
