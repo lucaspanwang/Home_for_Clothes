@@ -157,7 +157,7 @@ export default class AppBox extends Component {
     }
     
     componentDidMount(){
-        console.log(this.state.display,this.state.display1,this.state.display2)
+        // console.log(this.state.display,this.state.display1,this.state.display2)
         if(localStorage.getItem('添加')==undefined){
             this.setState({
                 value:'添加'
@@ -211,7 +211,7 @@ export default class AppBox extends Component {
                         />
                     </div>
                     <div id="store">
-                        <img src={Box} style={{width: '85%', height: '80%', margin: '45% 6%'}} />
+                        <img src={Box} style={{width: '85%', height: '80%', margin: '20% 7%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
                                 <button onClick={this.double}>{this.state.value}</button>
@@ -234,21 +234,21 @@ export default class AppBox extends Component {
                 </Router>
                 <div id='jia' style={{width:'90%',height:'200px',marginLeft:'5%',display:this.state.display,
                         backgroundColor:"rgba(169,169,169,0.8)",borderRadius:'45px',
-                        position:"relative",top:'-600px',paddingTop:'10%',borderWidth:'3px',borderStyle:'solid',borderColor:'red'}}>
+                        position:"relative",top:'-500px',paddingTop:'10%',borderWidth:'3px',borderStyle:'solid'}}>
                         <h2 style={{ margin: '5%', fontWeight: "lighter",color:'rgb(165,42,42)',}}>请输入你想修改的名称:</h2>
                         <input type="type" style={{ marginLeft: '5%', height: '40px' }} onChange={this.value.bind(this,'jia')}/>
                         <input type="submit" style={{ height: '40px', width: '60px' }} onClick={this.sub.bind(this,'jia')}/>
                 </div>
                 <div id='guizi' style={{display:'none',width:'90%',height:'200px',marginLeft:'5%',display:this.state.display1,
                         backgroundColor:"rgba(169,169,169,0.8)",borderRadius:'45px',
-                        position:"relative",top:'-600px',paddingTop:'10%',borderWidth:'3px',borderStyle:'solid',borderColor:'blue'}}>
+                        position:"relative",top:'-500px',paddingTop:'10%',borderWidth:'3px',borderStyle:'solid'}}>
                         <h2 style={{ margin: '5%', fontWeight: "lighter",color:'rgb(165,42,42)',}}>请输入你想修改的名称:</h2>
                         <input type="type" style={{ marginLeft: '5%', height: '40px' }} onChange={this.value.bind(this,'gui')}/>
                         <input type="submit" style={{ height: '40px', width: '60px' }} onClick={this.sub.bind(this,'gui')}/>
                 </div>
                 <div id='xinglixiang' style={{display:'none',width:'90%',height:'200px',marginLeft:'5%',display:this.state.display2,
                         backgroundColor:"rgba(169,169,169,0.8)",borderRadius:'45px',
-                        position:"relative",top:'-600px',paddingTop:'10%',borderWidth:'3px',borderStyle:'solid'}}>
+                        position:"relative",top:'-500px',paddingTop:'10%',borderWidth:'3px',borderStyle:'solid'}}>
                         <h2 style={{ margin: '5%', fontWeight: "lighter",color:'rgb(165,42,42)',}}>请输入你想修改的名称:</h2>
                         <input type="type" style={{ marginLeft: '5%', height: '40px' }} onChange={this.value.bind(this,'xing')}/>
                         <input type="submit" style={{ height: '40px', width: '60px' }} onClick={this.sub.bind(this,'xing')}/>
