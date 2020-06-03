@@ -436,9 +436,14 @@ export default class Index extends Component {
                     </div>
                 </div>
                 {/* 日记end */}
-                <ReactHighCharts config={config}/>
-                <div id="main" style={{ width: 350, height: 350 ,float:'right',marginTop:-300}}></div>
-                <div style={{marginLeft:'100px', width: '800px', height: '800px'}} ref={this.setMapElement} />
+                {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }}> */}
+                <div>
+                    <div style={{float:'left',width:600}}> 
+                    <ReactHighCharts config={config}/>
+                    </div>
+                    <div id="main" style={{ width: 350, height: 350,float:'left',marginTop:-30}}></div>
+                </div>
+                <div style={{marginLeft:'100px', width: '800px', height: '800px',position:'relative',top:250}} ref={this.setMapElement} />
             </div>
         )
     }
