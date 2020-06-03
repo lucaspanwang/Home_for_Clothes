@@ -3,20 +3,31 @@ import {NavBar, Flex, InputItem, Button} from 'antd-mobile';
 import { Link, Route, HashRouter as Router } from 'react-router-dom';
 import remark from '../images/message/remark.png';
 import thumb from '../images/message/thumb.png';
-import user123 from '../images/message/123.jpg';
-import user122 from '../images/message/122.jpg';
+import plus from '../images/message/plus.png';
 import group1 from '../images/group1.jpg';
 
 // import './login.css';
 
+var num = 1;
 export default class ResetPwd extends Component{
     constructor(){
         super();
         this.state = {
             user:{},
+            display:'none'
           }
     }
     
+    onClick3 = ()=>{
+        if(num == 1){
+            this.setState({ display:'block' });
+            num = num+1;
+        }else{
+            this.setState({ display:'none' });
+            num = num-1;
+        }
+    }
+
     componentDidMount(){
         fetch("http://47.98.163.228:3004/users?userId="+123)
         .then(res=>res.json())
@@ -29,6 +40,9 @@ export default class ResetPwd extends Component{
                 user:res[0]
             })
         });
+
+        // if(this.state.status==0) document.getElementById('dialog').style.display='none';
+        // else document.getElementById('dialog').style.display='block';
     }
 
     render(){
@@ -70,12 +84,27 @@ export default class ResetPwd extends Component{
                             <p style={{color:'#666666', margin:'0', fontSize:'16px'}}>嗯嗯，好滴~</p>
                         </div>
                     </li></Link>
+                    <a>
+                        <img onClick={this.onClick3} src={plus} style={{width:'35px',float:'right',position:'absolute',bottom:'15px',right:'15px'}} key="plus"/>
+                    </a>
+                    <ul id='dialog' style={{display:this.state.display ,float:'right', position:'absolute',width:'120px',height:'90px', bottom:'55px',right:'15px', backgroundImage:"url(" + require("../images/message/dialogNew.png") + ")",backgroundSize:' 100%'}}>
+                        <Link to=''><li style={{lineHeight:'8px', color:'#333333', marginTop:'17px', marginBottom:'3px', textAlign:'center', borderBottom:'solid 2px #cccccc'}}>
+                            <p>新建群聊</p>
+                        </li></Link>
+                        <Link to=''><li style={{lineHeight:'10px', color:'#333333', marginTop:'8px', marginBottom:'10px', textAlign:'center',}}>
+                            <p>添加群聊</p>
+                        </li></Link>
+                        
+                    </ul>
+                    
                 </ul>
                 {/* <Flex direction="column" justify="center" align="center">
                     <Link to="/login"><Button style={{marginTop:'7%' ,backgroundColor:'#fc9d9a', width:'90%', color:'white', fontSize:'15px'}}>重新登录</Button></Link>
                 </Flex> */}
-            </form>  
+            </form>
+              
         </Flex>
+        
     </div>
     }
 }
