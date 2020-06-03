@@ -469,7 +469,7 @@ class Insert extends Component {
       // });  
        
       // console.log('导入前端post成功');
-      // window.location.reload()
+      window.location.reload()
     }
     }
     
