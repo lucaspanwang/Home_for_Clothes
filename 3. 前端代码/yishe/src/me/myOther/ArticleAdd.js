@@ -34,13 +34,19 @@ export default class ArticleAdd extends Component {
     componentDidMount() {
         var today = new Date();
         var month = '';
+        var dayn = '';
         if(today.getMonth()<10){
             month = '0'+(today.getMonth()+1);
         }else{
             month = today.getMonth()+1;
         }
+        if(today.getDate()<10){
+            dayn = '0'+today.getDate();
+        }else{
+            dayn = today.getDate();
+        }
 
-        var date = today.getFullYear() + '-' + month + '-' + today.getDate(); 
+        var date = today.getFullYear() + '-' + month + '-' + dayn; 
         fetch('http://47.98.163.228:3000/report/'+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
@@ -49,11 +55,11 @@ export default class ArticleAdd extends Component {
                     content: res,
                 })
                 if(res.length!==0 && res[0].derp!==null){
-                    var time = res[0].time.split('T')[0]
+                    var time = res[0].time.split('T')[0];
                     var days = this.getDaysDiffBetweenDates(new Date(time), new Date(date))
                     console.log(days)
                     var day1=res[0].derp.split('帖')[1];
-                    var day2 = day1.split('天')[0];
+                    var day2 = day1.split('天')[0];//禁止发帖天数
                     console.log(day2);
                     if(days<=day2){
                         this.setState({
