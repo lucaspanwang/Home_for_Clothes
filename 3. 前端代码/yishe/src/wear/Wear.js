@@ -137,16 +137,13 @@ export default class Wear extends Component {
               if(res[0].userSex=='女'){
                 res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
                 big[i] = res[i].cloSmallPic;
-                console.log(big[i])
               }else{
                 res[i].cloSmallPic = "http://47.98.163.228:3001"+res[i].cloSmallPic.substr(j);
                 big[i] =  "ht"+res[i].cloSmallPic.substr(j).split('.png')[0]+'.png'
-                console.log(big[i])
               }
               var name = res[i].cloSmallPic.substr(j).split('/')[4];
               var n = name.split('.')[0];
               small[i] = "http://47.98.163.228:3001/aaa/"+n+'_s.png';
-              console.log(small[i])
               //判断裤子，把图存进去
               if(n.indexOf('ku')!=-1){
                 kuku.push(big[i]);
@@ -188,36 +185,6 @@ export default class Wear extends Component {
             qun_color:qun_c,ku_color:ku_c,yi_color:yi_c,tao_color:tao_c,
             xie:xie,xie_s:xie_s
           })
-          //实现推荐
-          var tuitui=[],tuitui_s=[];
-          if(this.state.temperature<0){//最低温度小于零（冬天）
-            this.setState({
-              tuijian:this.state.yi,
-              tuijian_s:this.state.yi_s
-            })
-          }
-          if(this.state.temperature2>25){//最高温度大于25（夏天）
-            this.setState({
-              tuijian:this.state.qun,
-              tuijian_s:this.state.qun_s
-            })
-          }
-          else{
-            if(this.state.tao[0]){//判断是否存了外套
-              for(var i=0;i<this.state.ku.length;i++){
-                tuitui.push(this.state.tao[i])
-                tuitui_s.push(this.state.tao_s[i])
-              }
-            }
-            for(var i=0;i<this.state.ku.length;i++){
-              tuitui.push(this.state.ku[i])
-              tuitui_s.push(this.state.ku_s[i])
-            }
-            this.setState({
-              tuijian:tuitui,
-              tuijian_s:tuitui_s,
-            })
-          }
         }
       })
       this.updata_image();//美妆
@@ -235,7 +202,6 @@ export default class Wear extends Component {
     })
     .then(res=>res.json())
     .then(res=>{
-      console.log(res)
       this.setState({
         temperature:res.tem2,
         temperature2:res.tem1,
@@ -282,8 +248,15 @@ export default class Wear extends Component {
       var index = h.lastIndexOf("\/");  
       window.location.href = h.substring(0, index+1)+str;
     }
-    //给模特穿衣服
-    qunzi=(idx)=>{
+//给模特穿衣服
+//裙子的跳转
+qunzi=(idx)=>{
+  this.state.count++;//判断点击几次
+  var a = setTimeout(()=>{
+    if(this.state.count>1){//双击
+      var place = this.zhao(idx,this.state.qun)
+      this.fasong(this.zhaoshu(place,this.state.qun[idx]),place);
+    }else{//单击穿鞋
       document.getElementById('mote_4').style.display='none'
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
@@ -299,16 +272,40 @@ export default class Wear extends Component {
       }
       //变色
       this.change_color(this.state.qun[idx],this.state.qun_color[idx])
+      this.setState({
+        count:0
+      })
     }
-    kuzi=(idx)=>{
+  },200)
+}
+//裤子的跳转
+kuzi=(idx)=>{
+  this.state.count++;//判断点击几次
+  var a = setTimeout(()=>{
+    if(this.state.count>1){//双击
+      var place = this.zhao(idx,this.state.ku)
+      this.fasong(this.zhaoshu(place,this.state.ku[idx]),place);
+    }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       //脱连衣裙
       document.getElementById('mote_4').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote2').src=this.state.ku[idx];
       document.getElementById('mote2').style.display = 'block';
+      this.setState({
+        count:0
+      })
     }
-    shangyi=(idx)=>{
+  },200)
+}
+//上衣的跳转
+shangyi=(idx)=>{
+  this.state.count++;//判断点击几次
+  var a = setTimeout(()=>{
+    if(this.state.count>1){//双击
+      var place = this.zhao(idx,this.state.yi)
+      this.fasong(this.zhaoshu(place,this.state.yi[idx]),place);
+    }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       if(!this.state.flag){
         document.getElementById('mote_4').style.display = 'none';
@@ -317,19 +314,48 @@ export default class Wear extends Component {
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote3').src=this.state.yi[idx];
       document.getElementById('mote3').style.display = 'block';
+      this.setState({
+        count:0
+      })
     }
-    waitao=(idx)=>{
+  },200)
+}
+//外套的跳转
+waitao=(idx)=>{
+  this.state.count++;//判断点击几次
+  var a = setTimeout(()=>{
+    if(this.state.count>1){//双击
+      var place = this.zhao(idx,this.state.tao)
+      this.fasong(this.zhaoshu(place,this.state.tao[idx]),place);
+    }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote4').src=this.state.tao[idx];
       document.getElementById('mote4').style.display = 'block';
+      this.setState({
+        count:0
+      })
     }
-    xie=(idx)=>{
+  },200)
+}
+//鞋的跳转
+xie=(idx)=>{
+  this.state.count++;//判断点击几次
+  var a = setTimeout(()=>{
+    if(this.state.count>1){//双击
+      var place = this.zhao(idx,this.state.xie)
+      this.fasong(this.zhaoshu(place,this.state.xie[idx]),place);
+    }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
       document.getElementById('mote5').src=this.state.xie[idx];
       document.getElementById('mote5').style.display = 'block';
+      this.setState({
+        count:0
+      })
     }
+  },200)
+}
  //变色（小图）
     change_color_small(it,col){
       var now  = it.split('.')
@@ -356,63 +382,20 @@ export default class Wear extends Component {
       document.getElementById('mote_4').src=now_src;
       document.getElementById('mote_4').style.filter=`drop-shadow(150px 0 ${color})`;
     }
-//推荐的点击事件
-    tuijian=(idx)=>{
-      this.state.count++;//判断点击几次
-        var a = setTimeout(()=>{
-          if(this.state.count>1){//双击
-            var place = this.zhao(idx,this.state.tuijian)
-            this.fasong(this.state.linshi,place)
-          }else{//单击穿衣
-            console.log(this.state.tuijian)
-            document.getElementById('mote').style.display = 'none';
-            document.getElementById('mote_2').style.display = 'block';
-            if(this.state.tuijian[idx].indexOf('ku')!==-1){ //裤子2
-              document.getElementById('mote6').style.display = 'none';
-              document.getElementById('mote_5').style.display = 'none';
-              document.getElementById('mote_4').style.display = 'none';
-              document.getElementById('mote2').src=this.state.tuijian[idx];
-              document.getElementById('mote2').style.display = 'block';
-            }
-            if(this.state.tuijian[idx].indexOf('qun')!==-1){ //裙子2
-              document.getElementById('mote6').style.display = 'none'
-              document.getElementById('mote_5').style.display = 'none';
-              document.getElementById('mote_4').style.display='none'
-              document.getElementById('mote_5').style.display='none'
-              document.getElementById('mote2').src=this.state.tuijian[idx];
-              document.getElementById('mote2').style.display = 'block';      
-              //变色......
-              if(this.state.tuijian[idx].indexOf('duan')!=-1){ //包括短裙
-
-              }else{//连衣裙
-                document.getElementById('mote3').style.display = 'none';
-                document.getElementById('mote4').style.display = 'none';
-              }
-            }
-            if(this.state.tuijian[idx].indexOf('yi')!==-1){
-              document.getElementById('mote6').style.display = 'none';
-              document.getElementById('mote_5').style.display = 'none';
-              document.getElementById('mote3').src=this.state.tuijian[idx];
-              document.getElementById('mote3').style.display = 'block';
-              if(document.getElementById('mote2').src.indexOf('qun')!=-1){
-                if(document.getElementById('mote2').src.indexOf('dun')!=-1){
-                  document.getElementById('mote2').style.display = 'none';
-                  document.getElementById('mote4').style.display = 'none';
-                }
-              }
-            }
-            if(this.state.tuijian[idx].indexOf('tao')!==-1){
-              document.getElementById('mote6').style.display = 'none';
-              document.getElementById('mote_5').style.display = 'none';
-              document.getElementById('mote4').src=this.state.tuijian[idx];
-              document.getElementById('mote4').style.display = 'block';
-            }
-            this.setState({
-              count:0
-            })
-          }
-      },200)
+  //找第几个数
+  zhaoshu(place,hh){
+    var length = this.state.ress.length;
+    var st = 0;
+    for(var i=0;i<length;i++){
+      if(this.state.ress[i].cloPlace == place){
+        st++;
+        if(this.state.ress[i].cloSmallPic.indexOf(hh)!=-1){
+          console.log(st)
+          return st;
+        }
+      }
     }
+  }
     //找到位置
     zhao=(idx,weizhi)=>{
       var place='';
@@ -503,43 +486,40 @@ export default class Wear extends Component {
     speak=()=>{
       this.audio.play();
     }
-      //导出图片
-      exportImage = () => {
-        const newCanvas = document.createElement("canvas");
-        const element = document.querySelector('#view');
-        const dom_width = 170;
-        const dom_height =550;
-        // const dom_width = parseInt(window.getComputedStyle(element).width);
-        // const dom_height = parseInt(window.getComputedStyle(element).height);
-        // console.log(dom_width)
-        // console.log(dom_height)
-        //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
-        newCanvas.width = dom_width*5;
-        newCanvas.height = dom_height*5;
-        newCanvas.style.width = dom_width + "px";
-        newCanvas.style.height = dom_height + "px";
-        const context = newCanvas.getContext("2d");
-        context.scale(1.8, 1.8);
-
-        html2canvas(element, { canvas: newCanvas }).then((canvas) => {
-            const imgUri = canvas.toDataURL(); // 获取生成的图片的url
-            console.log(imgUri)
-            this.setState({
-              imgUri:imgUri
-            },function(){
-              localStorage.setItem("shareImg", JSON.stringify(this.state.imgUri));
-              fetch('http://47.98.163.228:3001/toshare',{
-                method: 'post', 
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Credentials" : true,
-                headers: {
-                     'Content-Type': 'multipart/form-data;charset=utf-8'
-                },
-                body:JSON.stringify({pic:this.state.imgUri,userId:this.props.id}) 
-              })
-              console.log(this.state)
-            })
-        });
+    //导出图片
+    exportImage = () => {
+      const newCanvas = document.createElement("canvas");
+      const element = document.querySelector('#view');
+      const dom_width = 170;
+      const dom_height =550;
+      newCanvas.width = dom_width*5;
+      newCanvas.height = dom_height*5;
+      newCanvas.style.width = dom_width + "px";
+      newCanvas.style.height = dom_height + "px";
+      const context = newCanvas.getContext("2d");
+      context.scale(1.8, 1.8);
+      html2canvas(element, { 
+        canvas: newCanvas,
+        useCORS:true,
+        logging:true, 
+      }).then((canvas) => {
+        const imgUri = canvas.toDataURL(); // 获取生成的图片的url
+        console.log(imgUri)
+        this.setState({
+          imgUri:imgUri
+        },function(){
+          localStorage.setItem("shareImg", JSON.stringify(this.state.imgUri));
+          fetch('http://47.98.163.228:3001/toshare',{
+            method: 'post', 
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true,
+            headers: {
+              'Content-Type': 'multipart/form-data;charset=utf-8'
+            },
+            body:JSON.stringify({pic:this.state.imgUri,userId:this.props.id}) 
+          })
+        })
+      });
     }
     //渲染组件
     render() {
