@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
 import Back from '../images/fanhui_1.png';
@@ -46,25 +46,43 @@ export default class Robe extends Component {
     //   });
     // }
     componentDidMount(){
-        console.log(this.props.match.params.id);//获取用户id
-        fetch("http://47.98.163.228:8087/userid", {
-        method: 'post', 
-        "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials" : true,
-        credentials: 'include',
+        fetch('http://47.98.163.228:3003/picture', {
+        method: 'post',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         },
-        body:JSON.stringify({userId:this.props.match.params.id}) 
-      });
-        fetch(this.state.url)
-        .then(res=>res.json())
-        .then(res=>{
-            this.setState({
-                picture:res
-            })
-            console.log(res)
-        });
+        body: JSON.stringify({
+          userId:this.props.match.params.id,
+          whereId:"2"
+        })
+      }).then((res)=>res.json())
+      .then((res)=>{
+        //   console.log('图片路径接收：'+JSON.stringify(res))
+        this.setState({
+            picture:res
+        })
+      })
+    //     console.log(this.props.match.params.id);//获取用户id
+    //     fetch("http://47.98.163.228:8087/userid", {
+    //     method: 'post', 
+    //     "Access-Control-Allow-Origin" : "*",
+    //     "Access-Control-Allow-Credentials" : true,
+    //     credentials: 'include',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body:JSON.stringify({userId:this.props.match.params.id}) 
+    //   });
+    //     fetch(this.state.url)
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         this.setState({
+    //             picture:res
+    //         })
+    //         console.log(res)
+    //     });
         
       fetch('http://47.98.163.228:8083/pp2')
         .then(res=>res.json())
@@ -102,14 +120,14 @@ export default class Robe extends Component {
                         if(i==this.state.num){
                             return(
                                 <div key={i} style={{display:'inlinbe-block',position:'relative',width:'32%',height:"120px",margin:'2px',float:'left'}}>
-                                <img src={`http://47.98.163.228:8087/${item}`}style={{width:'100%',height:'120px',border:'1px solid red'}}/>
+                                <img src={`http://47.98.163.228:3004/${item}`}style={{width:'100%',height:'120px',border:'1px solid red'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>
                                 )
                         }else{
                             return(
                                 <div key={i} style={{display:'inlinbe-block',position:'relative',width:'32%',height:"120px",margin:'2px',float:'left'}}>
-                                <img src={`http://47.98.163.228:8087/${item}`}style={{width:'100%',height:'120px'}}/>
+                                <img src={`http://47.98.163.228:3004/${item}`}style={{width:'100%',height:'120px'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>
                             )}
