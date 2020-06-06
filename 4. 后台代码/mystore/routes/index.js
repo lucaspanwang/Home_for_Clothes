@@ -184,43 +184,120 @@ router.post('/insert',function(req,res){
   var cloPic=JSON.stringify('我的/images/'+cloId1+filesType);
   //小图片地址
   var cloSmallPic;
+  var kind=req.body.zhonglei[0]
+  console.log(kind)
+  // console.log('我的天涯'+kind)
+  console.log(kind=='上衣')
   if (sex == '女') {
-    console.log('女');
-    console.log(zhonglei=='"裤子牛仔裤"')
-    if (zhonglei == '"裤子运动裤"') {
-      cloSmallPic = JSON.stringify('我的/images/yundongku.png');
-    } else if (zhonglei == '"裤子牛仔裤"') {
-      cloSmallPic = JSON.stringify('我的/images/kuku.png');
-    } else if (zhonglei == '"裤子短裤"') {
-      cloSmallPic = JSON.stringify('我的/images/duanku1.png');
-    } else if (zhonglei == '"裤子西装裤"') {
-      cloSmallPic = JSON.stringify('我的/images/kuku.png');
-    } else if (zhonglei == '"裤子直筒裤"') {
-      cloSmallPic = JSON.stringify('我的/images/kuku.png');
-    } else if (zhonglei == '"裙子短裙"') {
-      cloSmallPic = JSON.stringify('我的/images/duanqun.png')
-    } else if (zhonglei == '"裙子半身长裙"') {
-      cloSmallPic = JSON.stringify('我的/images/changqun.png')
-    } else if (zhonglei == '"裙子吊带裙"') {
-      cloSmallPic = JSON.stringify('我的/images/heiqun.png')
-    } else if (zhonglei == '"上衣毛衣"') {
-      cloSmallPic = JSON.stringify('我的/images/maoyi.png')
-    } else if (zhonglei == '"上衣打底衫"') {
-      cloSmallPic = JSON.stringify('我的/images/yundongyi.png')
-    } else if (zhonglei == '"上衣卫衣"') {
-      cloSmallPic = JSON.stringify('我的/images/changshangyi.png')
-    } else if (zhonglei == '"上衣短袖"') {
-      cloSmallPic = JSON.stringify('我的/images/duanxiuyi.png')
-    } else if (zhonglei == '"外套牛仔外套"') {
-      cloSmallPic = JSON.stringify('我的/images/chenshantao.png')
-    } else if (zhonglei == '"外套毛呢大衣"') {
-      cloSmallPic = JSON.stringify('我的/images/waitao.png')
-    } else if (zhonglei == '"外套风衣"') {
-      cloSmallPic = JSON.stringify('我的/images/waitao.png')
-    } else if (zhonglei == '"外套衬衫"') {
-      cloSmallPic = JSON.stringify('我的/images/waitao.png')
+    //裤子
+    if(kind=='裤子'){
+      if(zhonglei=='"裤子背带裤"'){
+        cloSmallPic=JSON.stringify('我的/aaa/beidaiku.png');
+      }else if (zhonglei == '"裤子运动裤"') {
+        cloSmallPic = JSON.stringify('我的/aaa/yundongku.png');
+      } else if (zhonglei == '"裤子牛仔裤"') {
+        cloSmallPic = JSON.stringify('我的/aaa/niuzaiku.png');
+      } else if (zhonglei == '"裤子短裤"') {
+        cloSmallPic = JSON.stringify('我的/aaa/duanku.png');
+      } else if (zhonglei == '"裤子西装裤"') {
+        cloSmallPic = JSON.stringify('我的/aaa/xizhuangku.png');
+      } else if (zhonglei == '"裤子直筒裤"') {
+        cloSmallPic = JSON.stringify('我的/aaa/zhitongku.png');
+      } 
     }
+    //裤子结束
+
+    //裙子
+    if(kind=='裙子'){
+      console.log('我是裙子')
+      if(zhonglei == '"裙子短裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/duanqun.png')
+      } else if (zhonglei == '"裙子半身长裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/changqun.png')
+      } else if (zhonglei == '"裙子吊带裙"') {
+        cloSmallPic = JSON.stringify('我的/images/diaodaiqun.png')
+      }else if (zhonglei == '"裙子碎花短裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/suihuaduanqun.png')
+      }else if (zhonglei == '"裙子职业短裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/zhiyequn.png')
+      } else if (zhonglei == '"裙子工作裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/gongzuoqun.png')
+      } else if (zhonglei == '"裙子礼服裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/liqun.png')
+      } else if (zhonglei == '"裙子碎花长裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/suihuaqun.png')
+      } else if (zhonglei == '"裙子休闲裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/xiuxianqun.png')
+      }else if (zhonglei == '"裙子运动裙"') {
+        cloSmallPic = JSON.stringify('我的/aaa/yundongqun.png')
+      } 
+    }
+    //裙子结束
+
+    //上衣
+    if (kind == '上衣') {
+      console.log('我是上衣')
+      if (zhonglei == '"上衣毛衣"') {
+        cloSmallPic = JSON.stringify('我的/aaa/maoyi.png')
+      } else if (zhonglei == '"上衣打底衫"') {
+        cloSmallPic = JSON.stringify('我的/aaa/dadishan.png')
+      } else if (zhonglei == '"上衣卫衣"') {
+        cloSmallPic = JSON.stringify('我的/aaa/weiyi.png')
+      } else if (zhonglei == '"上衣短袖"') {
+        cloSmallPic = JSON.stringify('我的/aaa/duanxiu.png')
+      } else if (zhonglei == '"上衣运动衣"') {
+        cloSmallPic = JSON.stringify('我的/aaa/yundongyi.png')
+      } else if (zhonglei == '"上衣衬衫"') {
+        cloSmallPic = JSON.stringify('我的/aaa/chenshan.png')
+      } else if (zhonglei == '"上衣格子衫"') {
+        cloSmallPic = JSON.stringify('我的/aaa/gezishan.png')
+      }
+
+    }
+    //上衣结束
+
+    //外套
+    if (kind == '外套') {
+      // console.log("我是外套")
+      if (zhonglei == '"外套运动外套"') {
+        cloSmallPic = JSON.stringify('我的/aaa/yundongwaitao.png')
+      } else if (zhonglei == '"外套大衣"') {
+        cloSmallPic = JSON.stringify('我的/aaa/dayitao.png')
+      } else if (zhonglei == '"外套毛线外套"') {
+        cloSmallPic = JSON.stringify('我的/aaa/maoxianwaitao.png')
+      } else if (zhonglei == '"外套棉服"') {
+        cloSmallPic = JSON.stringify('我的/aaa/mianfutao.png')
+      }
+    }
+    //外套结束
+
+    //鞋子
+    if(kind=='鞋子'){
+      if (zhonglei == '"鞋子板鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/banxie.png')
+      } else if (zhonglei == '"鞋子长靴"') {
+        cloSmallPic = JSON.stringify('我的/aaa/changquexie.png')
+      } else if (zhonglei == '"鞋子帆布鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/fanbuxie.png')
+      } else if (zhonglei == '"鞋子高跟鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/gaogenxie.png')
+      }else if (zhonglei == '"鞋子厚板鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/houbanxie.png')
+      } else if (zhonglei == '"鞋子凉鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/liangxie.png')
+      } else if (zhonglei == '"鞋子皮鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/pixie.png')
+      }else if (zhonglei == '"鞋子拖鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/tuoxie.png')
+      }else if (zhonglei == '"鞋子运动鞋"') {
+        cloSmallPic = JSON.stringify('我的/aaa/yundongxie.png')
+      }else if (zhonglei == '"鞋子短靴"') {
+        cloSmallPic = JSON.stringify('我的/aaa/duanxuexie.png')
+      }
+    }
+    //鞋子结束
   } 
+  //女装分类结束
   else {
     if (zhonglei == '"裤子运动裤"') {
       cloSmallPic = JSON.stringify('我的/images/yundongku_boy.png');
@@ -251,7 +328,7 @@ router.post('/insert',function(req,res){
      
     }
   })
-  //读取图片到服务端
+  // //读取图片到服务端
   var path='../我的/images/'+cloId1+filesType;
   console.log(path);
   var dataBuffer=Buffer.from(base64,'base64');
