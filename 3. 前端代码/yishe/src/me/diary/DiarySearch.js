@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { NavBar,Grid } from 'antd-mobile';
+import { NavBar,Grid,Modal } from 'antd-mobile';
 import { Link,Route, HashRouter as Router } from 'react-router-dom';
 import fanhui from '../../images/fanhui_1.png';
 import del from '../../images/lajitong.png';
 import empty from '../../images/empty.png';
+
+const alert = Modal.alert;
 
 var diarys = []; 
 var diaryIds=[];
@@ -119,7 +121,14 @@ export default class DiarySearch extends Component {
                             <div style={{width:'100%',height:'50px'}}>
                                 <img src={this.state.content[0].userPic} alt='' style={{width:'12%',borderRadius:'50%',float:'left'}} />
                                 <div style={{paddingTop:'20px'}}>
-                                    <span style={{color:'#888'}}>&nbsp;&nbsp;&nbsp;&nbsp;{item.diaryTime} <img src={del} alt='' style={{width:'15px',float:'right'}} onClick={()=>this.deleteItem(idx)}/></span>
+                                    <span style={{color:'#888'}}>&nbsp;&nbsp;&nbsp;&nbsp;{item.diaryTime} <img src={del} alt='' style={{width:'15px',float:'right'}} 
+                                    // onClick={()=>this.deleteItem(idx)}
+                                    onClick={() =>
+                                        alert('删除', '你确定要删除该日记吗？', [
+                                          { text: '取消', onPress: () => console.log('cancel') },
+                                          { text: '确定', onPress: () => this.deleteItem(idx) },
+                                        ])}
+                                    /></span>
                                 </div>    
                             </div>
                             <div style={{width:'100%'}}>

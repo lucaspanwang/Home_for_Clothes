@@ -10,6 +10,7 @@ const { TextArea } = Input;
 const alert = Modal.alert;
 var dd = 0;
 var cont = '';
+
 const showAlert = () => {
   const alertInstance = alert('警告', cont, [
     { text: '确定', onPress: () => console.log('确定') },
@@ -54,10 +55,11 @@ export default class ArticleAdd extends Component {
                 this.setState({
                     content: res,
                 })
-                if(res.length!==0 && res[0].derp!==null){
+                if(res.length!==0 && res[0].derp!=='' && res[0].derp!==null){
                     var time = res[0].time.split('T')[0];
                     var days = this.getDaysDiffBetweenDates(new Date(time), new Date(date))
                     console.log(days)
+                    console.log(res[0].derp)
                     var day1=res[0].derp.split('帖')[1];
                     var day2 = day1.split('天')[0];//禁止发帖天数
                     console.log(day2);
@@ -73,7 +75,7 @@ export default class ArticleAdd extends Component {
                         }
                     }else{
                         this.setState({
-                            isSend: false,
+                            isSend: true,
                         })
                     }
                 }
@@ -95,6 +97,7 @@ export default class ArticleAdd extends Component {
         Toast.offline('文章不能为空!!!',2);
     }
     onPost=()=> { 
+        console.log(this.state.isSend);
         if(!this.state.isSend){
             showAlert()
             // Toast.offline('您发表的文章被举报，现禁止发帖！',5);

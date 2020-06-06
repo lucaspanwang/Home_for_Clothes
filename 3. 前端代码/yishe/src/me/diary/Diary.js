@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { NavBar,Carousel,Grid } from 'antd-mobile';
+import { NavBar,Modal } from 'antd-mobile';
 import { Link,Route, HashRouter as Router } from 'react-router-dom';
 import { Timeline,Icon } from 'antd';
 import './diary.css';
@@ -10,6 +10,8 @@ import fanhui from '../../images/fanhui_1.png';
 import date from '../../images/date.png';
 
 var diaryIds = []; 
+
+const alert = Modal.alert;
 
 export default class Diary extends Component {
     constructor(){
@@ -129,7 +131,7 @@ export default class Diary extends Component {
             <div style={{width:'100%'}}>
                 <NavBar style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                 leftContent={[
-                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="fan6356"/></Link>
+                    <Link to={"/apptab/"+this.props.match.params.id+'&me'}><img src={fanhui} style={{width:'30px'}} key="f62"/></Link>
                 ]}
                 >穿搭日记</NavBar>
                 <NavBar></NavBar>
@@ -187,7 +189,15 @@ export default class Diary extends Component {
                                     )
                                 }
                                     
-                                <p style={{color:'#888'}}>{this.formatUTC(item.diaryTime)} <img src={del} alt='' style={{width:'15px',float:'right'}} onClick={()=>this.deleteItem(idx)}/></p>
+                                <p style={{color:'#888'}}>{this.formatUTC(item.diaryTime)} <img src={del} alt='' style={{width:'15px',float:'right'}} 
+                                // onClick={()=>this.deleteItem(idx)}
+                                onClick={() =>
+                                    alert('删除', '你确定要删除该日记吗？', [
+                                      { text: '取消', onPress: () => console.log('cancel') },
+                                      { text: '确定', onPress: () => this.deleteItem(idx) },
+                                    ])
+                                  }
+                                /></p>
                             </div>    
                         </Timeline.Item>
                     )
