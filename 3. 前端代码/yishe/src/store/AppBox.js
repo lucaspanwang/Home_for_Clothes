@@ -36,19 +36,22 @@ export default class AppBox extends Component {
     // 根据名字查找位置（回车事件）
     fondWhere=(value)=>{
         console.log(value);
-        fetch(`http://47.98.163.228:3003/seek/${value}`)
+        var id=this.props.id;
+        fetch(`http://47.98.163.228:3003/seek/${value}/${id}`)
         .then(res=>res.json())
         .then(res=>{
             console.log(res);
             if(res=='不存在'){
                 alert('不存在')
             } else {
-                var where = res;
+                var where = res.whereId;
+                var picture=res.picture;
+                localStorage.setItem('搜索',picture)
                 if (where == '1') {
                     window.location.href = window.location.href.split('#')[0] + '#/home/' + this.props.id
-                } else if (this.state.where == '2') {
+                } else if (where == '2') {
                     window.location.href = window.location.href.split('#')[0] + '#/robe/' + this.props.id
-                } else if (this.state.where == '3') {
+                } else if (where == '3') {
                     window.location.href = window.location.href.split('#')[0] + '#/trunk/' + this.props.id
                 }
             }

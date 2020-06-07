@@ -8,8 +8,9 @@ export default class Home extends Component {
         super();
         this.state={
             url:'http://47.98.163.228:8084/home',
-            picture:[],
-            num:-1
+            picture:[],//记录图片路径
+            num:-1,
+            result:''//标记那个是红标
         }
     }
     deleteItem=(i,that)=>{
@@ -45,6 +46,7 @@ export default class Home extends Component {
     //   });
     // }
     componentDidMount(){
+        //图片显示
         fetch('http://47.98.163.228:3003/picture', {
         method: 'post',
         "Access-Control-Allow-Origin": "*",
@@ -58,11 +60,26 @@ export default class Home extends Component {
         })
       }).then((res)=>res.json())
       .then((res)=>{
-          console.log('图片路径接收：'+JSON.stringify(res))
+        //   console.log('图片路径接收：'+JSON.stringify(res))
         this.setState({
             picture:res
         })
       })
+      //那个是红标
+        if (localStorage.getItem('搜索')) {
+            this.setState({
+                result: localStorage.getItem('搜索')
+            })
+            localStorage.setItem('搜索', '')
+        }
+    //   fetch('http://47.98.163.228:3003/home')
+    //     .then(res=>res.json())
+    //     .then(res=>{
+    //         console.log('home',res)
+    //         this.setState({
+    //             result:res
+    //         })
+    //     })
     //   console.log(this.props.match.params.id)
     //     fetch("http://47.98.163.228:8084/userid", {
     //     method: 'post', 
@@ -137,10 +154,20 @@ export default class Home extends Component {
                 <div style={{position:'relative'}}>
                     {
                     this.state.picture.map((item,i)=>{
+                        console.log('item',item)
+                        console.log('搜索结果',this.state.result)
                         if(i==this.state.num){
                             return(
                                 <div key={i} style={{display:'inlinbe-block',position:'relative',width:'32%',height:"120px",margin:'2px',float:'left'}}>
                                 <img src={`http://47.98.163.228:3004/${item}`}style={{width:'100%',height:'120px',border:'1px solid red'}}/>
+                                <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
+                                </div>
+                                )
+                        }else if(item==this.state.result){
+                            
+                            return(
+                                <div key={i} style={{display:'inlinbe-block',position:'relative',width:'32%',height:"120px",margin:'2px',float:'left'}}>
+                                <img src={`http://47.98.163.228:3004/${item}`}style={{width:'100%',height:'120px',border:'2px solid red'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>
                                 )
@@ -150,7 +177,8 @@ export default class Home extends Component {
                                 <img src={`http://47.98.163.228:3004/${item}`}style={{width:'100%',height:'120px'}}/>
                                 <span style={{position:"absolute",color:'red',right:'5px',top:'-3px'}} onClick={this.deleteItem.bind(this,i)}>x</span>
                                 </div>
-                            )}
+                            )
+                        }
                     })
                     }
                 </div>

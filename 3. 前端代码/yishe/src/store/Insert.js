@@ -573,9 +573,9 @@ class Insert extends Component {
           length='1'
           files={files}
           onChange={this.onChange}
-          selectable={files.length < 7}
-          multiple={this.state.multiple}
-        style={{width:'300px',height:'100%'}}/>
+          selectable={files.length < 1}
+          multiple='false'
+          style={{width:'300px',height:'100%'}}/>
       </WingBlank>
       {/* 添加图片结束 */}
 
