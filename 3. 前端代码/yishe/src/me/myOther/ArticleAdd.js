@@ -10,7 +10,6 @@ const { TextArea } = Input;
 const alert = Modal.alert;
 var dd = 0;
 var cont = '';
-
 const showAlert = () => {
   const alertInstance = alert('警告', cont, [
     { text: '确定', onPress: () => console.log('确定') },
@@ -33,21 +32,25 @@ export default class ArticleAdd extends Component {
         };
     }
     componentDidMount() {
+        console.log(localStorage.getItem('shareImg'));
+        if(localStorage.getItem('shareImg')){
+            this.setState({
+                cimg:[{url:'http://47.98.163.228:3000/image/111mote.jpg',id:'0'}]
+            })  
+        }else{
+            this.setState({
+                cimg:[]
+            })
+        }
         var today = new Date();
         var month = '';
-        var dayn = '';
         if(today.getMonth()<10){
             month = '0'+(today.getMonth()+1);
         }else{
             month = today.getMonth()+1;
         }
-        if(today.getDate()<10){
-            dayn = '0'+today.getDate();
-        }else{
-            dayn = today.getDate();
-        }
 
-        var date = today.getFullYear() + '-' + month + '-' + dayn; 
+        var date = today.getFullYear() + '-' + month + '-' + today.getDate(); 
         fetch('http://47.98.163.228:3000/report/'+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
@@ -55,13 +58,12 @@ export default class ArticleAdd extends Component {
                 this.setState({
                     content: res,
                 })
-                if(res.length!==0 && res[0].derp!=='' && res[0].derp!==null){
-                    var time = res[0].time.split('T')[0];
+                if(res.length!==0 && res[0].derp!==null){
+                    var time = res[0].time.split('T')[0]
                     var days = this.getDaysDiffBetweenDates(new Date(time), new Date(date))
                     console.log(days)
-                    console.log(res[0].derp)
                     var day1=res[0].derp.split('帖')[1];
-                    var day2 = day1.split('天')[0];//禁止发帖天数
+                    var day2 = day1.split('天')[0];
                     console.log(day2);
                     if(days<=day2){
                         this.setState({
@@ -75,7 +77,7 @@ export default class ArticleAdd extends Component {
                         }
                     }else{
                         this.setState({
-                            isSend: true,
+                            isSend: false,
                         })
                     }
                 }
@@ -91,13 +93,12 @@ export default class ArticleAdd extends Component {
         Toast.loading('文章上传中...',2, () => {
             window.location.href=window.location.href.split('#')[0]+"#/myarticle/"+this.props.match.params.id
         });
-            
+        localStorage.removeItem('shareImg');      
     }
     onToastFail=()=>{
         Toast.offline('文章不能为空!!!',2);
     }
     onPost=()=> { 
-        console.log(this.state.isSend);
         if(!this.state.isSend){
             showAlert()
             // Toast.offline('您发表的文章被举报，现禁止发帖！',5);
@@ -123,29 +124,85 @@ export default class ArticleAdd extends Component {
                 var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
                 var cimgName = [];
                 var cimg = [];
-                let promise = new Promise(resolve =>{
-                    for(var i=0;i<this.state.cimg.length;i++){
-                        cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
-                        lrz(this.state.cimg[i].url, {quality:0.1})
-                        .then((res)=>{
-                            cimg.push(res.base64);
-                            console.log(cimg);
-                            resolve({cimg:cimg,cimgName:cimgName});
-                        });
+                var shareImg = localStorage.getItem('shareImg');
+                if(localStorage.getItem('shareImg')){
+                    cimgName = ['.jpg'];
+                    shareImg=shareImg.split('"')[1];
+                    var cimg = [shareImg];
+                    if(this.state.cimg.length===1){
+                        let promise = new Promise(resolve =>{
+                            lrz(this.state.cimg[0].url, {quality:0.2})
+                            .then((res)=>{
+                                cimg.push(res.base64);
+                                resolve({cimg:cimg,cimgName:cimgName});
+                            });
+                        }).then((value)=>{
+                            fetch('http://47.98.163.228:3004/articleAdd',{
+                                method: 'post', 
+                                "Access-Control-Allow-Origin" : "*",
+                                "Access-Control-Allow-Credentials" : true,
+                                credentials: 'include',
+                                headers: {
+                                    'Content-Type': 'multipart/form-data;charset=utf-8'
+                                },
+                                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                            });
+                            this.onToastSuccess();
+                        })
+                    }else{
+                        let promise = new Promise(resolve =>{
+                            lrz(this.state.cimg[0].url, {quality:0.2})
+                            .then((res)=>{
+                                cimg.push(res.base64);
+                            });
+                            for(var i=1;i<this.state.cimg.length;i++){
+                                cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
+                                lrz(this.state.cimg[i].url, {quality:0.2})
+                                .then((res)=>{
+                                    cimg.push(res.base64);
+                                    console.log(cimg);
+                                    resolve({cimg:cimg,cimgName:cimgName});
+                                });
+                            }
+                        }).then((value)=>{
+                            fetch('http://47.98.163.228:3004/articleAdd',{
+                                method: 'post', 
+                                "Access-Control-Allow-Origin" : "*",
+                                "Access-Control-Allow-Credentials" : true,
+                                credentials: 'include',
+                                headers: {
+                                    'Content-Type': 'multipart/form-data;charset=utf-8'
+                                },
+                                body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                            });
+                            this.onToastSuccess();
+                        })
                     }
-                }).then((value)=>{
-                    fetch('http://47.98.163.228:3004/articleAdd',{
-                        method: 'post', 
-                        "Access-Control-Allow-Origin" : "*",
-                        "Access-Control-Allow-Credentials" : true,
-                        credentials: 'include',
-                        headers: {
-                            'Content-Type': 'multipart/form-data;charset=utf-8'
-                        },
-                        body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
-                    });
-                    this.onToastSuccess();
-                })
+                }else{
+                    let promise = new Promise(resolve =>{
+                        for(var i=0;i<this.state.cimg.length;i++){
+                            cimgName.push('.'+this.state.cimg[i].file.name.split(".")[1]);
+                            lrz(this.state.cimg[i].url, {quality:0.2})
+                            .then((res)=>{
+                                cimg.push(res.base64);
+                                console.log(cimg);
+                                resolve({cimg:cimg,cimgName:cimgName});
+                            });
+                        }
+                    }).then((value)=>{
+                        fetch('http://47.98.163.228:3004/articleAdd',{
+                            method: 'post', 
+                            "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Credentials" : true,
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'multipart/form-data;charset=utf-8'
+                            },
+                            body: JSON.stringify({userId:this.props.match.params.id,content:this.state.value,time:date,cimg:value.cimg,cimgName:value.cimgName}) 
+                        });
+                        this.onToastSuccess();
+                    })
+                }
             }
             localStorage.setItem('come',1);
         }
@@ -158,6 +215,23 @@ export default class ArticleAdd extends Component {
         this.setState({
             cimg,
         });
+        if(localStorage.getItem('shareImg')){
+            var filesType = ['.jpg'];
+            for(var i=1;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+        }else{
+            var filesType = [];
+            console.log(1)
+            for(var i=0;i<this.state.cimg.length;i++){
+                console.log(this.state.cimg[i].file.name.split(".")[1]);
+                filesType[i]='.'+this.state.cimg[i].file.name.split(".")[1];
+            }
+        }
+        this.setState({
+            filesType:filesType
+        })
     }
     render() {
         return (
