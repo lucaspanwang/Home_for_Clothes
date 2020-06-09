@@ -262,22 +262,18 @@ let kindBoy=[
 
 
 // 位置data
-const where=[
+let where=[
   {
-    label:(<span>{localStorage.getItem("jia")?localStorage.getItem('jia'):'家'}</span>),
-      value:localStorage.getItem("jia")?localStorage.getItem('jia'):'家'
+    label:(<span>家</span>),
+      value:'家'
   },
   {
-    label:(<span>{localStorage.getItem("guizi")?localStorage.getItem('guizi'):'柜子'}</span>),
-      value:localStorage.getItem("guizi")?localStorage.getItem('guizi'):'柜子'
+    label:(<span>柜子</span>),
+      value:'柜子'
   },
   {
-    label:(<span>{localStorage.getItem("xinglixiang")?localStorage.getItem('xinglixiang'):'行李箱'}</span>),
-      value:localStorage.getItem("xianglixiang")?localStorage.getItem('xinglixiang'):'行李箱'
-  },
-  {
-  label:(<span>{localStorage.getItem("添加")?localStorage.getItem('添加'):''}</span>),
-    value:localStorage.getItem("添加")?localStorage.getItem:''
+    label:(<span>行李箱</span>),
+      value:'行李箱'
   }
 ]
 
@@ -436,14 +432,14 @@ class Insert extends Component {
       // 判断在位置中占第几个用来查找
       var whereId;
       console.log(this.state.whereValue)
-      for(var i in where){
-        if(where[i].value==this.state.whereValue){
+      for(var i in this.state.where){
+        if(this.state.where[i].value==this.state.whereValue){
           // console.log('位置：',parseInt(i)+1)
           whereId=parseInt(i)+1;
         };
       }
       console.log(sex);
-      console.log(whereId);
+      console.log('第几个'+whereId);
       fetch('http://47.98.163.228:3003/insert', {
         method: 'post',
         "Access-Control-Allow-Origin": "*",
@@ -463,43 +459,90 @@ class Insert extends Component {
           sex:sex
         })
       })
-      // .then(res=>res.json())
-      // .then((res)=>{
-      //   console.log('insert',res)
-      // });  
+      .then(res=>res.json())
+      .then((res)=>{
+        console.log('insert',res)
+      });  
        
       // console.log('导入前端post成功');
       window.location.reload()
     }
     }
     
-  componentWillMount(){
-    // console.log(this.props.match.params.id)
-    // fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
-    // .then(res=>res.json())
-    // .then(res=>{
-    //   console.log('男女：',res)
-    //   if(res=='女'){
-    //     this.setState({
-    //       kind:kindGirl
-    //     })
-    //   }
-    //   // sex=res
-    // })
-           
-    
-  }
+ 
   componentDidMount(){
-    console.log(localStorage.getItem('添加')?localStorage.getItem('添加'):'')
-    // console.log(this.props.match.params.id)
-    // console.log(kindGirl)
+    //位置改变
+    fetch('http://47.98.163.228:3003/place/'+this.props.match.params.id)
+    .then(res=>res.json())
+    .then(res=>{
+       if(res[0].placeFour=='添加'&&res[0].placeFive=='添加'){
+        this.setState({
+          where:[
+            {
+              label: (<span>{res[0].placeOne}</span>),
+              value: res[0].placeOne
+            },
+            {
+              label: (<span>{res[0].placeTwo}</span>),
+              value: res[0].placeTwo
+            },
+            {
+              label: (<span>{res[0].placeThree}</span>),
+              value: res[0].placeThree
+            }
+          ]
+        })
+       }else if(res[0].placeFour!='添加'&&res[0].placeFive=='添加'){
+        this.setState({
+          where:[
+            {
+              label: (<span>{res[0].placeOne}</span>),
+              value: res[0].placeOne
+            },
+            {
+              label: (<span>{res[0].placeTwo}</span>),
+              value: res[0].placeTwo
+            },
+            {
+              label: (<span>{res[0].placeThree}</span>),
+              value: res[0].placeThree
+            },
+            {
+              label: (<span>{res[0].placeFour}</span>),
+              value: res[0].placeFour
+            },
+          ]
+        })
+       }else if(res[0].placeFour=='添加'&&res[0].placeFive!='添加'){
+        this.setState({
+          where:[
+            {
+              label: (<span>{res[0].placeOne}</span>),
+              value: res[0].placeOne
+            },
+            {
+              label: (<span>{res[0].placeTwo}</span>),
+              value: res[0].placeTwo
+            },
+            {
+              label: (<span>{res[0].placeThree}</span>),
+              value: res[0].placeThree
+            },
+            {
+              label: (<span>{res[0].placeFive}</span>),
+              value: res[0].placeFive
+            },
+          ]
+        })
+       }
+        
+    })
+    
     // 根据性别判读分类
     fetch('http://47.98.163.228:3003/insertSex/'+this.props.match.params.id)
     .then(res=>res.json())
     .then(res=>{
       sex=res;
-      // console.log('男女：',res)
-      // console.log(res=='女')
       if(res=='女'){
         this.setState({
           kinds:kindGirl

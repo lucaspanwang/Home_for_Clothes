@@ -23,21 +23,21 @@ export default class Add extends Component {
             value:e.target.value
         })
     }
-    handle=()=>{
-        // console.log(this.state.value)
-        localStorage.setItem('添加',this.state.value);
-    //     fetch("http://47.98.163.228:8084/value", {
-    //     method: 'post', 
-    //     "Access-Control-Allow-Origin" : "*",
-    //     "Access-Control-Allow-Credentials" : true,
-    //     credentials: 'include',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     body:JSON.stringify({value:this.state.value}) 
-    //   })
-        // console.log(value);
-        // console.log(this.state.value);
+    handle = () => {
+        fetch('http://47.98.163.228:3003/change', {
+            method: 'post',
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: this.props.match.params.id,
+                value: this.state.value,
+                place: 'four'
+            })
+        })
+        window.location.reload()
     }
     render() {
         return (
@@ -50,9 +50,9 @@ export default class Add extends Component {
                 </NavBar>
                 <h2 style={{margin:'5%',fontWeight:"lighter"}}>请输入你想要添加的空间名称:</h2>
                 <input type="type" style={{marginLeft:'5%',height:'30px'}} onChange={this.change}/>
-                <Link to={"/apptab/"+this.props.match.params.id+'&store'}>
+                {/* <Link to={"/apptab/"+this.props.match.params.id+'&store'}> */}
                 <input type="submit" style={{height:'30px',width:'50px'}} onClick={this.handle}/>
-                </Link>
+                {/* </Link> */}
             </div>
         )
     }

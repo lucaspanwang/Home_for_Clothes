@@ -23,6 +23,7 @@ export default class AppBox extends Component {
     constructor(props){
         super(props);
         this.state={
+            place:[],//位置名称
             value:'',
             where:'家',
             jia:'',
@@ -58,13 +59,13 @@ export default class AppBox extends Component {
         })
         
     } 
-    
+    //添加一的单双击
     double = () => {
         count += 1;
         setTimeout(() => {
             console.log(count)
             if (count == 1) {
-                if(this.state.value!='添加'){
+                if(this.state.place[3]!='添加'){
                     window.location.href = window.location.href.split('#')[0]+'#/customize/' + this.props.id
                 }
                 // count = 0;
@@ -76,6 +77,7 @@ export default class AppBox extends Component {
         }, 200)
 
     }
+    //家更改div的display
     jia = () => {
         jiaNum += 1;
         setTimeout(() => {
@@ -91,6 +93,7 @@ export default class AppBox extends Component {
             }
         }, 200)
     }
+    //柜子更改div的display
     guizi = () => {
         guiNum += 1;
         setTimeout(() => {
@@ -105,6 +108,7 @@ export default class AppBox extends Component {
             }
         }, 200)
     }
+    //行李箱更改div的display
     xinglixiang = () => {
         console.log(xingNum)
         xingNum += 1;
@@ -120,9 +124,10 @@ export default class AppBox extends Component {
             }
         }, 200)
     }
+    //获取更改的值
     value=(data,ev)=>{
         if(data=='xing'){
-            console.log(ev.target.value)
+            // console.log(ev.target.value)
             this.setState({
                 xing:ev.target.value
             })
@@ -139,20 +144,74 @@ export default class AppBox extends Component {
         }
         
     }
+    //提交更改的值
     sub=(data,ev)=>{
         if(data=='jia'){
-            localStorage.setItem('jia',this.state.jia);
+            var p=[];
+            p=this.state.place;
+            p[0]=this.state.jia
+            this.setState({
+                place:p
+            })
+            fetch('http://47.98.163.228:3003/change', {
+                method: 'post',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: this.props.id,
+                    value:this.state.jia,
+                    place:'one'
+                })
+            })
             this.setState({
                 display:'none'
             })
         }else if(data=='gui'){
-            localStorage.setItem('guizi',this.state.gui);
+            var p=[];
+            p=this.state.place;
+            p[1]=this.state.gui;
+            this.setState({
+                place:p
+            })
+            fetch('http://47.98.163.228:3003/change', {
+                method: 'post',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: this.props.id,
+                    value:this.state.gui,
+                    place:'two'
+                })
+            })
             this.setState({
                 display1:'none'
             })
         }else if(data=='xing'){
-            console.log('行李箱',this.state.xing)
-            localStorage.setItem('xinglixiang',this.state.xing);
+            var p=[];
+            p=this.state.place;
+            p[2]=this.state.xing;
+            this.setState({
+                place:p
+            })
+            fetch('http://47.98.163.228:3003/change', {
+                method: 'post',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: this.props.id,
+                    value:this.state.xing,
+                    place:'three'
+                })
+            })
             this.setState({
                 display2:'none'
             })
@@ -160,16 +219,30 @@ export default class AppBox extends Component {
     }
     
     componentDidMount(){
-        // console.log(this.state.display,this.state.display1,this.state.display2)
-        if(localStorage.getItem('添加')==undefined){
+        //各个位置显示
+        var place=[]
+        fetch('http://47.98.163.228:3003/place/'+this.props.id)
+        .then(res=>res.json())
+        .then(res=>{
+            place.push(res[0].placeOne)
+            place.push(res[0].placeTwo)
+            place.push(res[0].placeThree)
+            place.push(res[0].placeFour)
+            place.push(res[0].placeFive)
             this.setState({
-                value:'添加'
+                place:place
             })
-        }else{
-            this.setState({
-                value:localStorage.getItem('添加')
-            })
-        }
+        })
+
+        // if(localStorage.getItem('添加')==undefined){
+        //     this.setState({
+        //         value:'添加'
+        //     })
+        // }else{
+        //     this.setState({
+        //         value:localStorage.getItem('添加')
+        //     })
+        // }
         // console.log('本地存储'+localStorage.getItem('添加'))
         // fetch('http://47.98.163.228:8084/change')
         // .then(res=>res.json())
@@ -217,19 +290,28 @@ export default class AppBox extends Component {
                         <img src={Box} style={{width: '85%', height: '80%', margin: '20% 7%'}} />
                         <div id="fiveBut">
                             <li id="oneBut">
-                                <button onClick={this.double}>{this.state.value}</button>
-                                <button>添加</button>
+                                <button onClick={this.double} style={{float:"left"}}>{this.state.place[3]}</button>
+                                <button style={{float:"left"}}>添加</button>
                             </li>
                             <li id='twoBut'>
-                                <button onClick={this.jia}>{localStorage.getItem('jia')?localStorage.getItem('jia'):'家'}</button>
+                                <button onClick={this.jia}>
+                                    {this.state.place[0]}
+                                    {/* {localStorage.getItem('jia')?localStorage.getItem('jia'):'家'} */}
+                                </button>
                                 {/* <Link to={"/home/"+this.props.id}><button>家</button></Link> */}
                             </li>
                             <li id='twoBut'>
-                               <button onClick={this.guizi}>{localStorage.getItem('guizi')?localStorage.getItem('guizi'):'衣柜'}</button>
+                               <button onClick={this.guizi}>
+                                   {this.state.place[1]}
+                                   {/* {localStorage.getItem('guizi')?localStorage.getItem('guizi'):'衣柜'} */}
+                                </button>
                                 {/* <Link  to={"/robe/"+this.props.id}><button>衣柜</button></Link> */}
                             </li>
                             <li id='twoBut'>
-                               <button onClick={this.xinglixiang}>{localStorage.getItem('xinglixiang')?localStorage.getItem('xinglixiang'):'行李箱'}</button>
+                               <button onClick={this.xinglixiang}>
+                                   {this.state.place[2]}
+                                   {/* {localStorage.getItem('xinglixiang')?localStorage.getItem('xinglixiang'):'行李箱'} */}
+                                </button>
                                 {/* <Link to={"/trunk/"+this.props.id}><button>行李箱</button></Link> */}
                             </li>
                         </div>

@@ -9,35 +9,65 @@ export default class Home extends Component {
         super();
         this.state={
             url:'http://47.98.163.228:8084/home',
-            pictureSummer:[],//记录图片路径
+            //记录图片路径
+            pictureSummer:[],
             pictureString:[],
             pictureWinter:[],
             num:-1,
-            result:''//标记那个是红标
+            result:'',//标记那个是红标
+            kai:'0',
+            item:''//标题
         }
     }
-    deleteItem=(i,that)=>{
-        // console.log(i)
-        var p=this.state.picture;
-        // console.log('删除前；',p)
-        p.splice(i,1);
-        // console.log('删除后：',p)
-        this.setState({
-            picture:p
-        })
-        fetch('http://47.98.163.228:8087/delete',{
-            method: 'post', 
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Credentials" : true,
-            credentials: 'include',
+    //图片删除
+    deleteItem=(item,that)=>{
+        if(this.state.pictureSummer.includes(item)){
+            var index=this.state.pictureSummer.indexOf(item)
+            var p=this.state.pictureSummer;
+            p.splice(index,1)
+            console.log(p)
+            this.setState({
+                pictureSummer:p
+            })
+        }
+        if(this.state.pictureString.includes(item)){
+            var index=this.state.pictureString.indexOf(item)
+            var p=this.state.pictureString;
+            p.splice(index,1)
+            this.setState({
+                pictureString:p
+            })
+        }
+        if(this.state.pictureWinter.includes(item)){
+            var index=this.state.pictureWinter.indexOf(item);
+            var p=this.state.pictureWinter;
+            p.splice(index,1)
+            this.setState({
+                pictureWinter:p
+            })
+        }
+        
+        fetch('http://47.98.163.228:3003/delete',{
+            method: 'post',
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+              'Content-Type': 'application/json'
             },
-            body:JSON.stringify({nage:i,weizhi:'家',userId:this.props.match.params.id})
+            body:JSON.stringify({cloPic:item,userId:this.props.match.params.id})
         })
     }
     
     componentDidMount(){
+        //标题显示
+        fetch('http://47.98.163.228:3003/place/'+this.props.match.params.id)
+        .then(res=>res.json())
+        .then(res=>{
+            this.setState({
+                item:res[0].placeOne
+            })
+            // console.log('标题显示'+res[0].placeOne)
+        })
         //图片显示
         fetch('http://47.98.163.228:3003/picture', {
         method: 'post',
@@ -61,12 +91,24 @@ export default class Home extends Component {
         })
       })
       //那个是红标
+        
         if (localStorage.getItem('搜索')) {
             this.setState({
                 result: localStorage.getItem('搜索')
             })
+            
             localStorage.setItem('搜索', '')
         }
+        // var kai=this.state.result;
+        //     console.log('result'+kai)
+            
+        //     if (this.state.pictureString.includes(kai)) {
+        //         this.setState({
+        //             kai: '1'
+        //         })
+        //     }
+        //     console.log('kai'+this.state.kai)
+        // console.log(this.state.kai)
     }
     render() {
         return (
@@ -78,10 +120,11 @@ export default class Home extends Component {
                         <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                     >
-                    {localStorage.getItem('jia')?localStorage.getItem('jia'):'家'}
+                        {this.state.item}
+                    {/* {localStorage.getItem('jia')?localStorage.getItem('jia'):'家'} */}
                     </NavBar>
                 <div style={{ marginTop: 10, marginBottom: 10 }}>
-                    <Accordion defaultActiveKey="0" className="my-accordion" onChange={this.onChange}>
+                    <Accordion defaultActiveKey={this.state.kai} className="my-accordion" onChange={this.onChange}>
                         <Accordion.Panel header="夏季">
                             <div style={{ position: 'relative' }}>
                                 {
@@ -90,7 +133,7 @@ export default class Home extends Component {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         } else if (item == this.state.result) {
@@ -98,21 +141,20 @@ export default class Home extends Component {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '2px solid red' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         } else {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         }
                                     })
                                 }
                             </div>
-                            
                         </Accordion.Panel>
                         <Accordion.Panel header="春秋" className="pad">
                             <div style={{ position: 'relative' }}>
@@ -122,7 +164,7 @@ export default class Home extends Component {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         } else if (item == this.state.result) {
@@ -130,14 +172,14 @@ export default class Home extends Component {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '2px solid red' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         } else {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         }
@@ -153,7 +195,7 @@ export default class Home extends Component {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         } else if (item == this.state.result) {
@@ -161,14 +203,14 @@ export default class Home extends Component {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '2px solid red' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         } else {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px' }} />
-                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, i)}>x</span>
+                                                    <span style={{ position: "absolute", color: 'red', right: '5px', top: '-3px' }} onClick={this.deleteItem.bind(this, item)}>x</span>
                                                 </div>
                                             )
                                         }
