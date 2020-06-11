@@ -255,7 +255,8 @@ qunzi=(idx)=>{
   var a = setTimeout(()=>{
     if(this.state.count>1){//双击
       var place = this.zhao(idx,this.state.qun)
-      this.fasong(this.zhaoshu(place,this.state.qun[idx]),place);
+      // this.fasong(this.zhaoshu(place,this.state.qun[idx]),place);
+      this.fasong(place)
     }else{//单击穿鞋
       document.getElementById('mote_4').style.display='none'
       document.getElementById('mote').style.display = 'none';
@@ -284,7 +285,8 @@ kuzi=(idx)=>{
   var a = setTimeout(()=>{
     if(this.state.count>1){//双击
       var place = this.zhao(idx,this.state.ku)
-      this.fasong(this.zhaoshu(place,this.state.ku[idx]),place);
+      // this.fasong(this.zhaoshu(place,this.state.ku[idx]),place);
+      this.fasong(place)
     }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       //脱连衣裙
@@ -303,8 +305,9 @@ shangyi=(idx)=>{
   this.state.count++;//判断点击几次
   var a = setTimeout(()=>{
     if(this.state.count>1){//双击
-      var place = this.zhao(idx,this.state.yi)
-      this.fasong(this.zhaoshu(place,this.state.yi[idx]),place);
+      var place = this.zhao(idx,this.state.yi) //找到了大图名字和整理箱编号
+      // this.fasong(this.zhaoshu(place,this.state.yi[idx]),place);
+      this.fasong(place)
     }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       if(!this.state.flag){
@@ -326,7 +329,8 @@ waitao=(idx)=>{
   var a = setTimeout(()=>{
     if(this.state.count>1){//双击
       var place = this.zhao(idx,this.state.tao)
-      this.fasong(this.zhaoshu(place,this.state.tao[idx]),place);
+      // this.fasong(this.zhaoshu(place,this.state.tao[idx]),place);
+      this.fasong(place)
     }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
@@ -344,7 +348,8 @@ xie=(idx)=>{
   var a = setTimeout(()=>{
     if(this.state.count>1){//双击
       var place = this.zhao(idx,this.state.xie)
-      this.fasong(this.zhaoshu(place,this.state.xie[idx]),place);
+      // this.fasong(this.zhaoshu(place,this.state.xie[idx]),place);
+      this.fasong(place)
     }else{//单击穿鞋
       document.getElementById('mote').style.display = 'none';
       document.getElementById('mote_2').style.display = 'block';
@@ -399,42 +404,49 @@ xie=(idx)=>{
     //找到位置
     zhao=(idx,weizhi)=>{
       var place='';
+      var placeId='';
+      var placePic = '';
       //找到它的存储地点
       var nnn = weizhi[idx].split('/')[4].split('.')[0];
       for(var i = 0;i<this.state.ress.length;i++){
         if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
-            place = this.state.ress[i].cloPlace
-            break;
-        }
-      }
-      //判断存储位置的第几个
-      for(var i = 0;i<this.state.ress.length;i++){
-        if(this.state.ress[i].cloPlace===place){
-          this.setState({
-            linshi:this.state.linshi+1
-          },function(){
-              console.log(this.state)
-          })
-        if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+          placeId = this.state.ress[i].whereId;
+          placePic  = this.state.ress[i].cloPic;
+          place = this.state.ress[i].cloPlace
           break;
         }
       }
-    }
-    return place
+      //判断存储位置的第几个
+    //   for(var i = 0;i<this.state.ress.length;i++){
+    //     if(this.state.ress[i].cloPlace===place){
+    //       this.setState({
+    //         linshi:this.state.linshi+1
+    //       },function(){
+    //           console.log(this.state)
+    //       })
+    //     if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
+    //       break;
+    //     }
+    //   }
+    // }
+    return placeId+'&'+placePic
     }
     //向整理箱发送衣物编号（从1开始）
-    fasong=(idx,place)=>{
+    fasong=(place)=>{
+      var id =place.split('&')[0];//位置id
+      var str = place.split('&')[1];
       localStorage.setItem('count',0);
-      localStorage.setItem('zlx_num',idx);
-      this.tiaozhuan(place)
+      localStorage.setItem('zlx_num',str);
+      this.tiaozhuan(id)
     }
     //跳转整理箱url
     tiaozhuan=(place)=>{
       var p = '';
       switch(place){
-        case '家':p='home';break;
-        case '行李箱':p='trunk';break;
-        case '柜子':p='robe';break;
+        case '1':p='home';break;
+        case '2':p='trunk';break;
+        case '3':p='robe';break;
+        case '4':p='customize';break;
       }
       window.location.href =window.location.href.split('#')[0]+ '#/'+p+'/'+this.props.id;
     }
