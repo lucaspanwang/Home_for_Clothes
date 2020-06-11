@@ -412,7 +412,7 @@ xie=(idx)=>{
         if(this.state.ress[i].cloSmallPic.indexOf(nnn)!=-1){
           placeId = this.state.ress[i].whereId;
           placePic  = this.state.ress[i].cloPic;
-          place = this.state.ress[i].cloPlace
+          place = this.state.ress[i].cloKind;
           break;
         }
       }
@@ -429,12 +429,14 @@ xie=(idx)=>{
     //     }
     //   }
     // }
-    return placeId+'&'+placePic
+    return placeId+'&'+placePic+'&'+place;
     }
     //向整理箱发送衣物编号（从1开始）
     fasong=(place)=>{
       var id =place.split('&')[0];//位置id
       var str = place.split('&')[1];
+      var str2 = place.split('&')[2];
+      console.log(id,str,str2)
       localStorage.setItem('count',0);
       localStorage.setItem('zlx_num',str);
       this.tiaozhuan(id)
@@ -444,8 +446,8 @@ xie=(idx)=>{
       var p = '';
       switch(place){
         case '1':p='home';break;
-        case '2':p='trunk';break;
-        case '3':p='robe';break;
+        case '3':p='trunk';break;
+        case '2':p='robe';break;
         case '4':p='customize';break;
       }
       window.location.href =window.location.href.split('#')[0]+ '#/'+p+'/'+this.props.id;
