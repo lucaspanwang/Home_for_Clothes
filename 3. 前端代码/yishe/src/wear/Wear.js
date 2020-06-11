@@ -122,6 +122,7 @@ export default class Wear extends Component {
         })
         .then(res=>res.json())
         .then(res=>{
+          console.log(res)
             //把读取的图片放进来
             //分类存小图标
             var kuku=[],kuku_s=[];//裤子
@@ -156,7 +157,7 @@ export default class Wear extends Component {
                 qun_c.push(res[i].cloColor)
               }
               //判断上衣
-              if(n.indexOf('yi')!=-1 || n.indexOf('shan')!=-1){
+              if(n.indexOf('yi')!=-1 || n.indexOf('shan')!=-1 || n.indexOf('xiu')!=-1){
                 yiyi.push(big[i]);
                 yiyi_s.push(small[i])
               }
