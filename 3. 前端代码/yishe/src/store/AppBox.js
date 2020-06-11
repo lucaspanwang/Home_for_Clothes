@@ -54,6 +54,8 @@ export default class AppBox extends Component {
                     window.location.href = window.location.href.split('#')[0] + '#/robe/' + this.props.id
                 } else if (where == '3') {
                     window.location.href = window.location.href.split('#')[0] + '#/trunk/' + this.props.id
+                } else if (where == '4') {
+                    window.location.href = window.location.href.split('#')[0] + '#/customize/' + this.props.id
                 }
             }
         })

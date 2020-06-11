@@ -15,7 +15,8 @@ export default class Robe extends Component {
             num:-1,
             result:'',
             kai:'0',
-            item:''//标题
+            item:'',//标题
+            jump:''
         }
     }
     deleteItem=(item,that)=>{
@@ -83,6 +84,20 @@ export default class Robe extends Component {
                 result: localStorage.getItem('搜索')
             })
             localStorage.setItem('搜索', '')
+        }
+        //跳转红标
+        if (localStorage.getItem('zlx_num')) {
+            var pp=localStorage.getItem('zlx_num')
+            console.log('pp'+pp)
+            var length=pp.length;
+            console.log('我的家'+pp.substring(3,length))
+            this.setState({
+                jump:pp.substring(3,length)
+            })
+            setTimeout(function(){
+                localStorage.setItem('zlx_num', '')
+            },1000)
+            
         }
       //显示图片
       fetch('http://47.98.163.228:3003/picture', {
@@ -163,7 +178,7 @@ export default class Robe extends Component {
                             <div style={{ position: 'relative' }}>
                                 {
                                     this.state.pictureSummer.map((item, i) => {
-                                        if (i == this.state.num) {
+                                        if (item == this.state.jump) {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
@@ -189,13 +204,12 @@ export default class Robe extends Component {
                                     })
                                 }
                             </div>
-                            
                         </Accordion.Panel>
                         <Accordion.Panel header="春秋" className="pad">
                             <div style={{ position: 'relative' }}>
                                 {
                                     this.state.pictureString.map((item, i) => {
-                                        if (i == this.state.num) {
+                                        if (item == this.state.jump) {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
@@ -226,7 +240,7 @@ export default class Robe extends Component {
                         <div style={{ position: 'relative' }}>
                                 {
                                     this.state.pictureWinter.map((item, i) => {
-                                        if (i == this.state.num) {
+                                        if (item == this.state.jump) {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />

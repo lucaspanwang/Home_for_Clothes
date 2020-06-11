@@ -14,9 +14,10 @@ export default class Home extends Component {
             pictureString:[],
             pictureWinter:[],
             num:-1,
-            result:'',//标记那个是红标
+            result:'',//搜索标记那个是红标
             kai:'0',
-            item:''//标题
+            item:'',//标题
+            jump:''//跳转红标
         }
     }
     //图片删除
@@ -56,8 +57,7 @@ export default class Home extends Component {
             },
             body:JSON.stringify({cloPic:item,userId:this.props.match.params.id})
         })
-    }
-    
+    }    
     componentDidMount(){
         //标题显示
         fetch('http://47.98.163.228:3003/place/'+this.props.match.params.id)
@@ -99,16 +99,21 @@ export default class Home extends Component {
             
             localStorage.setItem('搜索', '')
         }
-        // var kai=this.state.result;
-        //     console.log('result'+kai)
+        //跳转红标
+        if (localStorage.getItem('zlx_num')) {
+            var pp=localStorage.getItem('zlx_num')
+            console.log('pp'+pp)
+            var length=pp.length;
+            console.log('我的家'+pp.substring(3,length))
+            this.setState({
+                jump:pp.substring(3,length)
+            })
+            setTimeout(function(){
+                localStorage.setItem('zlx_num', '')
+            },1000)
             
-        //     if (this.state.pictureString.includes(kai)) {
-        //         this.setState({
-        //             kai: '1'
-        //         })
-        //     }
-        //     console.log('kai'+this.state.kai)
-        // console.log(this.state.kai)
+        }
+       
     }
     render() {
         return (
@@ -117,7 +122,8 @@ export default class Home extends Component {
                 // style={{width:'100%',backgroundColor:'#fc9d9a',color:'white',position:'fixed',top:0,left:0,zIndex:99}}
                     style={{backgroundColor:'rgb(252, 157, 154)'}}
                     leftContent={
-                        <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} style={{ width: '30px', height: "30px" }} key="fan"/></Link>
+                        <Link to={"/apptab/"+this.props.match.params.id+'&store'}><img src={Back} 
+                        style={{ width: '30px', height: "30px" }} key="fan"/></Link>
                     }
                     >
                         {this.state.item}
@@ -129,7 +135,7 @@ export default class Home extends Component {
                             <div style={{ position: 'relative' }}>
                                 {
                                     this.state.pictureSummer.map((item, i) => {
-                                        if (i == this.state.num) {
+                                        if (item == this.state.jump) {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
@@ -160,7 +166,7 @@ export default class Home extends Component {
                             <div style={{ position: 'relative' }}>
                                 {
                                     this.state.pictureString.map((item, i) => {
-                                        if (i == this.state.num) {
+                                        if (item == this.state.jump) {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
@@ -191,7 +197,7 @@ export default class Home extends Component {
                         <div style={{ position: 'relative' }}>
                                 {
                                     this.state.pictureWinter.map((item, i) => {
-                                        if (i == this.state.num) {
+                                        if (item == this.state.jump) {
                                             return (
                                                 <div key={i} style={{ display: 'inlinbe-block', position: 'relative', width: '32%', height: "120px", margin: '2px', float: 'left' }}>
                                                     <img src={`http://47.98.163.228:3004/${item}`} style={{ width: '100%', height: '120px', border: '1px solid red' }} />
