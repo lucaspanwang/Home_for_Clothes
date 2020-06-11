@@ -398,7 +398,6 @@ export default class Index extends Component {
             };
         return (
             <div style={{marginTop:30}}>
-                <div style={{width:'100%',height:150}}>
                 {/* 文章 */}
                 <div style={{position:'relative',marginBottom:10,float:'left',
                 borderRadius:10,width:250,height:100,backgroundColor:'rgba(18,21,54,0.9)'}}>
@@ -436,17 +435,10 @@ export default class Index extends Component {
                         <img src={this.state.nowdiray>=this.state.beforediray?Out:In} style={{width:50,height:50}}/>
                     </div>
                 </div>
-                </div>
-                
                 {/* 日记end */}
-                {/* <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start' }}> */}
-                <div>
-                    <div style={{float:'left'}}> 
-                    <ReactHighCharts config={config}/>
-                    </div>
-                    <div id="main" style={{ width: 350, height: 350,float:'left',marginTop:-30}}></div>
-                </div>
-                <div style={{marginLeft:'100px', width: '800px', height: '800px',position:'relative',top:250}} ref={this.setMapElement} />
+                <ReactHighCharts config={config}/>
+                <div id="main" style={{ width: 350, height: 350 ,float:'right',marginTop:-300}}></div>
+                <div style={{marginLeft:'100px', width: '800px', height: '800px'}} ref={this.setMapElement} />
             </div>
         )
     }

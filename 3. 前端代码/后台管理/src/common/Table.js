@@ -42,9 +42,15 @@ export default class Table extends Component {
             title: '你确定要删除这条数据?',
             icon: <ExclamationCircleOutlined />,
             content: '数据删除之后不能回撤，你确定以及肯定要删除?',
-            okText: <button style={{background:'#00000000',border:'none'}} onClick={()=>this.props.deleteItem(id)}>确定</button>,
+            // okText:'确定',
+            okText: <button style={{background:'#00000000',border:'none',width:'64px',height:'32px'}} onClick={()=>this.props.deleteItem(id)}>确定</button>,
             okType: 'danger',
             cancelText: '取消',
+            // okButtonProps:this.props.deleteItem(id),
+            // footer: [
+            //     <Button key="cancel" value="取消" onClick={this.handleCancel}></Button>,
+            //     <Button key="delete" value="确定" type="danger" onClick={()=>this.props.deleteItem(id)}></Button>
+            // ],
             onOk() {
                 console.log('OK');
             },

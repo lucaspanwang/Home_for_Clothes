@@ -39,3 +39,7 @@
 div.ant-typography, .ant-typography p{
     margin:0 !important;
 }
+/* 删除按钮的确定键 */
+.ant-btn-danger{
+    padding:0 !important;
+}

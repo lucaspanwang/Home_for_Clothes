@@ -39,21 +39,22 @@ export default class Official extends Component {
         fetch('http://47.98.163.228:3004/officeDelete?offId='+id)
         // .then(res => res.json())
         .then(res => {
+            fetch('http://47.98.163.228:3004/office')
+            .then(res=>res.json())
+            .then(res=>{     
+                // console.log(res);
+                for(var i=0;i<res.length;i++){
+                    res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
+                }  
+                this.setState({
+                    tbody:res
+                },function(){
+                    console.log(this.state.tbody)
+                })
+            })
             console.log('删除成功');
         })
-        fetch('http://47.98.163.228:3004/office')
-        .then(res=>res.json())
-        .then(res=>{     
-            // console.log(res);
-            for(var i=0;i<res.length;i++){
-                res[i].offContent = (<Paragraph ellipsis={{rows:2}}>{res[i].offContent}</Paragraph>)
-            }  
-            this.setState({
-                tbody:res
-            },function(){
-                console.log(this.state.tbody)
-            })
-        })
+        
     }
     render() {
         return (
@@ -67,8 +68,8 @@ export default class Official extends Component {
                     keys={this.state.keys} 
                     tbody={this.state.tbody} 
                     twidth={[10,20,55,15]} 
-                    operate={['edit','check','delete']}
-                    editItem={'/oedit'}//编辑操作跳转的链接
+                    operate={['check','delete']}
+                    // editItem={'/oedit'}//编辑操作跳转的链接
                     checkItem={'/ocheck'}//查看操作跳转的链接
                     deleteItem={this.deleteHandle}
                 />

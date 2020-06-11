@@ -109,20 +109,21 @@ export default class Rcheck extends Component {
                                         <br/>
                                         <span style={{fontWeight:'bolder'}}>处理结果：</span><span>{this.state.report.derp?this.state.report.derp:'无处理'}</span>
                                     </div>
-                                ):(
-                                    this.state.operate
-                                    ?(<div style={{margin:'15px',borderTop:'1px dashed #ddd',padding:'5px'}}>
-                                        <Radio.Group onChange={this.onChange} value={value}>
-                                            <Radio style={radioStyle} value='禁止发帖3天'>禁止发帖3天</Radio>
-                                            <Radio style={radioStyle} value='禁止发帖7天'>禁止发帖7天</Radio>
-                                            <Radio style={radioStyle} value='驳回举报'>驳回举报</Radio>
-                                        </Radio.Group>
-                                        <br />
-                                        <button style={{margin:'10px',padding:'5px 15px',border:'1px solid #1890ff',borderRadius:'5px',background:'#1890ffcc',color:'#fff'}} onClick={()=>this.onPost()}>确定</button>
-                                        <button style={{margin:'0 5px',padding:'5px 15px',border:'1px solid #1890ff',borderRadius:'5px',background:'#1890ffcc',color:'#fff'}} onClick={()=>this.setState({operate:false})}>取消</button>
-                                    </div>)
-                                    :(<button style={{margin:'10px',padding:'5px 15px',border:'1px solid #1890ff',borderRadius:'5px',background:'#1890ffcc',color:'#fff'}} onClick={()=>this.setState({operate:true})}>处理</button>)
-                                )
+                                ):''
+                            }
+                            {
+                                this.state.operate
+                                ?(<div style={{margin:'15px',borderTop:'1px dashed #ddd',padding:'5px'}}>
+                                    <Radio.Group onChange={this.onChange} value={value}>
+                                        <Radio style={radioStyle} value='禁止发帖3天'>禁止发帖3天</Radio>
+                                        <Radio style={radioStyle} value='禁止发帖7天'>禁止发帖7天</Radio>
+                                        <Radio style={radioStyle} value='驳回举报'>驳回举报</Radio>
+                                    </Radio.Group>
+                                    <br />
+                                    <button style={{margin:'10px',padding:'5px 15px',border:'1px solid #1890ff',borderRadius:'5px',background:'#1890ffcc',color:'#fff'}} onClick={()=>this.onPost()}>确定</button>
+                                    <button style={{margin:'0 5px',padding:'5px 15px',border:'1px solid #1890ff',borderRadius:'5px',background:'#1890ffcc',color:'#fff'}} onClick={()=>this.setState({operate:false})}>取消</button>
+                                </div>)
+                                :(<button style={{margin:'10px',padding:'5px 15px',border:'1px solid #1890ff',borderRadius:'5px',background:'#1890ffcc',color:'#fff'}} onClick={()=>this.setState({operate:true})}>处理</button>)
                             }
                         </div>
                     </div>

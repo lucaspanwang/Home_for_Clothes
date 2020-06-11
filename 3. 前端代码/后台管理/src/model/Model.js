@@ -6,16 +6,13 @@ import mote2 from '../images/mote_2.png'
 import xiaoren from '../images/xiaoren.png'
 import boy from '../images/boy.gif'
 import girl from '../images/girl.gif'
-import mote_boy from '../images/mote_boy.png'
+
 const data = [{
   url: mote,
   id: '2121',
 }, {
   url: mote2,
   id: '2122',
-},{
-  url: mote_boy,
-  id: '2123',
 }];
 const data2 = [{
   url: boy,
