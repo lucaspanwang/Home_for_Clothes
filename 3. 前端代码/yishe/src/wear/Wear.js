@@ -203,15 +203,15 @@ export default class Wear extends Component {
     })
     .then(res=>res.json())
     .then(res=>{
-      this.setState({
-        temperature:res.tem2,
-        temperature2:res.tem1,
-        dressing_advice:res.air_tips,
-        weather:res.wea,
-        speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.air_tips
-      },function(){
-        this.weather_icon();
-      })
+      // this.setState({
+      //   temperature:res.tem2,
+      //   temperature2:res.tem1,
+      //   dressing_advice:res.air_tips,
+      //   weather:res.wea,
+      //   speak_suggest:'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + res.air_tips
+      // },function(){
+      //   this.weather_icon();
+      // })
     })
   }
   //根据天气显示背景和图标
