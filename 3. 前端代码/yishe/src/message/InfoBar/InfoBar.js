@@ -18,8 +18,8 @@ const InfoBar = ({name, room}) => {
   }
 
   useEffect(() => {
-    if(room.indexOf('group')!=-1){
-      setRoomName('衣舍内测用户体验群1群');
+    if(room.indexOf('group')!==-1){
+      setRoomName('内测用户体验群');
     }else{
       var userId='';
       var user1= room.split("?")[0];

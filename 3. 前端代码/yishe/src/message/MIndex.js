@@ -5,6 +5,7 @@ import remark from '../images/message/remark.png';
 import thumb from '../images/message/thumb.png';
 import plus from '../images/message/plus.png';
 import group1 from '../images/group1.jpg';
+import Friend from './Friend';
 
 // import './login.css';
 
@@ -13,34 +14,25 @@ export default class ResetPwd extends Component{
     constructor(){
         super();
         this.state = {
-            user:{},
-            display:'none'
+            plusdisplay:'none',
+            friendisplay:'none'
           }
     }
     
     onClick3 = ()=>{
         if(num == 1){
-            this.setState({ display:'block' });
+            this.setState({ plusdisplay:'block' });
             num = num+1;
         }else{
-            this.setState({ display:'none' });
+            this.setState({ plusdisplay:'none' });
             num = num-1;
         }
     }
 
     componentDidMount(){
-        fetch("http://47.98.163.228:3004/users?userId="+123)
-        .then(res=>res.json())
-        .then(res=>{
-            for(var i=0;i<res.length;i++){
-                var j = res[i].userPic.indexOf('/');
-                res[i].userPic = "http://47.98.163.228:3004"+res[i].userPic.substr(j);
-            }
-            this.setState({
-                user:res[0]
-            })
-        });
-
+        if(this.props.id=='111'){
+            this.setState({ friendisplay:'block' });
+        }
         // if(this.state.status==0) document.getElementById('dialog').style.display='none';
         // else document.getElementById('dialog').style.display='block';
     }
@@ -68,32 +60,28 @@ export default class ResetPwd extends Component{
                             <p style={{color:'#a8a8a8', float:'right', marginRight:'3%', fontSize:'22px'}}>></p>
                         </div>
                     </li></Link>
-                    <Link to={"/chat?name="+this.props.id+"&room=111?123"}><li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px'}}>
-                        <img src={this.state.user.userPic} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
-                        <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%', color:'black'}}>
-                            {this.state.user.userName}
-                            <p style={{fontSize:'15px', color:'#a8a8a8', float:'right', marginTop:'0', marginRight:'2%'}}>5-26</p>
-                            <p style={{color:'#666666', margin:'0', fontSize:'16px'}}>OK，拜拜啦</p>
-                        </div>
-                    </li></Link>
-                    <Link to={"/chat?name="+this.props.id+"&room=group0"}><li style={{position:'relative', marginBottom:'0%', lineHeight:'30px', fontSize:'18px', color:'black'}}>
-                        <img src={group1} width="16%" style={{marginBottom:'6%' ,borderRadius:'100%'}}/>
-                        <div style={{width:'80%', marginLeft:'4%', borderBottom:'solid 1px #cccccc', display:'inline-block', fontSize:'18px', paddingLeft:'2%', paddingBottom:'4%', color:'black'}}>
-                            衣舍内测用户体验群1群
-                            <p style={{fontSize:'15px', color:'#a8a8a8', float:'right', marginTop:'0', marginRight:'2%'}}>5-24</p>
-                            <p style={{color:'#666666', margin:'0', fontSize:'16px'}}>嗯嗯，好滴~</p>
-                        </div>
-                    </li></Link>
+                    <Link to={"/chat?name="+this.props.id+"&room=111?123"} style={{display:this.state.friendisplay}}>
+                        <Friend userId='123' lastWord='大家好哈哈哈哈 :D  :D  :D ' date='6-11'/>
+                    </Link>
+                    <Link to={"/chat?name="+this.props.id+"&room=111?122"}  style={{display:this.state.friendisplay}}>
+                        <Friend userId='122' lastWord='啊啦啦啦啦 :D >:) ' date='6-10'/>
+                    </Link>
+                    <Link to={"/chat?name="+this.props.id+"&room=group0"}>
+                        <Friend userId='20190076' lastWord='好滴，冲冲冲! :100: ' date='6-10' />
+                    </Link>
+                    <Link to={"/chat?name="+this.props.id+"&room=111?20190070"}  style={{display:this.state.friendisplay}}>
+                        <Friend userId='20190070' lastWord='OKKK' date='6-5' />
+                    </Link>
                     <a>
                         <img onClick={this.onClick3} src={plus} style={{width:'35px',float:'right',position:'absolute',bottom:'15px',right:'15px'}} key="plus"/>
                     </a>
-                    <ul id='dialog' style={{display:this.state.display ,float:'right', position:'absolute',width:'120px',height:'90px', bottom:'55px',right:'15px', backgroundImage:"url(" + require("../images/message/dialogNew.png") + ")",backgroundSize:' 100%'}}>
-                        <Link to=''><li style={{lineHeight:'8px', color:'#333333', marginTop:'17px', marginBottom:'3px', textAlign:'center', borderBottom:'solid 2px #cccccc'}}>
+                    <ul id='dialog' style={{display:this.state.plusdisplay ,float:'right', position:'absolute',width:'120px',height:'90px', bottom:'55px',right:'15px', backgroundImage:"url(" + require("../images/message/dialogNew.png") + ")",backgroundSize:' 100%'}}>
+                        <li style={{lineHeight:'8px', color:'#333333', marginTop:'17px', marginBottom:'3px', textAlign:'center', borderBottom:'solid 2px #cccccc'}}>
                             <p>新建群聊</p>
-                        </li></Link>
-                        <Link to=''><li style={{lineHeight:'10px', color:'#333333', marginTop:'8px', marginBottom:'10px', textAlign:'center',}}>
+                        </li>
+                       <li style={{lineHeight:'10px', color:'#333333', marginTop:'8px', marginBottom:'10px', textAlign:'center',}}>
                             <p>添加群聊</p>
-                        </li></Link>
+                        </li>
                         
                     </ul>
                     
