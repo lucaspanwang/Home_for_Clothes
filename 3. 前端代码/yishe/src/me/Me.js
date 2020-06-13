@@ -64,7 +64,7 @@ export default class Me extends Component {
             window.location.reload();
             localStorage.removeItem('comee')
         }
-        fetch("http://47.98.163.228:3000/users?userId="+this.props.id)
+        fetch("http://47.98.163.228:3000/users/"+this.props.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){

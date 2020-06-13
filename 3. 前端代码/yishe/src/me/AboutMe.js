@@ -33,7 +33,7 @@ export default class AboutMe extends Component {
 
     componentDidMount(){
         console.log(this.props.match.params.id);
-        fetch("http://47.98.163.228:3000/users?userId="+this.props.match.params.id)
+        fetch("http://47.98.163.228:3000/users/"+this.props.match.params.id)
         .then(res=>res.json())
         .then(res=>{
             for(var i=0;i<res.length;i++){
